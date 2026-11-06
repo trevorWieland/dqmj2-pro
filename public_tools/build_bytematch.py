@@ -190,6 +190,7 @@ def run_private(root, log, arguments, allow_failure=False):
                 print(json.dumps(event), flush=True)
         except (ValueError, TypeError):
             pass
+    process.stdout.close()
     process.wait()
     log.flush()
     if process.returncode and not allow_failure:
