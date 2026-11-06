@@ -128,6 +128,42 @@ class PrivateInputTests(unittest.TestCase):
         with self.assertRaises(BundleError):
             install_bundle(self.root, self.bundle)
 
+    def supplement(self, name, body):
+        payload = io.BytesIO()
+        with tarfile.open(fileobj=payload, mode='w:gz') as archive:
+            info = tarfile.TarInfo(name)
+            info.size = len(body)
+            archive.addfile(info, io.BytesIO(body))
+        raw = payload.getvalue()
+        (self.bundle / 'reference.part').write_bytes(raw)
+        path = self.bundle / 'manifest.json'
+        manifest = json.loads(path.read_text())
+        manifest['supplementalArchives'] = [dict(archiveParts=[dict(name='reference.part',
+            sha256=hashlib.sha256(raw).hexdigest())])]
+        path.write_text(json.dumps(manifest), encoding='utf-8')
+
+    def test_supplemental_reference_archive_installs(self):
+        self.pack([('inputs/game.nds', b'owned')])
+        self.supplement('deps/reference/pinned/aes.c', b'pinned reference')
+        result = install_bundle(self.root, self.bundle)
+        self.assertEqual(result['installedFiles'], 2)
+        self.assertEqual(result['archiveParts'], 2)
+        self.assertEqual((self.root / 'deps/reference/pinned/aes.c').read_bytes(), b'pinned reference')
+
+    def test_supplement_cannot_replace_public_source(self):
+        self.pack([('inputs/game.nds', b'owned')])
+        self.supplement('src/game.c', b'forbidden')
+        with self.assertRaises(BundleError):
+            install_bundle(self.root, self.bundle)
+        self.assertFalse((self.root / 'inputs/game.nds').exists())
+
+    def test_duplicate_path_across_archives_is_rejected(self):
+        self.pack([('inputs/game.nds', b'owned')])
+        self.supplement('inputs/game.nds', b'owned')
+        with self.assertRaises(BundleError):
+            install_bundle(self.root, self.bundle)
+        self.assertFalse((self.root / 'inputs/game.nds').exists())
+
 
 class BuildOutcomeTests(unittest.TestCase):
     def setUp(self):

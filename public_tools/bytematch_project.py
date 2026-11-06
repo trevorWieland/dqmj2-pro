@@ -6,6 +6,7 @@ import re
 import struct
 import subprocess
 from pathlib import Path, PurePosixPath
+from source_links import load_aliases, load_records, TABLE as ALIAS_TABLE
 
 
 DENOMINATOR = 2512636
@@ -308,6 +309,8 @@ def prepare(root, private, output, diagnostic=False, receipt=None, compilation=N
     if set(links) != set(module_map):
         raise ValueError('Partial module link reports cannot be published')
     candidates = {}
+    aliases = load_aliases(root) if (root / ALIAS_TABLE).is_file() else {}
+    alias_records = {r['reportSymbol']: r for r in load_records(root)} if aliases else {}
     ledger_path = contained(private, 'ledger/functions.jsonl')
     for line in ledger_path.read_text().splitlines():
         row = json.loads(line)
@@ -390,6 +393,11 @@ def prepare(root, private, output, diagnostic=False, receipt=None, compilation=N
             base_path = output / 'base' / (key + '.o')
             known = next((code for start, stop, code in sections if start <= begin and end <= stop), None)
             candidate = next((r for r in real_candidates if int(r['address'], 0) == begin and int(r['address'], 0) + r['bytes'] == end), None)
+            if candidate and candidate['symbol'] in aliases:
+                alias = alias_records[candidate['symbol']]
+                if namespace(candidate) != namespace(alias) or candidate['mode'] != alias['mode'] or begin != int(alias['address'], 0):
+                    raise ValueError('Source alias crosses a physical function identity')
+                source = aliases[candidate['symbol']]
             code = bool(selection or candidate)
             symbols = [(n, o + selection[0] - begin, z, m) for n, o, z, m in selection[3]] if selection else [
                 (candidate['symbol'], 0, candidate['bytes'], candidate['mode'])] if candidate else []
@@ -401,7 +409,7 @@ def prepare(root, private, output, diagnostic=False, receipt=None, compilation=N
             metadata = dict(source_path=source, complete=bool(selection), progress_categories=[category])
             if unclassified:
                 metadata['progress_categories'].append('unclassified')
-            group = str(PurePosixPath(source).with_suffix('')) if selection else 'unreconstructed'
+            group = str(PurePosixPath(source).with_suffix('')) if selection or source != 'src' else 'unreconstructed'
             item = dict(name=group + '/' + physical + f'/{begin:08x}', target_path=target.relative_to(output).as_posix(),
                         base_path='base/empty.o', metadata=metadata)
             if selection:

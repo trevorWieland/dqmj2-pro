@@ -6,7 +6,7 @@ The tracked version is `B2JJ-modified`, the measured modified Dragon Quest Monst
 
 The build follows [pokebw2's separation of public sources and private inputs](https://github.com/fuddlesworth/pokebw2/blob/main/.github/workflows/build.yml). Matching runs on GitHub-hosted Windows runners on pushes to `main`, plus manual dispatch. Pull requests run source integrity and changed-code standards without receiving private inputs.
 
-The private `trevorWieland/dqmj2-pro-inputs` repository holds an immutable multipart archive. Its manifest binds the accepted source snapshot, public accepted-manifest hash and every archive part hash. It includes owned originals, pinned tools and the frozen replay metadata required by this custom build. A ROM and compiler alone do not close the historical replay dependencies. The `BUILD_INPUTS_DEPLOY_KEY` secret is a read-only key for this input repository; ByteMatch requires no credential.
+The private `trevorWieland/dqmj2-pro-inputs` repository holds an immutable multipart archive and separately pinned supplemental reference archives. Its manifest binds the accepted source snapshot, public accepted-manifest hash and every archive part hash. It includes owned originals, pinned tools and the frozen replay metadata required by this custom build. A ROM and compiler alone do not close the historical replay dependencies. The `BUILD_INPUTS_DEPLOY_KEY` secret is a read-only key for this input repository; ByteMatch requires no credential.
 
 The installer refuses traversal, links, conflicting inputs and replacement public source/configuration. Absent `src/**/*.json` files are private replay descriptors; existing public files at those paths cannot be replaced. Private inputs, build logs and objects are excluded from public Git and artifacts. Reusing the archive on a matching checkout preserves identical existing inputs.
 
@@ -36,6 +36,8 @@ This integration compares final linked image ranges. The generated ELF container
 Measured candidate and accepted functions enter the code budget. Other initialized spans remain explicit objects in an unclassified data budget with zero completion; the exporter does not invent functions for opaque gaps. All initialized bytes remain represented across code and data. ByteMatch's code percentage therefore describes the measured function inventory, and its data budget includes unclassified bytes that may contain further code. Neither is a precise whole-game executable percentage, the accepted initialized-source ledger percentage, or overall game completion. Source data that is not independently admitted by this function-manifest exporter remains uncredited. Do not substitute these figures for the separate accepted accounting.
 
 The behavioral draft ledger supplies `functional.json`. Only explicitly bounded behavior-qualified, nonmatching functions are included, with `medium` confidence; bounded evidence does not prove general functionality. Accepted functions are excluded from this list.
+
+`public_tools/source_aliases.json` pins the two functional drafts' full physical identities, source definitions and include hashes. `public_tools/source_links.py` generates the display-only `include/bytematch_names.h`; it is not included by compiler inputs. An unchanged copy of the overlay draft and its context header is published under `src/nonmatching/` so the viewer can show it. These source links retain empty source baselines and `complete: false`, adding no matching credit.
 
 After the build, CI runs pinned objdiff 3.8.3:
 

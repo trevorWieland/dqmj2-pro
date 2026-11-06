@@ -1,0 +1,2 @@
+#define func_0202b1a8 native_main_0202b1a8
+#define func_ov001_021ea56c native_ov001_021ea56c

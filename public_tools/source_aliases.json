@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "aliases": [
+    {
+      "program": "",
+      "processor": "arm9",
+      "module": "main",
+      "mode": "arm",
+      "address": "0x0202b1a8",
+      "reportSymbol": "func_0202b1a8",
+      "sourceSymbol": "native_main_0202b1a8",
+      "sourcePath": "src/runtime/20261101_heap_region_return/native_main_0202b1a8.c",
+      "sourceSha256": "ac32c8950dbb83be1149ba2d9c9ca2591a7d7ddf46432a5cc27e9db0659328db",
+      "sourceDependencies": [],
+      "complete": false
+    },
+    {
+      "program": "",
+      "processor": "arm9",
+      "module": "ov001",
+      "mode": "arm",
+      "address": "0x021ea56c",
+      "reportSymbol": "func_ov001_021ea56c",
+      "sourceSymbol": "native_ov001_021ea56c",
+      "sourcePath": "src/nonmatching/overlay-lane/20261101-action436/source.c",
+      "sourceSha256": "e030c5679db3b651a1af308728543628fce237be7562de0cf1d5eb2505688af2",
+      "sourceDependencies": [
+        {
+          "path": "src/nonmatching/overlay-lane/20261101-action436/context.h",
+          "sha256": "85ef28b95a2118e56a29cc23c1f516980da607be0430b9749258aca193575275"
+        }
+      ],
+      "complete": false
+    }
+  ]
+}

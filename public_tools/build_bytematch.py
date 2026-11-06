@@ -114,7 +114,11 @@ def install_bundle(root, bundle):
         raise BundleError("Private input bundle declares an incomplete replay closure")
     if manifest.get("acceptedManifestSha256", accepted_hash) != accepted_hash:
         raise BundleError("Accepted source manifest identity differs")
-    parts = bundle_parts(bundle, manifest)
+    supplements = manifest.get("supplementalArchives", [])
+    if not isinstance(supplements, list) or any(not isinstance(item, dict) for item in supplements):
+        raise BundleError("Invalid supplemental archive inventory")
+    inventories = [manifest, *supplements]
+    archives = [bundle_parts(bundle, item) for item in inventories]
     work = root / "work"
     if work.is_symlink() or getattr(work, "is_junction", lambda: False)() or not work.resolve().is_relative_to(root):
         raise BundleError("Private staging directory escapes checkout")
@@ -122,34 +126,36 @@ def install_bundle(root, bundle):
     stage.mkdir(parents=True)
     records, directories, seen = [], [], set()
     try:
-        with PartsReader(parts) as raw, io.BufferedReader(raw) as reader, tarfile.open(fileobj=reader, mode="r|gz") as archive:
-            for member in archive:
-                relative, target = member_path(root, member.name)
-                name = relative.as_posix()
-                if name in seen:
-                    raise BundleError("Duplicate archive path")
-                seen.add(name)
-                if member.isdir():
-                    if target.exists() and not target.is_dir():
-                        raise BundleError("Private input directory conflicts with an existing file")
-                    directories.append(target)
-                    continue
-                if not member.isfile():
-                    raise BundleError("Archive contains a link or special file")
-                staged = stage.joinpath(*relative.parts)
-                staged.parent.mkdir(parents=True, exist_ok=True)
-                source = archive.extractfile(member)
-                if source is None:
-                    raise BundleError("Archive member has no payload")
-                with source, staged.open("xb") as output:
-                    shutil.copyfileobj(source, output)
-                if staged.stat().st_size != member.size:
-                    raise BundleError("Truncated private input member")
-                value = digest(staged)
-                if target.exists() and (not target.is_file() or digest(target) != value):
-                    raise BundleError("Private input conflicts with an existing checkout file")
-                records.append((target, staged, value))
-        bundle_parts(bundle, manifest)
+        for parts in archives:
+            with PartsReader(parts) as raw, io.BufferedReader(raw) as reader, tarfile.open(fileobj=reader, mode="r|gz") as archive:
+                for member in archive:
+                    relative, target = member_path(root, member.name)
+                    name = relative.as_posix()
+                    if name in seen:
+                        raise BundleError("Duplicate archive path")
+                    seen.add(name)
+                    if member.isdir():
+                        if target.exists() and not target.is_dir():
+                            raise BundleError("Private input directory conflicts with an existing file")
+                        directories.append(target)
+                        continue
+                    if not member.isfile():
+                        raise BundleError("Archive contains a link or special file")
+                    staged = stage.joinpath(*relative.parts)
+                    staged.parent.mkdir(parents=True, exist_ok=True)
+                    source = archive.extractfile(member)
+                    if source is None:
+                        raise BundleError("Archive member has no payload")
+                    with source, staged.open("xb") as output:
+                        shutil.copyfileobj(source, output)
+                    if staged.stat().st_size != member.size:
+                        raise BundleError("Truncated private input member")
+                    value = digest(staged)
+                    if target.exists() and (not target.is_file() or digest(target) != value):
+                        raise BundleError("Private input conflicts with an existing checkout file")
+                    records.append((target, staged, value))
+        for inventory in inventories:
+            bundle_parts(bundle, inventory)
         for directory in directories:
             directory.mkdir(parents=True, exist_ok=True)
         installed, reused = 0, 0
@@ -170,7 +176,7 @@ def install_bundle(root, bundle):
         if digest(accepted_path) != accepted_hash:
             raise BundleError("Private input installation changed the accepted manifest")
         return dict(snapshotRevision=manifest["snapshotRevision"], acceptedManifestSha256=accepted_hash,
-                    installedFiles=installed, identicalExistingFiles=reused, archiveParts=len(parts))
+                    installedFiles=installed, identicalExistingFiles=reused, archiveParts=sum(map(len, archives)))
     finally:
         resolved_stage = stage.resolve()
         if resolved_stage.parent == work.resolve() and resolved_stage.is_relative_to(root) and stage.name.startswith("private-input-staging-"):
