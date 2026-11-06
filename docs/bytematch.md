@@ -12,6 +12,8 @@ The installer refuses traversal, links, conflicting inputs and replacement publi
 
 `public_tools/build_bytematch.py` verifies the inputs, recompiles the complete accepted source manifest, then executes `run_checks.py --clean`. The receipt binds the public Git revision, accepted manifest, fresh compiler report, fresh module-link reports and check results. The public compiler pass alone never authorizes a matching report.
 
+Before historical replay, it runs `reproduce.py` to rebuild and verify the checksum-tool prerequisite. Older overlay producers consume `oracle/results.json` for the pinned compiler flags; this generated file is recreated from public source and owned originals rather than imported from an older checkout.
+
 The historical workspace audit rejects any Git remote and requires external snapshot folders that do not exist on a clean runner. Those private-era conditions are superseded for public reporting by the [publication policy](public-reconstruction-policy.md). The wrapper records that historical failure and permits only this final audit exception: every build/oracle stage passed, source policy passed, and no recorded external file changed. Any other failure prevents report publication. This exception neither accepts new source nor establishes an overall source-only game build.
 
 ## Generated objdiff project

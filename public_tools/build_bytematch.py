@@ -298,6 +298,9 @@ def main():
                 if compiled.get("status") != "source-compilation-passed" or compiled.get("fullManifestCompiled") is not True or compiled.get("manifestSha256") != receipt["acceptedManifestSha256"] or compile_path.stat().st_mtime_ns < receipt["startedTimeNs"]:
                     raise BundleError("The complete fresh public source compilation did not pass")
                 receipt["publicSourceCompileReport"] = dict(path="build/public-source-compile/report.json", sha256=digest(compile_path), modifiedTimeNs=compile_path.stat().st_mtime_ns)
+                receipt['phase'] = 'bootstrap-checksum-tool-prerequisite'
+                print(json.dumps(dict(phase=receipt['phase'])), flush=True)
+                run_private(root, log, ['reproduce.py'])
                 print(json.dumps(dict(phase='replay-and-link-all-modules')), flush=True)
                 receipt['phase'] = 'replay-and-link-all-modules'
                 receipt['replayStartedTimeNs'] = time.time_ns()
