@@ -1,0 +1,2 @@
+#include "context.h"
+void native_main_020b86cc(Control*incoming){Control*q;u32 priority;native_data_021d3020=incoming;native_fn_02008d78(incoming,0,sizeof(Control));native_fn_02006dfc(native_data_021d3020,&native_data_021d3020->prefix[8],1);native_data_021d3020->active=0;q=native_data_021d3020;priority=native_fn_02006b74(native_data_020e33e4.current);native_fn_020065f0(q->thread,native_fn_020b87e4,0,q->stack+512,2048,priority);native_fn_02006ab0(native_data_021d3020->thread,128);}

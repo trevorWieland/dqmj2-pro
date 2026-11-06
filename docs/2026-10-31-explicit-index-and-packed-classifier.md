@@ -1,0 +1,15 @@
+# Explicit index and packed classifier - 2026-10-31
+
+New ordinary-C ARM020BB144/112 genuinely matches native compiler/MWLD bytes. Replay `python match_mechanics_save_20261031_lane_packed_classify.py`. Normal and parent-directory Python `-I -S` runs reproduce canonical SHA9f492dda712bab12d23f0cafd0f552ff93b22e15b2f349429c440518b2c07e58. Full compiler path/hash/flags and source identity are pinned separately from current-root object/link provenance. Shared acceptance remains required.
+
+The preferred source explicitly accepts the incoming signed index,forwards it into original685C8,and explicitly passes the returned record word into original96D9C. The historical unregistered draft declared the entry void and made both calls without arguments. Its byte equality depended on incidental physical R0 retention;it is not an adequate C input contract. Later helper calls also have explicit pointer words. This ARM32 source does not claim a complete64-bit portable pointer ABI.
+
+Original68594 accepts signed indices0..63;685C8 uses original63EA4 and12-byte stride from021BB2B8. All Thumb getters execute. The checked96D9C literal BX thunk forwards into96CF8;its logical entry is distinct from a physical return instruction. Original records and their768-byte backing remain unchanged. No provider or byte patch is used.
+
+The classifier reads word0. Bits11..12 give modes0/1/2/3. Modes1/2 return themselves;mode0 returns0. In mode3,bit15 set with bit14 clear returns5 first;otherwise bits13 and14 both set return4;otherwise return3. These are raw fields/return words. Saved offsets,status names,record ownership,lifecycle and ordinary gameplay prerequisites are unproved.
+
+The2,048 independent pairs cover all64 indices and32 flag combinations with other word bits varied. They yield4,096 actual top returns and27,136 separately observed physical native helper returns. There are4,096 logical thunk entries,not4,096 additional physical returns. Exact ARM/Thumb call/tail edges,full read traces,immutable backing,SP/callee-saved restoration,actual bounded return and all28 own instructions are mandatory. Six invalid-index original/source runs stop on null-record reads without handled-error or post-fault claims.
+
+Two complete compiled wrong-C bodies force index0 or exchange the mode3 priorities. Their4,096 pairs yield8,192 actual returns,1,768 independent returned-word rejections,2,328 positives and2,272 separate trace rejections. Full evidence is deterministic gzip. An initial text-rewrite syntax error was rejected before linking/execution and is retained as zero-credit evidence.
+
+The current accepted helper files contain additional void/empty pointer-forwarding declarations at96CF8/96D9C/96D4C/96D6C and first calls in96D04/96D24. Their original binaries execute here;their C primaries are preserved. Separate typed alternatives require independent real links and caller/return evidence before any zero-coverage migration. Nothing in this packet silently changes those sources or proves their host portability. Original ROM/save,application and accepted source remain unchanged.

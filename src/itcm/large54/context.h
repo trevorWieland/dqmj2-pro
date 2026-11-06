@@ -1,0 +1,31 @@
+#define NULL ((void *)0)
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef signed short s16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef unsigned long long u64;
+typedef signed long long s64;
+typedef float f32;
+typedef double f64;
+#define M2C_FIELD(value, type, offset) (*(type)((s8 *)(value) + (offset)))
+extern u32 native_fn_01ffa978();
+extern u8 *native_fn_01ffb334();
+extern u8 *native_fn_01ffb340();
+extern u32 native_fn_02046af4();
+extern u32 native_fn_02049604();
+extern u8 *native_fn_02049ad0();
+extern u32 native_fn_02049f4c();
+extern u32 native_fn_0204a574();
+extern u32 native_fn_0204a808();
+extern u32 native_fn_0206006c();
+extern u32 native_fn_02063b40();
+extern u32 native_fn_020685f0();
+extern u32 native_fn_ov000_022238c0();
+extern u32 native_fn_ov000_02223c40();
+extern u8 native_data_020dc88c[];
+extern u8 native_data_021c9698[];
+extern u8 native_data_021d4100[];
+extern u8 native_data_021d41f4[];
+extern u8 native_data_021d41fc[];

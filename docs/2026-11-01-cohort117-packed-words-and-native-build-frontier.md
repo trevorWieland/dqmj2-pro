@@ -1,0 +1,13 @@
+# Source117 packed words and native build frontier - 2026-11-01
+
+Eight new functions propose912 initialized bytes: two main table leaves40 each, main inverse lookup60, two ARM7 WRAM dummy transfers36 each, two ARM7 main packed-word routines272 each and an ARM7 main two-byte reader156. Root independently replays the original source/compiler/native packets and checks qualified interval overlaps against accepted and pending identities. No denominator changes or implementation-family novelty are credited for the duplicated physical dummy-transfer instances.
+
+The table paths execute original callees without supplied replacements and retain byte/fullword comparison controls, unsigned address wrap with explicit backing and bounded nonreturn cases. The packed routines preserve a measured unsigned four-byte bitfield view, all64-code/two-flag outcomes and no-store paths. The two-byte reader retains its real R3/LR frame and four busy phases as nonreturn evidence. Earlier sources and exact builds must remain preserved before publication.
+
+The original/recompiled912-byte candidates are separate from zero-credit research: a source-only functional536-byte SPI writer pair, save breadth/pointer drafts, a native signed-double ABI chain, the whole recovered Windows source link frontier and native Windows packed-word tests. The writer pair still has genuine byte mismatches and different private-frame store ordering; no full machine/concurrency equivalence is inferred.
+
+The Windows build work preserves selected source body hashes while isolating247 native compilation units. All duplicate function names disappear, but one data conflict and unresolved symbols keep all four program-level diagnostic links failing. These libraries have no entry point and are never executed. Two actual Windows packed-word components separately reproduce2,560 original ARM input cases in two fresh processes, including120 read-only no-store calls per run. Neither result is a complete game.
+
+The new601 native contracts support a separate save caller-context repair for signed32→binary64→multiply1.5→signed32 word flow. Native saturation outside the portable C cast domain remains explicitly qualified. No parent gameplay routine, bank arbitration, Android execution, full Windows game, executable-only completion percentage or source-only ROM is established by this research.
+
+Pending source114/115/116 identities exclude duplicate work only. The shared source registry is untouched until the exact committed116 closure exists. Source117 requires its own current module/regression checks and committed source/oracle closure before acceptance.

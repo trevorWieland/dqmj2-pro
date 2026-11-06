@@ -1,0 +1,11 @@
+# Source116 width callers and header evidence - 2026-11-01
+
+Eleven functions propose912 initialized bytes: ten main global-access callers780 and one overlay001 caller132 at ARM0x0222CD00. Independent source/compiler/genuine-link/native evidence passes before publication; accepted module coverage remains pending until the current build and committed closure pass. All earlier source selections and object identities must remain preserved.
+
+The main family uses individually measured word/halfword global widths. Original IRQ helpers execute; other boundaries are explicitly supplied with stated effects and no callee credit. The overlay caller executes the original unsigned-halfword getter and fill helper, then supplies four ordered stage boundaries. Its direct edge into the separately drafted780-byte row/RNG builder does not execute that builder in the caller oracle. The supplied-boundary harness qualifies actual unconditional ARM BL edges and preserves the initial overlapping-control failure.
+
+Zero-credit evidence separately retains the nonmatching overlay001 row/RNG builder:192 pairs/384 top returns,5,438 watched native dependency returns,3,326 supplied calls, all732 instruction bytes plus48 referenced literal bytes accounted. Its ordinary C remains nonmatching under the genuine linker. Only the observed raw values and effects are established; ordinary scene reachability, future RNG state and historical field meanings remain unresolved.
+
+The header143 bridge executes82 original frontend and162 original checksum/reader/copy returns with one supplied read per case. Header-only validity does not prove payload-checksum validity, a valid loaded bank, physical-bank selection or chronology. Raw counts4/127/128/255 pass recomputed header checksums. The summary's event-bit mapping is source dataflow evidence, with no encounter-availability meaning assigned and no reduction in the40,560 semantically unknown save bytes.
+
+Pending114/115 identities are used only to exclude overlapping work in preflight. They establish no accepted coverage. Source116 waits for the exact committed115 closure before any shared registry mutation. Full source-only ROM, Windows game and Android device execution remain unproved.

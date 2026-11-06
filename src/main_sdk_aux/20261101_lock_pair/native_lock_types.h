@@ -1,0 +1,11 @@
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef u32 (*LockCallback)(void);
+typedef struct { u32 flag; u16 owner; u16 unobserved6; } LockWord;
+typedef char lock_word_view_must_be_8[sizeof(LockWord) == 8 ? 1 : -1];
+extern u32 native_fn_02007ff4(void);
+extern u32 native_fn_02008008(u32);
+extern u32 native_fn_02008020(void);
+extern u32 native_fn_02008034(u32);
+extern u32 native_fn_02008f4c(u32,LockWord *);

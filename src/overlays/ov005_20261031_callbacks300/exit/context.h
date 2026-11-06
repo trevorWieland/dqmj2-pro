@@ -1,0 +1,10 @@
+typedef unsigned int u32;
+extern u32 native_fn_02089b64();
+extern u32 native_fn_ov005_021e0e6c();
+extern u32 native_fn_ov005_021e06a0();
+extern u32 native_fn_0202a498(u32,u32);
+extern u32 native_fn_ov005_021dfeb8();
+extern u32 native_fn_020befb8(u32);
+extern u32 native_fn_020653ac(void);
+typedef struct {unsigned char unknown[0x28];u32 field_28;} State;
+extern State native_data_ov005_021ed438;

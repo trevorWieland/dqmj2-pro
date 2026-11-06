@@ -1,0 +1,15 @@
+# Actual recovery caller phase alias
+
+Run `python prove_save_core_recovery_alias164_20261101.py`. This is a separate qualification of the existing controller's actual caller arguments. It preserves the 161 generic-pointer matrix and its direct-update sequences, with zero new reconstructed bytes.
+
+The enclosing configured main ARM function 0x020C2528/2,192 reads the byte at 0x021D4C3D for its dispatch. The original prefix at 0x020C2574 loads the state base, reads +1, compares against 21, and performs its computed branch. Phase 18 reaches table branch 0x020C25D0 and case entry 0x020C2B90. Two original literal loads prepare R0=0x021D4C3D and R1=0x021D4C54 before the actual BL at 0x020C2B98 into the accepted 720-byte controller.
+
+The phase output therefore aliases stateBase+1, and the error output is stateBase+0x18. The older source's reserved-byte field name describes a layout view rather than an original declaration or unused-byte claim. The generic 161 tests used separate output buffers and prove that API setup only. This new matrix uses the actual aliased addresses, preserving the separate internal state byte at +0 and counter halfword at +2.
+
+The original dispatch/case/controller chain reaches its checkpoint in 1,326 contexts. Each has an actual controller return; there are 618 actually returning native helper invocations and 198 separately classified provider-completed wrapper continuations. All tracked aliased effects, phase/error widths, provider arguments, helper returned words, register/control restoration, branch edges, fetch/read bounds and stack canaries are checked. Original dispatch and case instructions execute. The same seven explicit lower device/async/write/UI boundaries remain supplied.
+
+There are zero full returns of the 2,192-byte enclosing function. Its prologue, other branches and common continuation remain unexecuted. Phases 17 and 19 hit separate unsupported case targets before the controller and receive no return or post-fault credit. They are other valid dispatch branches, not invalid phase values. Phase changes written by the controller can choose a different case in a later enclosing invocation; the repeated direct-controller 161 sequences do not establish that case 18 continues running after a change.
+
+The fresh exclusion audit uses the accepted 114 identity snapshot and pending 115/116/117 intervals. The 2,192-byte parent is clear in those measured identities. Its new 165 draft uses a 34-byte remaining native stack-span hypothesis at SP+0xA, not an original declared-size claim; lower formatter output bounds are unresolved. It then fails at a generated void-pointer MMIO operation. A separate 166 alternative uses a measured volatile 32-bit MMIO view and compiles/links to 2,172 default or 2,200 speed bytes, neither exact. Those drafts and failures remain zero-credit source hypotheses.
+
+No actual payload restore, physical bank selector, chronology, ordinary scene reachability, UI behavior, original stack-buffer declaration, or unknown-save-byte meaning follows from this fixture. Accepted source, older proofs, application files, and original inputs remain unchanged.

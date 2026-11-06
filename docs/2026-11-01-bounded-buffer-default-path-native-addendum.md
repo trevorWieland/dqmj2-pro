@@ -1,0 +1,11 @@
+# Native default-path dependence and caller limits
+
+This addendum leaves every frozen 400-byte source, producer and oracle unchanged. Replay `probe_save_core_buffer112_default_20261101.py`. Its separate report is `evidence/functional/save-core-buffer112-default-native-20261101.json`; it is research evidence with zero source bytes, registered returns or source-language credit.
+
+The original Thumb branch at 020918B4 handles object kinds other than 4/5 by skipping both local initialization blocks. Original LDRs at 020918CA and 020918CC then read local words SP+C and SP+8. Original ADD at 020918D0 uses incoming R2, and the following LSL forms twice their sum modulo 2^32. The kind-4 path instead writes 16/16 and zeroes R2; kind 5 writes 20/16 and zeroes R2. This is an original uninitialized-local/default-input path, not a function-boundary or decode uncertainty and not an observed discrepancy on the supported original/exact-C domain.
+
+There are 140 fresh native prefix checkpoints: 100 other-kind cases and 40 kind-4/5 controls. The fixture explicitly seeds the two preexisting local words and incoming R2, then stops at 020918D4 before the common length store and derived loops. Every observed word matches the independent wrapped sum. None is a function return, a continuation claim, or evidence that C with uninitialized locals is correct for those other kinds. Extra register inputs and the incidental supported-domain raw R0 remain unqualified API contracts.
+
+Generated main assembly identifies three direct call sites in two functions: 02091A34 and 02092778. Nearby call code alone does not prove an ordinary 4/5 precondition. The latter has a check against 4 together with a separate byte-31 path, so that local check cannot be promoted into a blanket kind restriction.
+
+Static upstream evidence narrows part of the setup: 0209154C scans exactly the two halfwords 4 and 5 at 020DE830 and returns one or zero. The +32 writers at 0209158C and 0209161C use its result. A different +32 writer, 02091490, directly decodes two incoming bytes and stores them without a local 4/5 validation. Membership and complete setup/caller ordering, resume paths and other executable-module callers remain unproved. These findings do not establish a complete game-wide gate.

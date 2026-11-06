@@ -1,0 +1,5 @@
+# Cohort124 fixture format recovery — 2026-11-01
+
+All20 module comparisons, both checksum matches,144 isolated checksum returns and5,117 getters passed for9,329 functions/729,815 initialized bytes. Source packaging then refused trailing whitespace in the superseded, unregistered dictionary fixture V3. Its original bytes and failed packaging outputs are preserved in the attempt archive. Only that unused file’s line-trailing whitespace is removed; the original V1 handoff manifest remains unchanged and the new V2 manifest records the formatted file. Registered V4 and all selected source, object and registry hashes remain unchanged.
+
+Resume only packaging with `python resume_cohort124_fixture_format_20261101.py`. This does not claim an uninterrupted build or a clean replay. See [source-relative include recovery](2026-11-01-cohort124-source-relative-include-retry.md) for the earlier source-include refusal and retained native evidence. All original input hashes and whole-ROM requirements remain in force.

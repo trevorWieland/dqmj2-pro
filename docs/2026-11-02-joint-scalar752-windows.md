@@ -1,0 +1,7 @@
+# Joint scalar interpolation on Windows — 2026-11-02
+
+The two reconstructed ARM main scalar interpolation bodies at02032B90/348 and02032ED4/404 also compile unchanged as separate Windows i386 translation units. The driver uses each unit's actual unsigned-int32 or unsigned-long32 pointer interface and an incomplete compatible animation-header tag. Compile-time pointer/long assertions reject an incompatible model.
+
+`python check_main_joint_scalar752_windows32_20261102.py` builds five bounded private console executables using the pinned local NDK Clang/LLD/dlltool. It compares4,096 preferred public calls against the existing independent/native16-KiB page outcomes. Four wrong-source variants run16,384 public calls and detect2,108 incorrect results, matching each affected native control's rejection count. There are no function providers, hardware services, system setting changes, UI/audio or persistent game inputs. The fixed private page is released and child exit is required.
+
+The test runs successfully from the actual parent directory as well as the repository directory. PE and COFF timestamps are zero. Source, driver, commands, compiler pins, object/binary and result hashes are recorded in `evidence/ports/main-joint-scalar752-windows32-20261102.json`. This adds execution evidence and zero source-byte credit. It does not prove a full native Windows game or Android LP64 portability/device execution. The existing [native interpolation bounds](2026-11-02-joint-scalar752-interpolation-source.md) still apply.

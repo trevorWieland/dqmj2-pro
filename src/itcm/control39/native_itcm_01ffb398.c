@@ -1,0 +1,37 @@
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef struct { u16 *data; u32 bytes; } Block;
+extern u32 native_fn_0203cc2c(const void *, u32);
+extern void native_fn_0204518c(Block *, u32, u32);
+extern void native_fn_0204820c(const void *, u32, u32);
+extern void native_fn_02045490(u32, const void *, u32, u32);
+extern void native_fn_02045994(u32, const void *, u32, u32);
+extern void native_fn_0202a498(u32, u32);
+extern void native_fn_02048308(void);
+extern void native_fn_ov000_02223c24(u32, u32);
+extern void native_fn_ov000_022239ac(void);
+extern u32 native_fn_ov000_022159b8(const void *, u32);
+extern u8 native_data_020de770[];
+extern u8 native_data_020de784[];
+u32 native_itcm_01ffb398(void) {
+    u32 resource;
+    Block block;
+    u16 zero;
+    u32 secondBytes;
+    resource = native_fn_0203cc2c(native_data_020de770, 2);
+    zero = 0;
+    native_fn_0204518c(&block, resource, 0);
+    native_fn_0204820c(block.data, 0, block.bytes);
+    native_fn_0204820c(&zero, 0, 2);
+    native_fn_0204518c(&block, resource, 1);
+    native_fn_02045490(1, block.data, 0, block.bytes);
+    secondBytes = block.bytes;
+    native_fn_0204518c(&block, resource, 2);
+    native_fn_02045994(1, block.data, 0, block.bytes);
+    native_fn_0202a498(2, resource);
+    native_fn_02048308();
+    native_fn_ov000_02223c24(1, secondBytes);
+    native_fn_ov000_022239ac();
+    return native_fn_ov000_022159b8(native_data_020de784, 4);
+}

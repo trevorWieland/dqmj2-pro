@@ -1,0 +1,31 @@
+name: Contribution standards
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  GIT_CONFIG_COUNT: "2"
+  GIT_CONFIG_KEY_0: core.autocrlf
+  GIT_CONFIG_VALUE_0: "false"
+  GIT_CONFIG_KEY_1: core.longpaths
+  GIT_CONFIG_VALUE_1: "true"
+
+jobs:
+  authored-code:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: "3.13.5"
+      - name: Check changed authored source
+        env:
+          BASE_REVISION: ${{ github.event.pull_request.base.sha }}
+        shell: pwsh
+        run: python public_tools/check_contribution.py --base $env:BASE_REVISION

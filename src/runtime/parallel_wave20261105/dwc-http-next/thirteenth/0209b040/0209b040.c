@@ -1,0 +1,2 @@
+#include "context.h"
+int native_main_0209b040(RTCDate*date,RTCTime*time){s64 current,adjusted;if(!native_data_021d1990)return 0;if(native_fn_0200f540(date,time)!=0)return 0;current=native_fn_0200fc74(date,time);if(current==-1)return 0;if(current<native_data_021d1994)current+=3155760000LL;adjusted=current-native_data_021d199c;if(adjusted<0||adjusted>3155759999LL)return 0;native_fn_0200fe50(date,time,adjusted);return 1;}

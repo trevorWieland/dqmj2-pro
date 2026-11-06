@@ -1,0 +1,2 @@
+#include "context.h"
+int native_main_020b9128(Packet*packet){int result=0;u32 length;int sent;u8*cursor=(u8*)packet;if(!native_data_021d3028)return -28;length=packet->length;if(length>1044){native_fn_020b909c(6,-50);return -35;}sent=0;while(sent<length){result=native_fn_020903d0(native_data_021d3028->error1b8,cursor,length-sent);if(result>0){sent+=result;cursor+=result;if(sent>=length)return sent;}else if(result<0){native_fn_020b909c(6,-50);return result;}}return result;}

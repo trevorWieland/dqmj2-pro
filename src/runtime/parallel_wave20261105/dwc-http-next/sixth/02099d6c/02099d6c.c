@@ -1,0 +1,2 @@
+#include "context.h"
+BOOL native_main_02099d6c(DWCAuthAlloc alloc,DWCAuthFree free){if(native_data_021d19a4){native_fn_0209a9f8(9,-24100);return 0;}native_data_021d19a4=alloc((u32)native_data_020df21c,sizeof(DWCSvlIntWorkarea));if(!native_data_021d19a4){native_fn_0209a9f8(9,-24100);return 0;}native_fn_02008d78(native_data_021d19a4,0,sizeof(DWCSvlIntWorkarea));native_data_021d19a4->alloc=alloc;native_data_021d19a4->free=free;return 1;}

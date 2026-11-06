@@ -1,0 +1,33 @@
+# Overlay 6 exact record-display caller and stack interfaces, 2026-11-01
+
+ARM9 host-main overlay `ov006`, ARM `0x021EB240` /1,000 bytes, is reconstructed as ordinary C with a full canonical genuine-link match at both O2/space and O2/speed. Integrator acceptance remains required for source credit. ROM SHA-256 is `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`; overlay SHA-256 is `fb9cb28ea400207bda442e3265da73af994866cf3a6c352b46a11db59835d341`. There are960 observed code bytes and40 classified literal bytes, with no unclassified span.
+
+Replay `python match_ov006_render712_20261101.py` under pinned Python3.13.5/Unicorn2.1.4. All paths resolve against the repository, including invocation from an unrelated working directory. Source/header are `src/overlays/ov006_20261101_render712`; the canonical report is `evidence/matches/ov006-20261101-render712.json` and deterministic full traces are compressed at `evidence/generated/ov006-render712-native-traces-20261101.json.gz`. Normal and alternate-CWD report/trace hashes agree. Replays do not add unique vectors.
+
+## The missing stack arguments were a frontend failure
+
+The weak draft compiled to960 bytes with347 matching offsets. Its inferred calls silently omitted and shifted stack arguments. Native own-callee instructions establish at least seven prepared words for module-qualified entries `021E791C`, `021E7824`, `021E775C`, and eight for `021E78AC`. These are minimum physical input views, with unresolved public semantic types/deeper implicit inputs retained. They are not global catalogue or accepted-source migrations.
+
+`E791C` saves20/subtracts12 bytes, then loads caller stack words at local SP+0x20,+0x24,+0x28. `E7824` saves20/subtracts0x8C and reads SP+0xA0,+0xA4,+0xA8. `E78AC` has the same0xA0-byte frame and reads through SP+0xAC, so its four stack words make eight total arguments. `E775C` has a0x20-byte frame and reads three caller stack words, some only in its nonnull-resource path. Every original callee span/hash and offset is pinned in `evidence/abi/ov006-render712-word-interfaces-20261101.json`.
+
+Seeding those measured views before translation fixes the other argument lists and exposes exactly two unresolved M2C stackarg0 expressions: the name and fallback calls for slot41. Native `MOV R0,#19` at `021EB2F4` and `STR R0,[SP]` at `021EB2F8` dominate the conditional split at `021EB300`; neither branch rewrites SP0 or calls another function before its renderer. The targets are `E7824` at `021EB318` and `E791C` at `021EB334`. Their zero-based argument4 is therefore exactly19. Only those two hash-qualified error sites are replaced; there is no generic M2C_ERROR/CARRY lowering, register guess or pinned/shared frontend edit.
+
+Unmodified assembly/context/raw M2C output are preserved as generated scaffolding under `evidence/generated/ov006-render712-frontend`. They are not accepted source or executable-source credit. The repair receipt pins all input hashes, the two sites and resulting ordinary source. The final C is compiled from frozen source without requiring that generated output at build time.
+
+## Native comparison and bounded intent model
+
+The preferred frozen unit uses pinned2.0/base O2/speed, inline off, symbols on, soft-float and ARM946E. The current source/object is freshly compiled, split with unchanged relocation types/addends/H bits, and genuinely linked by pinned MWLD with qualified zero-code anchors. Every canonical output byte matches the measured1,000-byte span; no opcode patch or following-callee overwrite is used.
+
+There are96 original/C pairs and192 actual top returns. All960 code bytes are observed and all40 literal bytes have observed unconditional PC-relative readers. Complete main RAM including stack, every ARM core register/CPSR and every relevant/full raw provider argument view agree between original and current linked C. Every run reaches the actual return sentinel with the original stack pointer, ARM state and callee-saved registers intact.
+
+An independent golden intent model checks the entire call order and every prepared word, including all seven/eight-word stack tails. Inputs combine full reset words0/1/0x80000000/0xFFFFFFFF, first-name bytes0/65/128/255, unsigned16 lookup values0/1/0x8000/0xFFFF, full-width opaque query/kind words, zero/nonzero counter fields, and boundary values around999999 and9999. Counter comparisons/caps are unsigned. The name/fallback call's argument4 is checked against19 independently of the decompiler repair. Raw final R0 passes through the supplied last renderer value0/1/0x80000000/0xFFFFFFFF.
+
+All record queries, text/resource lookup, setup, clear, numeric formatting and renderer calls are supplied zero-RAM interfaces. The5,472 positive supplied calls count as provided; actual native dependency return count is0. No helper stub is called native execution or source. The measured own routine performs no nonstack writes under these boundaries. Its meaningful verified effects here are its decisions, field loads, clamps and full-word call contracts. Actual rendered output, backend resource behavior, native error conditions and ordinary scene reachability are unqualified.
+
+Record providers supply readable disjoint64-byte and12-byte buffers. The own byte read at record+0x14 selects supplied name versus fallback pointer. It establishes neither text encoding nor string validity. The two unsigned32 fields at+0x34/+0x38 cap to999999 when nonzero; three supplied words cap to9999. Field meanings, display labels and current record identities are not inferred from offsets or formatting constants. Null record-query returns and malformed/buffer-alias cases remain unsupported.
+
+Four separately compiled/genuinely linked wrong-source controls actually return and fail independent checks: changing the dominating name word19 to18, capping to999998, replacing an unsigned-nonzero counter predicate with signed>0, and reading the first name as a halfword. The latter explicitly catches the inverse byte/word error. Private-origin genuine links preserve following original code for wrong bodies, with the full substituted extent in the PC guard. Negative results add no source credit.
+
+## Scope and next source work
+
+The already matched renderer wrappers and the unaccepted200-byte `E775C` body are preserved. That helper remains an ordinary nonmatching hypothesis; this packet neither credits it nor claims its downstream drawing operations execute. New minimum stack views may seed only future module/hash-qualified drafts, with native validation required before adoption. No accepted source, application adapter/UI, shared ledger/builder or input file changes here. Full module, whole-ROM and earlier-match preservation remain integrator-owned.

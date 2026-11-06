@@ -1,0 +1,12 @@
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned long u32;
+extern void native_host_arm7_arm_0380528c(u32 pattern);
+extern void native_host_arm7_arm_03804f54(u32 pattern);
+extern void native_host_arm7_arm_03804cf0(u8 bits);
+extern void native_host_arm7_arm_03804d14(u8 bits);
+extern void native_host_arm7_arm_037fe708(void);
+extern u8 native_host_arm7_arm_03804c7c(u16 reg);
+extern void native_host_arm7_arm_03804c00(u16 reg,u8 value);
+extern u32 native_host_arm7_arm_038052a8(void);
+u32 native_host_arm7_wram_03804d40(u32 operation,u16 value);

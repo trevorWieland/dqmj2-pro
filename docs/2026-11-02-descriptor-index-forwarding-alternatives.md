@@ -1,0 +1,11 @@
+# Descriptor index forwarding alternatives - 2026-11-02
+
+Six existing main ARM wrappers 02044E44,02044E80,02044EBC,02044EF8,02044F34,02044F70 have 44-byte bodies. Their frozen runtime08 C omits the index argument to 020449D4. Original incoming R0 reaches that lookup before overwrite;the selected lookup C declares a signed32 index and returns the word at020F69EC+4 plus 100*index. Separate alternatives explicitly forward `(s32)arg0`,retain each two-word interface,and declare selected02044E18(s32,s32). The final0207B790 declaration is a three-word call-site view;its implementation and original formal API are unproved here.
+
+Each source genuinely compiles and links44/44 under Metrowerks2.0 O2/inline-off. Old sources remain unchanged. Admission requires explicit zero-byte/zero-function primary migrations. Reproduce with `python match_mechanics_save_20261102_lane_descriptor411.py`.
+
+The native matrix uses 32 synthetic100-byte records and levels0,1,7,50,99,100. Actual lookup and scaling code execute. A supplied final boundary captures the scaled halfword, index and level, then clobbers legal volatile registers. There are 1152 original/source pairs,2304 proper parent returns, 6912 separately observed lookup/scaling returns across three variants, and 3456 supplied final calls. Each wrapper reads its actual halfword at record offsets 10h, 12h, 14h, 16h, 18h or 1Ah. All 11 own instructions execute. Fresh machines,strict fetch/data/stack boundaries,own return opcode,SP/saved registers,canaries and backing invariants are checked.
+
+Wrong C forwards index 0: 1152 proper wrong returns yield 1,116 rejections and 36 index 0 positives. Synthetic index 27 has field values equal to index 0;the wrong read footprint still rejects. The PE32 observer correspondingly verifies the actual lookup argument.
+
+Windows32 executes the six unchanged typed alternatives and existing lookup/scaling C with observer adapters;only final computation is supplied. 1,152 preferred and 1,152 wrong public returns reproduce native rejection domains. No ROM code enters Windows. Synthetic indices and field values keep pointer andsigned arithmetic within this bounded domain. No high-index wrapping,arbitrary signed shifts,final game stats,ordinary eligibility,larger item-effect arity,whole Windows game,Android execution,bank chronology orsave-field meaning is inferred.

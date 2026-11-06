@@ -1,0 +1,5 @@
+# Asynchronous status near-match failures
+
+Main ARM 0202AA58 has a 92-byte measured span. Its existing raw draft is not accepted. Natural word typing for the error global, initialization lifetime changes, inline predicate forms, optimization levels, documented switches and the four already pinned compiler artifacts were tested without an exact match. These trials must not supply source credit or a generalized compiler configuration.
+
+Six source variants are preserved under `nonmatching/main-runtime/20261031/async-status/`. The input hashes are `evidence/verification/main-async-status-inputs-20261031.json`. Reproduce the 29 retained compiler profiles with `python reproduce_main_async_status_attempts_20261031.py`; results are `evidence/attempts/main-async-status-reproduced-20261031.json`. Compiled lengths range from 72 to 100 bytes. None matches the original span. This is compilation evidence only; no new native behavior or linked-match claim is made. Earlier empty batch selections and ad hoc trial reports remain in the local attempt history.

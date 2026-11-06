@@ -1,0 +1,6 @@
+typedef unsigned int u32;
+typedef signed int s32;
+extern u32 native_fn_02004d98(u32 arg0, s32 arg1, u32 arg2);
+u32 native_main_0203c1ac(u32 arg0, s32 arg1, u32 arg2) {
+    return native_fn_02004d98(arg0, arg1, arg2);
+}

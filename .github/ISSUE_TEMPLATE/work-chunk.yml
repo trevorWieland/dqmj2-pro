@@ -1,0 +1,25 @@
+name: Reconstruction work chunk
+description: Claim a disjoint measured function family before implementation.
+title: "[Decomp] "
+body:
+  - type: textarea
+    id: scope
+    attributes:
+      label: Physical scope
+      description: Program, CPU, module, ARM/Thumb mode, exact address ranges and source paths.
+    validations:
+      required: true
+  - type: textarea
+    id: ownership
+    attributes:
+      label: Claim and dependencies
+      description: Owner, current claims checked, frozen baseline, interfaces and dependencies. Release your claim when leaving it unfinished.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Acceptance evidence and remaining work
+      description: Commands, compiler identity, boundaries, relocation/link checks, behavior, negative controls, uncertainty and residual ranges. Keep original bytes and private logs out of the issue.
+    validations:
+      required: true

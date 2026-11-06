@@ -1,0 +1,11 @@
+# Parallel reconstruction lanes — 2026-11-01
+
+All4 available agent slots are active in4 isolated lanes: integrating/source recovery, ARM7/ITCM, overlays and save/core. Workers own their sources and outputs; the integrator publishes shared ledger/build changes. Compiler/profile subprocesses add bounded parallelism within those lanes. No additional external agents, uploads or application edits are used.
+
+The latest coordinator-verified committed source result is cohort124:9,329 functions/729,815 initialized bytes,29.045790954201085% of the2,512,636-byte initialized-module denominator. This is not an executable-only or complete-game percentage. Cohort125 is running;126 waits for committed125 closure and proposes9 further functions/2,980 bytes plus a zero-credit24-byte portability migration. Every prior match and exact scaffolding-ROM gate remains required.
+
+The ARM7 worker reports9 closedC/include groups with29 genuinely linked target ranges/4,788 bytes; a named-word-compatible alternative retains20/3,812. These are native-qualification backlog, not accepted source. The overlay worker is processing27 compiler jobs through3 subprocesses and has repaired a1,500-byte controller to a1,504-byte linked draft,968 same-offset bytes; residual scheduling/predication differs. The save worker has a32-unit/31,140-native-byte application-prioritized queue,8 first attempts and24 refinements, with2 compiler workers and at most3 compiler processes while preserving larger native proofs. These worker-reported draft figures may overlap other queues and must not be summed into matched coverage.
+
+Next semantic assignments follow encounter access, ordinary battle/reward callers and preparation/item/state transitions. Overlay identities remain explicit because their load addresses overlap. Approximate drafts, compiler success, native component returns, exact function matches and full source-only builds retain separate evidence classes. Source-only ROM, full native Windows game and Android device execution remain unproved.
+
+The machine-readable companion is `evidence/verification/parallel-reconstruction-lanes-20261101.json`. Live statuses age; consult current driver reports and accepted snapshots before reporting a newer percentage. Work continues under the active99% goal.

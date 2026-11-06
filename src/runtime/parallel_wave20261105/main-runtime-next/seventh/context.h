@@ -1,0 +1,33 @@
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef signed short s16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef struct PartyState { u8 opaque00[0x1c]; u32 primary1c[3]; u32 secondary28[3]; } PartyState;
+typedef struct EffectMetadata { u8 opaque00[0x2c]; u8 kind2c; } EffectMetadata;
+typedef struct KindState { u8 opaque00[0x3748]; u8 kinds3748[2][12]; } KindState;
+typedef struct Vec2 { u16 x; u16 y; } Vec2;
+typedef struct PointState { u8 opaque00[0x14]; Vec2 points14[3]; } PointState;
+typedef struct ResetRecord { u8 ordinal0; u8 opaque1; u8 active2; u8 opaque3[6]; } ResetRecord;
+typedef struct Matrix33 { s32 cells[3][3]; } Matrix33;
+extern PartyState native_data_021bd524;
+extern KindState native_data_021bd51c;
+extern PointState native_data_021b9e94;
+extern u8 native_data_021c2870;
+extern ResetRecord native_data_021c2871[36];
+extern Matrix33 native_data_021c0c7c[];
+extern void native_fn_02008d78(void *, u32, u32);
+extern void native_fn_02008e0c(const void *, void *, u32);
+extern u32 native_fn_020640b4(u32);
+extern EffectMetadata *native_fn_02065d88(u32);
+static inline PartyState *partyState(void) { return &native_data_021bd524; }
+static inline KindState *kindState(void) { return &native_data_021bd51c; }
+typedef char WordWidth[(sizeof(u32) == 4 && sizeof(void *) == 4) ? 1 : -1];
+typedef char ByteWidth[(sizeof(s8) == 1 && sizeof(u8) == 1) ? 1 : -1];
+typedef char PartyPrimaryOffset[((u32)&((PartyState *)0)->primary1c == 28) ? 1 : -1];
+typedef char PartySecondaryOffset[((u32)&((PartyState *)0)->secondary28 == 40) ? 1 : -1];
+typedef char VecStride[(sizeof(Vec2) == 4) ? 1 : -1];
+typedef char PointsOffset[((u32)&((PointState *)0)->points14 == 20) ? 1 : -1];
+typedef char RecordStride[(sizeof(ResetRecord) == 9) ? 1 : -1];
+typedef char ActiveOffset[((u32)&((ResetRecord *)0)->active2 == 2) ? 1 : -1];

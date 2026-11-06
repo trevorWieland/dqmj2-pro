@@ -1,0 +1,30 @@
+# Independent Ghidra 429 and native actor-input proof 434
+
+This packet adds no decompiled functions or matched bytes. It preserves an independent frontend experiment and a native input contract for future caller drafts. ROM SHA-256 is `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`. Accepted cohort 96 remains unchanged.
+
+Ghidra 12.2 and Temurin 25.0.5+8 were read from the explicitly supplied private integrator tool root. The launcher checks critical executable, JVM, decompiler and language-definition file hashes against that root's existing tools.lock.json, records both archive hashes, verifies version banners and available disk space, and copies all thirteen database files and the project descriptor with hashes before opening them. Each replay creates a new private snapshot under build/ghidra429/snapshots. Its own settings, cache and temporary directories stay there. No JAVA_HOME, PATH, system setting or original project is changed.
+
+The headless process uses read-only mode, no automatic analysis, two CPUs, a 2 GiB heap and a 45-second decompiler bound per function. Explicit module hashes and load bases are checked before creating temporary function definitions. Main arm9.bin, ov000.bin and ov001.bin remain separate programs, each with its own RAM namespace. Both overlays retain load address 021D7240. This does not validate cross-program references or supply main-memory types to an overlay program.
+
+The ten successful exports cover main 0202A44C, 0202A37C, 0202B334, 02042FEC, 0203CC2C and 0203CB8C; ov000 021E9E74/1000 and 021EAAAC/732; and ov001 021F4D20/644 and 021EA56C/1232, all in ARM mode. Actual sizes and span hashes come from measured module symbols. Generated C, high variables, stack storage and high call p-code are preserved separately in evidence/generated/ghidra429-independent-exports-20261031.json.gz. No M2C or accepted-source function prototypes were imported into Ghidra.
+
+The independent ov000 021E9E74 export discovers four separate 36-byte stack objects and retains its three-word A44C allocations and two-word 42FEC archive call. The stack extent corroborates the earlier eight-return native matrix421 experiment; that experiment is separate evidence and its executions are not counted again here. Ghidra also retains the caller's 4106C(dataC,data10,0) view that the strong M2C context erased. These are useful drafting leads, not original C typedef or formal-arity proofs.
+
+Ghidra also loses important dataflow. In the main program it reports only two A44C inputs and no 42FEC inputs when downstream signatures are not committed, despite raw transitive proof422 establishing further consumed words on qualified paths. In ov001 it omits the actor input to DB9F4 and one DB438 input. Its EA56C export additionally invents an undefined8 return view for 7B004 and extra in_r3 call words; these views are not adopted. Decompiler agreement is not a substitute for the native chain.
+
+Two negative headless controls reject an ov001 program presented with the ov000 hash and an ov000 program presented as main with the wrong expected base. The script error message and absence of any export determine rejection: Ghidra headless itself can return status zero after a script exception. An earlier replay also exposed private-project metadata changes to idata/~index.bak and idata/~journal.bak despite read-only processing. That rejected reuse attempt is retained, and the launcher now makes a fresh verified copy for every replay. The original source project remains unchanged.
+
+The separate native proof434 executes the original ov001 DB9F4/32 and main 44CDC/56 from the measured modules. It qualifies the chain incoming R0 actor -> word at actor+1E8 -> signed16 at record+2A -> 100-byte table row -> halfword+4. The original helper computes (((fieldWord >> 8) & 15) // 3); DB9F4 returns the full clean Boolean of that result equal to two. Its original formal pointer typedef and any game meaning remain unproven.
+
+There are 256 actual top returns and 256 actual native dependency returns, with no supplied callees. Every execution uses a fresh ARM946 machine, a 256-instruction bound, actual PC/SP/mode and preserved-register returns, an independently checked read chain and complete nonstack memory comparison. The corpus covers eight signed record indices, all sixteen class nibbles and two actor/record placements. Both a wrong class-equality model and an unsigned-record-index model are rejected in 96 cases. The report is byte-identical from an alternate working directory under Python -I -S. Signed-index extremes and table rows are synthetic mapped inputs; this does not establish real monster IDs, asset loading, save validity or ordinary scene reachability. DB9F4 already has selected source, so this adds no duplicate coverage.
+
+The fresh EA56C draft uses that actor pointer explicitly and caches the actual target across its context+1D store. Genuine linking improves its old 1236-byte/962-equal draft to 1232 bytes with 1213 equal. Remaining register and scheduling differences remain failures. Sources and earlier unsuccessful trials stay in separate nonmatching paths. No accepted source or shared catalogue changed. That near caller is separate lane research and is not adopted or executable evidence in this packet; its source and functional producer will follow separately.
+
+Replay from the overlay lane, with its private project inputs and tools already present:
+
+    python run_ghidra429_20261031.py --tool-root C:\Users\trevo\Documents\RecProgramming\DQM\dqmj2pro-decomp
+    python probe_ghidra429_controls_20261031.py
+    python freeze_ghidra429_evidence_20261031.py
+    python probe_ov001_actor434_20261031.py
+
+The explicit tool root is a documented external input to this research launcher. Generated frontend reports contain their private run paths and log hashes and need not be identical across replays. Native proof434 has no volatile timestamp and its complete isolated replay is identical. This packet does not change the source-only clean-build dependency rules or constitute module/whole-ROM source completion.

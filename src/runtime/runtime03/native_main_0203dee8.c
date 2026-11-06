@@ -1,0 +1,43 @@
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef signed short s16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef unsigned long long u64;
+typedef signed long long s64;
+typedef float f32;
+typedef double f64;
+#define M2C_FIELD(value, type, offset) (*(type)((s8 *)(value) + (offset)))
+extern u32 native_fn_020404f0();
+extern u32 native_fn_020406a8();
+extern u32 native_fn_020406c8();
+extern u32 native_fn_020406fc();
+extern u32 native_fn_020414b0();
+extern u32 native_fn_02041510();
+extern u32 native_fn_02041560();
+extern u32 native_fn_020612ec();
+extern u32 native_fn_02061950();
+extern u32 native_fn_02062074();
+extern u32 native_fn_02062a10();
+extern u32 native_fn_02067340();
+extern u32 native_fn_0206dcd0();
+extern u32 native_fn_0206de8c();
+extern u32 native_fn_ov000_0222213c();
+u32 native_main_0203dee8(void) {
+    native_fn_020406a8(1);
+    native_fn_02067340(0);
+    native_fn_020612ec(1, 0, 0x6000, 0);
+    native_fn_02062074(0);
+    native_fn_ov000_0222213c();
+    native_fn_02062a10();
+    native_fn_0206dcd0();
+    native_fn_0206de8c();
+    native_fn_02061950(1);
+    native_fn_020406c8(0xE);
+    native_fn_020404f0(0x2F);
+    native_fn_020414b0(1);
+    native_fn_02041510(1, 2, 4);
+    native_fn_02041560(0xA);
+    return native_fn_020406fc(0);
+}

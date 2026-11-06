@@ -1,0 +1,2 @@
+#include "context.h"
+void native_main_020b9998(void){u32 seed[8];native_fn_02008360(seed);native_fn_02092338(seed,32);if(!native_fn_020b9cf4()&&native_data_021d3030&&native_data_021d3030->prefix[0]==2&&native_data_021d3030->prefix[4]&&native_data_021d3030->request.words[7]){native_data_021d3030->prefix[4]=0;native_data_021d3030->request.words[7]=0;if(native_data_021d3030->extra40)((Completion)native_data_021d3030->extra40)(native_data_021d3030->request.words[8],native_data_021d3030->request.words[9],native_data_021d3030->extra44);}}

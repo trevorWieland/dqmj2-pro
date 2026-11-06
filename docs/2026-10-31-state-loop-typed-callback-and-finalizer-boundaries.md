@@ -1,0 +1,17 @@
+# State-loop controller - 2026-10-31
+
+Main ARM0207E874/212 is a new ordinary-C candidate. Replay `python match_mechanics_save_20261031_lane_state_loop.py`. Normal and parent-directory Python `-I -S` runs reproduce canonical SHA f3eb51f4283d2f38bfe5f2c137ea6c8c0fe0e0ce4dcdabacdf529f01f24ebc70. The actual historical2.0/base/O2 profile is a dedicated static input. Source/native/linked bytes match completely with genuine Metrowerks linking. Current object/link provenance is checked separately from source/native identities. Shared acceptance remains with the integrator.
+
+The initial11 byte differences were exclusively R8/R9 allocation of two locals. Swapping their ordinary declarations resolves them. The preferred source also makes the no-input constant/byte getters and the full-word request argument explicit. No byte patching, register forcing or accepted-source changes are used.
+
+The full-word state at021C6C14+10 transitions0 to1. At1, actual byte020F60EE equal1 exits0; every other byte invokes the request wrapper and poll, then enters2 after supplied completion. At2, signedbyte021C6C15 indexes the original ROM callback table at020DE4FC. Raw callback0 exits0; any nonzero return advances3 to4 to5 and eventually returns1. Encountering5 returns1; other unhandled words return0. The finalizer executes after the loop, including paths that return0.
+
+Retained native code includes0202A634,02041814/020417F8,020418B0/02041828 and0207F254/0207F358. The last routine performs its actual full-word store1 at0210276C. Six supplied boundaries remain explicit:020414E0 request(four words),02041598 poll(one word),actual callback targets0207FA10/02081A20,and lower finalizer0207F264 plus020811D8. These are bounded models, not proofs of original callbacks, physical hardware,rendering or the lower finalizer effects. The tail boundary811D8 records physical R0=02101AE8 without claiming a general original prototype.
+
+The corpus has2,177 original/source pairs and4,354 actual top returns, separately25,180 supplied calls. All51 own code addresses are fetched; the final eight bytes are literal data and guarded against instruction fetch. It covers all256 status bytes,both backed callback targets,raw0/1/80000000/FFFFFFFF returns,zero-to-two poll failures,high state words,and declared callback/finalizer mutations. A callback may write state5 and return0:the measured controller still returns0. A lower finalizer may change the state after the return was computed. These qualifications avoid interpreting the final state alone as success.
+
+Every case uses fresh Unicorn state and legal caller-clobber variation. Full64-byte context,status byte,finalizer flag,ordered native reads/writes,supplied calls/effects,SP/callee-saved restoration and actual returns are compared against an independent state model. Three unbacked signed-index profiles on both implementations produce six excluded guarded stops,without handled-error/post-fault claims.
+
+Three whole compiled C controls change the status gate to equality0,restrict callback completion to raw1,or omit the finalizer. Their360 pairs yield720 actual returns,164 independent rejections and196 observational positives. Full vectors are deterministic gzip sidecars.
+
+No ordinary scene prerequisites,full callback table extent,semantic menu/story labels,save-byte meaning,bank selection or chronology are inferred. Original inputs,application files and accepted sources remain untouched.

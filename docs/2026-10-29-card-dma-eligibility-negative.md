@@ -1,0 +1,9 @@
+# Unmatched card DMA eligibility, 2026-10-29
+
+Main ARM9 ARM function `02010D2C–02010EB8` remains unmatched and receives zero recovered-source credit. Its native extent is 396 bytes. The best independently compiled and actually MW-linked ordinary C candidate, `work/mechanics-save/20261029-card-dma-select/order-01.c`, agrees in instruction sequence, layout, calls and literals. Eleven instructions use destination/line-offset registers `r10/r9` where native uses `r9/r10`, leaving diagnostic agreement at 382 of 396 bytes. That partial agreement is not an accepted function or byte count.
+
+Reproduce the preserved negative result with `python work/mechanics-save/20261029-card-dma-select/replay_candidate.py`. The command validates the source/compiler/input identities, executes the actual MW link, and succeeds only when the same unaccepted mismatch remains. A future complete match requires a new evidence record. The immutable source/object/flags inventory and 177 search snapshots are indexed by `evidence/attempts/20261029-card-dma-select/index.json`.
+
+Hypotheses covered typed pointer/unsigned views, source lifetimes, declaration order, interface shapes, source-unit compiler versions/options and equivalent ordinary C expressions. No forced register assembly, fake arguments, wide-return trick, opcode rewrite or executable data encoding was introduced. The candidate has no accepted execution oracle because its required full-byte gate has not passed. Work rotated to a higher-level save acquisition/flag caller while preserving this unresolved question.
+
+Any future oracle must classify `02010E3C–02010E5C` honestly: those eight cache-edge instructions are unreachable when the async decision requires destination modulo 32 to be zero and callees preserve their ABI registers. Their complete bytes still require compiler/linker reconstruction. Reaching them by violating callee register preservation would not establish supported native behavior.

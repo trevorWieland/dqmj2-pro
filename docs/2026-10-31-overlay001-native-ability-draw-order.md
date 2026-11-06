@@ -1,0 +1,25 @@
+# Connected native ability draw order, 2026-10-31
+
+This evidence extends the frozen packet28 flag caller without modifying that source, report or fixture. It freshly recompiles and genuinely links the 788-byte ov001 ARM `0220FA6C` caller and already accepted 216-byte ov001 ARM `02210AD0` conditional reroll. The complete source-substituted module image equals the measured original. This proof assigns zero new source credit, including zero duplicate credit for the 216-byte helper. Other executable bytes remain explicit original-image execution scaffolding.
+
+The measured private ROM is 175,959,612 bytes, SHA-256 `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`. The report pins the main, ov001 and ITCM module hashes, the five extracted ROM-table hashes, both ordinary C sources, local input recipes and fixture dependencies. Main/overlay/ITCM function inventories enforce entry modes and bounded execution. ROM tables and synthetic records are placed at explicit local addresses; no external scratch input, emulator, stub or supplied callee return is used.
+
+Across 132 deterministic synthetic recipes, the original/source executions complete 264 actual top returns, 2,950 actual main `0203D294` RNG returns and 22,804 actual modeled native dependency returns. Maximum execution is 20,774 instructions under the 100,000 bound. These three return categories use disjoint address sets: top `0220FA6C`; RNG `0203D294`; dependencies `0207B674`, `0207D988`, `021DBD24`, `021DBCBC` and `02210AD0`. The producer asserts this partition. Untracked native descendants execute within the qualified inventory but add no extra measured return total. There are zero provided calls.
+
+The independently built recipes predict every modeled call's argument and return words, the complete RNG draw sequence, stored state, final caller flag word and final return. Original/source runs compare all final registers, flags, full RAM, ITCM integrity, private stack and deterministic PC/write trace hashes. The model catches a genuinely linked wrong-mask C control through complete RAM comparison, and rejects a deliberately wrong first-draw prediction at the actual RNG entry. Neither failed control gains an actual-return or source claim.
+
+## Measured scope
+
+The caller checks its twelve raw IDs in native order. A zero count skips the gate and consumes no RNG. Each positive count enters the actual 216-byte gate, which performs its first draw, tests the measured threshold and conditionally consults raw IDs 40/41 and current/maximum scalar accessors. The second draw occurs only when the actual branch and scalar comparison permit it. Every actual draw advances global `020F6044` with the measured LCG and returns the native remainder. The recipe predicts this state transition before execution; it does not hook or replace it.
+
+The byte list at record+0x46 has at most 64 entries and terminates at the first zero. Cases include empty lists, individual caller IDs, all twelve IDs, raw IDs 40/41, duplicates, an early zero with later ignored IDs, and full 64-byte lists with an additional sentinel outside the list. Native `0207B674` argument words and returned counts are checked on every recorded lookup. This qualifies raw count behavior on these inputs rather than a complete ability-data interpretation. Human ability names and probability semantics remain unasserted.
+
+Actor+0x1F0 and+0x21C hold synthetic signed16 scalar values; the actual maximum accessor's upper clamp is modeled. Cases include the 250/750 ratio boundaries with maximum 1000, negative extremes and an upper-clamped 32767 input. Form byte+0x1FD is0, and native metadata lookups 128..137 all return0. Nonzero-form paths and scalar-modifier skills remain unsupported. Tables come directly from the measured ROM, but synthetic actors/records do not establish valid-save construction, loaded-resource lifecycle or ordinary battle-scene reachability.
+
+Each initial RNG state is an explicit synthetic input. These results establish conditional draw ordering for this native caller under the declared domain. They do not recover an observed live/future scene seed, persistence policy or unobserved ordinary caller sequence.
+
+## Replay
+
+Run `python prove_ov001_ability_native30_20261031.py` from the repository, or invoke that script by its absolute path from another directory. Python 3.13.5 and Unicorn 2.1.4 are checked before execution. The producer regenerates fresh compiler/link artifacts, both controls and deterministic hashed gzip results under `work/ol30-proof`, then writes `evidence/functional/ov001-ability-native30-20261031.json`.
+
+Normal and unrelated-directory replay compare every report field except volatile `createdUtc`. Their stable content digest is recorded in the handoff manifest. Full-report hashes identify the frozen transfer snapshot only. The source-only handoff includes the new producer, case/model file, report, this note and manifest; it imports frozen source/fixture dependencies by explicit hash and excludes generated work artifacts, registry, ledger, configuration and application files.

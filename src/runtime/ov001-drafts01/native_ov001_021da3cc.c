@@ -1,0 +1,33 @@
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef signed short s16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef unsigned long long u64;
+typedef signed long long s64;
+typedef float f32;
+typedef double f64;
+#define M2C_FIELD(value, type, offset) (*(type)((s8 *)(value) + (offset)))
+#define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
+#define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
+#define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
+extern u32 native_fn_020649ac();
+extern u32 native_fn_020649c0();
+extern u32 native_fn_020649d4();
+extern u32 native_fn_020649e8();
+extern u32 native_fn_ov001_021da268();
+extern u8 native_data_ov001_022355ec[];
+extern u8 native_data_ov001_022362ac[];
+extern u8 native_data_ov001_02236f6c[];
+extern u8 native_data_ov001_02237c2c[];
+u32 native_ov001_021da3cc(u32 arg0) {
+    s32 temp_r4;
+    s32 temp_r4_3;
+    u32 temp_r4_2;
+
+    temp_r4_2 = native_fn_ov001_021da268(native_fn_020649ac(0), native_data_ov001_02236f6c, arg0);
+    temp_r4_3 = temp_r4_2 + native_fn_ov001_021da268(native_fn_020649d4(0), native_data_ov001_022355ec, arg0);
+    temp_r4 = temp_r4_3 + native_fn_ov001_021da268(native_fn_020649c0(0), native_data_ov001_022362ac, arg0);
+    return temp_r4 + native_fn_ov001_021da268(native_fn_020649e8(0), native_data_ov001_02237c2c, arg0);
+}

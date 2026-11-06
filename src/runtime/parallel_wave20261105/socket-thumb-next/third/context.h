@@ -1,0 +1,24 @@
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef struct TransportHeader { u8 opaque0[12]; u8 dataOffset12; u8 flags13; } TransportHeader;
+typedef struct AddressState { u8 opaque0[32]; u32 server20; u8 opaque24[20]; u32 timer38; u8 opaque3C[16]; u32 lease4C; u32 address50; } AddressState;
+extern AddressState native_data_021cfcf8;
+extern u32 native_fn_0208bbac(const void *,u32,const void *,u32);
+extern void native_fn_0208cdd0(u32,u32,u32);
+extern void native_fn_0208ce58(u32,u32,u32);
+extern void native_fn_0208cef0(u32,u32,u32);
+extern void native_fn_0208d0e0(u32,u32,u32);
+extern void native_fn_0208d154(u32,u32);
+extern void native_fn_0208cc24(u32,u32,u32,u32);
+extern void native_fn_0208d7c0(void);
+extern void native_fn_0208d764(void);
+extern void native_fn_0208d780(u32,u32,u32);
+extern void native_fn_0208d7e0(void);
+extern u32 native_fn_0208e250(s32);
+extern u32 native_fn_0208e2e0(u32,u32);
+#define AT(T,F) ((u32)&((T *)0)->F)
+typedef char WordLayout[(sizeof(u32)==4 && sizeof(void *)==4)?1:-1];
+typedef char PacketLayout[(sizeof(TransportHeader)==14 && AT(TransportHeader,dataOffset12)==12 && AT(TransportHeader,flags13)==13)?1:-1];
+typedef char AddressLayout[(sizeof(AddressState)==84 && AT(AddressState,server20)==32 && AT(AddressState,timer38)==56 && AT(AddressState,lease4C)==76 && AT(AddressState,address50)==80)?1:-1];

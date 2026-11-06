@@ -1,0 +1,2 @@
+#include "context.h"
+void native_main_020b95d8(void){int handle=native_data_021d3028->error1b8;int result;native_fn_0200708c(native_data_021d3028->mutex1bc);native_data_021d3028->error1b8=-59;native_fn_02007110(native_data_021d3028->mutex1bc);if(handle>=0){if(native_fn_02090464(handle)<0)native_fn_020b909c(5,-50);else{do{native_fn_02006b7c(100);result=native_fn_02090464(handle);}while(result==-26);if(result!=0)native_fn_020b909c(5,-50);}}native_fn_020b90ec(1);}

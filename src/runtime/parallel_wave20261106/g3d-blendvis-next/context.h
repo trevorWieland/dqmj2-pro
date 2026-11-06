@@ -1,0 +1,10 @@
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned long u32;
+typedef signed long fx32;
+typedef int BOOL;
+struct NNSG3dResTex_;
+typedef struct NNSG3dAnmObj_{fx32 frame;fx32 ratio;void*resAnm;void*funcAnm;struct NNSG3dAnmObj_*next;const struct NNSG3dResTex_*resTex;u8 priority;u8 numMapData;u16 mapData[1];}NNSG3dAnmObj;
+typedef struct NNSG3dVisAnmResult_{BOOL isVisible;}NNSG3dVisAnmResult;
+typedef void(*NNSG3dFuncAnmVis)(NNSG3dVisAnmResult*,const NNSG3dAnmObj*,u32);
+BOOL native_main_0202e260(NNSG3dVisAnmResult*,const NNSG3dAnmObj*,u32);

@@ -1,0 +1,224 @@
+#include "stdlib.h"
+#include "string.h"
+typedef struct GPIPeer_s GPIPeer;
+typedef struct{void*profileTable;int num,numBuddies;}GPIProfileList;
+typedef unsigned char u8;typedef unsigned short u16;typedef unsigned int u32;typedef void*GPConnection;typedef int GPResult,GPProfile,GPEnum,GPIBool;
+typedef struct{char*buffer;int size,len,pos;}GPIBuffer;
+typedef long time_t;typedef unsigned int gsi_time;typedef int GPIPeerOpState;typedef void*DArray;typedef void(*GPCallback)(GPConnection*,void*,void*);
+typedef struct GPIMessage
+{
+	GPIBuffer buffer;
+	int type;
+	int start;
+} GPIMessage;
+
+typedef struct _GPIPeerOp
+{
+	GPIPeerOpState state;
+	void *userData;
+	GPCallback callback;
+	struct _GPIPeerOp * next;
+	int type;
+	gsi_time timeout;
+} GPIPeerOp;
+
+typedef struct _GPIPeerOpQueue
+{
+	GPIPeerOp * opList;
+	GPIPeerOp * first;
+	GPIPeerOp * last;
+} GPIPeerOpQueue;
+
+
+
+typedef struct GPIPeer_s
+{
+	int state;
+	GPIBool initiated;
+	
+	unsigned int ip;
+	unsigned short port;
+	GPProfile profile;
+	time_t timeout;
+	int nackCount;
+	GPIBuffer inputBuffer;
+	GPIBuffer outputBuffer;
+	DArray messages;
+	GPIPeerOpQueue peerOpQueue;
+	struct GPIPeer_s * pnext;
+} GPIPeer;
+typedef struct{void(*callback)(GPConnection*,void*,void*);void*param;}GPICallback;
+typedef struct{char errorString[256];GPIBool infoCaching,infoCachingBuddyAndBlockOnly,simulation,firewall;char nick[31],uniquenick[21],email[51],password[31];int sessKey,userid,profileid,partnerID;GPICallback callbacks[9];int cmSocket,connectState;GPIBuffer socketBuffer;char*inputBuffer;int inputBufferSize;GPIBuffer outputBuffer;char mHeader[16];u16 peerPort;int nextOperationID,numSearches;GPEnum lastStatusState;u32 hostIp,hostPrivateIp;u16 queryPort,hostPort;u32 sessionFlags;char richStatus[256],gameType[33],gameVariant[33],gameMapName[33];void*extendedInfoKeys;char lastStatusString[256],lastLocationString[256];int errorCode;GPIBool fatalError;void*diskCache,*operationList;GPIProfileList profileList;GPIPeer*peerList;u32 callbackSlots[2];GPIBuffer updateproBuffer,updateuiBuffer;}GPIConnection;
+
+#define NULL ((void*)0)
+#define GP_NICK_LEN 31
+#define GP_EMAIL_LEN 51
+#define GP_NO_ERROR 0
+#define GPIFalse 0
+#define GPITrue 1
+#define GSI_UNUSED(x) ((void)(x))
+typedef struct{int buddyIndex;GPEnum status;char*statusString,*locationString;u32 ip;u16 port;GPEnum quietModeFlags;}GPIBuddyStatus;
+typedef struct{int buddyIndex;GPEnum statusState;char*richStatus,*gameType,*gameVariant,*gameMapName;u32 sessionFlags,buddyIp;u16 buddyPort;u32 hostIp,hostPrivateIp;u16 queryPort,hostPort;GPEnum quietModeFlags;int productId;void*extendedInfoKeys;}GPIBuddyStatusInfo;
+typedef struct GPIProfile{int profileId,userId;GPIBuddyStatus*buddyStatus;GPIBuddyStatusInfo*buddyStatusInfo;void*cache;char*authSig;int requestCount;char*peerSig;}GPIProfile;
+typedef GPIBool(*gpiProfileMapFunc)(GPConnection*,GPIProfile*,void*);
+typedef struct{char*nick,*email;GPIProfile**profile;GPIBool found;}GPIFindProfileByUserData;
+typedef struct{GPConnection*connection;gpiProfileMapFunc func;void*data;}GPIProfileMapData;
+typedef struct{int index;GPIProfile*profile;}GPIFindProfileData;
+int native_fn_020a89f0(void*,const void*);void*native_fn_020a8ab0(void*,int(*)(void*,void*),void*);
+GPIBool native_fn_020b0bd0(GPConnection*,gpiProfileMapFunc,void*);int native_fn_020b0bbc(void*,void*);
+GPIBool native_fn_020b0b5c(GPConnection*,GPIProfile*,void*);GPIBool native_fn_020b0c00(GPConnection*,GPIProfile*,void*);
+#define TableRemove native_fn_020a89f0
+#define TableMapSafe2 native_fn_020a8ab0
+#define gpiProfileMap native_fn_020b0bd0
+#define gpiProfileMapCallback native_fn_020b0bbc
+#define gpiCheckProfileForUser native_fn_020b0b5c
+#define gpiCheckForBuddy native_fn_020b0c00
+
+typedef struct GPIOperation_s{int type;void*data;GPIBool blocking;GPICallback callback;int state,id;GPResult result;struct GPIOperation_s*pnext;}GPIOperation;
+#define GPI_PROFILE_SEARCH 3
+
+#define assert(x)
+void*native_fn_020a8a3c(void*,const void*);void native_fn_020a89a4(void*,const void*);GPIBool native_fn_020b0a50(GPConnection*,GPProfile,GPIProfile**);
+#define TableLookup native_fn_020a8a3c
+#define TableEnter native_fn_020a89a4
+#define gpiGetProfile native_fn_020b0a50
+
+typedef int SOCKET;
+#define INVALID_SOCKET (-1)
+#define GPI_CONNECTED 3
+#define GPI_DISCONNECTED 4
+#define GPI_NOT_CONNECTED 0
+GPResult native_fn_020ac6f4(GPConnection*,GPIBuffer*,const char*);GPResult native_fn_020ac710(GPConnection*,GPIBuffer*,int);GPResult native_fn_020ac954(GPConnection*,SOCKET,GPIBuffer*,GPIBool*,GPIBool,const char*);int native_fn_020a8b7c(SOCKET,int);int native_fn_020a8b6c(SOCKET);GPIBool native_fn_020a99c0(void);void native_fn_020a9e0c(const char*);GPIBool native_fn_020a9e70(void),native_fn_020a9e94(void);void native_fn_020a9d38(void),native_fn_020a929c(void*);void native_fn_020afad8(GPConnection*,GPIOperation*),native_fn_020b029c(GPConnection*,GPIPeer*);GPIBool native_fn_020add5c(GPConnection*,GPIProfile*,void*);
+#define gpiAppendStringToBuffer native_fn_020ac6f4
+#define gpiAppendIntToBuffer native_fn_020ac710
+#define gpiSendFromBuffer native_fn_020ac954
+#define shutdown native_fn_020a8b7c
+#define closesocket native_fn_020a8b6c
+#define gsUdpEngineIsInitialized native_fn_020a99c0
+#define gsUdpEngineRemoveMsgHandler native_fn_020a9e0c
+#define gsUdpEngineNoMoreMsgHandlers native_fn_020a9e70
+#define gsUdpEngineNoApp native_fn_020a9e94
+#define gsUdpEngineShutdown native_fn_020a9d38
+#define gsifree native_fn_020a929c
+#define freeclear(p) do{gsifree(p);(p)=NULL;}while(0)
+#define gpiRemoveOperation native_fn_020afad8
+#define gpiDestroyPeer native_fn_020b029c
+#define gpiDisconnectCleanupProfile native_fn_020add5c
+extern const char native_data_020e0c68[];
+extern const char native_data_020e0c54[];
+extern const char native_data_020e0b30[];
+
+#define GS_ASSERT(x)
+#define GPI_PEER_NOT_CONNECTED 100
+#define GPI_PEER_TIMEOUT 10000
+#define GP_NETWORK_ERROR 3
+long native_fn_020a8e7c(long*);void*native_fn_020a85dc(int,int,void(*)(void*));void native_fn_020b03f4(void*),native_fn_020a865c(void*,const void*);GPResult native_fn_020ac684(GPConnection*,GPIBuffer*,const char*,int),native_fn_020ac63c(GPConnection*,GPIBuffer*,int);
+#define time native_fn_020a8e7c
+#define ArrayNew native_fn_020a85dc
+#define gpiFreeMessage native_fn_020b03f4
+#define ArrayAppend native_fn_020a865c
+#define gpiAppendStringToBufferLen native_fn_020ac684
+#define gpiAppendCharToBuffer native_fn_020ac63c
+extern const char native_data_020e1098[];
+extern const char native_data_020e109c[];
+extern const char native_data_020e10a4[];
+
+void*native_fn_020a927c(u32);unsigned long native_fn_0201d69c(const char*);
+#define gsimalloc native_fn_020a927c
+
+#define CHECK_RESULT(f) {GPResult checked=(f);if(checked!=GP_NO_ERROR)return checked;}
+
+#define GP_DONT_ROUTE 0xb00
+#define GP_MEMORY_ERROR 1
+#define GPI_PEER_DISCONNECTED 106
+#define GPI_BM_KEYS_REPLY 105
+void native_fn_020b2a38(char*,const char*,int);
+GPIPeer*native_fn_020b03a4(GPConnection*,GPProfile);
+GPIPeer*native_fn_020b0404(GPConnection*,GPProfile,GPIBool);
+GPResult native_fn_020b0464(GPConnection*,GPIPeer*),native_fn_020b049c(GPConnection*,GPIPeer*),native_fn_020b0534(GPConnection*,GPIPeer*,int,const char*);
+void native_fn_020b0794(GPIPeer*,GPIPeerOp*);
+GPResult native_fn_020af5d4(GPConnection*,char**);
+int native_fn_0201d800(const char*,const char*);
+GPResult native_fn_020abf18(GPConnection*,int,int,const char*);
+GPResult native_fn_020abfe4(GPConnection*,int,int,const char*,int,GPIPeerOp*);
+#define strzcpy native_fn_020b2a38
+#define gpiGetPeerByProfile native_fn_020b03a4
+#define gpiAddPeer native_fn_020b0404
+#define gpiPeerGetSig native_fn_020b0464
+#define gpiPeerStartConnect native_fn_020b049c
+#define gpiPeerAddMessage native_fn_020b0534
+#define gpiPeerAddOp native_fn_020b0794
+#define gpiSaveKeysToBuffer native_fn_020af5d4
+#define gpiSendServerBuddyMessage native_fn_020abf18
+#define gpiSendBuddyMessage native_fn_020abfe4
+extern const char native_data_020e0624[],native_data_020e05f8[],native_data_020e0760[],native_data_020e0678[],native_data_020e061c[],native_data_020e0174[];
+
+GPResult
+native_main_020abfe4(
+  GPConnection * connection,
+  int profileid,
+  int type,
+  const char * message,
+  int sendOption,
+  GPIPeerOp *peerOp
+);
+
+typedef char gsi_char;
+typedef struct{char*keyName,*keyValue;}GPIKey;
+typedef struct{GPProfile profile;gsi_char**keys,**values;int numKeys;}GPGetBuddyStatusInfoKeysArg;
+typedef struct{GPProfile profile;unsigned int date;int index;}GPRecvBuddyStatusArg;
+#define GP_PARAMETER_ERROR 2
+#define GP_PARSE 1
+#define GPI_RECV_BUDDY_STATUS 2
+#define GPI_INITIAL_NUM_KEYS 1
+#define GPI_ADD_BUDDYKEYS 14
+#define GPI_BM_KEYS_REQUEST 104
+void native_fn_020b2c88(GPConnection*,const char*),native_fn_020b2c6c(GPConnection*,int,const char*),native_fn_020acbcc(GPConnection*,GPResult,GPIBool);
+GPResult native_fn_020acc28(GPConnection*,GPICallback,void*,GPIOperation*,int);
+GPIProfile*native_fn_020b09e0(GPConnection*,int);
+int native_fn_020b2ae0(const char*,const char*,char*,int);
+void native_fn_020b0c48(GPIBuddyStatus*),native_fn_020af444(void*),native_fn_020b07c0(GPIPeer*,GPIPeerOp*);
+char*native_fn_020a8ea0(const char*);
+void native_fn_020b2b90(GPConnection*,char*,int*,char*,char*),native_fn_020a9040(const char*,char*,int,int*,int);
+GPResult native_fn_020af578(GPConnection*,DArray,const char*,char**),native_fn_020af4bc(GPConnection*,DArray,const char*,const char*),native_fn_020af510(GPConnection*,DArray,const char*,const char*);
+#define gpiSetErrorString native_fn_020b2c88
+#define gpiSetError native_fn_020b2c6c
+#define gpiCallErrorCallback native_fn_020acbcc
+#define gpiAddCallback native_fn_020acc28
+#define gpiProfileListAdd native_fn_020b09e0
+#define gpiValueForKey native_fn_020b2ae0
+#define gpiRemoveBuddyStatus native_fn_020b0c48
+#define gpiStatusInfoKeyFree native_fn_020af444
+#define goastrdup native_fn_020a8ea0
+#define gpiReadKeyAndValue native_fn_020b2b90
+#define B64Decode native_fn_020a9040
+#define gpiStatusInfoCheckKey native_fn_020af578
+#define gpiStatusInfoAddKey native_fn_020af4bc
+#define gpiStatusInfoSetKey native_fn_020af510
+#define gpiPeerRemoveOp native_fn_020b07c0
+#define Error(connection,result,string) {gpiSetErrorString(connection,string);return(result);}
+#define CallbackError(connection,result,code,string) {gpiSetError(connection,code,string);gpiCallErrorCallback(connection,result,0);return(result);}
+#define CallbackFatalError(connection,result,code,string) {gpiSetError(connection,code,string);gpiCallErrorCallback(connection,result,1);return(result);}
+#define htonl(x) ((u32)((((u32)(x)>>24)&0x000000ff)|(((u32)(x)>>8)&0x0000ff00)|(((u32)(x)<<8)&0x00ff0000)|(((u32)(x)<<24)&0xff000000)))
+
+extern const char native_data_020e0764[];
+extern const char native_data_020e0768[];
+extern const char native_data_020e077c[];
+extern const char native_data_020e0784[];
+
+GPResult native_main_020ac130(GPConnection *connection, GPIPeer *peer, char *buffer);
+
+#define GP_SERVER_ERROR 4
+typedef struct{GPResult result;}GPRegisterUniqueNickResponseArg,GPRegisterCdKeyResponseArg;
+GPIBool native_fn_020b2a4c(GPConnection*,const char*,GPIBool);
+#define gpiCheckForError native_fn_020b2a4c
+
+extern const char native_data_020e1534[];
+extern const char native_data_020e153c[];
+extern const char native_data_020e156c[];
+
+GPResult native_main_020b2908(
+  GPConnection * connection,
+  GPIOperation * operation,
+  const char * input
+);

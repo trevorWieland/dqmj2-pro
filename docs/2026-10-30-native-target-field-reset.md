@@ -1,0 +1,13 @@
+# Native target field reset, 2026-10-30
+
+`python match_ov001_target_fields_reset_20261030.py` reconstructs overlay001 ARM `021EC620`, 80 bytes, as ordinary C. The measured private ROM SHA-256 is `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`, with overlay001 SHA-256 `39fc7aab33ce02b1910cb8fac58dd9e19936c468f3d03d1ec17dfdc8fe40ce92`.
+
+Frozen source is `src/overlays/ov001_20261030_target_fields_reset_526d33ebe339.c`; report is `evidence/matches/ov001-20261030-target-fields-reset01.json`. All 80 bytes match fresh pinned compiler output and genuine pinned MWLD linking. Source, compiler settings, qualified symbols, object, linked ELF, relocations, and caller bytes are recorded and frozen. There is no assembly or byte substitution.
+
+The function selects team1 when source actor byte `+31E` is zero and team0 for every nonzero byte. Original `021DB438` returns the selected actor base. The function visits three actors, stride1088, and calls original `021DB8D0` for eligibility. Eligible actors have fields `+340` and `+342` set to signed16 -1 by original `021EE9FC`. No other field is changed. Eligibility requires nonzero actor byte `+31C`, zero byte `+1FF`, and zero record byte `+AC` through actor pointer `+1E8`. Earlier guards can reject an actor before dereferencing a null record pointer.
+
+All 96 vectors and 192 original/real-linked executions run every callee natively with no host function providers, IO, or RNG. Cases cover source-side bytes 0,1,2,255; every three-target eligibility mask; nonbinary presence/guard bytes; absent actors with null record pointers; second-guard rejection with null record pointers; and mapped records rejected by nonzero byte `+AC`. All four teams are populated independently so the complete RAM model also checks that unselected actors remain untouched. Existing field values include zero, -1, signed16 minimum, and signed16 maximum.
+
+Every execution requires actual return, restored SP, preserved registers, correct native instruction modes, bounded writes, and complete RAM effects against an independent model. Original and linked final registers, flags, complete RAM, stack, and instruction/write traces must agree. Physical R0 is checked independently: it is zero when the third target is ineligible, otherwise the third actor pointer plus `300` from the final native helper. The C definition exposes that measured full word; no gameplay meaning or status meaning is assigned to it. The ordinary scheduler discards it.
+
+Source actor nonnull and mapped record prerequisites remain explicit. This is a target-field reset within the ordinary action chain, not a complete action, battle, AI choice, or current-scene proof. Existing accepted `021EC670` and all earlier source/proofs remain unchanged.

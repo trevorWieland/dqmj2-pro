@@ -1,0 +1,5 @@
+# Cohort142 historical research-input packaging — 2026-11-02
+
+All source/build/regression gates passed before packaging refused three unchanged older nonmatching save-core C inputs with whitespace. These were required by archived research but were absent from the worker handoff's explicit `files` collection. Each current byte sequence has now been independently compared against worker commit8092f1bd7ce2d5e9ad986afce878c273d12fc937 and its observed SHA256. A separate zero-credit diagnostic manifest declares those exact inputs. Earlier manifests, original failures and all three input files remain unchanged. No source match, compiler output, native test or acceptance guard is relaxed.
+
+The initial refusal log and package hashes are recorded in `evidence/attempts/cohort142-historical-diagnostics-packaging-refusal-20261102.json`. Reproduce the qualification once with `python qualify_cohort142_historical_diagnostics_20261102.py`; the script refuses repeated mutation. Resume the existing finisher after the supplement. This repairs archival completeness only and contributes zero functions or bytes.

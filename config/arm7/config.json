@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "processor": "ARM7TDMI",
+  "architecture": "ARMv4T",
+  "module": "arm7",
+  "baseAddress": 37224448,
+  "entryAddress": 37224448,
+  "entryMode": "arm",
+  "input": "extract/arm7/arm7.bin",
+  "analysis": "heuristic-capstone-control-flow",
+  "dsdSupport": "unsupported-by-pinned-0.12.1-init",
+  "dsdEvidence": "tools/ds-decomp-source/cli/src/cmd/init.rs",
+  "unknowns": [
+    "function boundaries",
+    "indirect control flow",
+    "code/data boundaries",
+    "literal pool mapping",
+    "all relocations",
+    "compiler identity"
+  ]
+}

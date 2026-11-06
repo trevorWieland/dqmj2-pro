@@ -1,0 +1,2 @@
+#include "context.h"
+void native_main_0208bf98(u32 ip){u8 buf[42];native_fn_02008d78(buf,0,42);native_fn_02008d78(buf,0xff,6);native_fn_02008e0c(native_data_021d01e0,buf+6,6);CPS_SETUSHORT2(buf+12,0x0806);buf[15]=1;buf[16]=8;CPS_SETUSHORT2(buf+18,0x0604);buf[21]=1;native_fn_02008e0c(native_data_021d01e0,buf+22,6);CPS_SETULONG2(buf+28,G.myip);CPS_SETULONG2(buf+38,ip);native_fn_0208bce8(buf,42,NULL,0);}

@@ -1,0 +1,18 @@
+typedef unsigned char u8;typedef unsigned int u32;typedef int BOOL;typedef unsigned int undefined4;typedef unsigned int uint;typedef unsigned long size_t;typedef unsigned long long u64;typedef void*(*DWCAuthAlloc)(unsigned long,long);typedef void(*DWCAuthFree)(unsigned long,void*,long);typedef struct DWCHttpBuffer{char*buffer;char*write_index;char*buffer_tail;unsigned long length;}DWCHttpBuffer;typedef struct DWCHttpParam{const char*url;int action;unsigned long len_recvbuf;DWCAuthAlloc alloc;DWCAuthFree free;BOOL ignoreca;int timeout;}DWCHttpParam;typedef struct DWCHttpLabelValue{char*label;char*value;}DWCHttpLabelValue;typedef struct DWCHttpParseResult{DWCHttpLabelValue*entry;int len,index;}DWCHttpParseResult;typedef struct Mutex{u32 words[6];}Mutex;typedef struct Thread{u32 prefix[27];u32 id;u32 tail[20];}Thread;typedef struct DWCHttp{u8 stack[4096];u8 initflag;DWCHttpParam param;volatile int error;char url[256];char*hostname;char*filepath;u32 hostip;BOOL ssl_enabled;unsigned short port;u8 unknown1136[2198];u8*lowrecvbuf;u8*lowsendbuf;u32 lowentropydata[8];int num_postitem;DWCHttpBuffer req,rep;Mutex content_len_mutex;int content_len,receivedbody_len;DWCHttpLabelValue labelvalue[32];Thread thread;Mutex mutex;BOOL abort;}DWCHttp;
+#define NULL ((void*)0)
+#define DWC_Printf(...) ((void)0)
+extern void MI_CpuFill8(void*,u8,u32);extern void MI_CpuCopy8(const void*,void*,u32);extern void OS_LockMutex(void*);extern void OS_UnlockMutex(void*);extern void OS_JoinThread(void*);extern u32 Base64Decode(const char*,u32,char*,u32);extern char*DWC_Http_GetResult(DWCHttp*,const char*);
+extern int DWCi_Http_AllocBuffer(DWCHttp*,DWCHttpBuffer*,int);extern void DWCi_Http_FreeBuffer(DWCHttp*,DWCHttpBuffer*);extern int DWCi_Http_ReallocBuffer(DWCHttp*,DWCHttpBuffer*,int);extern void DWCi_Http_DestroyResult(DWCHttp*,DWCHttpLabelValue*,int);extern int DWCi_Http_SetHostinfo(DWCHttp*,const char*);extern int DWCi_Http_WriteBasicHeader(DWCHttp*);extern int DWC_Http_Add_HeaderItem(DWCHttp*,const char*,const char*);extern int OS_SNPrintf(char*,unsigned long,const char*,...);extern int DWC_Auth_Base64Encode(const char*,unsigned long,char*,unsigned long);extern void OS_InitMutex(void*);extern int native_fn_020068c0(void*);extern void OS_CreateThread(void*,void(*)(void*),void*,void*,u32,u32);extern void OS_WakeupThreadDirect(void*);extern void DWCi_Http_Thread(void*);extern int DWChttpignoreca;
+#include "string.h"
+typedef struct{DWCHttp http;int http_initialized;char url[257];char*result;int*badwordsnum;int wordsnum;}DWCProfWorkarea;extern DWCProfWorkarea*native_data_021d19a8;extern int DWCerrno;extern u32 native_fn_0209446c(void);extern void native_fn_0209a9f8(int,int);extern undefined4 native_fn_0209a56c(void);extern void native_fn_020987b0(DWCHttp*);extern void native_fn_0209aa64(int,void*,u32);extern int DWC_Http_ParseResult(DWCHttp*,int);extern int DWC_Http_GetBase64DecodedResult(DWCHttp*,const char*,char*,u32);extern u32 DWC_Auth_SetNasTimeDiff(char*);extern int atoi(const char*);
+#define DWCHTTP_E_NOERR 0
+#define DWCHTTP_E_MEMERR 1
+#define DWCHTTP_E_DNSERR 2
+#define DWCHTTP_E_CONERR 3
+#define DWCHTTP_E_SENDTOUT 4
+#define DWCHTTP_E_SENDERR 5
+#define DWCHTTP_E_RECVTOUT 6
+#define DWCHTTP_E_ABORT 7
+#define DWCHTTP_E_FINISH 8
+typedef int DWCSvlState;typedef struct{BOOL status;char svlhost[65];char svltoken[301];}DWCSvlResult;typedef struct{DWCAuthAlloc alloc;DWCAuthFree free;DWCHttp http;DWCSvlResult*result;}DWCSvlIntWorkarea;extern DWCSvlIntWorkarea*native_data_021d19a4;extern int native_fn_0209a03c(void);
+undefined4 native_main_0209a4a0(void);

@@ -1,0 +1,1 @@
+void WmspRequestFuncDummy(OSMessage msg);

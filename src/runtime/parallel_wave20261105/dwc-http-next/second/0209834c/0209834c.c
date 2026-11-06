@@ -1,0 +1,2 @@
+#include "context.h"
+void native_main_0209834c(DWCHttp*http,u32 priority){http->abort=0;native_fn_02007074(&http->mutex);native_fn_02007074(&http->content_len_mutex);if(http->param.ignoreca==1)native_data_021d1910=1;else native_data_021d1910=0;if(http->thread.state==0||native_fn_020068c0(&http->thread)){native_fn_020065f0(&http->thread,native_fn_02098574,http,http->stack+4096,4096,priority);native_fn_0200698c(&http->thread);}}

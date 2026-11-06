@@ -1,0 +1,2 @@
+#include "context.h"
+void native_main_020b8958(void){unsigned char buffer[1044];Message*packet=(Message*)buffer;packet->length=24;packet->magic=0x44535359;packet->code=219;packet->param0=native_data_021d3020->active->words[1];packet->param1=native_data_021d3020->active->words[4];packet->data[0]=native_data_021d3020->active->words[5];if(native_fn_020b8d44(native_fn_020b88fc)&&native_fn_020b8dc4(buffer))native_fn_020b8d80();native_fn_020b8da0();}

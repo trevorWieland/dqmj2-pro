@@ -1,0 +1,15 @@
+# Cohort 67 parser, flush and registry source — 2026-10-30
+
+The accepted build measures 8,763 native functions and 617,661 initialized source bytes, or 24.5822% of the current 2,512,636-byte inventory. Four new functions contribute 2,040 bytes: main `0201B338/1424`, ARM7 WRAM `037FF1C0/492`, and main `020485C8/84` plus `0204861C/40`. These measurements do not establish overall game completion. Original executable scaffolding remains.
+
+The parser passes 2,762 direct original/source pairs and 5,524 actual returns, with all 354 instruction addresses exercised. Four compiled wrong-source controls reject. ELF mapping identifies 1,416 instruction bytes, four alignment bytes and a four-byte ctype-table literal. The table itself receives no new credit. The independent model covers bounded flags, widths, precision, qualifiers, record fields and argument/cursor effects; invalid pointers and arithmetic overflow remain unsupported.
+
+The hardware flush passes 1,026 caller returns and 2,042 separately observed native driver returns, with all 122 own instruction addresses and ten-word PCM arguments checked. It uses no service providers or BIOS replacement. MMIO is disposable Unicorn backing; no physical audio or hardware behavior is claimed. All 36 standalone controls pass. The earlier control-report collision and exact restoration remain preserved in cohort 66 evidence.
+
+The widget insertion/removal leaves pass 2,724 independent pairs and 5,448 actual returns with no providers. All 128 registry positions, duplicate entries and qualified full/null-full/raw-prefix cases are covered. Separately connected caller proofs retain explicit allocator/free providers and receive no additional function credit. Their malformed or unsupported paths remain withheld.
+
+Run `python validate_cohort.py --cohort 67`. All 20 initialized module comparisons, actual preferred-source selections, exact ROM length/hash, both checksum matches / 144 isolated returning executions, 5,117 getter comparisons, negative freshness checks and source policy pass. The ROM is 175,959,612 bytes with SHA-256 `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`. Strict application isolation remains false because of outside concurrent edits; baseline and ROM/save input hashes remain unchanged. Source-only ROM and a complete Windows game built from source remain false, and Android device execution remains zero.
+
+Independent clean runs S and T still cover their immutable cohort 64/65 snapshots, not this cohort. Source details are in `docs/2026-10-30-native-format-parser-source.md`, `docs/2026-10-30-arm7-channel-hardware-flush-source.md` and the dated widget-registry writeup. Machine acceptance is recorded in `evidence/verification/cohort-2026-10-29-67.json`; committed-source closure is audited after the source commit.
+
+The committed source audit at `0b7ec266` checks 8,538 repository paths and 112 explicit copied dependency paths with zero missing paths or hash mismatches. See `evidence/verification/cohort67-committed-source-closure-20261030.json`.

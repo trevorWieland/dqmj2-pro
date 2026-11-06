@@ -1,0 +1,15 @@
+# Windows-native heap construction — 2026-11-01
+
+`python verify_windows_heap_closed656_v2_20261101.py` builds a private PE32 executable with the pinned Clang, linker and DLL-tool binaries, then executes 2,400 unique heap-construction calls on this Windows machine. A second fresh process repeats the same corpus and must produce identical output; the repeated run does not inflate the unique-context count.
+
+Ten C routine bodies correspond to 656 initialized ARM bytes. They include the new 160/116-byte initializers, three 44/44/84-byte support routines, and typed or retained existing list/getter routines. Original matched primaries remain unchanged. The executable uses no ARM emulation, original executable blobs, ROM file or save file. It embeds only 12 measured SDK fill-data bytes, with their address/hash explicitly recorded.
+
+Every call compares complete 4,096-byte data and global-state pages against the independently modeled ARM golden corpus, for 8,192 compared bytes per call. All 2,400 cases pass, including empty/nonempty root lists, nested and nonfirst parents, sibling links, low-byte options, high initialization-flag words, conditional fill and free-block initialization. The original ARM proof also passes 6,000 top returns with 58,950 original-helper returns and 1,200 source-linked header returns; these are separate origin groups.
+
+The Windows program runs the recovered list/heap implementations rather than supplying their results. A platform C loop performs the fill operation, and one explicit typed adapter calls the unchanged integer-pointer next-list routine. Source bodies compile separately and link through explicit function aliases. No application adapter or UI is edited.
+
+The test preserves the measured 32-bit word-pointer ABI by reserving its data page at a fixed low address. Global bytes are copied into native typed globals and copied back for comparison; internal root-list addresses are not exposed as public results. The header initializer is void, so host raw return-register contents are not invented as an API contract. This does not prove arbitrary high 64-bit pointers, physical interrupts/MMIO, Android-device execution or a complete Windows game.
+
+The version2 receipt keeps a content-addressed copy of the exact ARM golden report, so later source-registry sealing cannot make its oracle reference stale. Initial receipts and source trials remain preserved. Build outputs stay under `work/` and are regenerated from explicit source/tool inputs; no PE, object, ROM or save payload is committed as source. This milestone adds zero decompilation coverage.
+
+`python match_main_heap_support172_20261101.py` separately qualifies the three new support routines with 5,168 actual top returns, 6,266 original-helper returns and 1,162 source-linked lower returns, with no supplied outcomes. Full-page models cover block signature/size wrapping, list offsets, pointer updates and low16 counter wrapping. Three wrong C bodies produce 276 actual returns and 245 independent rejections. This source proof and the Windows component test remain distinct from whole-module/ROM acceptance.

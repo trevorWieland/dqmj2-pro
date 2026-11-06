@@ -1,0 +1,73 @@
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef signed short s16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef unsigned long long u64;
+typedef signed long long s64;
+typedef float f32;
+typedef double f64;
+#define M2C_FIELD(value, type, offset) (*(type)((s8 *)(value) + (offset)))
+#define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
+#define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
+#define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
+#define NULL ((void *)0)
+extern u32 native_fn_01ff8604();
+extern u32 native_fn_020414b0();
+extern u32 native_fn_02041510();
+extern u32 native_fn_02041800();
+extern u32 native_fn_02048034();
+extern u32 native_fn_02048094();
+extern u32 native_fn_0205dc70();
+extern u32 native_fn_0205e814();
+extern u32 native_fn_0205e844();
+extern u32 native_fn_02063ef8();
+extern u32 native_fn_02063f24();
+extern u32 native_fn_020642cc();
+extern u32 native_fn_020642f8();
+extern u32 native_fn_02064304();
+extern u32 native_fn_02064488();
+extern u32 native_fn_020644c0();
+extern u32 native_fn_02067748();
+extern u32 native_fn_02067904();
+extern u32 native_fn_020679f0();
+extern u32 native_fn_02067a60();
+extern u32 native_fn_02067b58();
+extern u32 native_fn_02067d54();
+extern u32 native_fn_ov006_021d77e8();
+extern u32 native_fn_ov006_021d8288();
+extern u32 native_fn_ov006_021d83b4();
+extern u32 native_fn_ov006_021da3e8();
+extern u32 native_fn_ov006_021db59c();
+extern u32 native_fn_ov006_021de358();
+extern u32 native_fn_ov006_021ded5c();
+extern u32 native_fn_ov006_021dee68();
+extern u32 native_fn_ov006_021def28();
+extern u32 native_fn_ov006_021df150();
+extern u32 native_fn_ov006_021df4c8();
+extern u32 native_fn_ov006_021df524();
+extern u32 native_fn_ov006_021df590();
+extern u32 native_fn_ov006_021df974();
+extern u32 native_fn_ov006_021dfd34();
+extern u32 native_fn_ov006_021e2f38();
+extern u32 native_fn_ov006_021e2f58();
+extern u32 native_fn_ov006_021e3b10();
+extern u32 native_fn_ov006_021e3b7c();
+extern u32 native_fn_ov006_021e9444();
+extern u32 native_fn_ov006_021e9484();
+extern u8 native_data_ov006_0220d0f0[];
+typedef struct {
+    s16 field_0;
+    u8 unknown_2[0x2];
+    u32 field_4;
+    s32 field_8;
+    u32 field_c;
+    u8 unknown_10[0x10];
+    s32 field_20;
+    u8 unknown_24[0x4];
+    s32 field_28;
+} Record_native_data_ov006_02217be0;
+extern Record_native_data_ov006_02217be0 native_data_ov006_02217be0;
+extern u8 native_data_ov006_02217bf0[];
+extern u8 native_data_ov006_02217c00[];

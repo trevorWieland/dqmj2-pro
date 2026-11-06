@@ -1,0 +1,31 @@
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef signed short s16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef unsigned long long u64;
+typedef signed long long s64;
+typedef float f32;
+typedef double f64;
+#define M2C_FIELD(value, type, offset) (*(type)((s8 *)(value) + (offset)))
+#define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
+#define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
+#define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
+extern u32 native_fn_02008c14();
+extern u32 native_fn_0204532c(s32, u32);
+extern u8 native_data_02102970[];
+u32 native_main_02048e14(void *arg0) {
+    u32 buffer;
+    buffer = M2C_FIELD(arg0, u32 *, 4);
+    if (buffer != 0) {
+        native_fn_0204532c((s8) *native_data_02102970, buffer);
+        M2C_FIELD(arg0, s32 *, 4) = 0;
+    }
+    buffer = M2C_FIELD(arg0, u32 *, 0);
+    if (buffer != 0) {
+        native_fn_0204532c((s8) *native_data_02102970, buffer);
+        M2C_FIELD(arg0, s32 *, 0) = 0;
+    }
+    return native_fn_02008c14(0, arg0, 0x64);
+}

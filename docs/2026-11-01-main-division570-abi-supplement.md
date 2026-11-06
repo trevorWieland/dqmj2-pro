@@ -1,0 +1,7 @@
+# Minimal native division ABI supplement — 2026-11-01
+
+This supplement supplies the exact unchanged `evidence/verification/main-nav562-signed-division-abi-20261101.json` required by copy568, SHA-256 `4d7b8fe5af8e3326e6bc012b049fe0a7636c11b0cff2cb6e13f1ac2dd128d5ff`, without importing the 708-byte draft, its sources, sweeps or former prover closure.
+
+Run `python probe_main_division570_native_20261101.py`. It loads only repository-local measured main ARM image and canonical symbol boundary, Python 3.13.5 and pinned Unicorn 2.1.4. Fresh ARM946 machines reproduce 129 actual original returns with zero providers/nonstack writes. All direct-native records, including raw R0–R3 and instruction counts, reproduce the frozen direct-record digest `1c0cf1e5b668a8ed7521fa1d354e05b14a9dd11f62847250d6232b9ec4c6a1f9`. Normal and unrelated-working-directory output reports are byte-identical.
+
+The finite corpus consists of 120 halfword-range operand pairs plus nine signed/boundary pairs. Physical R0 quotient and R1 remainder agree with independent signed truncation and encoded32 overflow observations. Thirteen zero-denominator cases return the original numerator word and zero. These machine facts do not define abstract C zero division or signed overflow, assert a public wide-return type, or contribute source credit. The frozen ABI JSON's old report/trace references remain historical IDs and are not required by this minimal replay.

@@ -1,0 +1,2 @@
+#include "context.h"
+u8*native_main_0208be70(u32*len){u32 enable;u16 blocklen;enable=native_fn_02007ff4();while(G.getpnt==G.putpnt){G.recvthread=native_data_020e33e4.current;native_fn_020068d4(NULL);G.recvthread=NULL;}native_fn_02008008(enable);{u8*buf=G.buf;do{if(G.buflen-G.getpnt<2)G.getpnt=0;blocklen=*(u16*)(buf+G.getpnt);if(blocklen==0)G.getpnt=0;}while(blocklen==0);*len=blocklen-2;return G.buf+G.getpnt+2;}}

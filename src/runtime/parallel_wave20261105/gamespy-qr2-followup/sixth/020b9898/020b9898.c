@@ -1,0 +1,2 @@
+#include "context.h"
+int native_main_020b9898(const char*name,int port,Peer8*peer){HOSTENT*host;peer->length=8;peer->family=2;peer->port=((port>>8)&255)|(((u32)port<<8)&0xff00);if(!native_fn_0209075c(name,&peer->address)){native_fn_0200708c(native_data_021d3028->mutex1bc);host=native_fn_0209046c(name);if(host)native_fn_02008e0c(host->h_addr_list[0],&peer->address,host->h_length);native_fn_02007110(native_data_021d3028->mutex1bc);if(!host)return 0;}return 1;}

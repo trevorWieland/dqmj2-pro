@@ -1,0 +1,17 @@
+# Continued reconstruction union 155 — 2026-11-04
+
+This growing union follows frozen cohort 154. Three source workers close independent packets while shared validation remains serial. Proposed membership is mutable until its frozen receipt; prepared, modeled and compiler-exact drafts have zero accepted credit.
+
+Every addition requires an original configured identity and full native span, pinned source compilation and genuine linking, unchanged relocation names/addends, strict program/CPU/module/mode/entry bindings, meaningful wrong-source controls, applicable independent ABI/behavior evidence and copied-root replay. Original module, checksum, ROM, getter, regression, workspace and committed source/oracle closure gates remain required.
+
+Original explicit assembly remains separate from ordinary C/C++. Proposed CPU context/reset routines must demonstrate register-bank, privileged-state or pre-C-ABI necessity with pinned published explicit assembly declarations and fresh body-token provenance. No ordinary algorithm assembly exception, raw-instruction source, binary patch or callee/hardware execution credit is permitted.
+
+Exact ROM reconstruction retains original executable scaffolding. Full fresh replay, a source-only ROM and complete native Windows/Android execution remain unproven. Workspace audit receipts retain their measured external-application discrepancy.
+
+Frozen membership is 76 functions / 9,448 bytes across twelve packets: 67 ordinary-C functions / 8,264 bytes and nine separately classified original SDK assembly functions / 1,184 bytes. Expected result after accepted 154 is 10,530 functions / 963,719 initialized bytes. Source-only ROM and platform execution remain unproved.
+
+The stream family adds seven complete functions / 3,644 bytes, including a 2,088-byte PCM/IMA-ADPCM routine. The pinned private offsetof shim, exact compiler argv and closed original global/table views reproduce all 59 relocations through genuine full links. Administrative fixtures cover 248 actual original/source returns; decoder payload, native imports, callbacks, I/O and hardware execution are zero. A genuinely linked wrong decoder is rejected by complete bytes and sixteen administrative cases. Thirty-two layout, seventeen branch/helper and 119 pointer negatives remain explicit. Globals and coefficient tables receive zero storage credit.
+
+Other packets cover typed pointer/argument forwarding, fixed-point matrices, vector and byte accessors, resource operations, table allocation/reset, signed-byte folding and aligned allocation. Selected import-free bodies execute bounded original/source vectors; opaque providers and hardware remain prescribed boundaries. Terminal-entry stops are recorded separately from function returns. The 888-byte phase dispatcher retains an unresolved overlays(1,7) call and is excluded. Legacy normalizer return-type debt is recorded without rewriting accepted source.
+
+A versioned source-input audit independently recompiles source-only ARM9 reference consumers, preserves complete function bytes and original relocations, and runs the unchanged original v8 ROM derivation, namespace and committed-blob checks. Registration occurs only after canonical sealing. Original C/C++, inline-CLZ and whole-original-assembly guards are unchanged. The new finisher uses that qualified audit and refreshes the atlas only after committed closure passes.

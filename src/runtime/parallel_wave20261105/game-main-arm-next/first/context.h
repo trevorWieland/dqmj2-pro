@@ -1,0 +1,17 @@
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned int u32;
+typedef int s32;
+typedef struct { u32 words[3]; } LayoutRecord;
+typedef struct { u8 prefix[16]; LayoutRecord rows[10]; } ContextPrefix;
+typedef char LayoutStride[(sizeof(LayoutRecord)==12)?1:-1];
+typedef char ContextPrefixExtent[(sizeof(ContextPrefix)==136)?1:-1];
+extern ContextPrefix *native_fn_02061944(void);
+extern u32 native_fn_020625bc(void);
+extern void native_fn_0207211c(u32,u32,u32);
+extern void native_fn_02065818(LayoutRecord *,u32,u32);
+extern u32 native_fn_02061c1c(s32,u32,u32,u32,u32,u32,u32);
+extern u32 native_fn_02045ed0(s32);
+extern void native_main_020720a4(s32,s32,u32,u32);
+extern u32 native_main_020725e8(u32);
+extern u32 native_main_020726d8(u32);

@@ -1,0 +1,7 @@
+# Cohort83 historical header transport repair
+
+The first cohort83 packaging preflight refused four missing header files referenced by the immutable ABI16 profile's historical source-body lineage. Source compilation, isolated native proofs, full module links and the regression gate had passed; these old header views are not inputs to the accepted ABI16 compiler units. The initial failure is retained in `evidence/verification/cohort83-initial-packaging-preflight-20261031.json`.
+
+Three callback244 headers and the pages368 header existed only in the private ARM7 lane filesystem, outside the frozen Git commit. Root recovered their exact bytes against hashes already frozen inside commit51f24a8's profile. It did not alter or reconstruct their contents. The [repair receipt](../evidence/verification/cohort83-historical-header-transport-repair-20261031.json) records all eight historical header pins, existing/restored status and frozen-commit availability. The four recovered files are now repository-local historical provenance, with zero source credit and no adoption of the earlier incompatible transfer views.
+
+The original collector remains unchanged. A fresh packaging preflight and committed-byte closure must pass before the cohort package is considered reproducible. This repair does not establish a full clean build of cohort83. The separate immutable checkoutX still targets cohort81 plus earlier packaging tooling.

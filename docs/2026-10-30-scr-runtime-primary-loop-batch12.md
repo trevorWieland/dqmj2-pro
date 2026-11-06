@@ -1,0 +1,27 @@
+# Complete runtime primary-flag loop source - 2026-10-30
+
+`world.e` entry257, code `[1056,1276)`, is reconstructed as an ordinary C for-loop in `src/scripts/20261030/batch12/clear_primary_range_450_498.c`. The complete 220-byte product matches the current original image. The loop clears primary450 through 498 inclusively: 49 iterations with a retained final counter value 499. This is a runtime loop, not an unrolled setter transcript. It closes another original-only dependency of the recovered entry32, whose frozen proof remains unchanged.
+
+## Compiler and domain
+
+Separately versioned `scr_c_compiler_20261030_v10.py` accepts one constant-bounded ordinary C for-loop with a named integer counter, unit increment and named primary setter body. Bounds must prove a nonempty finite interval within primary indices0..1535; the source counter's final value may be1536. The source type is C `int`; all supported counter values fit exactly in the VM binary32 representation. This equivalence is specific to the qualified domain, not a claim that arbitrary C integer arithmetic is interchangeable with floating arithmetic. Empty, reversed, negative and oversized intervals, unsupported conditions, changed counter use and extra loop bodies are rejected.
+
+The compiler lowers a statically nonempty loop to a post-tested runtime form. It computes branch labels from emitted lengths, including one private RET, and reproduces the original unreachable compiler join. C source contains no opcodes, source PC constants, executable arrays or per-opcode macros. The general-C-compiler claim remains false; frozen v1-v9 and earlier sources stay unchanged.
+
+The complete current-image audit finds one public entry257, one direct caller at63860 from entry32 and no known outside encoded read/write of counter slot33. Mode0 indices are canonical finite integral0..255. Opaque/native/computed references and complete global program control remain unproved. CFG traversal from the qualified entry excludes join1248,12 physical bytes, immediately after an unconditional loop exit. That generated join is byte-matched and never forced for execution coverage.
+
+## Native evidence
+
+The first full source proof passed 64 complete entry executions, 25,488 paired actual native VM/helper returns and 3,136 individual primary setter executions. There are 16 scenarios per implementation: four bit patterns and all 4 VM threads, two serialized invocations each. Every iteration's index, native previous-value result, counter increment and continuation/exit decision is independently checked. Primary setters write aligned32-bit words at RAM021C0E58/021C0E5C while preserving neighboring bits, including primary448/449 and499..511. Complete persistent state and all256 VM register words are compared; only the declared counter slot may change in the variable bank.
+
+All 49 first-invocation setters and all 49 reentry setters actually execute. The second call repeats setters with zero persistent change. That behavior does not establish encounter access, once-ever behavior or renewability. No story/area interpretation is assigned to the raw flag IDs. The counter progresses through451..499 after increments; native conditions continue48 times and exit once. Each invocation takes396 SCR records and must terminate inside an816-step cap. Each native call must actually reach its sentinel inside20,000 instructions / 1,000,000 microseconds.
+
+Comparisons include general registers/CPSR, ordered CPU stores, VM state and persistent state. Three separate zero-credit generated controls exercise index0, a31/32 word boundary crossing with enabled=true, and index1535 with final counter1536. They produce 50 actual native returns. These counts are separate from the original-function proof. No original blob, assembly or generated disassembly contributes source credit.
+
+## Controls and acceptance
+
+The first negative-start mutation accidentally changed a numeric part of the C function identifier as well as the loop initializer. It correctly failed syntax parsing but did not isolate the intended domain check. The matcher now mutates only the initializer. The first report and exact first matcher bytes are preserved in `work/script-source/20261030/batch12/first-proof-report.json` and `first-matcher-before-control-domain-fix.py`, with zero current acceptance credit. The final parent-CWD replay uses the corrected control and unchanged compiler/C/native fixture and reproduces all reported counts.
+
+`python match_scr_runtime_flags_20261030_batch12.py` performs the source-only rebuild and isolated original-versus-rebuilt executions. `python validate_scr_runtime_flags_20261030_batch12.py` freshly rebuilds the C product, checks original ROM/image/range identities, all current counter references and CFG exclusions, every complete trace/iteration/store/state boundary, positive boundary controls and negative source errors. Missing products withhold credit. Root owns ledger and acceptance updates.
+
+Only this complete 220-byte function is reconstructed by this proof. All other executable/native/asset content remains zero-credit scaffolding for this unit; no complete image, whole-ROM source match or natural scene-launch claim is made. Original ROM SHA256 remains `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`. Python3.13.5 and Unicorn2.1.4 are pinned. No application adapters/UI, save bank selection, device deployment or emulator execution was changed or used.

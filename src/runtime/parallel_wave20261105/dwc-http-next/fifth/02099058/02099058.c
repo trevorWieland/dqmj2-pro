@@ -1,0 +1,2 @@
+#include "context.h"
+void native_main_02099058(void){DWCAuthFree free=DWCnetcheck->param.free;if(DWChttp){native_fn_020987b0(DWChttp);free((unsigned long)native_data_020df034,DWChttp,0);DWChttp=0;}native_fn_02097618();if(DWCnetcheck){if(DWCnetcheck->body_302){free((unsigned long)native_data_020df044,DWCnetcheck->body_302,0);DWCnetcheck->body_302=0;}if(DWCnetcheck->body_wayport){free((unsigned long)native_data_020df060,DWCnetcheck->body_wayport,0);DWCnetcheck->body_wayport=0;}free((unsigned long)native_data_020df080,DWCnetcheck,0);DWCnetcheck=0;}}

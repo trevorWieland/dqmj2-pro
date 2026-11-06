@@ -1,0 +1,11 @@
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned long u32;
+typedef int s32;
+typedef struct {u8 x,y,state[256];} Rc4View;
+extern s32 native_main_02090c18(u8 **);
+extern void native_main_02090c60(s8 *,s8 *,s32);
+extern u32 native_main_02090cac(u8 *,s32);
+extern u32 native_main_020930f4(s32,u32 *);
+extern void native_main_020937dc(Rc4View *,u8 *,s32);
+extern void native_main_02093824(Rc4View *,u8 *,s32);

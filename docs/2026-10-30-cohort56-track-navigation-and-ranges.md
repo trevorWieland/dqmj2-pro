@@ -1,0 +1,17 @@
+# Cohort 56: track update, navigation and attribute ranges
+
+The accepted record is `evidence/verification/cohort-2026-10-29-56.json`. Five newly reconstructed functions add 1,588 initialized source bytes: ARM7 WRAM 0x03800B98/344, main ARM 0x02072918/488 and 0x0206D114/284, and overlay 001 ARM 0x021F08EC/100 and 0x021EF0B0/372. The integrator independently replayed all four source producers; the ARM7 producer and its 25 rejection controls were separately replayed before adoption.
+
+Current coverage is 8,683 native functions / 592,061 initialized source bytes, 23.563341447% of 2,512,636 inventoried initialized bytes. Remaining initialized bytes are 1,920,575. This denominator includes data and literal pools and does not establish complete executable discovery or overall game completion. All 18 preferred source implementations are actual linked inputs. Interpreted coverage remains 1,248 instances / 42,428 physical bytes / 32 definitions and receives no native C byte credit.
+
+The track update fixture observes 1,706 outer returns plus 56 nested original setter returns across 837 scenarios. Signed table values, full integer volume/fader/pan/pitch calculations, the six-byte structure copy and actual release behavior are retained. It uses no host providers. Its 128..255 index probes characterize adjacent memory and do not establish valid calls into a 128-entry table. Original data and callees receive no new source credit.
+
+The navigation delegate has 1,160 direct and connected pairs / 2,320 actual delegate returns, 4,724 other native helper returns and 944 explicitly muted notification interceptions. Forty-six connected cases have leaf result 1 and caller result 0. Viewport rebuild and twelve unsupported contexts remain outside the demonstrated domain. The frame-mask writer has 360 pairs / 720 actual returns, zero host providers and six rejected invalid indices. Both retain actual read/write and supported state effects.
+
+The two overlay providers have 4,436 top-level returns, 528 RNG returns and 10,192 native dependency returns. The fixtures cover all 256 immutable actions and bounded scene, actor, ID, counter and dispatcher-control contexts. The five original asset dependencies receive no reconstructed data credit. Natural scene occurrence and positive equipment, trait or scene modifiers are not established by the supplied contexts.
+
+The earlier main sorting hypothesis is retained as a zero-credit functional oracle with 382 actual returns. It remains a nonmatching source hypothesis and does not change boundaries or accepted totals in this cohort.
+
+All 20 initialized module comparisons are exact. The rebuilt ROM is 175,959,612 bytes with SHA-256 `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`. Both checksum byte matches, all 36 vectors / 144 isolated executions, 5,117 getter comparisons, linked preference checks, boundary audit, evidence-freshness rejection checks and source policy pass. Baseline and ROM/save input hashes remain unchanged. The strict application audit reports outside application edits; this work does not restore or alter them.
+
+Original executable object scaffolding remains. This exact container is not a whole-ROM build solely from reconstructed source, and a playable Windows game from reconstructed source is unproved. Android device execution count remains zero. Independent checkout P continues from the immutable cohort 53 plus deadline-tooling commit; M remains the latest completed full independent success. O's original outer-deadline failure remains a failed full run.

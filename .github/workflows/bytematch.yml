@@ -1,0 +1,58 @@
+name: Build and ByteMatch report
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  GIT_CONFIG_COUNT: "2"
+  GIT_CONFIG_KEY_0: core.autocrlf
+  GIT_CONFIG_VALUE_0: "false"
+  GIT_CONFIG_KEY_1: core.longpaths
+  GIT_CONFIG_VALUE_1: "true"
+
+jobs:
+  matching:
+    runs-on: windows-latest
+    timeout-minutes: 360
+    strategy:
+      matrix:
+        version: [B2JJ-modified]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Read private immutable inputs
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: trevorWieland/dqmj2-pro-inputs
+          ref: 2de94c292604cf70977a8f3828733f3d5a7a875c
+          ssh-key: ${{ secrets.BUILD_INPUTS_DEPLOY_KEY }}
+          persist-credentials: false
+          path: private-inputs
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: "3.13.5"
+      - name: Build the public source with verified private inputs
+        shell: pwsh
+        run: python public_tools/build_bytematch.py --root . --input-bundle private-inputs
+      - name: Generate the complete objdiff project
+        shell: pwsh
+        run: python public_tools/bytematch_project.py --root . --private-root . --out-dir build/${{ matrix.version }}
+      - name: Generate the public progress report
+        shell: pwsh
+        run: tools/objdiff/3.8.3/objdiff-cli.exe report generate --project build/${{ matrix.version }} -o build/${{ matrix.version }}/report.json
+      - name: Check report scope and public fields
+        shell: pwsh
+        run: python public_tools/validate_bytematch_report.py --project build/${{ matrix.version }}/objdiff.json --report build/${{ matrix.version }}/report.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ${{ matrix.version }}_report
+          if-no-files-found: error
+          path: |
+            build/${{ matrix.version }}/report.json
+            build/${{ matrix.version }}/functional.json

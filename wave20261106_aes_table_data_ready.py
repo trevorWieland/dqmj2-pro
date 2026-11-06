@@ -1,0 +1,18 @@
+from pathlib import Path
+from project import ROOT,read_json,write_json,sha256
+from seal_recovery_evidence_20261031 import code_closure
+from wave20261106_aes_table_data_paths import EVIDENCE
+
+
+def pin(path):return dict(path=path,sha256=sha256(ROOT/path))
+
+
+def main():
+    base=EVIDENCE.relative_to(ROOT).as_posix();descriptor_name=base+'/canonical-packet.json';descriptor=read_json(ROOT/descriptor_name);copied=read_json(EVIDENCE/'copied-root-controls.json');qualified=read_json(EVIDENCE/'addition-compatibility-review.json');report=read_json(ROOT/descriptor['output']);producer='wave20261106_aes_table_data_packet.py';qualifier='wave20261106_aes_table_data_additions.py';review='wave20261106_aes_table_data_additions_review.py'
+    if not copied['passed']or not qualified['passed']or copied['producerSha256']!=sha256(ROOT/producer)or qualified['qualifierSha256']!=sha256(ROOT/qualifier)or qualified['reviewerSha256']!=sha256(ROOT/review)or len(report['dataMatches'])!=10 or report['dataMatchedBytes']!=10240:raise ValueError('AES fresh producer/copiedroot/current typed-data integration qualification is not closed')
+    helpers=[producer,qualifier,review,'wave20261106_aes_table_data_copy_review.py',Path(__file__).name];closure=code_closure(helpers);manifest_pin=descriptor['sourceManifest'];proofs=[base+'/copied-root-controls.json',base+'/addition-compatibility-review.json'];extra_name=base+'/qualification-source-files.json';write_json(ROOT/extra_name,dict(schemaVersion=1,sourceCredit=0,files=[pin(path)for path in sorted(closure)],productionSourceManifest=manifest_pin,privateComparisonOrToolInputs=[],role='Additional immutable actual integration qualifier/reviewer code closure; all production mathematical C/header/descriptor/primary/native/tool inputs remain explicitly pinned by the full producer manifest.'))
+    paths=set(closure)|set(proofs)|{extra_name,descriptor_name,manifest_pin['path']};ready=dict(status='ready-for-coordinator-initialized-data-acceptance',sourceCredit=0,report=descriptor['output'],producer=[producer,descriptor_name],packets=[dict(report=descriptor['output'],producerArgv=[producer,descriptor_name])],functionCount=0,dataObjects=10,initializedBytes=10240,typedConstantDataBytes=10240,encodedAssetBytes=0,measuredZeroAlignmentBytes=0,executableBytes=0,bssBytes=0,gapBytes=0,interiorViewExtraBytes=0,interiorViewExtraObjects=0,sourceManifest=manifest_pin['path'],sourceManifestSha256=manifest_pin['sha256'],additionalQualifierSourceManifest=pin(extra_name),canonicalReport=descriptor['output'],canonicalProducer=[producer,descriptor_name],canonicalDescriptor=pin(descriptor_name),freshCopiedRootObjects=10,genuineWrongCObjects=8,copiedRootTamperControls=7,semanticMathSchemaControls=50,namespaceTypeExtentControls=8,threeInteriorViewControls=15,actualWrongWidthHeaderCompileRejected=True,allClosedCompilerInputGuardsPassed=True,actualFreshSourceGenerationCompilationAndGenuineLinkReplay=True,noOldWorkObjectsRequired=True,all13ExistingNativeAliasesPreserved=True,ambiguousQualifiersAndMainPluralReferencesUnchanged=True,dataAdditionQualifier=pin(qualifier),qualifierInterface='qualify(before, after, expected, functions, directory)',privateIntegrationNegativeControls=len(qualified['negativeControls']),privateEarlierSelectedFunctionsPreserved=qualified['unchangedSelectedFunctions'],privateStandardSizeZeroInteriorExports=3,frozenGpAuthPinsPreserved=copied['frozenGpAuthPinsRehashedUnchanged'],files=[pin(path)for path in sorted(paths)],limitations=report['limits'])
+    output=EVIDENCE/'ready.json';write_json(output,ready);print(dict(ready=output.relative_to(ROOT).as_posix(),sha256=sha256(output),tables=10,bytes=10240,readyFiles=len(paths),producer=ready['producer']),flush=True)
+
+
+if __name__=='__main__':main()

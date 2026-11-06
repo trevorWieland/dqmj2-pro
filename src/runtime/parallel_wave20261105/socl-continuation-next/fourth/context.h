@@ -1,0 +1,14 @@
+typedef unsigned short u16;
+typedef unsigned long u32;
+typedef int s32;
+extern s32 native_fn_02093874(u16 *,s32);
+extern void native_fn_02008d78(void *,s32,u32);
+extern void native_fn_02093aa0(u16 *,u32,s32,s32);
+extern void native_main_020938b8(u16 *,u16 *,u16 *,s32);
+extern void native_main_02093930(u16 *,u16 *,u16,s32);
+extern void native_main_02093998(u16 *,u16 *,u16 *,s32);
+extern void native_main_02093a18(u16 *,u16 *,u16,s32);
+extern s32 native_main_02093a6c(u16 *,u16 *,s32);
+extern void native_main_02093ac0(u16 *,u16 *,u16 *,s32);
+extern void native_main_02093b2c(u16 *,u16 *,u16,s32);
+extern void native_main_02093b7c(u16 *,u16 *,s32);

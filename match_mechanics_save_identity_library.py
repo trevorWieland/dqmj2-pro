@@ -1,0 +1,159 @@
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import random
+import struct
+import subprocess
+import sys
+
+ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT / 'deps/native'))
+from elftools.elf.elffile import ELFFile
+from unicorn import Uc, UC_ARCH_ARM, UC_MODE_ARM
+from unicorn.arm_const import UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_PC, UC_ARM_REG_LR, UC_ARM_REG_SP
+
+SPECS = {'saved_identity_first_free': (34320192, 52), 'saved_identity_string_parse': (34320244, 116), 'saved_identity_find': (34320360, 68), 'saved_identity_string_find': (34320428, 32), 'saved_identity_string_insert': (34320460, 32), 'saved_identity_record_write': (34320544, 72), 'saved_identity_record_clear': (34320616, 56), 'saved_identity_record_data_valid': (34320912, 36), 'saved_identity_record_data_read': (34320948, 64)}
+GLOBALS = {'native_identity_record': 33981896, 'native_identity_profile': 33981872, 'native_identity_insert': 34320492, 'native_copy': 33590796, 'native_fill': 33590648, 'native_sdk_thumb_02097198': 34173336, 'native_sdk_thumb_02096f50': 34172752, 'native_sdk_thumb_02097330': 34173744, 'native_sdk_thumb_02096ed0': 34172624, 'native_sdk_thumb_0209734c': 34173772, 'native_sdk_thumb_020973d8': 34173912, 'native_sdk_thumb_0209cd4c': 34196812, 'native_sdk_thumb_0209ccf4': 34196724, 'native_sdk_thumb_0209cc88': 34196616}
+THUMB_SYMBOLS = ['native_sdk_thumb_02096ed0', 'native_sdk_thumb_02096f50', 'native_sdk_thumb_02097198', 'native_sdk_thumb_02097330', 'native_sdk_thumb_0209734c', 'native_sdk_thumb_020973d8', 'native_sdk_thumb_0209cc88', 'native_sdk_thumb_0209ccf4', 'native_sdk_thumb_0209cd4c']
+FLAGS = ['-O2', '-enum', 'int', '-char', 'signed', '-str', 'noreuse', '-proc', 'arm946e', '-gccext,on', '-fp', 'soft', '-inline', 'off', '-Cpp_exceptions', 'off', '-RTTI', 'off', '-interworking', '-w', 'off', '-sym', 'on', '-gccinc', '-nolink', '-msgstyle', 'gcc']
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+def compile_and_compare(arm, optimization, inline='off', goal='space'):
+    output = ROOT / f'work/mechanics-save/identity-library-{optimization}-{inline}-{goal}.o'
+    output.parent.mkdir(parents=True, exist_ok=True)
+    compiler = ROOT / 'tools/mwccarm/mwccarm/2.0/base/mwccarm.exe'
+    env = dict(os.environ, LM_LICENSE_FILE=str(ROOT / 'tools/mwccarm/mwccarm/license.dat'))
+    flags = [f'-O{optimization}', *FLAGS[1:]]
+    flags[flags.index('-inline') + 1] = inline
+    if goal == 'speed':
+        flags.extend(['-opt', 'speed'])
+    result = subprocess.run([str(compiler), *flags, '-c', str(ROOT / 'src/mechanics_save/identity_library.c'), '-o', str(output)], env=env, capture_output=True, timeout=60)
+    if result.returncode:
+        raise RuntimeError(result.stdout.decode(errors='replace') + result.stderr.decode(errors='replace'))
+    object_hash = sha(output.read_bytes())
+    stable_output = ROOT / 'work/mechanics-save/objects' / (object_hash + '.o')
+    stable_output.parent.mkdir(parents=True, exist_ok=True)
+    if not stable_output.exists():
+        stable_output.write_bytes(output.read_bytes())
+    records = []
+    compiled = {}
+    with output.open('rb') as stream:
+        elf = ELFFile(stream)
+        symbols = {s.name: s for s in elf.get_section_by_name('.symtab').iter_symbols()}
+        for name, (address, size) in SPECS.items():
+            symbol = symbols[name]
+            raw = elf.get_section(symbol['st_shndx']).data()
+            start = symbol['st_value']
+            code = bytearray(raw[start:start + symbol['st_size']])
+            relocations = []
+            for section in elf.iter_sections():
+                if section['sh_type'] not in ('SHT_REL', 'SHT_RELA') or section['sh_info'] != symbol['st_shndx']:
+                    continue
+                table = elf.get_section(section['sh_link'])
+                for rel in section.iter_relocations():
+                    if not start <= rel['r_offset'] < start + len(code):
+                        continue
+                    target_name = table.get_symbol(rel['r_info_sym']).name
+                    target = GLOBALS.get(target_name, SPECS.get(target_name, (None,))[0])
+                    if target is None:
+                        raise ValueError(('unknown relocation', target_name))
+                    at = rel['r_offset'] - start
+                    value = struct.unpack_from('<I', code, at)[0]
+                    kind = rel['r_info_type']
+                    if kind == 2:
+                        addend = rel['r_addend'] if section['sh_type'] == 'SHT_RELA' else value
+                        struct.pack_into('<I', code, at, (target + addend) & 0xffffffff)
+                    elif kind in (1, 28, 29):
+                        if section['sh_type'] == 'SHT_RELA':
+                            addend = rel['r_addend']
+                        else:
+                            addend = (value & 0xffffff) << 2
+                            if addend & 0x2000000:
+                                addend -= 0x4000000
+                        displacement = target + addend - (address + at)
+                        if target_name in THUMB_SYMBOLS:
+                            if value & 0x0f000000 != 0x0b000000:
+                                raise ValueError('Thumb target requires a declared ARM call')
+                            value = 0xfa000000 | ((displacement & 2) << 23) | ((displacement >> 2) & 0xffffff)
+                        else:
+                            value = (value & 0xff000000) | ((displacement >> 2) & 0xffffff)
+                        struct.pack_into('<I', code, at, value)
+                    else:
+                        raise ValueError(('unsupported relocation', kind))
+                    relocations.append({'offset': at, 'type': kind, 'symbol': target_name, 'target': hex(target), 'addend': addend, 'targetModule': 'main', 'targetMode': 'thumb' if target_name in THUMB_SYMBOLS else 'arm', 'processor': 'arm9'})
+            target = arm[address - 0x02000000:address - 0x02000000 + size]
+            match = code == target
+            records.append({'name': name, 'module': 'main', 'processor': 'arm9', 'mode': 'ARM', 'address': hex(address), 'bytes': size, 'compiledBytes': len(code), 'matchingBytes': sum(a == b for a, b in zip(code, target)), 'exactAfterDeclaredRelocation': match, 'targetSha256': sha(target), 'outputSha256': sha(code), 'relocations': relocations, 'flags': flags, 'objectSha256': object_hash, 'object': str(stable_output.relative_to(ROOT)), 'sectionIndex': symbol['st_shndx'], 'sectionOffset': start, 'nativeAlias': f'func_{address:08x}'})
+            if match:
+                compiled[name] = bytes(code)
+    return records, compiled
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--search', action='store_true')
+    args = parser.parse_args()
+    rom = (ROOT / 'inputs/game.nds').read_bytes()
+    save = (ROOT / 'inputs/save.sav').read_bytes()
+    arm = (ROOT / 'extract/arm9/arm9.bin').read_bytes()
+    if sha(rom) != '674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6':
+        raise ValueError('Wrong measured ROM')
+    if sha(save) != '169d65a4c6ffcb0fe996d652f73a01f70d594a08ad2385098f628abbe1c4b8f0':
+        raise ValueError('Wrong measured save')
+    if sha(arm) != 'ea530f917c534c3fa2b036288dd9e4551e3cbf68b5fc36713e1217704148534f':
+        raise ValueError('Wrong extracted ARM9 module')
+    compiler_bytes = (ROOT / 'tools/mwccarm/mwccarm/2.0/base/mwccarm.exe').read_bytes()
+    if sha(compiler_bytes) != '7150fa4fe4cb6db6867ac530ec1a0754f6ca4df92868d963a7875196f9222880':
+        raise ValueError('Wrong pinned compiler')
+    all_records = []
+    matches = {}
+    configurations = [(2, 'off', 'space'), (2, 'off', 'speed'), (2, 'noauto', 'space')]
+    if args.search:
+        configurations.extend((value, 'off', goal) for value in (0, 1, 3, 4) for goal in ('space', 'speed'))
+    for optimization, inline, goal in configurations:
+        records, compiled = compile_and_compare(arm, optimization, inline, goal)
+        all_records.extend(records)
+        for name in compiled:
+            if name not in matches:
+                matches[name] = (next(r for r in records if r['name'] == name), compiled[name])
+    report = {'schemaVersion': 1, 'romSha256': sha(rom), 'saveSha256': sha(save), 'arm9Sha256': sha(arm), 'source': 'src/mechanics_save/identity_library.c', 'sourceSha256': sha((ROOT / 'src/mechanics_save/identity_library.c').read_bytes()), 'compilerSha256': sha((ROOT / 'tools/mwccarm/mwccarm/2.0/base/mwccarm.exe').read_bytes()), 'matches': [record for record, code in matches.values()], 'attempts': all_records, 'nativeSymbols': {**{name: hex(address) for name, address in GLOBALS.items()}, **{name: hex(spec[0]) for name, spec in SPECS.items()}}, 'wholeLinkedRebuild': False, 'nativeSymbolModules': {name: 'main' for name in GLOBALS}, 'nativeSymbolModes': {name: 'thumb' if name in THUMB_SYMBOLS else 'arm' for name in GLOBALS}}
+    report['nativeSymbolEntries'] = {name: {'address': address, 'module': 'main', 'processor': 'arm9', 'kind': 'function', 'mode': 'thumb' if name in THUMB_SYMBOLS else 'arm'} for name, address in report['nativeSymbols'].items()}
+    report.pop('nativeSymbolModes', None)
+    from link_runtime_unit import validate as validate_link
+    from save_link_snapshots import freeze_link
+    linked = []
+    for record, code in matches.values():
+        record.update({'source': report['source'], 'sourceSha256': report['sourceSha256'], 'compilerSha256': report['compilerSha256']})
+        result = validate_link({**report, **record}, report['nativeSymbolEntries'])
+        directory = (ROOT / result['linkedElf']).parent
+        binary = directory / 'caller.bin'
+        proof = directory / 'validation.json'
+        if sha(binary.read_bytes()) != record['targetSha256']:
+            raise AssertionError('Actual MW linked caller differs from native span')
+        record.update(freeze_link(result))
+        linked.append(result)
+    report['isolatedRealMwCallerLinks'] = linked
+    report['linkerSha256'] = linked[0]['linkerSha256'] if linked else None
+    report['nativeCalleeCodeOrSourceCredit'] = 0
+    sys.path.insert(0, str(ROOT))
+    from mechanics_save_identity_library_oracle import validate
+    report['oracle'] = validate(arm, save, matches, ROOT)
+    report['oracleSource'] = 'mechanics_save_identity_library_oracle.py'
+    report['oracleSourceSha256'] = sha((ROOT / report['oracleSource']).read_bytes())
+    for record in report['matches']:
+        record.update({'source': report['source'], 'sourceSha256': report['sourceSha256'], 'compilerSha256': report['compilerSha256'], 'linked': False, 'state': 'function-matched'})
+    for path_name, expected in [('game.nds', report['romSha256']), ('save.sav', report['saveSha256'])]:
+        if sha((ROOT / 'inputs' / path_name).read_bytes()) != expected:
+            raise ValueError('Input changed during validation')
+    report['inputsUnchanged'] = True
+    report['limitations'] = ['Each full ARM caller span matches after declared ELF relocations and actual pinned MW linker output.', 'Original versus split source REL/RELA records, types, addends and encoded instructions are preserved; typed zero-size bindings provide no initialized callee bytes or callee credit.', 'The connected library oracle patches actual MW caller.bin bytes and reuses the earlier section3 caller/pointer source bodies.', 'Thumb SDK and memory routines remain native; affirmative online data results are separate bounded caller contracts.', 'Full host-module linking and whole-ROM reconstruction remain separate; raw identity/data paths promote no semantic partition bytes.']
+    path = ROOT / 'evidence/matches/mechanics-save-identity-library.json'
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(report, indent=2), encoding='utf-8')
+    print(json.dumps({'matchedFunctions': len(matches), 'matchedBytes': sum(r['bytes'] for r, code in matches.values()), 'compilerAttempts': len(all_records), 'oracleCases': report['oracle']['cases'], 'oracleCalls': report['oracle']['nativeAndRecompiledCalls'], 'unmatched': [name for name in SPECS if name not in matches]}, indent=2))
+
+if __name__ == '__main__':
+    main()

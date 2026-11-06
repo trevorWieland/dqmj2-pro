@@ -1,0 +1,2 @@
+#include "context.h"
+int native_main_020982e4(DWCHttp*http){char text[8];u32 length;char*body;if(native_fn_020988bc(http,native_data_020dedbc,native_data_020dedc8))return 1;body=native_fn_0201d984(http->req.buffer,native_data_020dedd0);length=native_fn_0201d69c(body+4);if(length){native_fn_020061ac(text,7,native_data_020dedd8,length);if(native_fn_020988bc(http,native_data_020deddc,text))return 1;}return 0;}

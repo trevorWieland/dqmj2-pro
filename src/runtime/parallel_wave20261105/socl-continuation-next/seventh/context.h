@@ -1,0 +1,16 @@
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned long u32;
+typedef unsigned long long u64;
+typedef int s32;
+typedef struct {u8 master[48],cached,reuse;u16 method;u8 randoms[64],session[32];} ConnectionPrefix;
+typedef struct {u8 session[32],master[48];u32 when,ip;u16 port;u8 valid,padding;} SessionView;
+extern SessionView native_data_021d1748[4];
+extern u32 native_fn_02007ff4(void);
+extern void native_fn_02008008(u32);
+extern u64 native_fn_02007a9c(void);
+extern void native_fn_02008e0c(const void *,void *,u32);
+extern s32 native_fn_0201b248(const void *,const void *,u32);
+extern void native_main_020909c8(ConnectionPrefix *,u32,u16);
+extern void native_main_02090a3c(ConnectionPrefix *,u32,u16);
+extern void native_main_02090ae8(ConnectionPrefix *);

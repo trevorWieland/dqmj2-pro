@@ -1,0 +1,2 @@
+#include "context.h"
+int native_main_02098adc(DWCHttp*http,DWCHttpBuffer*buf,int len){DWCAuthAlloc alloc=http->param.alloc;DWCAuthFree free=http->param.free;char*ptr;if(len<=0)return 0;ptr=alloc((unsigned long)native_data_020deeec,buf->length+len);if(!ptr)return 0;native_fn_02008e0c(buf->buffer,ptr,buf->length);free((unsigned long)native_data_020deed8,buf->buffer,0);if(!ptr)return 0;buf->write_index=(char*)((u32)buf->write_index+((u32)ptr-(u32)buf->buffer));buf->length+=len;buf->buffer=ptr;buf->buffer_tail=ptr+buf->length;return 1;}

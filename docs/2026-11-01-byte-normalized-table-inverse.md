@@ -1,0 +1,13 @@
+# Byte-normalized inverse table lookup
+
+Run `python match_mechanics_save_20261101_lane_table_inverse.py`. The ordinary C body at main ARM 0x0207B6AC/60 matches all native bytes after genuine compiler and MWLD linking. The original 80-byte helper at 0x0207B3A0 executes without providers. The new C source is separate from the preserved breadth hypothesis, with identical C bytes.
+
+The helper loads a pointer through 0x021C674C+4, reads a signed count at pointer+4, then scans eight-byte rows through 0x021C674C+8 for a matching byte at row+1. It returns the first matching row index or zero. The parent tries full IDs 0..255, compares only the low eight bits of each helper result to its full incoming query, and returns the matching ID or zero. A missing helper result and row zero can both yield zero; this is not a bijective inverse or a validated asset format.
+
+The matrix has 351 contexts, 702 actual original/compiled parent returns, and 163,830 separately observed original helper returns. It covers every low-byte incoming query, high-word and negative incoming words, signed nonpositive row counts, duplicate IDs, first/last entries, no matches, and supplied row indices 256/257 whose result bytes wrap. Full tracked memory and registers, ordered reads, helper arguments and raw return words, instruction coverage, actual return, stack canaries, and logical data/fetch bounds are checked. Neither routine writes data in these cases.
+
+A complete wrong C source omits the helper-return byte normalization. Four cases produce eight actual returns, two independent rejections and two positive coincidences. A separate missing-row-backing control stops at the logical read guard with no parent return or post-fault credit. Synthetic negative count values skip all row reads. These controls establish fixture domains, not application table limits or import restrictions.
+
+The initial 1,331-case attempt hit the inherited 500,000-instruction cap on duplicate-table work and remains archived as an incomplete failure with zero return or source credit. The final matrix removes redundant profiles while retaining all 256 incoming low queries and the edge domains, and uses a stated 1,000,000-instruction bound. Unexpected caps still fail. The failed attempt is not classified as nonreturning behavior.
+
+Source, compiler flags, current object, genuine linked output, native module/span, case digest, and replay dependencies are independently pinned. Complete evidence uses deterministic gzip. Native table initialization, resource lifetime, original asset identity, callers, save-bank selection, chronology, and semantic meanings remain unproved. No unknown-save-byte interpretation follows from this function.

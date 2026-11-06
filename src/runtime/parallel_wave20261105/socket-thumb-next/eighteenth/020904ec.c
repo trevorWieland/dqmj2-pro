@@ -1,0 +1,2 @@
+#include "context.h"
+int native_main_020904ec(int value,void *argument){AddressView *address=(AddressView *)argument;u32 localIp,localPort;if(!value){return -39;}localIp=native_fn_020900f4();localPort=(u32)(value?((SocketView *)value)->local74:0);if(localIp==0){localPort=0;}address->length0=sizeof(AddressView);address->family1=2;address->port2=SWAP16(localPort);address->address4=SWAP32(localIp);return 0;}

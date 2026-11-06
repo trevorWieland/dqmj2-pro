@@ -1,0 +1,25 @@
+typedef unsigned char u8;
+typedef signed short s16;
+typedef unsigned short u16;
+typedef signed int s32;
+typedef unsigned int u32;
+typedef unsigned long long u64;
+typedef long long s64;
+typedef struct Vec3 { s32 x; s32 y; s32 z; } Vec3;
+typedef struct Mtx33 { s32 words[9]; } Mtx33;
+typedef struct CameraView { u8 gap0[8]; s32 angle8; u32 wordc; u32 word10; u32 word14; s32 angle18; Vec3 position; Vec3 target; Vec3 up; s32 sine40; s32 cosine44; u8 dirty48; u8 gap49[3]; } CameraView;
+typedef struct CurrentState { u8 gap0[8]; CameraView *current; } CurrentState;
+extern CurrentState native_data_020edd0c;
+extern const s16 native_math_sincos_020d3fe0[8192];
+extern void native_fn_02000ce8(Mtx33 *);
+extern void native_fn_020280a0(Mtx33 *, s32);
+extern void native_fn_02028044(Mtx33 *, s32);
+extern void native_fn_0200103c(const Vec3 *, const Mtx33 *, Vec3 *);
+
+typedef char MatrixSize[(sizeof(Mtx33) == 36) ? 1 : -1];
+typedef char VectorSize[(sizeof(Vec3) == 12) ? 1 : -1];
+typedef char RollOffset[((u32)&((CameraView *)0)->angle18 == 24) ? 1 : -1];
+typedef char PositionOffset[((u32)&((CameraView *)0)->position == 28) ? 1 : -1];
+typedef char TargetOffset[((u32)&((CameraView *)0)->target == 40) ? 1 : -1];
+typedef char UpOffset[((u32)&((CameraView *)0)->up == 52) ? 1 : -1];
+typedef char CurrentOffset[((u32)&((CurrentState *)0)->current == 8 && sizeof(CurrentState) == 12) ? 1 : -1];

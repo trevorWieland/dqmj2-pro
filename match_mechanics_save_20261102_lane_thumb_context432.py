@@ -1,0 +1,31 @@
+import gzip
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import sys
+ROOT=Path(__file__).resolve().parent
+sys.dont_write_bytecode=True
+sys.path[:0]=[str(ROOT),str(ROOT/'evidence/application'),str(ROOT/'deps/native')]
+from match_mechanics_save_20261029_record33 import sha,file_identity,verify_inputs,ROM_SHA,SAVE_SHA,MAIN_SHA
+from match_mechanics_save_20261031_lane_pointer_sequence import native_entry
+from match_mechanics_save_20261102_lane_state_dispatch import runtime_files
+from source_dependencies import dependencies_current
+SOURCE='src/mechanics_save/20261102_lane_thumb_context/native_main_0209f80c.c'
+SOURCE_SHA='2efa3adc8656697b95a11ef8c9265cab96fe8e1ef759bcee5302d704a3fe565c'
+PRODUCER='evidence/application/save_core_thumb_context431_fixtures_20261102.py'
+REPORT='evidence/application/save-core-thumb-context431-20261102.json'
+BAD_SOURCE='nonmatching/save-core/20261102-breadth427/native_main_0209f80c.c'
+def main():
+ verify_inputs();assert sha((ROOT/SOURCE).read_bytes())==SOURCE_SHA;result=subprocess.run([sys.executable,'-I','-S',str(ROOT/PRODUCER)],cwd=ROOT,capture_output=True,text=True,timeout=600);assert result.returncode==0,result.stdout+result.stderr;r=json.loads((ROOT/REPORT).read_text());assert (r['pairs'],r['properOriginalAndSourceReturns'],r['properWrongReturns'],r['actualHelperReturns'],r['suppliedRngCalls'])==(384,768,768,87760,1536) and r['wrongRejects']==[384,24] and r['wrongPositiveControls']==[0,360];side=r['sidecar'];packed=(ROOT/side['path']).read_bytes();assert sha(packed)==side['sha256'] and sha(gzip.decompress(packed))==side['caseSha256'];row=dict(r['candidate']);row.update(row['realLinkSnapshot']);assert row['mode']=='thumb' and row['bytes']==row['compiledBytes']==820 and row['exactByteEqual'] and row['sourceSha256']==SOURCE_SHA and dependencies_current(row)
+ for key,digest in [('object','objectSha256'),('isolatedCallerBinary','isolatedCallerBinarySha256'),('isolatedCallerLinkValidation','isolatedCallerLinkValidationSha256')]:assert sha((ROOT/row[key]).read_bytes())==row[digest]
+ body=(ROOT/row['isolatedCallerBinary']).read_bytes();v=json.loads((ROOT/row['isolatedCallerLinkValidation']).read_text());assert v['sourceObjectSha256']==row['objectSha256'] and v['sourceSha256']==SOURCE_SHA and v['exactCallerBytes'];assert v['linkedCallerSha256']==v['nativeSpanSha256']==sha(body) and v['linkerSha256']=='bd8a36a81d79af96f02fdd06e114ae97ea47acc801775a0701f93b7be139fa74' and v['linkerAttempt']['exitCode']==0
+ cache={};entries={row['name']:native_entry('main',0x0209F80C,cache)};meta,arm,cfg=cache['main'];assert body==arm[0x9F80C:0x9FB40]
+ for relocation in row['relocations']:entries[relocation['symbol']]=native_entry('main',int(relocation['target'],0),cache)
+ row.update(outputSha256=sha(body),linked=False,exactBytes=820,exactAfterDeclaredRelocation=True,exactAfterRealMwLink=True,oracle=dict(supported=True,cases=384,actualReturns=768,report=REPORT,reportSha256=sha((ROOT/REPORT).read_bytes()),limits=r['limits']),returnContract=dict(sourceReturnType='u32',sourceInputType='s32',physicalR0Compared=True,apiMeaningProven=False,qualification='Opaque fullwordR0:rawcontext pointer orpriorbyte orsetterword ontested branches;no success label'),ordinaryCReconstruction=True)
+ deps=runtime_files()|{SOURCE,PRODUCER,REPORT,side['path'],'match_mechanics_save_20261102_lane_thumb_context432.py','evidence/application/save_core_thumb_unit425_20261102.py',BAD_SOURCE,'evidence/attempts/save_core_thumb431_initial_unmapped_20261102.py','evidence/attempts/save-core-thumb431-initial-sp-banking-20261102.json','docs/2026-11-02-thumb-context-constructor-matching-source.md'};deps.update(x['source'] for x in r['controls']);deps.update(x[0]['symbolsFile'] for x in cache.values());snapshot='evidence/verification/accepted-cohort141-identities-v2-20261101.json';deps.add(snapshot);accepted=json.loads((ROOT/snapshot).read_text())['functions'];assert not[x for x in accepted if x.get('processor')=='arm9' and x.get('program','')=='' and x['module']=='main' and 0x0209F80C<x['address']+int(x.get('bytes') or 1) and x['address']<0x0209FB40]
+ selected=[]
+ for address,source,prototype in [(0x020A3D70,'src/runtime/thumb-runtime02/native_main_020a3d70.c','u32 native_main_020a3d70(void)'),(0x020A3D7C,'src/runtime/thumb-runtime02/native_main_020a3d7c.c','u32 native_main_020a3d7c(u32 arg0)')]:
+  item=next(x for x in accepted if x['module']=='main' and x['address']==address);assert item['source']==source and sha((ROOT/source).read_bytes())==item['sourceSha256'] and prototype in (ROOT/source).read_text();selected.append(dict(address=hex(address),source=source,sourceSha256=item['sourceSha256'],prototype=prototype));deps.add(source)
+ verify_inputs();out=dict(schemaVersion=1,romSha256=ROM_SHA,saveSha256=SAVE_SHA,arm9Sha256=MAIN_SHA,matches=[row],matchedFunctions=1,matchedBytes=820,nativeSymbolEntries=entries,nativeSymbols={n:x['address'] for n,x in entries.items()},nativeSymbolModules={},sourceDependencies=[],replayDependencies=[file_identity(p) for p in sorted(deps)],replayRequires=[],selectedInterfaceClosure=selected,oracle=dict(pairs=384,actualOriginalAndSourceReturns=768,actualWrongReturns=768,actualNativeHelperReturns=87760,suppliedRngCalls=1536,nativeCaseDigest=side['caseSha256']),negativeControls=dict(rejects=[384,24],positiveControls=[0,360],allWrongRunsReturn=True),knownBadHypothesis=dict(path=BAD_SOURCE,sha256=sha((ROOT/BAD_SOURCE).read_bytes()),reason='Finalcontext pointer truncated tou8 thenusedasaddress;prior824-byte hypothesis isnot a safeportable alternative'),wholeLinkedRebuild=False,registrationPerformedByThisScript=False,inputsUnchanged=True,limits=r['limits']+['Onlyselected directCinterfaces A3D70(void)/A3D7C(u32) alreadyhave reconstructed definitions. Otheroriginal helpers execute inthis proof buthave rawword call-site views,not invented originalC declarations. Reset16 sourceexperiment isnot registered orcredited.']);p=ROOT/'evidence/matches/mechanics-save-20261102-lane-thumb-context432.json';p.write_text(json.dumps(out,indent=2)+'\n');print(json.dumps(dict(matchedBytes=820,properReturns=768,wrongReturns=768,helpers=87760,reportSha256=sha(p.read_bytes()))))
+if __name__=='__main__':main()

@@ -1,0 +1,7 @@
+# Main alarm72: original BSS section addressing — 2026-11-02
+
+Main ARM02038970/72 genuinely matches from ordinary C. The source scans eight allocation-mask bits and updates the first clear bit, retaining complete compiler/link equality. This is source byte-matching evidence, with zero native behavioral returns, audio output, real scheduling or game-scene claims.
+
+The first typed-extern hypothesis matched69/72 bytes because it treated the original section-base literal020F4C38 as the lock address. Original instructions actually access the lock at section`+4`, address020F4C3C. A separate two-word complete external section view accesses index1 and restores every original byte. No binary patch, synthetic lock definition or linker exception is used. Original BSS remains scaffolding with zero additional data credit. The incorrect standalone view and exact mismatch remain archived.
+
+Source-interface and configured-boundary audits pass:13,614 spans examined, one direct entry candidate and no interior entry or conflicting start. Files are comment-free and below500 lines. Actual-parent Python `-I -S` reproduction preserves the full report hash. Run `python reproduce_main_alarm_section_view_20261102.py`, `python match_main_alarm72_20261102.py` and the corresponding interface/boundary audits. Native behavior, indirect entry, module/ROM acceptance and a complete Windows/Android game remain separate evidence states.

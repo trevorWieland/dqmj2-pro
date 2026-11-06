@@ -1,0 +1,26 @@
+# Item threshold caller and signed absent result - 2026-10-31
+
+This is a zero-new-source-credit semantic extension of the frozen main02066A7C/32 candidate. Replay `python prove_save_core_item_caller_20261031.py`. Normal and parent-directory Python `-I -S` runs reproduce receipt69799099cac1ce7bb3d26e59b915b9cdc84cd5e6a75ca23d76de3fd8b07e6463 and producer2ae12c65c697620a894acff9d18f492eead78103a86220cb163b5a81ceb018d8. Native case digest is8b862875f8f53f60c32237ef49625df5de77fe4bb29121822d44ab0ea5b33cb1. Source/native/input identities are pinned separately from current-root compiler/link provenance. The original caller and RNG execute;C6E0/C7EC effects remain explicit providers.
+
+| Module/mode/entry | Measured contract or fields |
+|---|---|
+| main ARM02066A7C/32 | Full item word into original02065D88;descriptor+2C==8 selects unsigned byte+2A,otherwise fullFFFFFFFF. Read-only. |
+| ov001 ARM0220B770/16 | No input consumed;returns byte223E088+1B,used as item ID. |
+| ov001 ARM0220B74C/16 | No input consumed;returns byte+1A,used as index. |
+| ov001 ARM0220B794/16 | No input consumed;returns byte+1C,used as target kind. |
+| ov001 ARM021DB438/124 | Index0..3 selects one of four fixed bases;kind0..2 adds440*kind. Outside those local domains returns0. Caller kind4 bypasses it with0. |
+| main ARM0203D294/72 | Bound100 here;actual LCG updates word020F6044,then actual02026350 returns the modulus used by the caller. |
+| ov001 ARM0220C888/356 | No incoming argument used;returns0. Actual352-byte instruction prefix plus4-byte literal. Reads/writes synthetic context state+E,counter+D and completion byte+3. |
+| ov001 ARM0220C6E0 and0220C7EC | Observed three call words are resolved target,item ID,index. Exactly these two whole effects are supplied in this proof;their true memory effects,eligibility and consumed resource contracts are not asserted. |
+
+At C888 stage byte+E0,original main66A7C produces the full threshold word and original3D294 runs with100. The signed comparison is at0220C8E0. RNG<threshold stores stage10,otherwise100. Thus absentFFFFFFFF is signed-1 and rejects the measured nonnegative RNG outcomes;truncatedFF would be255 and admit them. Every one of the100 outcomes0..99 is produced by a chosen predecessor seed through the original LCG and modulus,not by a supplied RNG.
+
+The actual ItemTbl file has256 records of88 bytes after its8-byte header,SHA5aa45bb4c0de39185246defd9698ae28edef64144d30c583751b16beb5eb64b7. Only native IDs9 and243 have raw+2C8;both have+2A100. This identifies literal fields/native IDs,not book/equipment names. All256 original record bytes are tested. Synthetic field variants cover0/1/99/100/255 thresholds and non8 selectors without changing disk inputs.
+
+The states are sequential conditions in one invocation. Stage10 invokes C6E0,clears counter+D,then stores20. Stage20 invokes C7EC immediately:raw nonzero clears the counter and stores30;zero increments the byte with wrap and changes to30 only when the resulting byte exceeds30. Stage30 then increments again,even when just reached from20. Resulting counter>30 stores100. Stage100 resets+E0 and writes+3=14 in that same invocation. Unrecognized stage bytes return0 after the initial getters/resolution. These local state transitions do not establish an original frame duration or scene meaning.
+
+There are1,907 independent profiles:1,907 original and1,907 correct-source-selector top returns,plus1,907 top returns with a fully compiled wrong leaf that truncates absence. The original/correct executions contain29,494 separately observed actual native dependency returns and1,416 supplied effect entries. Every one of the88 caller instructions is observed. Fresh state,actual external call edges,legal provider caller-clobbers,SP/callee-saved preservation,ordered context/RNG writes and unchanged ItemTbl bytes are mandatory. Effect providers make no memory writes and return declared raw words. Full traces are deterministic gzip.
+
+The wrong leaf gives1,254 independent context/effect-contract rejections and653 positives. A concrete counterexample uses actual item0 bytes,synthetic stage0/counter77/index0/kind0 and actual RNG0. Native stores context+3=14,leaves counter77,ends+E0 and calls neither effect. The wrong leaf calls both effects and ends counter1,+E20,leaving+3A5. This demonstrates the full-word C contract;it does not prove that ordinary gameplay routes item0 into this caller. The actual ItemTbl contents alone do not prove menu eligibility,dispatch selection or source-scene reachability.
+
+The direct branch inventory found only this qualified ov001 caller of66A7C in the current exported assembly. Indirect pointers/unexported regions are not claimed complete. Static C6E0 leads reference descriptor+29/+2B/+30 and440-stride live records,but those bodies are not executed here. No allocation02076D70,slot02062F3C,rebuild02078978 orlibrary0207AEBC direct edge occurs in C888. Inventory consumption,paid-operation gates,those anchors,enclosing prerequisites,saved-field persistence and semantic names remain unresolved. Only context/RNG changes and provider contracts are measured. There are no application,baseline,input or accepted-source edits.

@@ -1,0 +1,2 @@
+#include "context.h"
+void native_main_020b92b4(void*unused){(void)unused;if(!native_data_021d3028)return;native_fn_020b90ec(1);while(native_data_021d3028->f0){switch(native_data_021d3028->f0){case 1:native_fn_020b9328();break;case 2:native_fn_020b9364();break;case 3:native_fn_020b9404();break;case 4:native_fn_020b94b0();break;case 5:native_fn_020b95d8();break;case 6:native_fn_020b9650();break;case 7:native_fn_020b97bc();break;}}}

@@ -1,0 +1,13 @@
+# 2026-11-02: Projection context word and native comparison
+
+The unaccepted 362 hypotheses still inherited an incorrect `(u8)native_data_021c4f60` pointer view from339. One temporary was reused first for projected bytes, then for the full context address. Keeping its byte type truncated later word accesses to address00000074. New364 alternatives either keep a full word or separate those lifetimes; old source files and all accepted sources remain unchanged.
+
+The preferred full-word hypothesis is still nonmatching: default 568 compiled bytes/327 matching against native 576;speed 580/168. It preserves the 32-byte output object, 64-byte feature object, 29-entry context-list view and actual selected helper signatures. Byte-proximity is zero accepted coverage.
+
+Native365 has 227 original and 227 preferred compiled parent returns. It checks the complete 256-byte context, exact ordered count/list writes, unchanged 132-byte record, saved registers, stack canaries and bounded reads/writes. Two explicitly supplied four-word helpers write 64 feature bytes and 32 projected bytes with legal volatile-register/flag clobbers. Their data feasibility and native game-data dependencies remain unproved. The matrix covers null record,ID0,signed16 IDs,variants,0..28 occurrences of value 5,the 23/24 threshold,special indices 1..6/24 and projected values 0..8. Physical R0 is compared without assigning public return/status meaning.
+
+For the supplied outputs, at least 24 values equal to 5 among indices 1..28 yield a one-entry E0 list. Otherwise, all seven selected indices equal to 5 add E1 and exclude those indices from normal entries. Remaining values 0/2/3/4/5/6/7 append in ascending value then index order, encoded as 8*(index-1)+value. Value 1 and values outside0..7 are ignored. Null/ID0 still clear the context count and 29 list bytes. These are measured transient context effects; no serialized save-field or ownership meaning follows.
+
+The complete prior typed-array C has 19 returning positive controls on bypass/E0 paths. On 208 other profiles its truncated context access faults at00000074. Those cases are failures, counted separately with no parent return or postfault-state credit. This is a concrete reason to prefer the full-word source over a smaller/higher byte score.
+
+Run `python replay_save_core_projection366_20261102.py`. The complete family contains 11 compileable hypotheses/22 genuine profiles over three native identities/1632 bytes, all zero exact coverage. It includes the compile-only508/548 loaders and the 454-return projection comparison, keeping historical source/hash identities and current object/link provenance separate. No bank,application adapter,original input or existing preference is changed.

@@ -1,0 +1,34 @@
+name: Source integrity without ROM inputs
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  GIT_CONFIG_COUNT: "2"
+  GIT_CONFIG_KEY_0: core.autocrlf
+  GIT_CONFIG_VALUE_0: "false"
+  GIT_CONFIG_KEY_1: core.longpaths
+  GIT_CONFIG_VALUE_1: "true"
+
+jobs:
+  verify-public-source:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: "3.13.5"
+      - name: Check accepted source hashes and include closure
+        shell: pwsh
+        run: python public_tools/verify_sources.py --root . --report build/public-source-integrity.json
+      - name: Check verifier rejection cases
+        shell: pwsh
+        run: python -m unittest discover -s public_tools -p "test_*.py"

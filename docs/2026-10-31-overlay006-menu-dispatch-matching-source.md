@@ -1,0 +1,29 @@
+# Overlay006 dispatch source and width repair, 2026-10-31
+
+The ARM9 ARM routine at ov006 `021E3064` now matches all 2,728 native bytes through fresh pinned MWCC compilation, ELF relocation comparison and genuine MWLD linking. Its source is ordinary C with a switch, conditional calls, arithmetic and explicit word/halfword data reads. Compiler-generated literals and dispatch data originate from this source. No assembly, opcode changes, padding or inherited-register arguments are introduced. Integrator acceptance remains pending; this handoff assigns zero accepted source credit.
+
+The authoritative private ROM has 175,959,612 bytes and SHA-256 `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`. Overlay006 SHA-256 is `fb9cb28ea400207bda442e3265da73af994866cf3a6c352b46a11db59835d341`, and main initialized input SHA-256 is `ea530f917c534c3fa2b036288dd9e4551e3cbf68b5fc36713e1217704148534f`. The C source hash is `0a21a1d9c5fa433b7a64f9f6ce8a6cf7ddf963a80adeb73106c8e34a1a9606d0`; its header hash is `ff1b0d0196c5c77dad1df250c2bab748cbd27d62cb2477e0ed20a50e58e9aebd`.
+
+The initial 2,710-byte-similar draft had two real width errors. Native `021E31E0` uses LDR to read the runtime word window at `02217BF0`, while the draft dereferenced a byte-address view as a byte. Native `021E34E8` uses LDRH for the ten-entry halfword table at `0220D0F0`, while the draft again read a byte. Explicit `u32` and `u16` reads preserve the measured widths. Retaining an increment expression for the first of three counted bits closes the remaining instruction-selection difference. One measured variant closes all 18 differing bytes; no allocation permutation sweep was needed.
+
+## Native evidence and boundaries
+
+There are 125 deterministic synthetic recipes and 250 actual original/source caller returns. They include 498 actual native dependency returns and 488 explicitly provided lower UI services. Maximum native instructions are 72 under the 2,000 bound. Original/source executions compare every final general register, condition flags, all RAM, private stack, full PC sequence and write sequence. The independent model verifies protocol arguments/order, physical return words and complete RAM effects. It requires actual top return, stack restoration, preserved registers and completion of every nested native call.
+
+All selector values 0..24 exercise dispatch with UI triggers inactive, with additional out-of-range selectors. Active paths 5, 9 and 11 and the unconditional countdown path 24 receive further tests. Other active UI paths remain explicitly unsupported. These are isolated caller contracts with supplied lower UI returns and no supplied memory effects; they do not establish a loaded menu, valid resources or ordinary scene reachability.
+
+Actual main getters `02067748` and `020679F0` run against explicit synthetic roots. Actual overlay input thunk `021DF150` tails into main `0202A634`; actual main raw-state thunk `02041800` tails into byte getter `020417F8`. Both entries in each native tail chain are separately checked against their qualified module/address/mode, expected return and restored stack, without substituting returns. Actual state setter `021E2F58` writes the next selector at `02217BE0+0xC`. Actual unsigned classifier `021E3B7C` runs across every interval boundary, including zero and `FFFFFFFF`.
+
+The runtime four-word window at `02217BF0` is outside the initialized overlay image and overlaps the observed prefix at `02217BE0+0x10`. Fixture inputs supply those words explicitly, without claiming an initialized ROM value or complete historical aggregate extent. Values with nonzero high bytes prove full-word argument forwarding to the supplied resolver. A separately compiled and genuinely linked byte-width C control is rejected at that resolver's argument gate. Synthetic resolver words do not establish valid resource IDs.
+
+The original ten-halfword table remains unchanged. Its measured entries are `006A,006B,006C,007D,007E,007F,0080,0081,0082,0083`; their upper bytes are zero. The original LDRH and exact linked bytes establish the halfword access even though these current table values alone would not distinguish its high byte. No unobserved table content is invented.
+
+Path 9 counts only the low three bits of a nonzero raw flag byte; tests include all combinations and high-bit-only values. Path 24 checks countdown values below/at/above its exit, avoiding signed-minimum subtraction overflow. Other numeric sums use modest signed inputs. Naming as a menu/dispatch routine is organizational; raw selectors, IDs, masks and return words retain their measured meanings and limitations.
+
+## Portable replay
+
+Run `python match_ov006_menu33_20261031.py` from the repository or invoke that script by its absolute path from another directory. The script resolves local inputs, tools and output paths independently of the working directory, checks Python 3.13.5 and Unicorn 2.1.4, regenerates both genuine links and the rejected-width control, and writes `evidence/matches/ov006-20261031-menu33.json`.
+
+Normal and unrelated-directory replays compare all report fields except volatile `createdUtc`. Their stable digest is `7fbcb181862a12994b4576e0ee1cc93b46b1e60edff60c7558c2edd9799af3c9`. A separately pinned manifest identifies the frozen handoff files; full-report SHA-256 is transfer integrity rather than a stable replay identity. Complete execution results are checked before compact case serialization, with deterministic hashed gzip traces regenerated under `work/ol33-proof`.
+
+This source-only handoff excludes registry, ledger, build artifacts, project configuration and application files. Full-module/ROM gates and every previous match remain the integrator's responsibility. Unchanged original executable dependencies and successful image equality add no reconstructed source credit.

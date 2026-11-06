@@ -1,0 +1,11 @@
+# Paired native access-width contexts
+
+The candidate-local access-width experiment revisits 61 existing ARM functions totaling 34,348 native bytes from breadth12/13. It adds no unique breadth and no accepted source. Twelve attempts improve same-offset byte similarity, three worsen and 46 remain equal; none becomes an exact compiler match. Sixty-one generated C candidates are archived separately from reconstructed source.
+
+The detector follows limited register/literal bindings and records observed aligned load/store widths. Mixed widths and writeback are rejected. A local load width is a hypothesis about a candidate's use, not a complete global structure or array layout. Reused registers can make this conservative detector miss valid evidence: it does not infer the 0x021D6BC0 word table in roster refresh because that register is reused later. Manual native review supplies that correction in the separate matching 380-byte reconstruction. The detector's output must not override better float, pointer or measured native contracts.
+
+The paired run retains captured prior contexts and C return declarations. Only inferred global contexts and corresponding output declarations change. The baseline and all accepted source files remain untouched. Similarity is neither a semantic verdict nor accepted executable coverage.
+
+Run `python archive_global_width_inputs_20261031.py --restore` before `python draft_main_global_width_pair_20261031.py` in a clean checkout. The archive contains 473 explicit prior reports, source drafts, assembly inputs and contexts needed by the queue; restoration verifies existing files and never overwrites different bytes. All are under `generated/drafts/main-global-width-pair-20261031/seed-inputs`. Output candidates and their manifest are under that experiment's generated directory. Original executable code and generated disassembly remain scaffolding with zero decompilation credit.
+
+Results are in `evidence/attempts/main-global-width-pair-20261031.json`. Native comparisons, input hashes, retained failures and compiler commands are recorded per candidate. The generator and detector are separate from the frozen drafting framework. Any acceptance still requires source review, genuine linking, native behavior checks and preservation of earlier matches.

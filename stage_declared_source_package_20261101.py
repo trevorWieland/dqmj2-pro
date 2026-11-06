@@ -1,0 +1,64 @@
+import argparse
+import subprocess
+import sys
+from project import ROOT, read_json, write_json, sha256
+import oracle_source_closure_20261031
+import stage_verified_cohort
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('configuration')
+    options = parser.parse_args()
+    configuration = read_json(ROOT / options.configuration)
+    cohort = configuration['cohort']
+    extra = [options.configuration, 'stage_declared_source_package_20261101.py', *configuration['extra']]
+    declared, dependencies, diagnostic = set(), [], []
+    for name in configuration['manifests']:
+        extra.append(name)
+        for row in read_json(ROOT / name)['files']:
+            relative = row['path'].replace(chr(92), '/')
+            path = (ROOT / relative).resolve()
+            assert path.is_relative_to(ROOT) and path.is_file()
+            if relative.split('/')[0] in ['deps', 'tools', 'inputs']:
+                assert sha256(path) == row['sha256']
+                dependencies.append(dict(path=relative, sha256=sha256(path)))
+                continue
+            assert relative.split('/')[0] not in stage_verified_cohort.EXCLUDED
+            assert path.suffix.lower() not in ['.bin', '.nds', '.sav', '.o', '.exe', '.dll']
+            declared.add(relative)
+            if relative.startswith('nonmatching/') and sha256(path) == row['sha256']:
+                diagnostic.append(dict(path=relative, sha256=sha256(path), pinManifest=name, pinManifestSha256=sha256(ROOT / name)))
+    dependency_path = f'evidence/verification/cohort{cohort}-copied-reference-inputs-20261101.json'
+    diagnostic_path = f'evidence/verification/cohort{cohort}-frozen-diagnostic-sources-20261101.json'
+    write_json(ROOT / dependency_path, dict(copiedDependencies=dependencies,
+        committedAsAuthoredSource=False, copiedByFreshInputSnapshot=True, sourceCredit=0))
+    write_json(ROOT / diagnostic_path, dict(frozenDiagnosticSources=diagnostic, sourceCredit=0,
+        scope='Exact handoff-pinned diagnostic alternatives; no positive source credit'))
+    extra.extend([*declared, dependency_path, diagnostic_path])
+    for label in configuration['archives']:
+        folder = ROOT / 'provenance/handoffs' / label
+        assert folder.is_dir()
+        extra.extend(path.relative_to(ROOT).as_posix() for path in folder.glob('*.json'))
+    for name in configuration.get('archivedEvidenceDirectories', []):
+        folder = (ROOT / name).resolve()
+        assert folder.is_relative_to(ROOT / 'evidence')
+        extra.extend(path.relative_to(ROOT).as_posix() for path in folder.glob('*.json'))
+    extra.extend(path.relative_to(ROOT).as_posix() for path in (ROOT / 'evidence/verification').glob(f'cohort{cohort}-*20261101.json'))
+    assert all((ROOT / name).is_file() for name in extra)
+    subprocess.run(['git', 'add', '--', *sorted(declared), *configuration.get('traces', [])], cwd=ROOT, check=True)
+    original = oracle_source_closure_20261031.collect
+
+    def captured_collect():
+        result = original()
+        write_json(ROOT / f'evidence/verification/cohort{cohort}-captured-oracle-closure-20261031.json', result)
+        return result
+
+    oracle_source_closure_20261031.collect = captured_collect
+    sys.argv = ['stage_verified_cohort.py', '--cohort', str(cohort), '--extra', *sorted(set(extra))]
+    stage_verified_cohort.main()
+    subprocess.run(['git', 'add', '--', f'evidence/verification/cohort{cohort}-captured-oracle-closure-20261031.json'], cwd=ROOT, check=True)
+
+
+if __name__ == '__main__':
+    main()

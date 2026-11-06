@@ -1,0 +1,10 @@
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef double f64;
+extern f64 native_fn_02024504(u32);
+extern f64 native_fn_02024540(f64,f64);
+extern f64 native_fn_02023f78(f64,f64);
+extern u32 native_fn_020243e0(f64);
+extern u8 native_data_ov001_0224992c[];

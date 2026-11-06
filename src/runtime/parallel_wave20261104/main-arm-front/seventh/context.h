@@ -1,0 +1,10 @@
+typedef unsigned int u32;
+typedef signed int s32;
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef signed short s16;
+typedef struct {u8 opaque00[0x60];s32 *pointer60;u8 opaque64[0x100];s32 word164;u8 opaque168[0x74];s8 byte1dc;u8 opaque1dd[2];u8 byte1df;} Object;
+typedef struct {u16 word0;u16 word2;u16 word4;} Entry;
+Entry *native_fn_02042d58(u32,s32,s32 *);
+u32 native_fn_0205e7a8(u32,u32);

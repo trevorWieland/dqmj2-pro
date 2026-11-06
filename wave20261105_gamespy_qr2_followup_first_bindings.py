@@ -1,0 +1,84 @@
+import copy
+import hashlib
+import re
+import struct
+from project import ROOT,read_json,sha256
+from wave20261105_gamespy_qr2_followup_first_compiler import INPUT,INPUT_SHA,LANE
+from link_runtime_unit import verify_binding
+from capstone import Cs,CS_ARCH_ARM,CS_MODE_THUMB
+
+NATIVE=LANE/'native-inputs.json'
+NATIVE_SHA='8931536ae5af8eca9f9ee67b35524cad0f69343b841d66018d7b2436a611067d'
+
+
+def inputs():
+    if sha256(NATIVE)!=NATIVE_SHA or sha256(INPUT)!=INPUT_SHA:raise ValueError('Frozen native/import contract changed')
+    value=read_json(NATIVE)
+    for key in ['image','inventory','relocations']:
+        path=value[key]
+        if sha256(ROOT/path['path'])!=path['sha256']:raise ValueError('Original module/inventory/relocations changed')
+    return value,(ROOT/value['image']['path']).read_bytes(),(ROOT/value['inventory']['path']).read_text(),(ROOT/value['relocations']['path']).read_text(),read_json(INPUT)
+
+
+def validate(row,rel,binding,value,image,inventory,records,imports):
+    if (row.get('program') or '',row['processor'],row['module'],row['mode'])!=('','arm9','main','thumb'):raise ValueError('Original full caller namespace differs')
+    caller=next((item for item in value['entries'] if item['address']==row['address']),None)
+    if caller is None or (row['bytes'],row['targetSha256'])!=(caller['bytes'],caller['targetSha256']):raise ValueError('Full native extent/identity differs')
+    address=int(row['address'],0);native=image[address-0x2000000:address-0x2000000+row['bytes']]
+    if hashlib.sha256(native).hexdigest()!=row['targetSha256'] or caller['canonicalInventoryRecord'] not in inventory.splitlines():raise ValueError('Full native caller/boundary changed')
+    origin=address+rel['offset'];matches=[line for line in caller['originalRelocationRecords'] if line.startswith(f'from:0x{origin:08x} ')]
+    if len(matches)!=1 or matches[0] not in records.splitlines():raise ValueError('Unique original relocation origin absent')
+    record=matches[0];match=re.fullmatch(r'from:0x[0-9a-f]+ kind:(thumb_call|thumb_call_arm|load) to:(0x[0-9a-f]+) module:main',record)
+    if match is None:raise ValueError('Original Thumb relocation kind/module differs')
+    kind,target=match[1],int(match[2],0)
+    if (binding.get('program') or '',binding['processor'],binding['module'],int(binding['address'],0))!=('','arm9','main',target):raise ValueError('Original binding CPU/program/module/entry differs')
+    if int(rel['target'],0)!=target:raise ValueError('Generated target differs from actual original import')
+    word=image[origin-0x2000000:origin-0x2000000+4]
+    if kind=='load':
+        if rel['type']!=2 or rel['addend']!=0 or struct.unpack('<I',word)[0]!=target or (binding['kind'],binding['mode'])!=('data','data'):raise ValueError('Original ABS32 word/addend/kind differs')
+        view=imports['dataViews'].get(hex(target))
+        allowed={35466952: ('int', 4, 'bss'), 35466956: ('struct in_addr[5]', 20, 'bss'), 34481612: ('const char[10]', 10, 'data'), 34481624: ('const char[10]', 10, 'data'), 34481636: ('const char[7]', 7, 'data'), 34481644: ('const char[2]', 2, 'data'), 34481648: ('const char[2]', 2, 'data'), 34481652: ('const char[13]', 13, 'data'), 34481668: ('const char[9]', 9, 'data'), 34481680: ('const char[9]', 9, 'data'), 34481692: ('const char[11]', 11, 'data')}
+        if view is None or (view['type'],view['minimumBytes'],view['storage'])!=allowed.get(target):raise ValueError('Qualified original negotiation view differs')
+        storage='bss' if view['storage']=='bss' else 'data(?:\\(any\\))?'
+        canonical=next((line for line in inventory.splitlines() if re.fullmatch(r'\S+ kind:'+storage+r' addr:0x%08x'%target,line)),None)
+        if canonical is None:raise ValueError('Original negotiation data boundary differs')
+        if view['storage']=='data':
+            raw=image[target-0x2000000:target-0x2000000+view['minimumBytes']]
+            if raw!=bytes.fromhex(view['expectedHex']):raise ValueError('Original immutable negotiation data differs')
+            if target==0x20e1738 and raw!=bytes.fromhex('fdfc1e666ab2'):raise ValueError('Original six-byte NAT packet magic differs')
+        elif view['expectedHex'] or target<0x2000000+len(image):raise ValueError('Original BSS view differs')
+        result=dict(symbol=rel['symbol'],origin=hex(origin),target=hex(target),originalRecord=record,originalLiteralWord=word.hex(),canonicalInventoryRecord=canonical,typedView=view,storageExtentAuthorshipCredit=0)
+    else:
+        mode='arm' if kind=='thumb_call_arm' else 'thumb'
+        if rel['type']!=10 or rel['addend']!=-4 or (binding['kind'],binding['mode'])!=('function',mode):raise ValueError('Original THM_CALL/addend/mode differs')
+        decoded=list(Cs(CS_ARCH_ARM,CS_MODE_THUMB).disasm(word,origin))
+        if len(decoded)!=1 or decoded[0].size!=4 or decoded[0].mnemonic!=('blx' if mode=='arm' else 'bl') or decoded[0].op_str!='#'+hex(target):raise ValueError('Actual original Thumb branch opcode/entry differs')
+        canonical=next((line for line in inventory.splitlines() if re.fullmatch(r'\S+ kind:function\(%s,size=0x[0-9a-f]+\) addr:0x%08x'%(mode,target),line)),None)
+        if canonical is None:raise ValueError('Same-program original target mode/entry absent')
+        result=dict(symbol=rel['symbol'],origin=hex(origin),target=hex(target),originalRecord=record,nativeInstruction=word.hex(),actualMnemonic=decoded[0].mnemonic,canonicalInventoryRecord=canonical,calleeSourceCredit=0)
+    verify_binding(rel['symbol'],binding)
+    return result
+
+
+def verify_original(row,bindings):
+    value,image,inventory,records,imports=inputs()
+    witnesses=[validate(row,rel,bindings[rel['symbol']],value,image,inventory,records,imports) for rel in row['relocations']]
+    return dict(witnesses=witnesses,actualNativeThumbOpcodesAndEntriesChecked=True,oldNormalizerAndHelperParsersUnchanged=True,calleeSourceCredit=0,originalStorageAuthorshipCredit=0)
+
+
+def negative_controls(rows):
+    value,image,inventory,records,imports=inputs();rejected=[]
+    for row in rows:
+        for rel in row['relocations']:
+            binding=row['nativeSymbolEntries'][rel['symbol']]
+            cases=[('CPU','binding','processor','arm7'),('program','binding','program','child'),('module','binding','module','ov000'),('mode','binding','mode','thumb' if binding['mode']!='thumb' else 'arm'),('interior','binding','address',hex(int(binding['address'],0)+2)),('kind','binding','kind','data' if binding['kind']=='function' else 'function'),('origin','rel','offset',rel['offset']+2),('addend','rel','addend',rel['addend']+8),('type','rel','type',1),('caller-mode','row','mode','arm')]
+            for label,owner,key,wrong in cases:
+                objects={key:copy.deepcopy(item) for key,item in [('row',row),('rel',rel),('binding',binding)]};objects[owner][key]=wrong
+                try:validate(objects['row'],objects['rel'],objects['binding'],value,image,inventory,records,imports)
+                except (ValueError,KeyError) as error:rejected.append(dict(caller=row['address'],origin=rel['offset'],case=label,rejected=True,reason=str(error)))
+                else:raise ValueError('Wrong original binding accepted:'+label)
+            altered=bytearray(image);altered[int(row['address'],0)-0x2000000+rel['offset']]^=1
+            try:validate(row,rel,binding,value,bytes(altered),inventory,records,imports)
+            except ValueError as error:rejected.append(dict(caller=row['address'],origin=rel['offset'],case='altered-original-byte',rejected=True,reason=str(error)))
+            else:raise ValueError('Altered original relocation bytes accepted')
+    return dict(status='passed',cases=rejected,sourceCredit=0)

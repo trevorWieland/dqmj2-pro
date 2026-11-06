@@ -1,0 +1,15 @@
+# Cohort49 native flag flow, UID contracts and script source
+
+The accepted gate adds four ordinary-C overlay1 ARM functions:021DCCD0/104,021E7FA8/280,021E686C/80 and021DCBE4/236. Their700 initialized bytes pass coordinator source compilation, full native/relocation comparison, genuine MWLD linking and bounded original-versus-linked execution. The flag consumer uses a real two-element side array and unsigned conversion before shifting; the earlier after-shift variant remains rejected. Healthy chooser scoring and its unresolved inherited-register path remain outside the qualified blocked-actor corpus.
+
+Five already matched main ranges totaling284 bytes now prefer explicit full-word UID/pointer interfaces:02062638,020692B0,02078A1C,020C783C and020CDD4C. All4516 fixture returns pass. The actual module-input proof selects all15 preferred implementations, including the earlier text and inventory repairs. Historical sources remain unchanged. These migrations add zero functions or bytes.
+
+Four complete interpreted C definitions add4176 physical source bytes:primary byte modes1000, context byte-row configuration1552, dynamic registered flags1128 and module-global initialization496. Their original VM comparisons and source-adapter rejection controls pass. Module globals, native helper contracts and unsupported inputs remain explicit. No whole script image, story meaning, encounter availability or ownership proof is assigned.
+
+Accepted totals are8652 native functions/586029 initialized source bytes,23.32327483965047% of2512636 inventoried initialized bytes. Interpreted totals are1245 instances/40636 physical bytes/29 definitions:1111 empty instances17776B,115 copy-only instances7368B and19 other instances15492B. These are separate measurements, and overall game completion remains unknown.
+
+All20 initialized module comparisons, the original175959612-byte ROM SHA256674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6, both checksum byte matches,144 isolated checksum executions and5117 getter comparisons pass. Source policy, baseline and original input checks pass. The strict application audit retains concurrent external edits; this task did not edit the application. The authoritative record is evidence/verification/cohort-2026-10-29-49.json.
+
+The separate clean-replay repair replaces facade/text/UID verifiers with portable V2 proofs while preserving all C/header/compiler identities and zero additional coverage. CheckoutN remains a failed full clean run; its declared independent-directory diagnostics do not grant clean-build credit. CheckoutM/cohort46 remains the latest fully successful committed-tree reproduction until a later complete run passes. See the clean-replay golden dependency record. Native executable scaffolding, incomplete discovery, full Windows game execution and Android device execution remain unresolved; whole-ROM-from-source remains false.
+
+Four frozen generated rejection inputs retain their original whitespace and hashes, with zero source credit. Git whitespace lint excludes exactly the paths in evidence/verification/cohort49-frozen-control-whitespace.json; all other staged files pass.

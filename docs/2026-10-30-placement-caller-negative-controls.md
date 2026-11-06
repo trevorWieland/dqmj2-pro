@@ -1,0 +1,7 @@
+# Independent placement caller source rejection controls
+
+The frozen 120-byte main `020C09F4` source and its canonical report remain unchanged. A separate producer, `python evidence/application/roster_placement_caller_controls_20261030.py`, compiles two ordinary C mutations with the pinned compiler and real MW linker: clear flagB instead of flagA, and exchange X/Y stores. Each complete compiler-produced 120-byte body is installed as a negative control. No opcode edits or partial byte replacement are used.
+
+Three original calls pass the independent caller model. All six mutant calls return normally under the same explicitly omitted compaction and derived-rebuild contracts, preserve the observed opaque return word, and fail the independent state model. Cases use rows0/7/14 and differing low-byte coordinates, including full-word high-bit values. The failures therefore establish sensitivity to the intended byte stores rather than merely relying on termination or native/source self-comparison. They add zero matched source or native coverage.
+
+`evidence/application/roster-placement-caller-controls-20261030.json` has SHA-256 `969d6fb95dd40112796772295df828f4b7a22c4e02804a6f25dea679712d9296`, reproduced exactly from the repository parent CWD. Mutant source, object, real-link evidence and resulting row effects are retained in that report. The exact source, canonical matcher, fixture and accepted inputs were not edited; lower-body effects remain subject to the limits in `2026-10-30-placement-caller-exact-six-argument-c.md`.

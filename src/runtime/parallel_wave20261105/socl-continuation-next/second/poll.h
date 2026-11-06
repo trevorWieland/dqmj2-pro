@@ -1,0 +1,10 @@
+typedef unsigned char u8;
+typedef short s16;
+typedef unsigned int u32;
+typedef int s32;
+typedef unsigned long long u64;
+typedef long long s64;
+typedef struct {s32 fd;s16 events,revents;} PollEntry;
+extern s32 native_fn_02090138(s32);
+extern void native_fn_02006b7c(u32);
+extern s32 native_main_020907f4(PollEntry *,u32,u64);

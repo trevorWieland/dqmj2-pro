@@ -1,0 +1,10 @@
+typedef unsigned char u8;
+typedef signed short s16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef struct { u8 prefix[24]; s16 species; u8 variant; } CriterionRecord;
+typedef struct { u8 prefix[28]; u32 first[3]; u32 second[3]; } CriterionGroups;
+extern u32 native_fn_020633b0(void);
+extern u32 native_fn_02062a10(u32);
+extern u32 native_fn_02044dc4(s32,u32);
+extern u32 native_fn_02064654(u32,const CriterionRecord *);

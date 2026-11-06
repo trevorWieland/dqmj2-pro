@@ -1,0 +1,9 @@
+# FIFO acknowledgement source - 2026-11-01
+
+Main ARM 0200DDF4/148 and 0200DFD8/152 are two new ordinary C candidates covering 300 initialized bytes. `python match_main_fifo_ack300_20261101.py` compiles them with MWCC 2.0/base O2/inline-off and genuinely links every byte. Both share one authored header whose hash is declared as an include dependency. All 288 instruction bytes and twelve literals are covered.
+
+The independent model checks the complete global/register pages, ordered word/halfword stores, raw CPU state, complete stack effects and actual return. Original IRQ and FIFO-send routines execute with zero supplied outcomes. Successful sends update the acknowledgement and clear the selected failure bit before IRQ restoration. Failed sends restore IRQ first, set the failure halfword and follow a null or selected mapped original callback endpoint. The selected callback deliberately reuses the original three-word FIFO endpoint on failing register snapshots; this is physical word-ABI evidence, not proof of historical callback formal types or game-scene availability.
+
+There are 768 original/C pairs, 1,536 actual top returns and 7,424 physical native dependency returns. Two genuinely compiled wrong C controls return 192 times, with 106 independent model rejections and 86 unchanged cases. The initial independent return-count model omitted one outer IRQ restore while calls/writes/result already agreed; that failed calibration and exact fixture are retained with zero acceptance credit. Both normal and parent-directory isolated-Python invocations pass.
+
+Mapped register bytes are disposable snapshots. Written error-acknowledgement values do not prove physical W1C transitions or later FIFO state. ARM7 delivery, asynchronous completion, actual callback reachability, concurrency and full-game operation remain unproved. No ordinary logic is replaced with executable byte arrays or credited assembly.

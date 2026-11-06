@@ -1,0 +1,17 @@
+# Cohort 64: decimal rounding and placement caller
+
+The accepted record is `evidence/verification/cohort-2026-10-29-64.json`. Main ARM 0x0201C2EC/292 and 0x020C09F4/120 add two ordinary C functions / 412 initialized bytes. Native coverage is 8,744 functions / 607,293 initialized source bytes, 24.169557389% of 2,512,636 inventoried initialized bytes. Remaining initialized bytes are 1,905,343. This includes data/literals and is not overall game completion or proof of complete executable discovery.
+
+The decimal helper has 1,336 original/source pairs / 2,672 actual returns, an independent full-record and ordered-store model, ARM/Thumb returns, signed length/exponent limits, no providers and four rejected compiled wrong sources. Genuine MWLD matches all 292 instruction bytes. At zero retained digits, tie parity reads the preceding length byte; no general rounding standard is inferred. See `docs/2026-10-30-native-decimal-round-source.md`.
+
+The placement caller has 389 pairs / 778 actual returns. Its six arguments and signed-byte count pointer are measured; independent row, full-UID cache, footer and ordered provider-boundary checks pass. Actual cache lookup/clear, wait-zero and restriction/footer helpers execute. Compaction and derived rebuilding remain two explicit provided bodies. Rows are disabled and engine mask2 is clear in this corpus; completed lower resource/sprite behavior and persistence remain unproved. See `docs/2026-10-30-placement-caller-exact-six-argument-c.md`.
+
+Both canonical producers were independently replayed and reproduce identically from another working directory. The separate placement controls additionally execute compiler-produced, genuinely linked mutants that return normally yet fail the independent state model. They add zero source credit and do not change the frozen positive packet.
+
+All 20 initialized module comparisons, exact 175,959,612-byte ROM and SHA-256 `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`, both checksum byte matches, 36 vectors / 144 isolated executions, 5,117 getter comparisons, source selection, freshness rejection checks and source policy pass. All 20 preferred implementations remain actual linked inputs. Interpreted coverage stays 1,248 instances / 42,428 physical bytes / 32 definitions, with zero native credit.
+
+Baseline and original input hashes are unchanged. The strict application audit separately flags concurrent outside edits; application files are neither edited nor restored here. Independent clean Q is replaying immutable cohort60; clean R is replaying committed cohort63. Original object scaffolding remains. Source-only ROM completion, a playable Windows game and Android device execution are not established.
+
+The separate 1,892-byte floating formatter and 2,896-byte ARM7 player-step packets are not counted in this cohort. Their full linked-byte comparisons and expanded native checks are preparation for a later accepted build. Native physical-return evidence for main0x02041800 also remains a zero-credit candidate; the accepted void wrapper is unchanged.
+
+Commit `581209c5` contains the accepted source. The post-commit Git audit verifies all 8,367 registered repository paths against their published SHA-256 values with zero missing files or mismatches. The dated report is `evidence/verification/cohort64-committed-source-closure-20261030.json`; reproduce with `python verify_committed_source_closure_20261030.py --cohort 64`. It establishes source snapshot closure, not a fresh build.

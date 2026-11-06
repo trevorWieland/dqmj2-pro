@@ -1,0 +1,1 @@
+void ExecuteMessage(OSMessage *pMsg);

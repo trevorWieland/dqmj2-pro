@@ -1,0 +1,11 @@
+# Windows-native FIFO closure - 2026-11-01
+
+`python verify_windows_fifo_closed576_20261101.py` builds and runs a real PE32 executable from eight recovered C bodies covering 576 initialized ARM bytes. The closure contains the three new request routines 352, FIFO sender 136 and four previously matched veneer/common helpers 88. The nine compiled files include one platform runner. This port adds zero matching byte credit beyond their separate native module acceptance.
+
+The actual Windows process executes 1,920 unique synthetic calls: 768 direct FIFO sends and 1,152 request entries. A second fresh process repeats exactly the same output. Every call compares all 8,192 relevant data/register-page bytes by SHA-256, the return word, control-mask state and ordered IRQ-helper call records against content-addressed ARM oracle reports. No failures occur. The executable consumes no ROM/save files or original ARM executable bytes and contains no ARM emulator.
+
+The three request files share the authored 40-byte state header. The runner bridges that measured prefix to the host C symbol, maps private low 32-bit pages and executes the unchanged C bodies with 32-bit pointers. The bitfield sender retains volatile register accesses. IRQ disable/restore is an explicitly modeled single-thread C state machine whose state and call sequence are checked; it does not manipulate physical ARM interrupts. No helper return outcomes are supplied from an oracle.
+
+Compiler, linker and import-library tools are hash-pinned to the existing local LLVM toolchain. Source hashes, full commands, executable hash, oracle hashes, PE architecture/manifest checks, case counts and limits are recorded in evidence/portability/fifo-closed576-windows32-20261101.json. The executable and intermediate objects remain excluded from Git. Synthetic input generation reproduces the native fixture seeds and word boundaries, not the game asset format.
+
+This proves actual bounded Windows C execution. It does not prove physical FIFO/W1C transitions, asynchronous ARM7 message processing, concurrency, Windows instruction/store ordering equivalence, raw ARM register equivalence, arbitrary 64-bit pointers, Android device execution, graphics or a full game. Complete source reconstruction and source-only ROM matching remain unproved.

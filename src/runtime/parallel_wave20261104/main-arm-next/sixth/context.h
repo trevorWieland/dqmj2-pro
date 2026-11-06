@@ -1,0 +1,13 @@
+typedef unsigned char u8;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef struct ResourceBlob { u8 header00[8]; u32 table08; u32 table0c; u32 table10; u32 table14; u32 table18; u32 table1c; u32 table20; u32 table24; u8 payload[]; } ResourceBlob;
+typedef struct ResourceManager { u8 opaque00[0x8c]; ResourceBlob *blob8c; } ResourceManager;
+typedef struct OffsetTable { u32 count; u32 offsets[]; } OffsetTable;
+extern ResourceManager *native_data_020f4c44;
+typedef char WordWidth[(sizeof(u32) == 4) ? 1 : -1];
+typedef char ManagerBlobOffset[((u32)&((ResourceManager *)0)->blob8c == 0x8c) ? 1 : -1];
+typedef char ManagerMinimumPrefix[(sizeof(ResourceManager) == 0x90) ? 1 : -1];
+typedef char BlobMinimumPrefix[(sizeof(ResourceBlob) == 0x28) ? 1 : -1];
+typedef char TableItemOffset[((u32)&((OffsetTable *)0)->offsets == 4) ? 1 : -1];
+typedef char TableItemWidth[(sizeof(((OffsetTable *)0)->offsets[0]) == 4) ? 1 : -1];

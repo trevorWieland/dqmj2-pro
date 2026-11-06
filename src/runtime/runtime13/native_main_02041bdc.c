@@ -1,0 +1,61 @@
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef signed short s16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef unsigned long long u64;
+typedef signed long long s64;
+typedef float f32;
+typedef double f64;
+#define M2C_FIELD(value, type, offset) (*(type)((s8 *)(value) + (offset)))
+#define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
+#define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
+extern u32 native_fn_0201d444();
+extern u32 native_fn_0203cf20();
+extern u32 native_fn_02040d18();
+extern u32 native_fn_020411c4();
+extern u32 native_fn_02041aa4();
+extern u32 native_fn_02041af0();
+extern u32 native_fn_02041b24();
+extern u32 native_fn_02042fd4();
+extern u8 native_data_020dd964[];
+extern u8 native_data_020dd96c[];
+extern u8 native_data_020dd97c[];
+extern u8 native_data_020dd988[];
+u32 native_main_02041bdc(u32 arg0) {
+    u8 sp0[32];
+    u32 temp_r0;
+    u32 temp_r0_2;
+    u32 temp_r0_3;
+    u32 temp_r0_4;
+    u32 var_r6;
+
+    var_r6 = 0;
+    if (arg0 < 0x981U) {
+        if (native_fn_02041af0() == 0) {
+            temp_r0 = native_fn_02041b24(arg0);
+            if (temp_r0 != 0) {
+                temp_r0_2 = native_fn_02042fd4(arg0);
+                native_fn_0201d444(&sp0, native_data_020dd964, temp_r0_2);
+                temp_r0_3 = native_fn_0203cf20(native_data_020dd96c, &sp0, -1);
+                M2C_FIELD(temp_r0, u32 *, 0xC) = temp_r0_3;
+                if (temp_r0_3 != 0) {
+                    native_fn_0201d444(&sp0, native_data_020dd97c, temp_r0_2);
+                    if (native_fn_020411c4(M2C_FIELD(temp_r0, u32 *, 0xC), temp_r0 + 4, &sp0) != 0) {
+                        native_fn_0201d444(&sp0, native_data_020dd988, temp_r0_2);
+                        temp_r0_4 = native_fn_02040d18(M2C_FIELD(temp_r0, u32 *, 0xC), &sp0);
+                        M2C_FIELD(temp_r0, u32 *, 8) = temp_r0_4;
+                        if (temp_r0_4 != 0) {
+                            native_fn_02041aa4();
+                        }
+                        var_r6 = 1;
+                    }
+                }
+            }
+        } else {
+            var_r6 = 2;
+        }
+    }
+    return var_r6;
+}

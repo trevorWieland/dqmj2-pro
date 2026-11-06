@@ -1,0 +1,13 @@
+# Cohort48 source selection and context words
+
+The terminal gate accepts three new ordinary-C native functions/916 initialized bytes:main020BF61C/168 and overlay1 ARM022030B8/368 plus021E7538/380. Five already matched source ranges totaling904 bytes gain explicit text-stream, slot and pointer-return contracts with zero new coverage. Their retained originals remain unchanged.
+
+The new world entry272 C body contributes1280 separately measured interpreted bytes and one definition. Coordinator replay completes1280 script entries/66624 native VM-helper returns, with2960 separate byte-domain control returns. All own branches, global context-word reset/set order, persistent/register-file state and native wrapper contracts are checked. No story, access or encounter-renewal meaning or complete script-image credit is assigned.
+
+The first full build had exact module bytes but selected old overlay5/overlay6 sources because module-unit consolidation independently used last-report-wins order. Actual-input verification rejected that build; `evidence/attempts/cohort48-overlay-primary-selection-20261030.json` and its saved diagnostic preserve the failure. No acceptance was granted from byte equality alone.
+
+`source_variants.consolidate` now honors the explicit hash-qualified policy in either report order and refuses an old-source fallback. `build_modules` attaches canonical preferred-report identities by matching immutable report content hashes. Unit source, source hash, target span, processor and report identity must agree. Twenty real order permutations and eight rejection controls pass. A private preflight over387 actual input snapshots selects all10 requested sources without assigning module credit. The subsequent actual module build, source-input verifier and complete regression gate pass.
+
+Accepted totals are8648 native functions/585329 initialized source bytes(23.295415651132913%) and1241 interpreted range instances/36460 physical bytes/25 definitions. All20 initialized module comparisons are exact; the175959612-byte output has SHA256674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6. Both checksum byte matches,144 isolated checksum executions and5117 getters pass. Source policy, baseline and original input hashes pass. The separate application audit remains false for concurrent external changes.
+
+Whole-ROM-from-source, complete executable discovery, full combat and overall game percentage remain unproven. The authoritative terminal record is `evidence/verification/cohort-2026-10-29-48.json`. CheckoutN independently tests immutable committed cohort47 and does not validate these new changes. Bounded native throughput research is separate, gives zero source credit and is not adopted into frozen tests.

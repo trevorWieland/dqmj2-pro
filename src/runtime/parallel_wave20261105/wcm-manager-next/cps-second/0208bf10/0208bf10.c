@@ -1,0 +1,2 @@
+#include "context.h"
+CPSMacAddress*native_main_0208bf10(u32 ip){u32 enabled;CPSMacAddress*result;u32 i;enabled=native_fn_02007ff4();result=NULL;if(ip==0x7f000001||ip==G.myip)result=&native_data_021d01e0;else if(native_fn_0208bc30(ip)||native_fn_0208bc58(ip))result=&native_data_020de7ac;else{for(i=0;i<8;i++)if(ip==ARP[i].ip){ARP[i].when=(u16)tick();result=&ARP[i].mac;break;}}native_fn_02008008(enabled);return result;}

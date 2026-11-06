@@ -1,0 +1,11 @@
+# ARM32 formatting wrapper source
+
+`python match_main_format_wrappers_20261030.py` reconstructs main ARM 0x0201D3DC/104 and 0x0201D444/44 as ordinary C. The first has 100 instruction bytes and a four-byte callback literal. The latter has 44 instruction bytes. Pinned compiler 2.0/base, independently demonstrated O2/speed flags, unchanged relocations and the verified real MW linker reproduce both complete spans. The report is `evidence/matches/main-format-wrappers-20261030.json`.
+
+The bounded-output wrapper initializes a buffer/capacity/written context for the original writer and formatter. Its return is the full formatting count. It writes a final zero at the returned count when that count fits, or at the last available byte after truncation. Capacity zero causes no destination write in the tested domain. The C pointer association for that last byte matters to matching; unsuccessful source forms and compiler profiles are retained under `evidence/attempts/`.
+
+The variadic wrapper forwards its arguments using the measured four-byte ARM register-home convention, including arguments crossing R2/R3 and the caller stack. This is target-specific C. Its pointer-width guard is tested by `python verify_main_format_variadic_abi_20261030.py`, which requires a real Windows x64 compiler to reject it without changing the NDS source/object. Use a normal host formatter for native application integration.
+
+There are 320 independent-state pairs / 640 actual top-level returns, with capacities 0/1/2/3/4/8/16/64, four alignments, strings, signed/unsigned integers, hexadecimal values and high-byte characters. Return values, all general registers/CPSR, bounded RAM/stack, original main preservation and ordered effects are compared. The output model separately checks count, truncation and the final zero. Null destinations are only tested at zero capacity. Floating values, long-long formatting, count stores, invalid active pointers and malformed format behavior are not established by this wrapper fixture.
+
+The core at 0x0201CB74, writer at 0x0201D398 and memory helpers execute original context and receive zero additional source credit here. A later formatter-core reconstruction and its broader tests are separate from cohort 59. These sources establish neither a portable Windows game nor Android device execution.

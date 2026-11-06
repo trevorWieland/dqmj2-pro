@@ -1,0 +1,7 @@
+#include "native_spi_types.h"
+u32 native_arm7_wram_03803e3c(void) {
+    u16 status;
+    ((volatile u16 *)0x040001c2)[0] = 0;
+    do { status = ((volatile u16 *)0x040001c0)[0]; } while (status & 0x80);
+    return status;
+}

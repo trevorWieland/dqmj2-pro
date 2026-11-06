@@ -1,0 +1,48 @@
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef signed short s16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef unsigned long long u64;
+typedef signed long long s64;
+typedef float f32;
+typedef double f64;
+#define M2C_FIELD(value, type, offset) (*(type)((s8 *)(value) + (offset)))
+#define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
+#define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
+extern u32 native_fn_020273f0();
+extern u32 native_fn_ov000_021e969c();
+extern u8 native_data_020f6054[];
+u32 native_main_0203ed74(void) {
+    if (M2C_FIELD(native_data_020f6054, u8 *, 0x26) != 0) {
+        goto block_2;
+    }
+    M2C_FIELD(native_data_020f6054, u8 *, 0x26) = 0xAU;
+    goto block_9;
+block_2:
+    if (M2C_FIELD(native_data_020f6054, u8 *, 0x26) != 0xA) {
+        goto block_7;
+    }
+    if (native_fn_ov000_021e969c(1) == 0) {
+        goto block_9;
+    }
+    if (native_fn_020273f0() == 0) {
+        goto block_6;
+    }
+    if (native_fn_020273f0() != 0xC) {
+        goto block_9;
+    }
+block_6:
+    M2C_FIELD(native_data_020f6054, u8 *, 0x26) = 0x14U;
+    goto block_9;
+block_7:
+    if (M2C_FIELD(native_data_020f6054, u8 *, 0x26) != 0x14) {
+        goto block_9;
+    }
+    M2C_FIELD(native_data_020f6054, s8 *, 8) = 0;
+    M2C_FIELD(native_data_020f6054, s8 *, 0xA) = 0x1D;
+    M2C_FIELD(native_data_020f6054, u8 *, 0x26) = 0U;
+block_9:
+    return 0U;
+}

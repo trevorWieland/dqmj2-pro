@@ -1,0 +1,2 @@
+#include "context.h"
+void native_main_0208c080(u8*mac,u32 ip,int new_entry){u16 oldest_time,now;u32 candidate,i;if(ip==0x7f000001||ip==G.myip||!native_fn_0208bbe8(ip)||native_fn_0208bc58(ip))return;now=(u16)tick();for(i=0;i<8;i++){if(ip==ARP[i].ip){ARP[i].when=now;native_fn_02008e0c(mac,ARP[i].mac,6);return;}}if(new_entry){oldest_time=0;candidate=0;for(i=0;i<8;i++){if(ARP[i].ip==0){candidate=i;break;}if((s16)(now-ARP[i].when)>oldest_time){oldest_time=now-ARP[i].when;candidate=i;}}ARP[candidate].ip=ip;native_fn_02008e0c(mac,ARP[candidate].mac,6);ARP[candidate].when=now;}}

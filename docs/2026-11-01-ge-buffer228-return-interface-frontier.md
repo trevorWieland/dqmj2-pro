@@ -1,0 +1,9 @@
+# GE buffer228 return-interface frontier — 2026-11-01
+
+A standalone SDK-style void implementation for main ARM0202E434/228 genuinely compiles/links to all228 bytes, using measured buffer/pending state at020EDF84/+4 and original CPU copy/send/flush/wait helpers. This remains a nonmatching-tree hypothesis with zero source credit because selected0202E380 declares/returns a rawu32 value from this target. New joint SRT callers use the SDK void interface. Their types must be reconciled with measured caller behavior before any preference or registry change.
+
+The native pending-buffer positive-count branch returns the updated word index in physicalR0. Its zero-count branch leaves a slot-related address; direct sending leaves the original CPU-send result. These are raw observations, not a semantic status API. An explicit raw-word C view with a typed slot compiles244 bytes/95same-offset bytes; an explicit byte-offset view compiles236/133. O2/O2p/O2s/O4s variants keep236/133. All are retained as0-credit experiments. No instruction forcing, executable-byte encoding, unjustified volatile qualifier or accepted-source modification is used.
+
+Selected0202E380 forwards the physical word through main02030318 in some paths; callback-stream020316B4 discards it. This static source inventory is not sufficient to decide that wider original callbacks semantically consume it. The actual native/SDK return contract and every selected declaration/caller need a joint proof. Busy waits, installedDMA concurrency, overflowing command buffers, physicalGPU and complete scene/game behavior remain unproved. Earlier standalone SRT native/Windows/Android-crossbuild evidence does not fill this interface gap.
+
+Original source and all earlier matches remain unchanged. The preflight/source variants and profile comparison report are preserved under evidence/attempts and nonmatching/integration/20261101-ge-buffer-return-view. No function or byte credit is requested.

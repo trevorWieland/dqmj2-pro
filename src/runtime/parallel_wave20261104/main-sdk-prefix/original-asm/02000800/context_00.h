@@ -1,0 +1,24 @@
+typedef unsigned long u32;
+void native_fn_02000c34(void);
+void native_fn_02000b60(void);
+extern u32 native_data_main_027e0000[];
+void native_fn_02000950(void * bottom);
+void native_fn_01ff8000(void);
+extern void native_fn_02000c34(void);
+extern void native_fn_01ff8000(void);
+void native_fn_020009fc(void);
+void native_fn_02000a78(void);
+void native_main_02000800(void);
+void native_fn_0200093c(register u32 data, register void *destp, register u32 size);
+extern void native_fn_02026a94(void);
+extern void native_fn_02026a90(void);
+extern void native_data_main_00001000(void);
+void native_fn_0200093c(register u32 data, register void *destp, register u32 size);
+typedef struct {
+void *const field_0000[9];
+} NativeStorage_02000b68;
+extern NativeStorage_02000b68 native_data_main_02000b68;
+void  native_fn_02000950 (register void *bottom);
+void native_fn_020009fc (void);
+void native_fn_02000a78 (void);
+__declspec(weak) void native_fn_02000b60 (void);

@@ -1,0 +1,117 @@
+import re
+
+from elftools.elf.elffile import ELFFile
+from project import ROOT
+from slice_reference_sdk_entities_v3_20261102 import declaration_name
+
+
+def normalize_alignment(text):
+    pattern = r'(?m)^([^\n;{}]+?)\s+(__attribute__\s*\(\(\s*aligned\([^)]*\)\s*\)\))\s*;'
+    return re.sub(pattern, lambda m: m[2] + ' ' + m[1].strip() + ';', text)
+
+
+def normalize_callback_returns(text):
+    seen = set()
+    pattern = r'\b(void)\s*\(\*\s*(CARDi_GetRomAccessor)\s*\((void)\)\)\s*\((CARDRomStat\s*\*)\)'
+    def replace(match):
+        name = match[2]
+        alias = 'NativeReturnType_' + name
+        prefix = '' if name in seen else 'typedef ' + match[1] + ' (*' + alias + ')(' + match[4] + ');\n'
+        seen.add(name)
+        return prefix + alias + ' ' + name + '(' + match[3] + ')'
+    return re.sub(pattern, replace, text)
+
+
+def lift_statics(text, row, functions, declaration_name):
+    local_names = {}
+    with (ROOT / row['object']).open('rb') as stream:
+        symbols = list(ELFFile(stream).get_section_by_name('.symtab').iter_symbols())
+    for seed in reversed(functions(text)):
+        body = text[seed['opening']:seed['end']]
+        declarations = []
+        for match in list(re.finditer(r'(?m)^[ \t]*(?:(?:const|volatile)\s+)*static\b', body))[::-1]:
+            depth = 0
+            end = None
+            for index in range(match.start(), len(body)):
+                if body[index] == '{':
+                    depth += 1
+                elif body[index] == '}':
+                    depth -= 1
+                elif body[index] == ';' and not depth:
+                    end = index + 1
+                    break
+            if end is None:
+                raise ValueError('Local static SDK declaration is incomplete')
+            declaration = body[match.start():end].strip()
+            name = declaration_name(declaration)
+            candidates = [s.name for s in symbols if s.name.startswith(str(name) + '$') and s['st_info']['type'] == 'STT_OBJECT']
+            if not candidates:
+                continue
+            if len(candidates) != 1:
+                raise ValueError('Local static SDK identity is ambiguous: ' + str(name))
+            newname = 'native_static_' + seed['name'] + '_' + name
+            local_names[candidates[0]] = newname
+            declarations.append(re.sub(r'\b' + re.escape(name) + r'\b', newname, declaration))
+            body = body[:match.start()] + body[end:]
+            body = re.sub(r'\b' + re.escape(name) + r'\b', newname, body)
+        text = text[:seed['start']] + '\n'.join(declarations) + '\n' + text[seed['start']:seed['opening']] + body + text[seed['end']:]
+    return text, local_names
+
+
+def storage_groups(text, row, bases, aliases, entities, local_names):
+    records = entities(text)
+    declarations = [r for r in records if r['kind'] == 'declaration']
+    remove = set()
+    groups = []
+    insertions = {}
+    layouts = []
+    with (ROOT / row['object']).open('rb') as stream:
+        elf = ELFFile(stream)
+        symbols = list(elf.get_section_by_name('.symtab').iter_symbols())
+        for section, base in sorted(bases.items()):
+            objects = sorted((s for s in symbols if s['st_shndx'] == section and s['st_info']['type'] == 'STT_OBJECT'), key=lambda s:s['st_value'])
+            typename = 'NativeStorage_' + format(base, '08x')
+            globalname = 'native_data_main_' + format(base, '08x')
+            fields = []
+            checks = []
+            members = []
+            section_declarations = []
+            cursor = 0
+            for symbol in objects:
+                offset, size = symbol['st_value'], symbol['st_size']
+                if offset < cursor:
+                    raise ValueError('Measured SDK storage has overlapping objects')
+                if offset > cursor:
+                    fields.append('unsigned char padding_' + format(cursor, '04x') + '[' + str(offset - cursor) + '];')
+                name = symbol.name
+                sourcename = local_names.get(name, name)
+                candidates = [d for d in declarations if re.search(r'\b' + re.escape(sourcename) + r'\b', d['text']) and 'sdk_compiler_assert__LINE__' not in d['text'] and not d['text'].strip().startswith('typedef')]
+                candidates = [d for d in candidates if re.fullmatch(r'[A-Za-z_]\w*', sourcename)]
+                field = 'field_' + format(offset, '04x')
+                if candidates:
+                    declaration = candidates[-1]
+                    fragment = declaration['text'].strip().split('=', 1)[0].rstrip().removesuffix(';').rstrip()
+                    fragment = re.sub(r'\b(?:static|extern)\s+', '', fragment)
+                    fragment = re.sub(r'\b' + re.escape(sourcename) + r'\b', field, fragment)
+                    fields.append(fragment + ';')
+                    for item in candidates:
+                        remove.add(id(item))
+                        section_declarations.append(records.index(item))
+                    aliases[sourcename] = globalname + '.' + field
+                    checks.append('typedef char StorageCheck_' + format(base, '08x') + '_' + field + '[(sizeof(((' + typename + ' *)0)->' + field + ') == ' + str(size) + ' && (unsigned int)&((' + typename + ' *)0)->' + field + ' == ' + str(offset) + ') ? 1 : -1];')
+                    members.append(dict(name=name, field=field, offset=offset, bytes=size))
+                else:
+                    fields.append('unsigned char ' + field + '[' + str(size) + '];')
+                    members.append(dict(name=name, field=field, offset=offset, bytes=size, opaqueUncredited=True))
+                cursor = offset + size
+            group = 'typedef struct {\n' + '\n'.join(fields) + '\n} ' + typename + ';\nextern ' + typename + ' ' + globalname + ';\n' + '\n'.join(checks)
+            if not section_declarations:
+                raise ValueError('No typed declarations for SDK storage section')
+            insertions.setdefault(max(section_declarations), []).append(group)
+            layouts.append(dict(section=section, nativeBase=hex(base), members=members, storageCredit=0))
+    pieces = []
+    for index, record in enumerate(records):
+        if id(record) not in remove:
+            pieces.append(record['text'])
+        pieces.extend(insertions.get(index, []))
+    return '\n'.join(pieces) + '\n', layouts

@@ -1,0 +1,69 @@
+import concurrent.futures
+from pathlib import Path
+import match_runtime as compiler
+from project import ROOT, read_json, write_json, sha256, now
+from link_runtime_unit import validate
+from recover_linked_runtime import qualified_bindings
+
+INPUT = ROOT / 'evidence/attempts/root-breadth-source-archive-20261101.json'
+OUTPUT = ROOT / 'evidence/attempts/root-breadth-archive-recompile-20261101.json'
+WORK = ROOT / 'work/root-breadth-archive-recompile-20261101'
+
+
+def worker(record):
+    source = ROOT / record['source']
+    assert sha256(source) == record['sourceSha256']
+    flags = record['compilerFlags']
+    assert flags[0].startswith('-O')
+    directory = WORK / (record['mode'] + '-' + record['address'][2:])
+    compiler.WORK = directory / 'compile'
+    result = dict(identity={key: record[key] for key in ['processor', 'program', 'module', 'mode', 'address', 'initializedBytes']},
+        source=record['source'], sourceSha256=sha256(source), compiled=False, genuineLinkProduced=False,
+        exactNativeBytes=False, historicalExact=record['exactHistoricalLinkedBytes'], sourceCredit=0)
+    try:
+        rows, unused = compiler.compare(source, 'main', int(flags[0][2:]), flags[flags.index('-inline') + 1],
+            speed='-opt' in flags and flags[flags.index('-opt') + 1] == 'speed', thumb=record['mode'] == 'thumb')
+        assert len(rows) == 1 and not rows[0].get('compileFailed')
+        row = rows[0]
+        assert row['compilerFlags'] == flags and row['compilerSha256'] == record['originalCompilerSha256']
+        result.update(compiled=True, freshObjectSha256=row['objectSha256'], compilation=row)
+        try:
+            proof = validate(row, qualified_bindings(row), directory / 'link')
+            result['exactNativeBytes'] = True
+        except ValueError as error:
+            assert isinstance(error.args[0], dict)
+            proof = error.args[0]
+        result['genuineLinkComparison'] = proof
+        binary = directory / 'link/caller.bin'
+        result.update(genuineLinkProduced=binary.is_file(), freshLinkedSha256=sha256(binary) if binary.is_file() else None)
+    except Exception as error:
+        result['error'] = repr(error)
+    return result
+
+
+def main():
+    source = read_json(INPUT)
+    records = [record for record in source['records'] if record['compiledInHistoricalProof']]
+    assert len(records) == 385
+    report = dict(generator=Path(__file__).name, generatorSha256=sha256(__file__), startedUtc=now(),
+        sourceArchive=INPUT.relative_to(ROOT).as_posix(), sourceArchiveSha256=sha256(INPUT),
+        originalObjectOrCacheInputs=0, originalWorkDirectoryInputs=0, compilerProcesses=3,
+        state='running', sourceCredit=0, results=[])
+    write_json(OUTPUT, report)
+    with concurrent.futures.ProcessPoolExecutor(max_workers=3) as pool:
+        for result in pool.map(worker, records, chunksize=1):
+            report['results'].append(result)
+            write_json(OUTPUT, report)
+            if len(report['results']) % 25 == 0:
+                print(dict(processed=len(report['results']), compiled=sum(row['compiled'] for row in report['results'])), flush=True)
+    report.update(state='finished', finishedUtc=now(), compiledUnits=sum(row['compiled'] for row in report['results']),
+        genuinelyLinkedUnits=sum(row['genuineLinkProduced'] for row in report['results']),
+        exactByteHypotheses=sum(row['exactNativeBytes'] for row in report['results']),
+        hypothesisOutcomesPreserved=all(row['exactNativeBytes'] == row['historicalExact'] for row in report['results']))
+    report['passed'] = report['compiledUnits'] == report['genuinelyLinkedUnits'] == len(records) and report['hypothesisOutcomesPreserved']
+    write_json(OUTPUT, report)
+    print({key: report[key] for key in ['passed', 'compiledUnits', 'genuinelyLinkedUnits', 'exactByteHypotheses', 'sourceCredit']})
+
+
+if __name__ == '__main__':
+    main()

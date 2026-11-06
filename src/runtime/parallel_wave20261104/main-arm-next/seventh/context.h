@@ -1,0 +1,18 @@
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef struct ResourceRecord { u32 resourceId; u16 field4; u8 opaque6[2]; u8 field8; u8 field9; } ResourceRecord;
+extern ResourceRecord *native_fn_02038d88(s32);
+extern u32 *native_fn_02038dec(s32);
+extern u32 native_fn_02039ba0(void *, s32, s32, s32, ResourceRecord *, s32);
+extern void *native_fn_0203917c(u32);
+extern ResourceRecord *native_fn_020389f4(void *, s32);
+extern u32 native_fn_02039c9c(void *, u32, u32, u32, ResourceRecord *, void *, s32, s32);
+typedef char RecordField4Offset[((u32)&((ResourceRecord *)0)->field4 == 4) ? 1 : -1];
+typedef char RecordField4Width[(sizeof(((ResourceRecord *)0)->field4) == 2) ? 1 : -1];
+typedef char RecordField8Offset[((u32)&((ResourceRecord *)0)->field8 == 8) ? 1 : -1];
+typedef char RecordField9Offset[((u32)&((ResourceRecord *)0)->field9 == 9) ? 1 : -1];
+typedef char WordWidth[(sizeof(u32) == 4) ? 1 : -1];
+typedef char ByteWidth[(sizeof(u8) == 1) ? 1 : -1];
+typedef char RecordField9Width[(sizeof(((ResourceRecord *)0)->field9) == 1) ? 1 : -1];

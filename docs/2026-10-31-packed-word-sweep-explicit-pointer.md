@@ -1,0 +1,15 @@
+# Packed-word sweep and explicit pointer - 2026-10-31
+
+Main ARM 020BB120/36 is a new ordinary-C candidate. Replay `python match_mechanics_save_20261031_lane_packed_sweep.py`. Normal and parent-directory Python `-I -S` runs reproduce canonical SHA45223fc407041ba0795f8b3c910ad99659e937a8011a993ba14d04b6ba1f6ccb. The dedicated input preserves the recorded compiler path/hash and full flags. Genuine Metrowerks compiler/link bytes match the native span, with current object provenance checked separately from source/native pins. Registration remains with the integrator.
+
+The retained historical exact-link source omitted the real argument consumed by02096DF0 after020685C8. Its compiled bytes happened to carry R0 correctly. The new preferred C explicitly nests the returned slot address into the consumer call, preserving exactly the same bytes. No execution mismatch is falsely claimed for the identical old binary; the defect concerns the original C argument contract. The historical source/hash remains in this handoff.
+
+Seven original dependencies execute without providers: ARM020685C8,02068594,02063EA4 and Thumb02096DF0,02096CE8,02096DA4,02096C6C. The index predicate accepts0..63; the base getter returns021BB2B8; the address getter computes base+12*index. The caller visits each of64 indices in order. The Thumb getter extracts word bits11..31, the consumer clears field bits2..5, and the setter restores that packed field. Consequently physical word bits13..16 clear while every other bit and each slot's eight neighboring bytes remain unchanged.
+
+The final setter returns raw1, which the caller forwards. This is measured physical return behavior, not an inferred success/API label. The12-byte slots have no established game record,save serialization,ownership or lifecycle meaning in this proof. The64 bound belongs to the native getter/caller, not a general import or save limitation.
+
+The106 supported pairs yield212 actual top returns and separately94,976 actual native helper returns. They cover every single word bit,all-zero/all-one words,eight deterministic full-word matrices and64 individually targeted slots. Every run uses fresh Unicorn state, verifies actual ARM/Thumb call edges/modes and nested returns, requires SP/callee-saved restoration, and compares ordered reads/writes plus all768 backing bytes. All nine own instructions execute. Full traces are deterministic gzip sidecars.
+
+Two complete compiled wrong-C controls omit the final slot or repeatedly visit the first. Their212 pairs yield424 actual returns,90 independent final-state rejections and122 final-state positives. All212 traces differ; this separate count is retained without calling state-positive traces exact matches. Already-clear words explain the final-state positives. No timeout is credited as a return.
+
+Original ROM/save,application and accepted source remain unchanged. Table allocation/lifetime,ordinary scene reachability,semantic save offsets,bank arbitration and chronology remain unproved. Shared module/ROM gates remain required.

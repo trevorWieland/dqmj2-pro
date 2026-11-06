@@ -1,0 +1,10 @@
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef signed short s16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef unsigned long long u64;
+typedef signed long long s64;
+extern void native_fn_main_02008be0(u32, void *, u32);
+extern void native_fn_main_02008e0c(void *, void *, u32);

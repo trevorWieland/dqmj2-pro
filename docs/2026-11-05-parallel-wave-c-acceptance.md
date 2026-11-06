@@ -1,0 +1,9 @@
+# Parallel source union 158 — 2026-11-05
+
+Prepared after accepted 157: **59 ordinary-C functions / 5,464 bytes** across ten frozen packets, comprising14 ARM controller/renderer routines / 1,876 bytes and45 Thumb GameSpy routines / 3,588 bytes. Source remains unaccepted until all 16 original shared stages and committed source/input/oracle closure finish. Additional READYs collect in159.
+
+Every packet has complete genuine links, copied-root replay, original-data/layout/namespace/entry controls and independently scoped caller fixtures. All45 Thumb routines additionally pass fresh explicit-C99 body/relocation identity, actual ELF mode inspection and genuine links of the fresh objects. Sixteen input qualification negatives include rejection of a real ARM object by the Thumb mapping check. ARM-only namespace guards remain unchanged.
+
+The first GameSpy packet helper-only count is106, corrected by its immutable erratum;548 caller returns remain unchanged. Platform socket entry-to-canonical-SOC stops are separate from returns. Timers have zero hardware execution; allocator/callback paths and malformed inputs retain explicit limits. The browser packet adds6 functions / 742 bytes with16 original relocations,192 strict binding negatives,80 vectors / 160 caller returns / 48 helper entries and3 genuinely linked wrong-C failures. Constructor allocation, dynamic callbacks and sorting remain unexecuted. Imports, backing storage, thunks, mode anchors and original executable scaffolding receive zero reconstruction credit.
+
+The active goal is95% confirmed initialized-source coverage followed by a verified native Windows build. Initialized-byte coverage is not overall game completion; exact ROM builds remain scaffolding-assisted. Fresh full source replay and native full-game execution remain unproven.

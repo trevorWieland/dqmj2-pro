@@ -1,0 +1,24 @@
+# Material animation tracks and connected parents — 2026-11-02
+
+Six ordinary ARM9/main C functions have genuine full-byte MW links totaling1,616 bytes. They remain candidates until shared module/regression and committed-source closure acceptance. Measured input is the175,959,612-byte ROM SHA256674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6; main SHA256ea530f917c534c3fa2b036288dd9e4551e3cbf68b5fc36713e1217704148534f.
+
+| Main ARM entry | Bytes | Recovered interface and behavior |
+|---|---:|---|
+|02033930|360|u16 color track(resource pointer,u32 metadata,u32 integer frame)|
+|02033A98|236|u16 alpha track(resource pointer,u32 metadata,u32 integer frame)|
+|02033D48|256|s32 vector track(resource pointer,u32 metadata,u32 data/constant,u32 integer frame)|
+|02033E48|268|u32 packed signed16 sine/cosine track, same four arguments|
+|02033C58|240|void material parent(result pointer,animation-object pointer,u32 index); index narrows to16 bits|
+|02033F54|256|void texture parent(resource pointer,u16 index,u32 integer frame,result pointer)|
+
+The four leaves run4,096 original/source pairs /8,192 actual returns with no function providers. An independent per-channel weighted model covers constants, all four step-bit combinations, frames0..31, last-interpolation0/current frame, both signed16/32 vector storage, packed signed components, direct high color bits and interpolation truncation. All1,108 instruction bytes and12 literal bytes are observed. Four separately compiled wrong step declarations return4,096 times and reject863 models. Read-only input, full relevant machine registers/flags, main/input/stack memory and ordered accesses agree. Instruction-budget exhaustion is explicitly rejected as a return.
+
+The two parents run1,024 original/source pairs /2,048 actual top returns and10,240 separately observed actual leaf returns. All four leaves are compiled and substituted together with the parents. No function providers are used. A four-entry initialized dictionary selects20-byte material records or40-byte texture records. The material result preserves the existing bit15 flags, packs diffuse/ambient and specular/emission, and applies alpha to polygon attributes. The texture result updates translation, rotation and scale flags and leaves inactive result slots unchanged. Independent full-page models and two wrong C bodies reject620 of1,024 actual wrong returns.488 parent instruction bytes execute; the two four-byte invalid-index branches at02033CA0/02033F90 are unvisited under valid dictionary indices. Original dictionary entry lookup is inlined; there is no data source credit.
+
+Canonical and actual parent-directory native replays produce byte-identical reports and objects. Configured ARM/Thumb boundary audits inspect13,614 function spans: ten direct leaf references and one direct parent reference enter boundaries, with no configured interior starts or external direct interior branches. Indirect targets and arbitrary data references are not proved. No accepted135 source contains named references to these six entries; this is not a proof about all indirect callers.
+
+Native Windows i386 tests compile the unmodified six source bodies as separate translation units with compatible typed declarations. Thin parent wrappers alias existing native_fn names to the corresponding recovered native_main names. The leaf bundle completes4,096 preferred and16,384 wrong public calls;863 wrong results are detected. The parent bundle completes1,024 preferred calls with5,120 compiled leaf calls, plus2,048 wrong public calls detecting620 wrong results. Entire16-KiB pages and relevant returns are compared against native/model evidence. Local pinned NDK Clang/LLD/dlltool produce deterministic zero-timestamp PE/COFF outputs, use a private mapped data page, and release it before bounded child exit. This is real Windows component execution, not a full game.
+
+The target's unsigned-long32 rank is retained with compile-time width assertions. A separate268-byte revision casts cosine to unsigned before packing its high halfword, removing a potentially negative signed left shift while retaining every native byte. The parent similarly casts unsigned16 color/alpha values before high shifts. Earlier original-source hypotheses remain preserved. Signed arithmetic right shifts are measured on the pinned target and Windows compilers. Android LP64 source portability remains unproved.
+
+Reproduce with `python match_main_material_track1120_20261102.py`, `python match_main_material_parents496_20261102.py`, both `audit_main_material_*_boundaries_20261102.py` commands, and `python check_main_material_track1120_windows32_20261102.py` / `python check_main_material_parents496_windows32_20261102.py`. Synthetic metadata does not establish encoded asset validity, malformed/null/index error recovery, complete renderer behavior, ordinary scene reachability, source-only ROM or Android device execution.

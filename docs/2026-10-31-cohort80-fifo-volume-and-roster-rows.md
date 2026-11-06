@@ -1,0 +1,13 @@
+# Cohort 80 FIFO, volume, and roster rows
+
+The accepted build measures 8,918 source-matched functions and 665,029 initialized module bytes out of 2,512,636: 26.4673832581%. Seven functions add 1,064 bytes relative to cohort 79. Initialized-byte coverage includes literals, data and padding; executable-only and overall-game percentages remain unproved.
+
+The accepted additions are ARM7 FIFO send 96 and volume 116, main roster population 340 across two functions, main progression/resource 164, overlay006 forwarding 136, and overlay001 message 212. The full per-function identities, hashes, compiler choices, genuine linker evidence and commands are in [the cohort plan](../evidence/verification/cohort-2026-10-29-80.json).
+
+The volume fixture explicitly supplies SVC 1C behavior. Its 5,968 actual outer/wrapper returns do not prove original BIOS or hardware execution. FIFO send uses a static mapped-register contract; receiver, asynchronous hardware and physical device behavior are outside this acceptance. Message handling separately qualifies the original DB9E0/DBAAC interface and SDK leaf execution; finite indices and nibble cases do not prove complete scene reachability. The roster/resource fixtures preserve full-word inputs and explicitly forward measured helper results rather than relying on leftover registers.
+
+All earlier selected source and object identities remain selected, with 28 source preferences. The regression driver passed 20 exact module comparisons, both checksum functions, 36 vectors with 144 isolated actual returns, and 5,117 getter comparisons. The scaffold-assisted ROM still measures 175,959,612 bytes with SHA-256 `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`.
+
+The baseline and original inputs remain unchanged. The independent application workspace has outside edits, so strict whole-workspace isolation remains false; this project did not edit or rebaseline it. No full clean replay of cohort 80 is asserted. Immutable checkout W has passed the new static-input preflight and is running the full suite against its frozen cohort 79-plus-tooling commit. The previous U/V failures remain retained. Source-only ROM reconstruction, complete Windows execution and Android device execution remain unproved.
+
+Reproduce acceptance with `python run_cohort_20261031_80.py` and `python finalize_cohort_20261031_80.py`. The scripts resolve repository paths independently of the calling directory. Preparation and publication are recorded separately from acceptance in the plan; a successful reconstruction of original-object scaffolding is not decompiled source.

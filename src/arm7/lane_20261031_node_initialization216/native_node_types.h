@@ -1,0 +1,10 @@
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef signed short s16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef unsigned long long u64;
+typedef signed long long s64;
+extern u32 native_host_arm7_arm_027e8c5c(void *, s16);
+extern u32 native_utility_child_arm7_arm_027e8fc8(void *, s16);

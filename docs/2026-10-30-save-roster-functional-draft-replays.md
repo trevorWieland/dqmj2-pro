@@ -1,0 +1,7 @@
+# Save/roster functional C drafts
+
+The coordinator independently reran two new bounded ordinary-C hypotheses. Main ARM0206CF44/160 passes829 native/C pairs and1658 actual returns with original48A60 widget stores and zero providers. Its160-byte C still differs in register allocation. Main ARM0206C88C/296 has300-byte and296-byte alternatives;594 contexts produce1782 actual creator returns plus3 direct species queries. The creator retains original44CDC and explicitly provides only the lower seven-word6D2E0 resource boundary. Its296-byte alternative matches258 bytes, which is not a complete source match.
+
+The two complete report hashes reproduce exactly in the coordinator directory:897a7adb549beda2088a0944207e568028255f407ab7a7e34f69c22021e2dcbd and d745f5d0c10c9ef21a18138cb3fb0b4225d3024b430c4151dece7b5e434e4b90. Six position and three creator unsupported stops receive no return or post-stop credit. Full-word handles, signed counters, halfword species and guarded descriptor/widget effects remain explicit; physical resource creation, natural scenes, ownership and import legality are unproved.
+
+No function, module or ROM source coverage is added, and none of these alternatives is promoted to the matching registry. The qualified receipt evidence/functional/coordinator-save-draft-replays-20261030.json pins processor/module/address/mode, target/source hashes, counts, commands and limitations. The reports and source drafts are preserved separately from accepted C.

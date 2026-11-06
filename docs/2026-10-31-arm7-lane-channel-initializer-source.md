@@ -1,0 +1,13 @@
+# ARM7 channel-record initializer
+
+Host ARM7 WRAM ARM `037FF164` is a complete 92-byte ordinary C initializer, with 84 instruction bytes and eight compiler-generated literal bytes. Its source-only Base O3/space build and genuine MWLD link reproduce the full original range. Existing registry, ledger, configuration and accepted source files remain unchanged.
+
+The measured behavior visits sixteen 84-byte records at `03807EE0`, writes each index to byte zero, replaces byte three with its previous value AND 6, then stores zero to `03807EBC` followed by `03807EB8`. Every other WRAM byte is preserved. These qualified BSS bindings and ordered stores are measured independently of the C struct names; physical audio behavior and caller lifecycle are not established.
+
+`python match_arm7_lane_initializer_20261031.py` performs fresh source compilation, recursive two-header hashing, exact real linking, module/mode/native-symbol qualification, boundary and pool review, and original-versus-compiled execution. Thirty-two deterministic contexts include every prior flag byte across the sixteen records, arbitrary other record bytes and nonzero mask words. Two persistent calls per implementation produce 128 actual returns. All 21 own instructions execute; full registers, flags, stack, ordered writes and mapped memory are compared. A separate model checks every affected byte and preservation of the complete remaining WRAM image. No provider, BIOS, emulator or hardware execution is used.
+
+`python validate_arm7_lane_initializer_20261031.py` passes 36 controls. Five independently compiled C mutations alter the loop limit, active bit, sync field, mask value or record ID. Metadata, input closure, source-only scope, missing/changed current products after caching and instruction exhaustion controls also reject. Missing products withhold current credit.
+
+Canonical report: `evidence/matches/arm7-lane-initializer-20261031.json`, SHA-256 `35cff07f97e3355b647e4fd07dec2f2dacd67eedca284f90b3243ebd7c99bdf6`. An unrelated parent-directory invocation reproduced that exact report. Controls report: `evidence/verification/arm7-lane-initializer-controls-20261031.json`, SHA-256 `715d82e47fb9e6b09c87500c931db8226b40f420d2b99ea1d3b4b40ed40a694e`.
+
+Preparation and derivation scripts preserve provenance; the matcher and validator are the fresh rebuild commands and do not need the earlier typed-draft work directory. Existing timing and driver packets stay frozen. This packet supplies one entry-domain source proof, with zero original-data, helper, full-module or whole-game source credit. The integrator separately owns registration and complete module/ROM regression.

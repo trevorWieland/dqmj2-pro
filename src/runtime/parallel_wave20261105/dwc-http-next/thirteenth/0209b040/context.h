@@ -1,0 +1,12 @@
+typedef unsigned int u32;typedef long long s64;
+typedef enum{RTC_WEEK_SUNDAY=0,RTC_WEEK_MONDAY,RTC_WEEK_TUESDAY,RTC_WEEK_WEDNESDAY,RTC_WEEK_THURSDAY,RTC_WEEK_FRIDAY,RTC_WEEK_SATURDAY,RTC_WEEK_MAX}RTCWeek;
+typedef enum{RTC_RESULT_SUCCESS=0,RTC_RESULT_BUSY,RTC_RESULT_ILLEGAL_PARAMETER,RTC_RESULT_SEND_ERROR,RTC_RESULT_INVALID_COMMAND,RTC_RESULT_ILLEGAL_STATUS,RTC_RESULT_FATAL_ERROR,RTC_RESULT_MAX}RTCResult;
+typedef struct{u32 year,month,day;RTCWeek week;}RTCDate;
+typedef struct{u32 hour,minute,second;}RTCTime;
+extern int native_data_021d1990;
+extern s64 native_data_021d1994,native_data_021d199c;
+extern RTCResult native_fn_0200f540(RTCDate*,RTCTime*);
+extern s64 native_fn_0200fc74(const RTCDate*,const RTCTime*);
+extern void native_fn_0200fe50(RTCDate*,RTCTime*,s64);
+typedef unsigned long size_t;
+int native_main_0209b040(RTCDate*,RTCTime*);

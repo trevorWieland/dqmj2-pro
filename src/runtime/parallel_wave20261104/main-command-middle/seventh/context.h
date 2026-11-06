@@ -1,0 +1,20 @@
+typedef unsigned int u32;
+typedef signed char s8;
+typedef unsigned char u8;
+extern s8 native_data_02102970;
+extern void native_fn_0204532c(int, void *);
+extern int native_fn_020349b8(void *, u32);
+extern int native_fn_0203454c(void *, u32);
+extern int native_fn_0203470c(void *, u32);
+extern int native_fn_020346c0(void *, u32);
+
+typedef struct Link { u32 field0; void *resource; } Link;
+typedef struct Entry { Link *link; s8 field4; s8 field5; u8 gap6[2]; } Entry;
+extern Entry *native_fn_02049aa8(int);
+extern void native_fn_02049898(Entry *);
+typedef char SignedByte[((s8)-1 < 0 && sizeof(s8) == 1) ? 1 : -1];
+typedef char EntrySize[(sizeof(Entry) == 8) ? 1 : -1];
+typedef char EntryField4[((u32)&((Entry *)0)->field4 == 4) ? 1 : -1];
+typedef char EntryField5[((u32)&((Entry *)0)->field5 == 5) ? 1 : -1];
+typedef char LinkResource[((u32)&((Link *)0)->resource == 4) ? 1 : -1];
+typedef char WordSize[(sizeof(int) == 4 && sizeof(void *) == 4) ? 1 : -1];

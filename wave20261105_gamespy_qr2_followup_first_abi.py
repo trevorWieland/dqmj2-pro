@@ -1,0 +1,10 @@
+import match_runtime
+from project import ROOT,sha256
+from capstone import Cs,CS_ARCH_ARM,CS_MODE_THUMB
+
+
+def verify(rows):
+    indexed={int(row['address'],0):row for row in rows};assert set(indexed)=={0x20b8010,0x20b8334,0x20b8380};image=(ROOT/'extract/arm9/arm9.bin').read_bytes();cs=Cs(CS_ARCH_ARM,CS_MODE_THUMB);items=list(cs.disasm(image[0xb8334:0xb837c],0x20b8334));literal=int.from_bytes(image[0xb837c:0xb8380],'little');assert literal==0x508
+    required=[('ldr','r0, [pc, #0x3c]'),('add','r0, sp, r0'),('str','r1, [r0, #0x78]'),('add','r0, sp, #8'),('ldr','r2, [r2, #0x78]')];assert all(any((i.mnemonic,i.op_str)==q for i in items)for q in required)
+    assert all(row['compilerPath']=='tools/mwccarm/mwccarm/2.0/sp1p5/mwccarm.exe'for row in rows)
+    return dict(status='passed',profile=dict(compilerPath=rows[0]['compilerPath'],compilerSha256=rows[0]['compilerSha256'],frontend='explicit-C99',processor='arm946e',callerMode='thumb'),largeStackMember=dict(caller='0x20b8334',bufferBaseCurrentSPOffset=8,bufferDeclaredBytes=1400,lengthMemberOffset=1400,lengthMemberAbsoluteCurrentSPOffset=1408,nativeAddressLiteral=hex(literal),nativeEncodedSecondaryOffset=0x78,computedCurrentSPOffset=literal+0x78,originalInstructions=[dict(address=hex(i.address),bytes=i.bytes.hex(),instruction=i.mnemonic+' '+i.op_str)for i in items if i.address<=0x20b835e]),sourceHeaders=sorted({(pin['path'],sha256(ROOT/pin['path']))for row in rows for pin in row['sourceDependencies']}),queryBuildAbi=dict(actualOriginalCalleeEntry='0x20b7ac8',inputWords=8,firstRequest=[255,0,255,0,255,0],fallbackRequest=[255,0,0,0,0,0],calleeSourceOrExecutionCredit=0),limits=['Same declared C layout is retained across base/SP1p5 controls. Actual native/SP1p5 instructions construct the large stack-member address; no manual instruction/object patches are made.','Header/query/memory/string/address/socket/clock helpers are supplied fixture contracts; callback words only gate metadata fields and do not execute callbacks. Original storage and game/network/platform completion receive zero extra credit.'])

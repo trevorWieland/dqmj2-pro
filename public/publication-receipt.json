@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "sourceSnapshotRevision": "14ac8dcd6f8ab0009e5dd54d73cf31c928540776",
+  "originalExportAuditSha256": "382472c55451b53b7c4aad10ae6d4593315a3ad7ac002426ed0b4507d9360333",
+  "auditedFiles": 21258,
+  "auditedBytes": 116650657,
+  "auditedContentSha256": "37bb791bb4cc567ac7026bd7d2f189a0ad8c848be8109d458ca0693493cfb8e0",
+  "changedExportFiles": {
+    ".gitignore": {
+      "previousSha256": "9984bec68bbe30a088a50ba4f0856299fb5cb18755ef22f88b493f28c16cdb40",
+      "sha256": "f846feb20461130131cb353173164e61f7b5d65f85e61ebc28559e34c00de8b6",
+      "bytes": 286
+    }
+  },
+  "addedPublicFiles": {
+    ".github/ISSUE_TEMPLATE/work-chunk.yml": {
+      "sha256": "d752bf8a056c04e51af1d8b6ac7b44b1906ae78fce7158fbbf4c944810d43361",
+      "bytes": 959
+    },
+    ".github/pull_request_template.md": {
+      "sha256": "7e5331d2d2a4217b29eab55615922ff0f0b75138aab2c14c1ca88c3fdb2180d1",
+      "bytes": 704
+    },
+    ".github/workflows/bytematch.yml": {
+      "sha256": "85b61a4ae360d645c2c57825031256ca718da81ce782a3b1abfe5d3e8eb80ba9",
+      "bytes": 2150
+    },
+    ".github/workflows/contribution-standards.yml": {
+      "sha256": "c2d28b0fa7cd09d3e96f990880ae0a8e8ff3327dffa768ac967dda723e44f1f9",
+      "bytes": 800
+    },
+    ".github/workflows/source-integrity.yml": {
+      "sha256": "186f181af9a893a005926320481d074644abbe9faa5a69ab799622a40ddefe53",
+      "bytes": 947
+    },
+    "CONTRIBUTING.md": {
+      "sha256": "286aab317b52a39e6705094c3d41f63522a99b2635d0c2500f68c0d644688b47",
+      "bytes": 3291
+    },
+    "README.md": {
+      "sha256": "b71a50f73b72fca6ecd19ab15e6d44f0df7c90cf6421e7271a9156fc2779335f",
+      "bytes": 4525
+    },
+    "docs/bytematch.md": {
+      "sha256": "4bfee380287b567cefa469d90108bbbb12c7e129aa9c88a8a0617f919ce41d8d",
+      "bytes": 7343
+    },
+    "docs/public-build.md": {
+      "sha256": "cd52ad976fdd9ffaba325357e7072da9394c26d4be9ebc3f8ccd96cd173bf594",
+      "bytes": 10242
+    },
+    "docs/public-reconstruction-policy.md": {
+      "sha256": "4be88d0eebdee8c347770eb74188c3ca4090d5377f27779a36ca070cc50b3de5",
+      "bytes": 2966
+    },
+    "docs/semantic-understanding.md": {
+      "sha256": "2436cdc89da455c4e4cee0f285f9386b9ed49dd096dca940725c242400e007a6",
+      "bytes": 2581
+    },
+    "naming_report.py": {
+      "sha256": "7649aa22bdc8e8a5bd22491895b88381cdf093e49b3bc71c1f0f122f67352f8a",
+      "bytes": 6553
+    },
+    "public/export-audit.json": {
+      "sha256": "382472c55451b53b7c4aad10ae6d4593315a3ad7ac002426ed0b4507d9360333",
+      "bytes": 3716229
+    },
+    "public_tools/build_bytematch.py": {
+      "sha256": "7e046c7caa14d8f3f8e4f875e69f1cc1e2b6507de7bf7d39e1b318b13e794352",
+      "bytes": 15881
+    },
+    "public_tools/bytematch_project.py": {
+      "sha256": "00a53c70647f915333fc796b5e7981a1259ce964986a49cae8abec645befefd7",
+      "bytes": 25853
+    },
+    "public_tools/check_contribution.py": {
+      "sha256": "71077ffe146b7b239b64f2a28b749d4e4661f28658a19ca1560ac155a62136f5",
+      "bytes": 1813
+    },
+    "public_tools/compile_sources.py": {
+      "sha256": "187ed6ef992bfbbce83e2ae94aa28a9bc6613f6350d2dd5b4ed0eae3a082aca9",
+      "bytes": 8332
+    },
+    "public_tools/elf_metadata.py": {
+      "sha256": "6aae69b5bd7865e0e59cfdf5fd2321106a6205d2efb5a954a7fa00f0542506ca",
+      "bytes": 3740
+    },
+    "public_tools/public_manifest.py": {
+      "sha256": "80f38d97a29a4d888c7d80b51cce7ca7434a9340381a404c56517dcdf5cfe8be",
+      "bytes": 9962
+    },
+    "public_tools/test_bytematch_project.py": {
+      "sha256": "922ac7f04fbcbd1afbbbb08632a788cbe4982f70f35a6966a1b078633d894579",
+      "bytes": 11605
+    },
+    "public_tools/test_bytematch_report.py": {
+      "sha256": "4c189783c2bcde18e786da389c27a8f37154a1bc847dd30f2dcf582ac135a991",
+      "bytes": 1598
+    },
+    "public_tools/test_private_inputs.py": {
+      "sha256": "f09d543ec63ec1e2669202664327c40466b8ceaff342f866af013610500155f2",
+      "bytes": 8993
+    },
+    "public_tools/test_public_tools.py": {
+      "sha256": "fc0f3c873b258c7741020c5c348451763c96bf70edd68f2282fd5a16d7d17a38",
+      "bytes": 7329
+    },
+    "public_tools/validate_bytematch_report.py": {
+      "sha256": "ed11fed8f1bbfbf0ee5d23f701dacaec47d02776a7d6746a892b587584f72451",
+      "bytes": 4724
+    },
+    "public_tools/verify_sources.py": {
+      "sha256": "000a94f1711dd6cc799a066193e01fadafd2b9830eb675db87ada051ec9af8aa",
+      "bytes": 1680
+    },
+    "publication_export.py": {
+      "sha256": "8d6c52866b3b92567187f682d977f81bc25bc99d64c225c2b264cccee849f6fe",
+      "bytes": 6579
+    }
+  },
+  "privateHistoryPublished": false,
+  "acceptedSourcesUnmodified": true,
+  "freshCompilationUnits": 10841,
+  "freshCompiledFunctions": 11482,
+  "currentFullModuleReplayProven": false,
+  "localDiagnosticReportIsPublishable": false
+}

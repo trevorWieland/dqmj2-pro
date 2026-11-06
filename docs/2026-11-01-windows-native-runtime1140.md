@@ -1,0 +1,9 @@
+# Windows-native runtime closure - 2026-11-01
+
+`python verify_windows_runtime_closed1140_20261101.py` builds and physically executes twelve recovered C bodies covering 1,140 initialized target bytes. Its 3,712 unique calls comprise the earlier 2,688 FIFO/request/acknowledgement cases plus 1,024 descriptor-gate cases. A second fresh process returns exactly identical output. No page, logical-return, control-mask or ordered IRQ-event comparison fails.
+
+The descriptor addition executes the newly recovered 152-byte caller and the already matched 112-byte scalar predicate. The typed platform adapter preserves all raw 32-bit words when entering the predicate's signed third parameter; its existing expression promotes multiplication through an unsigned argument before the measured signed comparison. Boundary and wrapping inputs are checked against the original ARM oracle. The host maps only the qualified low 32-bit object pages and bridges the measured 12-byte global pointer prefix. No extra predicate matching credit is claimed.
+
+The earlier explicit callback-ID/host-function and logical-pointer-return mapping remains in the closure. Each call compares all 8,192 relevant page bytes by SHA-256, return word, modeled IRQ-control state and IRQ event sequence. Oracle reports are content-addressed snapshots. Source/tool hashes, commands, PE architecture/manifest and executable hash are recorded. The executable contains no ARM emulator and receives no original ARM code or ROM/save files.
+
+The routine-byte total overlaps separately accepted source; this portability proof adds zero matching coverage. Physical FIFO/W1C behavior, asynchronous ARM7 processing, arbitrary 64-bit pointers, concurrency, Windows instruction/store ordering equivalence, historical formal declarations, Android-device execution, graphics and a complete Windows game remain unproved. The platform IRQ adapter is a single-thread C state machine, not physical ARM interrupt control.

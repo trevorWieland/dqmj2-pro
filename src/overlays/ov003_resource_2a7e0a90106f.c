@@ -1,0 +1,57 @@
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+
+extern u8 data_ov003_021e0440[];
+extern u8 data_ov003_021e0450[];
+extern u8 data_ov003_021e0220[];
+extern u8 data_ov003_021e0210[];
+extern u8 data_ov003_021e020c[];
+extern void func_0202a090(u32, u32);
+extern u32 func_0202a1e0(u32);
+extern void func_ov003_021d7694(void);
+extern void func_ov003_021d7724(void);
+extern void func_0207a9ec(u32);
+extern void func_020c39d0(u32);
+extern void func_ov003_021d790c(void);
+extern u32 func_02027400(void);
+extern void func_ov003_021d744c(void);
+extern void func_ov003_021d7888(void);
+extern void func_020c3a10(u32);
+extern void func_0204617c(u32, u32);
+extern void func_02084920(void);
+extern void func_ov003_021d770c(void);
+extern void func_ov003_021d8ce8(void);
+extern void func_ov003_021d9dc0(void);
+extern void func_02061898(void);
+extern void func_020406a8(u32);
+extern void func_0207aad0(u32);
+extern void func_0202a164(u32);
+extern void func_0205db90(void *, void *, u32);
+extern u32 func_0205d9e8(u32, void *, void *, void *, u32);
+extern void func_0205dbc4(u32, void *);
+extern void func_0203cb2c(void);
+extern void func_02002e5c(u32);
+extern void func_020030ec(u32);
+extern void func_02045338(void);
+extern void func_020489f0(u32);
+extern void func_0205fd80(u32);
+extern void func_020bb334(void);
+extern void func_02002c98(u32, u32, u32);
+extern void func_02008c58(u32, u32, u32);
+extern void func_02041898(u32);
+extern void func_020414b0(u32);
+extern void func_02046150(u32, u32, u32);
+extern void func_020628b0(u32);
+extern void func_02062980(u32);
+extern u32 func_020c3704(u32);
+extern void func_02062850(u32);
+extern u32 func_020c3770(u32);
+extern void func_02062904(u32);
+
+void native_ov003_021d7694(void) {
+    u8 buffer[32] = {0};
+    func_0205db90(buffer, data_ov003_021e0220, -1);
+    ((u32 *)data_ov003_021e0440)[4] = func_0205d9e8(2, buffer, data_ov003_021e0210, data_ov003_021e020c, 2);
+}

@@ -1,0 +1,14 @@
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef signed short s16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef unsigned long long u64;
+typedef signed long long s64;
+#define M2C_FIELD(value, type, offset) (*(type)((s8 *)(value) + (offset)))
+extern u8 native_utility_child_arm9_data_02027ce8[];
+extern u8 native_utility_child_arm9_data_0200e541[];
+u32 native_utility_child_arm9_main_02003068(s32 arg0) {
+    return ((u32 (*)(s32, s32, s32)) native_utility_child_arm9_data_0200e541)(M2C_FIELD(native_utility_child_arm9_data_02027ce8, s32 *, 4) + 0x13E0, M2C_FIELD(native_utility_child_arm9_data_02027ce8, s32 *, 4) + 0x1C00, arg0);
+}

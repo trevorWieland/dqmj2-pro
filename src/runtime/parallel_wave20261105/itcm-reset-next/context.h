@@ -1,0 +1,11 @@
+typedef unsigned long u32;
+typedef signed long s32;
+typedef u32 OSIntrMode;
+void native_itcm_01ff82c8(void);
+void native_fn_01ff8370(u32 source,void *destination,s32 length);
+OSIntrMode native_fn_02007ff4(void);
+void native_fn_02007270(void);
+void native_fn_02007264(void);
+OSIntrMode native_fn_02008008(OSIntrMode mode);
+void native_fn_02007338(void);
+void native_fn_0200732c(void);

@@ -1,0 +1,13 @@
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef struct AllocationState { u8 opaque0[8]; void *primary8; u8 opaqueC[0x10]; void *tail1C; } AllocationState;
+extern AllocationState native_data_021c3708;
+extern void *native_data_021c3768[9];
+extern void *native_fn_0202a37c(u32, u32, u32);
+typedef char WordWidth[(sizeof(u32) == 4 && sizeof(void *) == 4) ? 1 : -1];
+typedef char ByteWidth[(sizeof(s8) == 1 && sizeof(u8) == 1) ? 1 : -1];
+typedef char PrimaryOffset[((u32)&((AllocationState *)0)->primary8 == 8) ? 1 : -1];
+typedef char TailOffset[((u32)&((AllocationState *)0)->tail1C == 28) ? 1 : -1];
+typedef char SlotsWidth[(sizeof(native_data_021c3768) == 36) ? 1 : -1];

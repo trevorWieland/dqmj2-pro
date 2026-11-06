@@ -1,0 +1,14 @@
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef signed int s32;
+struct Metadata { u32 unused; u16 kind:4; u16 rest:12; };
+extern const struct Metadata *native_fn_020449d4(u32);
+extern u32 native_fn_02044ff4(void*,u32,u32);
+extern u32 native_fn_0203d294(s32);
+extern u32 native_data_ov001_02249830[];
+extern u8 native_data_ov001_022498fc[];
+extern u8 native_data_ov001_02249914[];
+extern u8 native_data_ov001_02249828[];
+extern u8 native_data_ov001_02249916[];
+extern u8 native_data_ov001_02249917[];

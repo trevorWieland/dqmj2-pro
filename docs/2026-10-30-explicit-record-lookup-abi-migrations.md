@@ -1,0 +1,27 @@
+# Explicit UID lookup, roster and cache caller interfaces
+
+Five ordinary-C alternatives compare284 already accepted bytes and add zero executable coverage. Original primaries and provisional byte-identical hypotheses remain unchanged. The coordinator owns source preference selection and full module integration. Cohort49 now selects all five as actual linked inputs with zero new coverage.
+
+| Main ARM address | Bytes | Preferred source SHA-256 |
+|---|---:|---|
+|02062638|24|7ca285fe4eeabbe2983b210ed47e6cc774cac47256af3bea2c72d78f147a03a8|
+|020692B0|128|4a3d64112fe57912a1e265b264fb24f635dbeb5a1baa9333ccad4f1d96e60272|
+|02078A1C|44|6dc111792f892678b9333dbb1401bbcddfc3ae07539bea3bc2433ab8405dfac7|
+|020C783C|44|f084b96d4e6d7ef14805b160985db986c95be7e434f4db869bf256abb059fcbe|
+|020CDD4C|44|28621f87cc2499b6bac4e9862665120efcd32d4ccc0d7f805a267a2bc6cc709a|
+
+Sources live in `src/mechanics_save/20261030_record_lookup_abi/`; the three44-byte wrappers prefer the `_context.c` files. Their620A10 declaration returns the existing SavedRecord pointer type with an explicit full32-bit UID argument. The accepted lookup source in `src/save_recovery_records.c` scans100 records of132 bytes, skips UID0 and matches the full word at record+0x14. The new record layout duplicates that existing definition exactly. No record checksum, bank selection, ownership or enclosing scene meaning is inferred.
+
+02062638 now declares and forwards the incoming UID. 020692B0 explicitly forwards the same UID to all three real lookups, reads signed16 record+0x18 and bytes+0x1A/+0x1D, and passes eleven measured words to native69068. The latter two byte meanings remain opaque; names used in hypotheses do not establish their semantics. Native69068 then writes actual roster fields and increments its signed-byte counter. Three lower UI/resource boundaries remain modeled and may omit physical backend effects. Disabled-layout contexts return fullFFFFFFFF; enabled contexts exercise low-byte stack-argument behavior and full UID stores. Negative/large record+0x18 cases establish argument forwarding under those lower contracts, not validity for real resources.
+
+The three44-byte wrappers retain original tracker0206BE2C and current-UID getter0206BF34. They explicitly pass the resulting UID to620A10 and its returned pointer to6DCD0. The final6DCD0 declaration uses void* matching the retained callee source, with an opaque full-word return. Native6DCD0 still executes, including pointer stores at021C4F60+0x20/+0x24, flags+0x2C/+0x2E, word+0x30 and byte+0x2F. Synthetic native61944 UI mode0 bounds the matrix; modes3/4/5 are not established. The unchanged-cache path returns the entire pointer word. No success/error interpretation is assigned.
+
+`python match_mechanics_save_20261030_record_lookup_abi.py` fresh-links all five complete spans and runs the frozen proof. Canonical report `evidence/matches/mechanics-save-20261030-record-lookup-abi.json` SHA-256 is `2eb502e3907e413b2fe640e6c381181aea71cad7a27eca0e265ac947a4d216c7`, reproduced byte-identically from an unrelated working directory. Repeated repository-relative `--source module:0xaddress=path` alternatives must have the reviewed source hash and pass complete native/object/link closure. No shared registry, preferences or build inputs are changed by the verifier.
+
+Fixture `evidence/application/record-lookup-abi-fixtures-20261030.json` SHA-256 is `4caa24052c25609c0859222bc2f9df0affa77e50e526e2f9c7331769cf46bc14`. Its2258 native/C pairs give4516 actual top-level returns:104 existence,120 row-writer and2034 tracker/cache caller pairs. Actual record lookup returns are followed by legal R1/R2/R3/R12/NZCV clobbers; full helper arguments, native effects, source effects, cache/context snapshots, saved-state invariance, callee-saved registers and actual bounded return are checked. Five separate strict-arity compiler negatives reject original omitted arguments. Original binaries already matched; byte equality alone did not establish a valid source call signature.
+
+Four unsupported controls exclude post-stop state and return credit: row15 must hit the exact logical boundary at020690E8, and missing record must fault with UC_ERR_READ_UNMAPPED at02069318. Unexpected instruction-limit failures do not satisfy either control. The final strict stop guard preserved all native behavior and compared source/object identities. Provisional reports, narrower pointer declarations, the earlier negative-source-rewrite mistake and the LF/CRLF metadata-hash prediction error are retained under `evidence/attempts/record-lookup-abi-*`; none received source credit.
+
+The verifier does not write the original ROM/save, baseline or application. The coordinator isolation audit separately observes concurrent external application changes. This is a source-interface migration and bounded function proof, not an exact whole-ROM reconstruction or full UI/resource/scene proof.
+
+The registered reproducer now uses match_mechanics_save_20261030_record_lookup_abi_v2.py and its -abi-v2.json report. V1 above remains historical. V2 retains all4516 returns, five strict-arity negatives and source/header/target identities, while checking current local object/link provenance independently of portable native-case identity. Normal/alternate working directories and declared independent-directory diagnostics pass. Source coverage remains unchanged; see the clean-replay repair record.

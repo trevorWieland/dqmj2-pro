@@ -1,0 +1,20 @@
+typedef unsigned char u8;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef struct Widget { u8 opaque0[0x7c]; u32 flags7C; } Widget;
+typedef struct MenuWidgets { u8 opaque0[12]; Widget *previousC; Widget *next10; } MenuWidgets;
+extern MenuWidgets native_data_021d6b48;
+extern s32 native_fn_020629e0(void);
+extern s32 native_fn_020d0a14(void);
+extern void native_fn_02048a44(void *, u32);
+typedef struct PageEntry { void *member0; u32 opaque4; } PageEntry;
+typedef struct PageState { u8 opaque0; u8 page1; u8 opaque2[2]; PageEntry *entries4; } PageState;
+typedef struct MenuCursor { signed char x0; signed char y1; u8 side2; } MenuCursor;
+extern PageState native_data_021d6b5c;
+extern MenuCursor native_data_021d6b64;
+#define AT(T, F) ((u32)&((T *)0)->F)
+typedef char WordLayout[(sizeof(u32)==4 && sizeof(void *)==4)?1:-1];
+typedef char WidgetLayout[(sizeof(Widget)==128 && AT(Widget,flags7C)==124)?1:-1];
+typedef char WidgetStateLayout[(sizeof(MenuWidgets)==20 && AT(MenuWidgets,previousC)==12 && AT(MenuWidgets,next10)==16)?1:-1];
+typedef char PageLayout[(sizeof(PageEntry)==8 && sizeof(PageState)==8 && AT(PageState,page1)==1 && AT(PageState,entries4)==4)?1:-1];
+typedef char CursorLayout[(sizeof(MenuCursor)==3 && AT(MenuCursor,y1)==1 && AT(MenuCursor,side2)==2)?1:-1];

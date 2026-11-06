@@ -1,0 +1,11 @@
+# Source118 row preparation and native link types - 2026-11-01
+
+Two overlay001 ARM functions propose432 bytes:0x0222CD84/308 and0x0222CEB8/124. They are adjacent producers within the separately measured CD00→CD84→CEB8→CF34→D240 chain. Earlier matched callers and later nonmatching builders retain independent identities and evidence. The current native and compiler/link proofs add no whole-scene reachability claim.
+
+The308-byte routine uses a measured low-four-bit halfword view and sparse switch.432 native/source pairs return864 times with1,872 actual RNG/division returns and1,728 supplied initializer/lookup calls. Raw modes outside50/100/101 preserve earlier row bytes in the explicitly measured cases. The124-byte producer has534 native/source pairs,1,068 top returns,4,272 actual math returns and no supplied calls. The complete binary64 word chain is modeled; low16 narrowing precedes the cap, including measured52389→stored0 behavior. Native inputs are synthetic and do not establish legal/current game domains or historical field names.
+
+Separate zero-credit packets preserve the1092-byte record builder's1084-byte comparison and native effects, larger save entry-prefix/suffix proofs, the guarded physical-double-pair lowering and signed-width/word-forwarding corrections. Probe/checkpoint returns are not full parent-function returns. Supplied services, native helpers, unsupported paths and rejected trials stay separate from matching-byte coverage.
+
+The Windows native frontier qualifies shared ITCM data ownership, catalogues the8,375 compiled source units and applies1,760 uniquely targeted, primitive-type-compatible function aliases in an actual link attempt. Host ARM9 still reports7,116 unresolved symbols, produces no DLL and is never executed as a game. No original C body, ARM source, fake function or force-link acceptance is introduced. Executable coverage credit remains zero for all native build transport work.
+
+The shared registry waits for committed117 closure. Source118 is accepted only after its own current module/regression validation, preservation checks and committed source/oracle closure. Source-only ROM, complete Windows game and Android device execution remain unproved.

@@ -1,0 +1,2 @@
+#include "context.h"
+int native_main_020b9b90(u32 id,void*buffer,u32 capacity,u32 opaque4,u32 opaque5){if(!native_fn_020b9c74(0,id))return 0;native_fn_02008d78(&native_data_021d3030->request,0,40);native_data_021d3030->request.words[0]=3;native_data_021d3030->request.words[1]=id;native_data_021d3030->request.words[3]=(u32)buffer;native_data_021d3030->request.words[5]=capacity;native_data_021d3030->extra40=opaque4;native_data_021d3030->extra44=opaque5;if(native_fn_020b8780(&native_data_021d3030->request)){native_data_021d3030->prefix[4]=1;return 1;}return 0;}

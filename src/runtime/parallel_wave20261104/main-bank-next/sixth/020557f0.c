@@ -1,0 +1,13 @@
+#include "context.h"
+void native_main_020557f0(Context *context, const Instruction *instruction, int selector)
+{
+    int first = (int)context->parameters[0];
+    int second = (int)context->parameters[1];
+    const int *coordinates = native_fn_ov000_021e6a40(selector, 0);
+    context->parameters[0] = (float)coordinates[0] / 4096.0f;
+    context->parameters[1] = (float)coordinates[1] / 4096.0f;
+    context->parameters[2] = (float)coordinates[2] / 4096.0f;
+    native_fn_ov000_021e6cd0(selector, first, second);
+    context->records[context->bank].position += instruction->advance;
+    context->records[context->bank].status = 0;
+}

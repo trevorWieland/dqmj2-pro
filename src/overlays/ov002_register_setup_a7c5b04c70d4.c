@@ -1,0 +1,61 @@
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+
+typedef struct { u32 control; u32 pad4; u16 bg[4]; u8 pad16[12]; u32 word28; } Registers;
+
+extern void func_0203cb2c(void);
+extern void func_02002e5c(u32);
+extern void func_020030ec(u32);
+extern void func_02045338(void);
+extern void func_020489f0(u32);
+extern void func_0205fd80(u32);
+extern void func_020bb334(void);
+extern void func_02002c98(u32, u32, u32);
+extern void func_02008c58(u32, u32, u32);
+extern void func_02041898(u32);
+extern void func_020414b0(u32);
+extern void func_02046150(u32, u32, u32);
+extern void func_02002d00(u32);
+extern void func_020038a8(u32);
+extern void func_02003950(u32);
+extern void func_020039c0(u32);
+extern void func_02003a40(u32);
+extern void func_02045680(u32);
+extern u32 *func_02049ad0(s8);
+extern void func_02048e8c(void);
+
+void native_ov002_021da2f0(void) {
+    volatile u16 *prior;
+    volatile u16 *bg;
+    volatile u32 *control;
+    u32 bits;
+    func_0203cb2c();
+    func_02002e5c(9);
+    func_020030ec(2);
+    func_02045338();
+    func_020489f0(0);
+    func_0205fd80(0);
+    func_020bb334();
+    func_02002c98(1, 3, 0);
+    ((volatile Registers *)0x04000000)->control = (((volatile Registers *)0x04000000)->control & 0xffcfffef) | 0x10;
+    ((volatile Registers *)0x04000000)->bg[0] = (((volatile Registers *)0x04000000)->bg[0] & 0x43) | 0x318;
+    ((volatile Registers *)0x04000000)->bg[1] = (((volatile Registers *)0x04000000)->bg[1] & 0x43) | 0x108;
+    ((volatile Registers *)0x04000000)->bg[2] = (((volatile Registers *)0x04000000)->bg[2] & 0x43) | 0x210;
+    ((volatile Registers *)0x04000000)->bg[3] = (((volatile Registers *)0x04000000)->bg[3] & 0x43) | 0x4884;
+    func_02008c58(0, 0x06000000, 0x80000);
+    ((volatile Registers *)0x04000000)->control = (((volatile Registers *)0x04000000)->control & ~0x1f00) | 0x1f00;
+    func_02041898(2);
+    func_020414b0(63);
+    prior = (volatile u16 *)0x04000008;
+    bg = (volatile u16 *)0x0400000a;
+    bg[0] = bg[0] & ~3;
+    bg[2] = (bg[2] & ~3) | 3;
+    bg[1] = (bg[1] & ~3) | 1;
+    prior[0] = (prior[0] & ~3) | 2;
+    *(volatile u32 *)((u8 *)bg + 18) = 0;
+    control = (volatile u32 *)0x04000000;
+    *control = *control & ~0xe000;
+    func_02046150(0, 0, 2);
+}

@@ -1,0 +1,22 @@
+typedef unsigned char u8;
+typedef int s32;
+typedef unsigned int u32;
+typedef long long s64;
+typedef unsigned long long u64;
+typedef struct Vec3 { s32 x; s32 y; s32 z; } Vec3;
+typedef struct Node { u8 reserved[0x1c]; Vec3 position; Vec3 target; } Node;
+typedef struct CurrentState { u8 reserved[8]; Node *current; } CurrentState;
+typedef struct Flags { u8 reserved[8]; u8 flag8; u8 gap9[3]; u8 flagc; } Flags;
+extern CurrentState native_data_020edd0c;
+extern s32 native_fn_0200236c(s32);
+typedef char VectorSize[(sizeof(Vec3) == 12) ? 1 : -1];
+typedef char PositionOffset[((u32)&((Node *)0)->position == 0x1c) ? 1 : -1];
+typedef char TargetOffset[((u32)&((Node *)0)->target == 0x28) ? 1 : -1];
+typedef char CurrentOffset[((u32)&((CurrentState *)0)->current == 8) ? 1 : -1];
+typedef char FlagOffsets[((u32)&((Flags *)0)->flag8 == 8 && (u32)&((Flags *)0)->flagc == 12) ? 1 : -1];
+typedef char IntegerWidths[(sizeof(s32) == 4 && sizeof(u64) == 8) ? 1 : -1];
+
+typedef char CurrentPrefix[(sizeof(CurrentState) == 12) ? 1 : -1];
+typedef char NodePrefix[(sizeof(Node) == 52) ? 1 : -1];
+typedef char FlagsPrefix[(sizeof(Flags) == 13) ? 1 : -1];
+typedef char SignedLongWidth[(sizeof(s64) == 8 && (s32)0xffffffff == -1) ? 1 : -1];

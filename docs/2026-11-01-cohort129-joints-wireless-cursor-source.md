@@ -1,0 +1,9 @@
+# Cohort129 joint, wireless and cursor source — 2026-11-01
+
+The unpublished queue is expanded before preparation to6 new ordinaryC functions/1,360 initialized bytes plus a jointly typed existing92-byte caller,0extra credit. It waits for128 committed closure. The old proposal/idle driver are retained; no active build or shared registry is changed by replacing the wait process.
+
+[Joint/wireless group](2026-11-01-cohort129-joints-wireless-native-source.md) retains3joint routines620 bytes, ARM7 copy360 and timeout128, plus independent native/default-formation and zero-credit broad source archives. Their native/Windows/Android-crossbuild limits remain unchanged. Android device execution is0.
+
+Main ARM0206238C/252 is admitted only with typed main0206F79C/92 alternative. The existing396-byte consumer and its rawu32(s8*,s32,s32) helper view remain unchanged.10,819 direct pairs yield21,638 top returns;8,227 consumer pairs yield16,454 more.285,910 actual native helper returns are counted separately, with only the explicit muted notification supplied. Gate order, blocked-gate null outputs, byte wrap, signed full32 bounds, reversed/equal bounds, lower-then-upper clamps and96alias profiles are modeled independently with ordered memory effects. Six whole-C controls produce108 actual returns,20 rejections and34 pair-positive cases as described in the source packet. Physical prerequisites, unsupported post-gate-null paths and full Windows/game behavior remain unproved. No signed-char return is forced to improve a larger caller’s assembly.
+
+Expected successful129 totals would be9,362 functions/739,307 initialized bytes. They are queue expectations, not accepted results. Every original source/object/input,20 module comparisons, checksum bodies/144 isolated returns,5,117 getters and exact original-length/SHA scaffolding ROM remain mandatory. Full source-only ROM and full native Windows game remain unproved.

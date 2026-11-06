@@ -1,0 +1,26 @@
+# ARM7 note/channel initialization, 2026-10-30
+
+The private measured ROM is `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`. This proof covers host ARM7 WRAM ARM `03801B08..03801C50`: 328 ordinary C instruction bytes, with no pool, padding, assembly, original-object or callee source credit. Integration and whole-module acceptance remain the coordinator's responsibility.
+
+The standalone source is `src/arm7/20261030_note_on/native_arm7_wram_03801b08.c`, SHA-256 `d733fba8a4bec3ceb52ec40e2933c38eddc2849e2d71a1f4804c388a3c81044c`. Its six-word ABI is channel pointer, full-word MIDI value, velocity, length, bank pointer and 12-byte instrument pointer. The two pointer arguments occupy the incoming stack. Full-word MIDI and velocity remain distinct from their low-byte destination stores. The partial channel view only declares the fields used by this function; it does not redefine the complete 84-byte channel object.
+
+The source captures both instrument archive and wave indexes before testing the archive pointer. This preserves the original load/lifetime order. Direct type-4 wave pointers combine two unsigned halfwords with the high half shifted by 16. Those ordinary expression and declaration choices produce a complete genuine MWCC/MWLD match; no register forcing, instruction editing or object-addend editing is used. The unit-specific compiler profile is MWCC 2.0 base, ARM7TDMI, O2 and inline off, as pinned in `nonmatching/arm7-bulk/20261030/note-on-final60/closure.json`.
+
+Measured branches distinguish archive-relative type 1, direct-pointer type 4, type 2 channel IDs 8..13 and type 3 channel IDs 14..15. Invalid type, null wave and failed lower initialization return zero. Successful initialization stores the low-byte MIDI/velocity values, instrument root and pan minus 64, and executes the original envelope setters. Release byte 255 replaces length with `FFFFFFFF` and release with zero before lower initialization. Archive counts use unsigned comparison. An unmapped bank or instrument is an unsupported fault, not a successful zero return.
+
+The bounded synthetic suite contains 715 fresh scenarios and four three-call persistent-state sequences. Original and rebuilt runs produce 1,446 actual outer returns and 6,780 separately observed original-helper returns. All 82 own ARM instructions execute. The original PCM, PSG, noise, channel-start, attack, decay, sustain, release, wave-address, empty synchronization and signed-division helpers execute without provider replacements. Actual root/helper argument words, complete registers, CPSR, stack hashes, RAM/BSS hashes and ordered non-stack stores are compared across original and rebuilt execution. An independent typed state model separately checks returns, ordered stores, complete disposable RAM and WRAM/BSS preservation, and saved-register/root/nested ABI behavior.
+
+The scenarios exhaust the type and pan byte domains and include full-word MIDI/velocity/length inputs, channel boundaries, release overrides, archive slots 0/1/3, index/count comparisons, null/relative/absolute wave addresses, coefficient boundaries and reentry. Raw envelope bytes 128..255 are explicitly synthetic: attack can read before the nominal coefficient table into measured initialized module data. Those observations do not prove valid instrument formats. Supported backing is aligned and disjoint, with four archive slots and indexes/counts 0..3. No sample playback, physical audio, ownership, surrounding sequence execution, malformed-pointer recovery or hardware-timing claim is made. Unicorn uses the documented TI925T ARMv4T surrogate with a 100,000-instruction and 100,000-microsecond per-call cap.
+
+Configured-boundary analysis confirms the complete 328-byte root, eight direct native helper calls, no source pool, one configured outside root call from `03800F90`, no configured outside interior entry and no unresolved aligned initialized word into the interior. Opaque computed pointer producers remain outside this entry-domain proof.
+
+The local pinned pokediamond `SND_seq.c` reference at commit `b623abef1b4dfe204ca50aab42447ac00c134290` independently corroborates the six-word call in `TrackPlayNote`; `SND_exChannel.c` explains the related lower API names and layouts. These are reference-only inputs, not compiler inputs or evidence that J2 uses the same SDK revision. Original module and helper code receive zero new credit.
+
+Reproduce from any working directory with the pinned Python 3.13.5 executable and an absolute path to:
+
+```
+match_arm7_note_on_20261030_60.py
+validate_arm7_note_on_20261030_60.py
+```
+
+The matcher regenerates `evidence/matches/arm7-note-on-20261030-60.json` from current C compilation and genuine MWLD linking, then executes the native suite. Its report includes qualified native symbol publication, unchanged explicit relocation addends, source-only inputs and complete frozen generator/runtime hashes. The standalone validator performs a fresh source/link/native/boundary proof, rechecks current products after caching, and rejects 33 metadata, missing/mutated-product, executable-effect and real wrong-C compiler/link controls. Unsupported instruction exhaustion and unmapped-input faults receive zero return credit. All accepted products are restored after controls.

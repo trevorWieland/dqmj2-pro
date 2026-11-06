@@ -1,0 +1,7 @@
+# Explicit C99 qualification for unlabelled compiler inputs — 2026-11-02
+
+Cohort143's first preparation refused three overlay C units because their frozen producer recorded neither a language label nor an explicit `-lang` option. The production compiler, source, complete function bytes and relocations were already pinned. The stricter source-accounting classifier correctly refused to infer C solely from a filename. Shared registry and preference hashes remained at accepted142.
+
+The new v4 preparer recompiles each otherwise unlabelled `.c` input with the same pinned compiler and production flags plus explicit `-lang c99`. It requires exact complete function bytes and relocation records against the existing production object, including symbol identity and source/object/compiler hashes. Qualification affects accounting only: production sources, objects, flags, reports and linker bindings remain unchanged. Three actual explicit C99 probes pass. Six controls reject changed source/object/compiler hashes, a C++ language override, actual C++ syntax under the C99 parser, and ordinary-logic inline assembly. Assembly classification and all earlier matching gates remain intact.
+
+Run `python test_explicit_c_frontend_qualification_20261102.py`. The v18 continuation driver uses v4 preparation for ordinary source packages. The original v17 refusal and all frozen worker inputs remain preserved. Per-cohort qualification receipts record the explicit compiler commands and output signatures with zero additional source credit.

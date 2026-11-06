@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "rom": "inputs/game.nds",
+  "save": "inputs/save.sav",
+  "deps": "deps/native",
+  "dsd": "tools/dsd.exe",
+  "compiler": "tools/mwccarm/mwccarm/2.0/base/mwccarm.exe",
+  "linker": "tools/mwccarm/mwccarm/2.0/base/mwldarm.exe",
+  "license": "tools/mwccarm/mwccarm/license.dat",
+  "romSha256": "674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6",
+  "saveSha256": "169d65a4c6ffcb0fe996d652f73a01f70d594a08ad2385098f628abbe1c4b8f0",
+  "output": "oracle"
+}

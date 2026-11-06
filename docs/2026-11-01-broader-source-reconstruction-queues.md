@@ -1,0 +1,15 @@
+# 2026-11-01: Broader source reconstruction queues 314-316
+
+Three bounded queues attempted 38 distinct unaccepted identities spanning 29,508 native bytes. The completed corpus contains 34 ordinary C hypotheses for 14,728 native bytes; 25 compile and complete genuine linker comparisons, covering 11,128 native bytes under 50 profiles. No source is exact or natively qualified by this breadth packet, and accepted executable coverage remains zero.
+
+The 600-4000-byte queue found five fresh identities after accepted/pending and prior-attempt exclusions. All five produced C, four compiled. The 256-599-byte caller/dependency queue selected 32 identities, produced 29 C hypotheses and 21 compiling units. These are refinements of existing drafts, not new address discoveries or decompiled-byte credit.
+
+The larger 4000-20000-byte queue selected a genuinely new-name 13,664-byte main 020BB878 candidate. It produced generated m2c text but correctly stopped at an unsupported physical word pair rather than invent C. The raw output calls 02044454, treats its return as a pair, then forwards SECOND_REG plus unset R2/R3 to host01FFF610. The measured 02044454 body actually stores an incoming word and returns the previous word in R0, with no demonstrated R1 return. The actual 01FFF610 contract is being independently checked. The generated text/assembly/context are retained as generated evidence only, never counted as reconstructed source.
+
+Each compiler result preserves source, module/address/mode, compiler path/hash, complete flags, original bytes and genuine link provenance. The replay reconstructs current objects locally and compares linked executable bytes with their frozen identities; it does not require old debug objects or scratch outputs. Failed conversion/compile evidence stays in deterministic gzip sidecars.
+
+Run `python replay_save_core_breadth319_20261101.py`. Both normal and parent-directory `-I -S` runs reproduce the compact counts and current compiler report. The archival selectors use immutable accepted snapshots plus explicit pending/ownership exclusions; the replay consumes their frozen source/profile corpus without rerunning selection against mutable state.
+
+A separate unqualified measured-width alternative for 0206C88C replaces a byte operation at global021C4BFC with the native 32-bit store/read and a byte store at021C4C02 with the native 16-bit store. It improves 230 to 234 of 296 same-offset bytes and remains nonmatching, without native behavior credit. The actual STR at 0206C8E0 and STRH at 0206C908 ground these views; they do not establish original structures, domains, buffer capacities or semantic field meanings.
+
+Inferred globals, scalar-versus-pointer expressions, signed arithmetic, aggregate/stack extents, callee argument/return views and omitted default branches remain review risks in these hypotheses. No generated disassembly, partial source, successful compilation, near byte score or repacking is counted as completion. No application, baseline, input, shared registry or accepted source is changed.

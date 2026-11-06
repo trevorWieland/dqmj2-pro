@@ -1,0 +1,9 @@
+# Bounded record expansion matching source - 2026-11-02
+
+Main ARM9 Thumb020AE0E4 is512 bytes ofordinary C matching the complete original module span after genuine Metrowerks2.0 O2/space compilation andMWLD linking. It expands anF0-byte source record into a204-byte destination through nullable byte strings,inline byte arrays andword fields. No save-format,encoding,record identity orgame-scene meaning is assigned.
+
+A generated u32 return200h was the final address-offset artifact. Bothobserved direct callers,at020AE7E6 and020AF2AA,overwriteR0 beforeconsumption. The new void caller-qualified view removes four extra bytes. The static audit makesno claim aboutunknown indirectcallers ororiginalCdeclaration. RawphysicalR0=200h is compared as a machineeffect,not anAPI result. The bounded copy helper hasanexplicit three-word call-site prototype;its originalAPI remainsunknown.
+
+Reproduce with `python match_mechanics_save_20261102_lane_record_expand438.py`. There are512 original/source pairs,1024 proper parent returns,1024 proper wrong-source returns and26,624 actual helper returns. Original20B2A38 andalready-selected80-byte0201D780 strncpy execute;no functions areprovided. The former copies apositive bound andforces itslastbyte toNUL. All128 nullablepointermasks,short andlong/high-byte strings andtwo outputpoisons aretested. An independent model checks completeoutput,padding preservation,word transfers,byte-copy/padding/finalNUL effects andsource invariants. Strict code/data/write bounds,orderedreads/writes,fresh machines,actualPOP-PC,PCSTOP/SP/savedregisters andcanaries are required.
+
+Complete wrong C omits the firstnullablezero ornarrows thefinalwordstore tobyte. Both return normally:reject/positive domains are256/256 and512/0. Existing helper source andall earlier primaries stayunchanged. Onlyintegrator module/ROM/regression gates can admit512 newsource bytes;the current packet alone is notcompletion orwhole-ROM source construction.

@@ -1,0 +1,12 @@
+typedef unsigned char u8;
+typedef unsigned int u32;
+typedef int s32;
+typedef struct {u32 words[3];} Layout;
+typedef struct {u8 prefix[16];Layout rows[10];u8 gap88[0x1d4];u32 cursor25c;} ContextPrefix;
+extern const char native_data_020de394[22];
+extern ContextPrefix *native_fn_02061944(void);
+extern char *native_fn_0201d444(char *,const char *);
+extern void native_fn_0205ff80(const char *);
+extern u32 native_fn_02065730(Layout *,s32,s32,u32,u32);
+extern void native_fn_0205ff9c(void);
+extern void native_main_0207154c(void);

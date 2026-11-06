@@ -1,0 +1,35 @@
+typedef unsigned char u8;
+typedef signed short s16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef struct { void *data; s32 size; } Span;
+extern u32 native_fn_0202a250(void);
+extern void native_fn_0202a498(u32,void *);
+extern void *native_fn_0203cc2c(const void *,u32);
+extern Span *native_fn_0204518c(Span *,void *,u32);
+extern void native_fn_0204820c(const void *,s32,s32);
+extern void native_fn_02048308(void);
+extern u32 native_fn_02048f7c(u32);
+extern void native_fn_020c7044(void);
+extern u32 native_fn_020c8fec(u32);
+extern void native_fn_02045680(u32);
+extern const u8 native_data_020e2e74[];
+extern struct { u8 first; u8 second; } native_data_021d6384;
+u32 native_main_020c70cc(void) {
+    Span span;
+    s16 zero;
+    u32 heap;
+    void *resource;
+    zero=0;
+    heap=native_fn_0202a250();
+    resource=native_fn_0203cc2c(native_data_020e2e74,heap);
+    native_fn_0204518c(&span,resource,0);
+    native_fn_0204820c(span.data,0,span.size);
+    native_fn_0204820c(&zero,0,2);
+    native_fn_02048308();
+    native_fn_0202a498(heap,resource);
+    native_fn_020c7044();
+    native_fn_02045680(native_fn_02048f7c(1));
+    if(native_data_021d6384.second==1) return native_data_021d6384.second;
+    return native_fn_020c8fec(0);
+}

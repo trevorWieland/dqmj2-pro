@@ -1,0 +1,2 @@
+#include "context.h"
+void native_main_020960d0(tagACWORK*w){int index,sum;SOCInAddr primaryDns,secondaryDns;if(w->connectApType<6){index=DWCi_ConvConnectAPType(w->connectApType);sum=w->userInfo[index].ap.dns[0][0]+w->userInfo[index].ap.dns[0][1]+w->userInfo[index].ap.dns[0][2]+w->userInfo[index].ap.dns[0][3];if(w->userInfo[index].ap.ip[0]==0&&sum!=0){primaryDns.addr=ConvAddress(w->userInfo[index].ap.dns[0]);secondaryDns.addr=ConvAddress(w->userInfo[index].ap.dns[1]);SOC_SetResolver(&primaryDns,&secondaryDns);}}}

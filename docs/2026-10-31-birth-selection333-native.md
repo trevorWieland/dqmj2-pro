@@ -1,0 +1,21 @@
+# Native birth selection dependency, 2026-10-31
+
+The already accepted `ov000:ARM 0x0222976C/240` ordinary C is reused unchanged. Its fresh real MWLD output equals every native byte. Two hundred independently modeled original/source pairs produce400 actual top returns,2252 strict native dependency returns, including252 RNG returns. There are no function providers and zero new source/function coverage. The selected body executes all232 code bytes; its final8 literal bytes are compared but not counted as executed instructions.
+
+This applies only to ROM SHA-256 `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`, primary ARM9, overlay000 SHA-256 `783cb72f0d6ee2fdb632aba3e0ae41a9eee0c7e41933192b1680152e50aa61f6`. The report retains native/source hashes, the genuine link proof, asset hashes, recipes, compact results, full deterministic compressed traces, limitations and reproduction command.
+
+The measured call view passes parent-record pointers in R0/R1 and child species in R2. The function stores both pointers at `0x02247480+4/+8`. It reads parent raw byte+0x31 through actual main `0x02065D88`: this indexes the measured `ItemTbl.bin` payload with stride88. The selector observes raw table byte+0x2A. Its original item meaning, names and exact formal typedef remain unproven.
+
+The independent model begins at selector9. A first parent raw table value1 sets0; value2 sets1. A second parent value1 sets0 unless the existing selector is1, in which case it returns to9. A second parent value2 sets1 unless the selector is0, in which case it returns to9. Other table values leave that step unchanged. Tests use actual indices0,13,14,181,182, including distinct IDs with the same raw1/2 table values; no book/sceptre label is inferred from these bytes.
+
+When the selector remains9, original RNG `0x0203D294(17)` executes. A zero result selects2 with one state advance. A nonzero result executes original `0x0203D294(1024)` and selects its low bit, requiring two state advances. The model independently computes the32-bit LCG and high-word modulo. It checks return words, limits, order and final state. RNG returns are already part of the native dependency total and must not be added again.
+
+The selector is stored at scratch `0x022474C8+0x1B`. Actual main `0x02044D60` then reads child species table flags: bit15 of the u16 at `EnmyKindTbl` record+4 can overwrite the selection with2. This override occurs after any draws. Therefore identical output2 can coexist with different RNG consumption. A future-state prediction requires the actual initial RNG word and ordinary caller prerequisites; these tests supply deterministic seeds and cannot provide that future scene state.
+
+Every execution starts from a fresh ARM946 machine, copied measured inputs and declared synthetic parent item bytes/child species/RNG seed. Actual return requires PC, SP, mode and preserved registers. A full independent nonstack RAM model permits only the two cached pointers, scratch selector byte and RNG word changes. The instruction bound is10000 and measured maximum223. Two child species are chosen by the actual raw flag bit. The original ItemTbl getter, child flag predicate and RNG code execute without function stubs.
+
+An ordinary compiled source control changes the RNG limit17 to16. The independently checked original call sequence rejects it even in a case whose output byte remains2. This verifies the draw-contract check instead of relying only on the visible result.
+
+This dependency is called by the accepted244-byte `0x0222900C` routine whose static role correction is in handoff331. That larger record removal/allocation chain and its ordinary scene caller have not been executed by this packet. `0x02229100/1644` scratch construction remains a separate function and a nonmatching functional draft in handoff330. Neither calling the selector directly nor seeded fixtures establish synthesis eligibility, payment/item consumption, persistence or a real newborn's record33.
+
+Replay `python prove_ov000_selection333_20261031.py`, or invoke its absolute path from another working directory. The existing accepted source is hash-checked and stays untouched. Full traces regenerate under `work/ol333-proof/raw-traces` as separately hashed gzip with mtime0. No application, UI, adapter, registry, ledger or shared build code is edited.

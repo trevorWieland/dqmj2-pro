@@ -1,0 +1,23 @@
+# Lookup node forwarding and modular counter - 2026-10-31
+
+Main Thumb020AC404/124 now matches every byte through pinned Metrowerks and genuine MWLD. The original path loads a node pointer from its stack output,reads node+14,then leaves that pointer in R1 for the call to accepted020AAF08. That144-byte original helper saves incoming R1 and reads node+0 and+14. The old one-argument hypothesis omitted a real consumed pointer. The preferred caller explicitly passes the stack-returned node and keeps all lower contracts local.
+
+The preferred source also subtracts one as an unsigned32-bit word before signed interpretation. Native counter80000000 becomes7FFFFFFF and skips the signed<=0 cleanup gate. This is defined modular arithmetic before a pinned signed view,not a claim about valid original counter domains. The intermediate signed-subtraction hypothesis is preserved separately;it can match the same124 Metrowerks bytes while retaining an unproved fullword C domain.
+
+OriginalAAF08,42-byteB0CA8 and16-byteB2C88 execute in the native/source fixtures. All202 accepted helper bytes are freshly compiled/linked and patched with the preferred caller,with zero duplicate credit. B2C88 executes a validated BX R3 transfer to the supplied B2A38 target. Its supplied completion receives zero native-return credit;actual return instructions are counted separately. OriginalAAF08 always produces raw0 after these supported calls,so the callers retained nonzero branch is not forced into a false native path.
+
+The840 paired cases give1680 actual top returns,2064 separate actual helper returns,72 separately recorded supplied tail completions and15168 paired lower calls. Six explicit lower targets cover lookup/out-pointer,diagnostic-format recording,release/list boundaries and tail logging. Their real lookup/format/deallocation/list behavior is unproved. Format arguments are recorded into the supplied destination to expose pointer/order effects without assigning original text semantics.
+
+Cases cross full lookup outcomes,opaque resource words,counters0/1/2/FFFFFFFF/80000000/7FFFFFFF,four fullword remaining-field predicates,two nodes and holder replacement at lookup. The outer caller keeps the context captured before lookup for its+100 gate;AAF08 reads the post-lookup holder for its own context. This is adversarial bounded ordering evidence. Missing output on nonzero lookup physically stops in native/source;two stops receive no return or post-fault credit.
+
+Four complete wrong-C bodies alter the node argument,the signed<=0 gate,the captured context gate or subtraction direction. Their3360 pairs/6720 actual returns give1850 independent raw-output/full-data-backing rejections and1510 observational positives. Stack-output addresses,reads and instruction scheduling alone never produce an independent rejection. All own decoded instruction starts are covered;the post-POP C046 alignment and literal pool remain matched but unfetched.
+
+Actual Windows PE32 executes the preferred caller plus three unchanged accepted C helpers840 times. Complete3200-byte synthetic native context/node backing is compared after normalizing only the known diagnostic string symbol identities inside the supplied recorder. All840 pass. A separately compiled unaccepted signed-subtraction C variant actually returns840 times but fails64 cases,all at initial counterINT_MIN:its optimized code clears the resource field where native modulo32 produces a positive counter and preserves that field. This measured counterexample demonstrates why compiler-byte equality alone cannot rank a source interpretation above semantic evidence. No old accepted-source/native binary failure is invented. A missing-node-argument C control also fails its explicit API compile check.
+
+The repeated840 native port captures reproduce the same profiles and add no source coverage. Windows uses pinned32-bit freestanding C/alias rules;no Android run,64-bit portability,ordinary scene,lifetime,bank selection or whole-game guarantee follows. Original ROM/save/baseline/application files remain untouched.
+
+Reproduce from any working directory:
+
+`python <repository>/match_mechanics_save_20261031_lane_lookup_node.py`
+
+Normal and parent-directory -I -S replays reproduce canonical SHAf8b17040e3fe87e5aaf747bf7235753132ae6564b4c605c62ff17416e10a44b8. Producers materialize their own helper objects,negative sources,port controls and golden data;no generated-report ordering is hidden. Root alone registers the one-function/124-byte candidate and performs full module/ROM gates. Old hypotheses and all accepted sources remain frozen.

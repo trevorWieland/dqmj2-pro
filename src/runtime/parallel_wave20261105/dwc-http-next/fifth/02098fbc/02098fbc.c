@@ -1,0 +1,2 @@
+#include "context.h"
+DWCNetcheckError native_main_02098fbc(DWCNetcheckParam*param){DWCAuthAlloc alloc=param->alloc;if(DWCnetcheck)return 4;DWCnetcheck=alloc(ALLOC_DWC_NETCHECK,sizeof(DWCNetcheck));if(!DWCnetcheck)return 4;native_fn_02008d78(DWCnetcheck,0,sizeof(DWCNetcheck));DWCnetcheck->returncode=-99999;DWCnetcheck->param=*param;if(DWChttp)return 4;DWChttp=alloc(ALLOC_DWC_HTTP,sizeof(DWCHttp));if(!DWChttp)return 4;DWCishotspot=0;native_fn_02007074(&DWCnetcheck->mutex);native_fn_02099178();return 0;}

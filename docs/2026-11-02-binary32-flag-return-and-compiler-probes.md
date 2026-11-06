@@ -1,0 +1,11 @@
+# 2026-11-02: Binary32 flag return and compiler predicates
+
+The fresh 370 batch exposed a concrete frontend boundary: several callers branch BLS after original main 0202537C, while m2c reports an unset $hi condition. This call's useful condition state is not represented by its ordinary R0 return alone, and the caller can overwrite R0 before branching. No failed macro is suppressed or guessed.
+
+Native377 executes the original 92-byte helper 8256 times with zero providers or data-memory accesses. It checks 64 raw binary32 words,all 4096 pairs under incoming NZCV0/F,and four representative pairs under all 16 incoming flag patterns. Finite extremes,subnormals,signed zeros,infinities,NaN signs/payloads and deterministic random encodings are included. R0 is 1 exactly when decoded input R0 is greater than input R1; CPSR.HI agrees and LS is its complement. Full flag/volatile-register effects are preserved separately. This is bounded native ABI evidence,not an arbitrary floating-point or double-precision guarantee.
+
+Pinned Metrowerks compilation of two synthetic ordinary C predicates emits runtime symbol _fgr followed by MOVHI/MOVLS. A genuine MW linker run binds _fgr to the original 0202537C ARM entry through a zero-code NOBITS mode anchor. The generated predicate binary contains no copied helper code. The larger predicate runs 8192 times and the zero-comparison predicate 128 times;all 8320 proper C-probe returns and 8320 actual original-helper returns agree with the independent binary32 relation model. Probe addresses are synthetic and contribute zero original-function or byte credit.
+
+These results qualify a specific new frontend relation-lowering hypothesis. They do not establish the remaining failed callers' conversion/multiplication behavior,their full input domains or complete reconstructed source. No below 02040000 source was authored or changed. Helper original bytes remain execution input and scaffolding.
+
+Run `python replay_save_core_float379_20261102.py`. It regenerates native377 before its compiled-predicate consumer 378,pins source/compiler/linker/native identities,checks real relocated branch targets,and keeps current object/debug provenance separate from stable case and binary identities. All outputs remain private;no save,application or accepted source is changed.

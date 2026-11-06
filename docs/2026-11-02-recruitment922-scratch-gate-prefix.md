@@ -1,0 +1,9 @@
+# Recruitment scratch gate prefix, 2026-11-02
+
+ROM SHA-256: 674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6. ARM9 overlay001 ARM `0x021FB214/1352`. Replay `python prove_ov001_scratch922_prefix_20261102.py`.
+
+Actual original main `0x02008D78` clears 132 bytes at `0x02239ABC`. For a nonzero incoming argument, actual `0x021FB1DC` and mode getters return before native PC `0x021FB244` stores u8 one at scratch `+0x67`. Execution then stops at `0x021FB248`, before the first actor dereference (`LDR R1,[R10,#0x1E8]`). At this checkpoint all other scratch bytes, including signed16 species input `+0x64` and u8 variant input `+0x66`, remain zero. The gate write therefore precedes later field population. It does not prove a completed record, concurrency, or ordinary scene reachability.
+
+All 256 raw u8 mode values at `[0x020F69C4+0x24]` are tested. The initialized main word u32 `[0x020DD9BC]` remains its measured value1; no hypothetical word9 rewrite is used. In this corpus the actual mode predicate returns one only for raw modes3/7. Its return does not guard the nonnull scratch-gate write. Clear bounds and adjacent canaries are checked. There are 256 explicitly unfinished prefix checkpoints, one actual null-input constructor return, one actual getter return, and 1,024 separately counted actual helper returns, with zero providers.
+
+Null input fully returns zero after the clear, and the subsequently invoked actual getter `0x021FBE70` returnsNULL. The getter is not invoked inside an unfinished nonnull frame. Its independent all-byte gate behavior remains frozen in912. The prefix has no source credit and leaves later dependencies/RNG/record completion and persistence unproved. This overlay001 scratch is distinct from overlay000 birth scratch and saved-record byte33 evidence. Canonical and different-directory `python -I -S` report/trace hashes are identical. No original ROM/save files, accepted source or application adapters change.

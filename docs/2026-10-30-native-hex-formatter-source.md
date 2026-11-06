@@ -1,0 +1,13 @@
+# Native hexadecimal floating formatter source
+
+Main ARM 0x0201BE10/1244 is reconstructed as ordinary C at `src/runtime/20261030_hex_formatter/native_main_0201be10.c`. Pinned SP1p6 MWCC O4/speed, inline-all and genuine MWLD reproduce all 1,200 instruction bytes plus the 44-byte pool. The canonical report is `evidence/matches/main-hex-formatter-20261030.json`, SHA-256 `284e231ffd84c6158bfc8d0f4c24588b0889772555cb953bd3205bb842946f47`. It remains pending the next complete module/ROM gate.
+
+Run `python match_main_hex_formatter_20261030.py` and `python validate_main_hex_formatter_20261030.py`. The direct corpus has 494 original/source pairs / 988 actual returns and 4,896 original helper returns, with no providers. Independent raw-bit text and every ordered store, full guarded output RAM, actual helper returns, all GP registers, CPSR, stack, ARM/Thumb return modes and immutable module memory pass. Absolute-value helper output independently equals the input bits with only the sign cleared.
+
+The native representation is intentionally reported literally. Positive and negative zero produce lowercase `0x0p0`, ignoring conversion case, sign and precision. Nonzero subnormals use the same leading1 path with raw exponent minus1023. Mantissa hex digits are extracted and padded; this is not general IEEE rounding. Infinity and quiet NaN signs/case are tested. Normal/subnormal extremes, sign/alternate flags, aligned/unaligned output endpoints, safe precisions through498, zero precision509 and immediate precision510 failure are covered. Wider nonzero outputs that exceed the512-byte guard, negative precision, invalid pointers/selectors and arbitrary aliases remain unsupported.
+
+The complete C draft came from the pinned MSL reference plus measured native differences: an early zero shortcut, in-place eight-byte reversal, unconditional exponent bias, if/else special cases and final rather than intermediate byte narrowing. Capturing the decimal-conversion input before the guard restores the native scheduling. Failed alternative captures and compiler profiles remain separate attempts. There are no physical-register constraints, assembly or byte/relocation patches.
+
+Five compiled wrong C controls (radix, sign, result pointer, zero pointer and nonreturning loop) fail both strict linking and independent execution checks. Original decimal conversion, absolute/equality comparison, integer formatting and readonly text receive zero new credit. Native behavior alone establishes no text/UI, source-only ROM or playable host/device claim.
+
+This function is accepted in cohort65. See `docs/2026-10-30-cohort65-player-formatters-and-descriptors.md` for the measured complete module/ROM gate.

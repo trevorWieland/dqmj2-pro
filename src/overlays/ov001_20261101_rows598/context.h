@@ -1,0 +1,11 @@
+typedef unsigned char u8;
+typedef unsigned int u32;
+typedef signed int s32;
+extern u32 native_fn_020c5938(void);
+extern u32 native_fn_02008d78(void *, u32, u32);
+extern u32 native_fn_ov001_0222cd84(u32);
+extern u32 native_fn_ov001_0222ceb8(u32, u32);
+extern u32 native_fn_ov001_0222cf34(s32, u32);
+extern u32 native_fn_ov001_0222d240(u32, u32);
+extern u8 native_data_ov001_022498fc[];
+extern u8 native_data_ov001_0224983c[];

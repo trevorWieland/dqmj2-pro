@@ -1,0 +1,15 @@
+# Standalone matched OAM reset source — 2026-11-01
+
+The source candidate for primary ARM9/main/ARM0203716C is now162 physical lines of ordinary C. It contains no includes, placeholder headers, assembly, encoded instruction arrays or work-directory inputs. Its complete296-byte function/pool span genuinely matches through the pinned compiler and actual MWLD linker. Module/regression acceptance remains required; this document awards no source credit.
+
+The code is reference-assisted reconstruction from the pinned NitroSystem source. A function dependency slice retains ten actual C definitions; a type/declaration slice retains the necessary SDK structures and word types. Manual review removes two unrelated declarations and unused pragmas/no-op release assertions. The final standalone file preserves the whole linked span. The intermediate1026-function and2588-entity scans and every inexact or refused variant remain research evidence with zero accepted credit. No assertion is weakened in the decompilation validation.
+
+The existing accepted020489C4 source passes a signed-int address expression and consumes an unsigned-int physical return. The selected candidate therefore uses that defined raw ABI view and returns the value of the final halfword assignment. This differs from the public SDK void API declaration without assigning a status meaning to the returned value. The earlier pointer-formal and post-assignment reread hypotheses were superseded, never admitted.
+
+Run `python match_main_oam_reference296_closed_20261101.py`. Six hundred deterministic original/C pairs require1,200 actual top returns,1,152 actual cache/CPU-fill helper returns and768 explicitly supplied DMA calls. Fast-transfer flags include0,1,2,80000000 andFFFFFFFF. The corpus observes every288 instruction bytes plus eight generated literal bytes. Raw registers, flags, main data, complete cache buffers, stack guards and ordered calls/writes must agree; original helper instructions add no source credit.
+
+Two complete returning wrong C units alter the fill value or final halfword assignment. Across480 actual wrong returns,474 independently fail the semantic model and six retain their positive behavior. Instruction-bound prefixes do not count as returns. Both canonical and parent-working-directory Python `-I -S` runs produce identical report bytes.
+
+The supported state space is bank0..2, from/to0..127 and the recorded bounded valid/invalid-window states. Cache invalidation instructions execute in Unicorn but establish no physical cache/device coherence. DMA remains an explicit supplied word-fill boundary. Malformed/aliased records, asynchronous device behavior, rendering and scene meanings remain unsupported.
+
+The cache array and DMA control word remain externally bound original data with zero recovered data credit. Complete module links, all earlier source/object matches, both checksum matches/all144 isolated checksum returns,5,117 getters and the exact175,959,612-byte ROM checksum must pass before admitting this candidate. Original executable scaffolding and a matched source function do not prove a source-only ROM or complete Windows game.

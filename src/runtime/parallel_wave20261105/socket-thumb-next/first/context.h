@@ -1,0 +1,28 @@
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef struct ThreadView ThreadView;
+typedef struct SocketView { ThreadView *owner0; u32 kind4; u8 state8; u8 mode9; u16 portA; u8 opaqueC[12]; u16 remote18; u16 remote1A; u32 address1C; u32 address20; u32 sequence24; u8 opaque28[16]; u32 word38; u8 opaque3C[8]; u32 word44; u8 opaque48[24]; u32 word60; } SocketView;
+struct ThreadView { u8 opaque0[0xa4]; SocketView *socketA4; };
+typedef struct Singleton { u32 opaque0; ThreadView *thread4; } Singleton;
+typedef struct AddressState { u8 opaque0[0x50]; u32 address50; } AddressState;
+extern Singleton native_data_020e33e4;
+extern AddressState native_data_021cfcf8;
+extern SocketView *native_fn_0208cb1c(u32,u32);
+extern void native_fn_020069f8(void);
+extern void native_fn_0200698c(ThreadView *);
+extern void native_fn_0208cc0c(SocketView *,u32);
+extern void native_fn_0208cc18(SocketView *,u32);
+extern void native_fn_0208cc24(u32,u32,u32,u32);
+extern s32 native_fn_0209280c(SocketView *);
+extern s32 native_fn_0208d820(SocketView *);
+extern void native_fn_02092b50(SocketView *);
+extern void native_fn_0208d8b4(SocketView *);
+extern u32 native_fn_0208d6b4(void);
+#define AT(T,F) ((u32)&((T *)0)->F)
+typedef char WordLayout[(sizeof(u32)==4 && sizeof(void *)==4)?1:-1];
+typedef char SocketLayout[(sizeof(SocketView)==100 && AT(SocketView,kind4)==4 && AT(SocketView,state8)==8 && AT(SocketView,mode9)==9 && AT(SocketView,portA)==10 && AT(SocketView,remote18)==24 && AT(SocketView,remote1A)==26 && AT(SocketView,address1C)==28 && AT(SocketView,address20)==32 && AT(SocketView,sequence24)==36 && AT(SocketView,word38)==56 && AT(SocketView,word44)==68 && AT(SocketView,word60)==96)?1:-1];
+typedef char ThreadLayout[(sizeof(ThreadView)==168 && AT(ThreadView,socketA4)==164)?1:-1];
+typedef char SingletonLayout[(sizeof(Singleton)==8 && AT(Singleton,thread4)==4)?1:-1];
+typedef char AddressLayout[(sizeof(AddressState)==84 && AT(AddressState,address50)==80)?1:-1];

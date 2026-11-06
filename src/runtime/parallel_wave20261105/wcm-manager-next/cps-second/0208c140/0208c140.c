@@ -1,0 +1,2 @@
+#include "context.h"
+void native_main_0208c140(u8*hdr,u32 hdr_len,u8*body,u32 body_len,u32 ip_to,u16 type){CPSMacAddress*mac_to;CPS_SETUSHORT2(hdr-2,type);if(!native_fn_0208bc58(ip_to)){ip_to=native_fn_0208bc18(ip_to);if(ip_to==0)return;mac_to=native_fn_0208bf10(ip_to);if(mac_to==NULL)mac_to=native_fn_0208c038(ip_to);if(mac_to==NULL)return;native_fn_02008e0c(mac_to,hdr-14,6);}else{hdr[-14]=1;hdr[-13]=0;hdr[-12]=0x5e;hdr[-11]=(ip_to>>16)&0x7f;hdr[-10]=ip_to>>8;hdr[-9]=ip_to;}native_fn_02008e0c(native_data_021d01e0,hdr-8,6);native_fn_0208bce8(hdr-14,hdr_len+14,body,body_len);}

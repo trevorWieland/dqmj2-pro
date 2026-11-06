@@ -1,0 +1,31 @@
+typedef unsigned char u8;
+typedef unsigned int u32;
+typedef struct NativeThread NativeThread;
+typedef struct { NativeThread *head; NativeThread *tail; } ThreadQueue;
+struct NativeThread {
+    u8 context[0x64];
+    u32 state;
+    NativeThread *globalNext;
+    u8 unobserved6C[0xC];
+    ThreadQueue *waitingQueue;
+    NativeThread *previousWaiting;
+    NativeThread *nextWaiting;
+    u8 unobserved84[0x18];
+    ThreadQueue joinQueue;
+    u8 unobservedA4[0xC];
+    void *sleepAlarm;
+};
+typedef char native_thread_view_must_be_B4[sizeof(NativeThread) == 0xB4 ? 1 : -1];
+extern u8 native_data_020e33c0[];
+#define NATIVE_CURRENT_THREAD (*(NativeThread **)(native_data_020e33c0 + 0x28))
+extern u32 native_fn_02007ff4(void);
+extern void native_fn_020067a0(void);
+extern u32 native_fn_02006c70(void);
+extern void native_fn_0200716c(NativeThread *);
+extern void native_fn_02006878(NativeThread *);
+extern NativeThread *native_fn_020062a4(ThreadQueue *,NativeThread *);
+extern void native_fn_02006388(NativeThread *);
+extern void native_fn_02006924(ThreadQueue *);
+extern u32 native_fn_02006ca4(void);
+extern u32 native_fn_02008008(u32);
+extern u32 native_fn_020069dc(void);
