@@ -178,7 +178,19 @@ def install_bundle(root, bundle):
 
 
 def run_private(root, log, arguments, allow_failure=False):
-    process = subprocess.run([sys.executable, *arguments], cwd=root, stdout=log, stderr=subprocess.STDOUT)
+    process = subprocess.Popen([sys.executable, *arguments], cwd=root, stdout=subprocess.PIPE,
+                               stderr=subprocess.STDOUT, text=True, errors='replace')
+    for line in process.stdout:
+        log.write(line)
+        try:
+            event = json.loads(line)
+            if (isinstance(event, dict) and set(event) == {'script', 'exitCode'}
+                    and isinstance(event['script'], str) and re.fullmatch(r'[A-Za-z0-9_./-]+\.py', event['script'])
+                    and type(event['exitCode']) is int):
+                print(json.dumps(event), flush=True)
+        except (ValueError, TypeError):
+            pass
+    process.wait()
     log.flush()
     if process.returncode and not allow_failure:
         raise BundleError("Private build command failed")
@@ -201,6 +213,8 @@ def prepare_runtime(root, log):
 
 
 def build_outcome(root, exit_code, started_ns):
+    if (root / REPORTS[0]).stat().st_mtime_ns < started_ns:
+        raise BundleError('The complete build check report is stale')
     checks = read_json(root / REPORTS[0])
     if exit_code == 0 and checks.get("allChecksPassed") is True:
         return dict(legacyAllChecksPassed=True, publicReportingOverride=False)
@@ -260,7 +274,10 @@ def main():
         try:
             receipt["acceptedManifestSha256"] = digest(accepted_path)
             receipt["publicGitRevision"] = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, stderr=log, text=True).strip()
+            receipt['phase'] = 'install-private-inputs'
+            print(json.dumps(dict(phase='install-pinned-private-inputs')), flush=True)
             receipt["privateInputs"] = install_bundle(root, bundle)
+            receipt['phase'] = 'check-public-source'
             accepted, unused_units, unused_pins, summary = verify(root, accepted_path)
             receipt["sourceIntegrity"] = summary
             receipt["prepared"] = True
@@ -268,7 +285,10 @@ def main():
                 for name in ("recovery.json", "manifest.json", "provenance/seed-manifest.json", "provenance/seed-oracle-results.json"):
                     if not (root / name).is_file():
                         raise BundleError("Private replay closure is incomplete")
+                receipt['phase'] = 'verify-runtime-inputs'
                 prepare_runtime(root, log)
+                receipt['phase'] = 'compile-public-source'
+                print(json.dumps(dict(phase='compile-accepted-public-source')), flush=True)
                 run_private(root, log, ["public_tools/compile_sources.py", "--root", str(root),
                     "--compiler-root", str(root / "tools/mwccarm/mwccarm"),
                     "--license-file", str(root / "tools/mwccarm/mwccarm/license.dat"), "--jobs", "3"])
@@ -277,9 +297,12 @@ def main():
                 if compiled.get("status") != "source-compilation-passed" or compiled.get("fullManifestCompiled") is not True or compiled.get("manifestSha256") != receipt["acceptedManifestSha256"] or compile_path.stat().st_mtime_ns < receipt["startedTimeNs"]:
                     raise BundleError("The complete fresh public source compilation did not pass")
                 receipt["publicSourceCompileReport"] = dict(path="build/public-source-compile/report.json", sha256=digest(compile_path), modifiedTimeNs=compile_path.stat().st_mtime_ns)
+                print(json.dumps(dict(phase='replay-and-link-all-modules')), flush=True)
+                receipt['phase'] = 'replay-and-link-all-modules'
+                receipt['replayStartedTimeNs'] = time.time_ns()
                 build_exit = run_private(root, log, ["run_checks.py", "--clean"], allow_failure=True)
-                receipt["buildOutcome"] = build_outcome(root, build_exit, receipt["startedTimeNs"])
-                receipt["reports"] = fresh_reports(root, receipt["startedTimeNs"], accepted["romSha256"])
+                receipt["buildOutcome"] = build_outcome(root, build_exit, receipt["replayStartedTimeNs"])
+                receipt["reports"] = fresh_reports(root, receipt["replayStartedTimeNs"], accepted["romSha256"])
                 if digest(accepted_path) != receipt["acceptedManifestSha256"]:
                     raise BundleError("Accepted manifest changed during the private build")
                 verify(root, accepted_path)
@@ -287,11 +310,30 @@ def main():
             status = 0
         except Exception as error:
             receipt["failureType"] = type(error).__name__
+            if isinstance(error, BundleError):
+                receipt['failureReason'] = str(error)
             log.write(type(error).__name__ + ": " + str(error) + "\n")
         receipt["finishedTimeNs"] = time.time_ns()
     (output / "build-receipt.json").write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps(dict(buildPassed=receipt["buildPassed"], prepared=receipt["prepared"],
-                          receipt="build/B2JJ-modified/build-receipt.json", privateLog="build/B2JJ-modified/private-build.log")))
+    summary = dict(buildPassed=receipt['buildPassed'], prepared=receipt['prepared'], phase=receipt.get('phase'),
+                   failureType=receipt.get('failureType'), failureReason=receipt.get('failureReason'))
+    compiled_path = root / 'build/public-source-compile/report.json'
+    if compiled_path.is_file() and compiled_path.stat().st_mtime_ns >= receipt['startedTimeNs']:
+        compiled = read_json(compiled_path)
+        summary['compilation'] = {key: compiled.get(key) for key in ('status', 'selectedCompilationUnits', 'compiledUnits', 'fullManifestCompiled')}
+        summary['compilation']['firstFailures'] = [
+            dict(**{key: unit.get(key) for key in ('source', 'status', 'exitCode')},
+                 failureClass='compiler-license' if 'license' in (unit.get('stdout', '') + unit.get('stderr', '')).lower() else 'compiler-or-object-check')
+            for unit in compiled.get('results', []) if unit.get('status') != 'compiled'][:5]
+    checks_path = root / REPORTS[0]
+    if checks_path.is_file() and checks_path.stat().st_mtime_ns >= receipt.get('replayStartedTimeNs', receipt['startedTimeNs']):
+        checks = read_json(checks_path)
+        summary['checksState'] = checks.get('state')
+        failed = [s for s in checks.get('steps', []) if s.get('exitCode')]
+        if failed:
+            summary['failedStep'] = dict(script=Path(failed[-1]['command'][1]).name, exitCode=failed[-1]['exitCode'])
+    (output / 'public-build-status.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+    print(json.dumps(summary))
     return status
 
 

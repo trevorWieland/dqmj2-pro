@@ -16,6 +16,15 @@ The historical workspace audit rejects any Git remote and requires external snap
 
 ## Generated objdiff project
 
+The initial public checkpoint reconciles as follows:
+
+| Measurement | Accepted bytes | Denominator | Percentage |
+| --- | ---: | ---: | ---: |
+| Native initialized source, closed cohort 172 | 1,224,354 | 2,512,636 | 48.727870% |
+| Measured function code, objdiff diagnostic | 1,115,554 | 2,122,900 | 52.548588% |
+
+The initialized numerator is 1,115,554 function bytes, 108,776 separately accepted initialized-data bytes and 24 qualified alignment bytes. ByteMatch's current page headline uses function-code matching and does not support the combined initialized metric. Its function-only report currently grants no data completion. The separately labeled [native initialized-source badge](../public/native-progress.svg) and [accounting record](../public/native-progress.json) preserve the local milestone without changing objdiff classifications or promoting original data to source credit. Source-integrity CI checks that this record and badge still agree with the closed manifests.
+
 `public_tools/bytematch_project.py` generates `build/B2JJ-modified/objdiff.json`; do not edit that output. It reads the closed public accepted manifest and all three genuine module-link reports, covering 20 native modules and 2,512,636 initialized bytes. Program, CPU and module namespaces keep overlapping overlay and ARM7/ARM9 addresses distinct.
 
 Each credited unit has a folder-based name derived from its source path, an original target object, a source-side object, a repository-relative `metadata.source_path`, and CPU/program progress categories. Completion requires the closed accepted identity, exact source and object hashes, a genuine exact module link and equivalent freshly compiled function bytes and relocation contracts. Compiler debug/path differences are ignored; function or relocation changes fail. Report symbols use the actual C or assembly definition names, so ordinary source linking requires no source edits or mass renaming.

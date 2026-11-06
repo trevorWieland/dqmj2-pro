@@ -43,6 +43,13 @@ jobs:
       - name: Generate the complete objdiff project
         shell: pwsh
         run: python public_tools/bytematch_project.py --root . --private-root . --out-dir build/${{ matrix.version }}
+      - name: Publish a limited build status on failure
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ${{ matrix.version }}_build-status
+          if-no-files-found: ignore
+          path: build/${{ matrix.version }}/public-build-status.json
       - name: Generate the public progress report
         shell: pwsh
         run: tools/objdiff/3.8.3/objdiff-cli.exe report generate --project build/${{ matrix.version }} -o build/${{ matrix.version }}/report.json

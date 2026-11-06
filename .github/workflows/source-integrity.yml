@@ -32,3 +32,6 @@ jobs:
       - name: Check verifier rejection cases
         shell: pwsh
         run: python -m unittest discover -s public_tools -p "test_*.py"
+      - name: Reconcile initialized-source accounting and badge
+        shell: pwsh
+        run: python public_tools/progress_accounting.py --root .

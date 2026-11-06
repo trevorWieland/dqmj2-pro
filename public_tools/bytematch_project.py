@@ -189,7 +189,7 @@ def receipt_check(root, private, receipt, manifest_hash):
         raise ValueError('Build receipt must bind a successful build to this public revision and manifest')
     if os.environ.get('GITHUB_SHA') and os.environ['GITHUB_SHA'] != revision:
         raise ValueError('Public build revision differs from CI revision')
-    started = data.get('startedTimeNs', data.get('startTimeNs'))
+    started = data.get('replayStartedTimeNs', data.get('startedTimeNs', data.get('startTimeNs')))
     if not isinstance(started, int):
         raise ValueError('Build receipt lacks its start time')
     for name in REPORTS:

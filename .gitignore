@@ -30,3 +30,10 @@ __pycache__/
 *.7z
 *.dat
 /private-inputs/
+/src/**/*.json
+/recovery.json
+/source-preferences.json
+/interpreted-recovery.json
+/manifest.json
+/recovery-ownership.json
+/source-map.json

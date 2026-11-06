@@ -1,6 +1,8 @@
 # Dragon Quest Monsters: Joker 2 Professional
 
-[![Progress](https://bytematch.dev/trevorWieland/dqmj2-pro.svg)](https://bytematch.dev/trevorWieland/dqmj2-pro)
+[![Progress](https://bytematch.dev/trevorWieland/dqmj2-pro.svg?label=Function%20code)](https://bytematch.dev/trevorWieland/dqmj2-pro) [![Initialized source](public/native-progress.svg)](docs/bytematch.md)
+
+The two badges measure different scopes: ByteMatch shows measured function-code matching; initialized source preserves the closed local code/data/alignment ledger. [See the reconciliation](docs/bytematch.md).
 
 An in-progress reconstruction into readable C/C++, with justified assembly for measured low-level routines. The target is a reproducible ROM matching the measured input exactly.
 

@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "sourceSnapshotRevision": "14ac8dcd6f8ab0009e5dd54d73cf31c928540776",
+  "functionManifestSha256": "1a3602d9eb57e0952f8bf003de2bf2a189294158e77469577ecfda26d10e8c60",
+  "dataManifestSha256": "67a68a35e0ebd2f36a9f3b07dea37e28736ef7a3eaf138d34c5ea6d048fd8052",
+  "acceptedFunctions": 11482,
+  "acceptedFunctionBytes": 1115554,
+  "acceptedDataInitializedBytes": 108776,
+  "separatelyAcceptedAlignmentBytes": 24,
+  "acceptedInitializedBytes": 1224354,
+  "initializedDenominatorBytes": 2512636,
+  "initializedSourcePercent": 48.72786985460687,
+  "scope": "Closed accepted native initialized-source coverage; code, data and qualified alignment. BSS and interpreted scripts are excluded.",
+  "bytematchScope": "ByteMatch reports measured function code separately. Its code percentage uses a different denominator.",
+  "sourceOnlyRomProven": false
+}
