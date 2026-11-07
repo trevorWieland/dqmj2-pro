@@ -23,7 +23,9 @@ The initial public checkpoint reconciles as follows:
 | Measurement | Accepted bytes | Denominator | Percentage |
 | --- | ---: | ---: | ---: |
 | Native initialized source, closed cohort 172 | 1,224,354 | 2,512,636 | 48.727870% |
-| Measured function code, objdiff | 1,115,554 | 2,122,900 | 52.548588% |
+| Measured function code, objdiff | 1,115,554 | 2,116,684 | 52.702910% |
+
+The frozen function inventory leaves 30 ARM7 target-only candidate sizes unknown. Those 6,216 bytes remain unclassified initialized data; a later working ledger measured them, which explains the earlier 52.55% code estimate. Data matching changes no code classification.
 
 The initialized numerator is 1,115,554 function bytes, 108,776 separately accepted initialized-data bytes and 24 qualified alignment bytes. ByteMatch's current page headline uses function-code matching and does not support the combined initialized metric. The native report also measures 108,776 bytes of genuinely compiled and linked typed data. Combined code and data therefore cover 1,224,330 initialized bytes (48.726915%), which rounds to the same 48.73% local milestone. The separately qualified 24-byte linker alignment remains unmatched in objdiff. The separately labeled [native initialized-source badge](../public/native-progress.svg) and [accounting record](../public/native-progress.json) preserve the local milestone without changing objdiff classifications or promoting original data to source credit. Source-integrity CI checks that this record and badge still agree with the closed manifests.
 
