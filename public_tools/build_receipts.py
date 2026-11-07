@@ -80,7 +80,13 @@ def native_reports(root, private, outer, revision, manifest_hash, started, reque
         raise ValueError('Native build receipt belongs to another revision or accepted manifest')
     if native.get('startedTimeNs') != native_started or timestamp(native.get('finishedTimeNs'), 'native build finish time') < native_started:
         raise ValueError('Native receipt timing differs from the parent CI build')
-    expected = {'moduleCount': 20, 'initializedBytes': DENOMINATOR, 'acceptedFunctionsLinked': 11482}
+    manifest_path = relative_file(root, 'public/accepted-functions.json')
+    if digest(manifest_path) != manifest_hash:
+        raise ValueError('Accepted function manifest changed before native receipt validation')
+    function_count = read(manifest_path).get('acceptedFunctions')
+    if type(function_count) is not int or function_count <= 0:
+        raise ValueError('Accepted function manifest lacks its closed function count')
+    expected = {'moduleCount': 20, 'initializedBytes': DENOMINATOR, 'acceptedFunctionsLinked': function_count}
     if any(type(native.get(key)) is not int or native[key] != value for key, value in expected.items()):
         raise ValueError('Native build receipt omits the complete closed module/function scope')
     if any(native.get(key) is not True for key in ('allModuleBytesExact', 'allSymbolChecksPassed', 'frozenInputsUnchanged')):

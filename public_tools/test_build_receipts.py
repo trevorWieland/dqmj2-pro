@@ -22,7 +22,7 @@ class BuildReceiptTests(unittest.TestCase):
         self.started = self.clock - 20_000_000_000
         self.native_started = self.clock - 10_000_000_000
         manifest = self.root / 'public/accepted-functions.json'
-        self.write(manifest, dict(revision='closed-172'))
+        self.write(manifest, dict(revision='closed-172', acceptedFunctions=11482))
         self.manifest_hash = digest(manifest)
         self.compilation = self.root / 'build/public-source-compile/report.json'
         self.write(self.compilation, dict(status='source-compilation-passed', fullManifestCompiled=True,
@@ -71,6 +71,38 @@ class BuildReceiptTests(unittest.TestCase):
     def validate(self, **options):
         with patch('build_receipts.subprocess.check_output', return_value=self.revision + '\n'), patch.dict(os.environ, {'GITHUB_SHA': self.revision}):
             return validate_build_receipt(self.root, self.root, self.outer_path, self.manifest_hash, **options)
+
+    def rebind_function_count(self, count, linked):
+        manifest = self.root / 'public/accepted-functions.json'
+        self.write(manifest, dict(revision='closed-next', acceptedFunctions=count))
+        self.manifest_hash = digest(manifest)
+        compiled = json.loads(self.compilation.read_text())
+        compiled['manifestSha256'] = self.manifest_hash
+        self.write(self.compilation, compiled, self.clock - 15_000_000_000)
+        for record in (self.native, self.outer):
+            record['acceptedManifestSha256'] = self.manifest_hash
+            record['publicSourceCompileReport'] = self.pin(self.compilation)
+        self.native['acceptedFunctionsLinked'] = linked
+        self.persist()
+
+    def test_current_closed_manifest_function_count_is_required(self):
+        self.rebind_function_count(11546, 11546)
+        self.assertEqual(self.validate()['nativeReceipt']['acceptedFunctionsLinked'], 11546)
+
+    def test_previous_checkpoint_count_cannot_satisfy_new_manifest(self):
+        self.rebind_function_count(11546, 11482)
+        with self.assertRaisesRegex(ValueError, 'complete closed module/function scope'):
+            self.validate()
+
+    def test_missing_closed_count_is_rejected(self):
+        self.rebind_function_count(None, 11482)
+        with self.assertRaisesRegex(ValueError, 'lacks its closed function count'):
+            self.validate()
+
+    def test_changed_manifest_bytes_cannot_reuse_a_native_receipt(self):
+        self.write(self.root / 'public/accepted-functions.json', dict(acceptedFunctions=11546))
+        with self.assertRaisesRegex(ValueError, 'manifest changed'):
+            self.validate()
 
     def test_native_reports_route_only_to_new_verified_paths(self):
         result = self.validate()
