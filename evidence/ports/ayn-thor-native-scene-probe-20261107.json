@@ -1,0 +1,42 @@
+{
+  "status": "ROM-free-synthetic-component-probe-passed-on-one-device",
+  "date": "2026-11-07",
+  "publicCommit": "c7b1e6b011dd21b13582d2285eae587cae25c736",
+  "publicRunId": 42369787083,
+  "publicArtifactId": 13573093025,
+  "publicRunURL": "https://github.com/trevorWieland/dqmj2-pro/actions/runs/42369787083",
+  "device": {
+    "model": "AYN Thor",
+    "androidRelease": "13",
+    "api": 33,
+    "abi": "arm64-v8a",
+    "pageBytes": 4096
+  },
+  "probeSourceSha256": "0b97a590f64fa14c98ae5b3029b07d625dc5d6311178cfa187b168d15c64fbe6",
+  "probeElfSha256": "7df84fd84c28c52474c8c482f6de621e91d5f84dcc1b44cb3cbb93d5854ed737",
+  "librarySha256": "722d23b7c1ac111b9062a3a3643e7d3136295c55a3b3b7f040847ad17af0ffa1",
+  "ownerDeviceReceiptSha256": "e5d5d5f78579831fcc1d10b1db6bc1b1064918d33c63137c91252038009c8b04",
+  "observed": {
+    "status": "C7_ROMFREE_PROBE_PASS",
+    "sceneModels": 8,
+    "positionModels": 8,
+    "positionRecords": 16,
+    "sceneReferences": 16,
+    "sceneSubmissions": 10,
+    "warmCases": 4,
+    "refusals": 31,
+    "romInputs": false,
+    "renderer": false
+  },
+  "transfersHashVerified": true,
+  "temporaryFilesRemoved": true,
+  "temporaryDirectoryRemoved": true,
+  "productionSourceEdited": false,
+  "privateInputs": false,
+  "sourceCredit": 0,
+  "matchingCredit": 0,
+  "CMakePackagingExecutedOnDevice": false,
+  "rendering": false,
+  "dualScreenRendering": false,
+  "gameExecution": false
+}

@@ -4,7 +4,7 @@ from pathlib import Path
 import struct
 
 
-def validate(data):
+def validate(data, allowed_libraries=()):
     if len(data) < 64 or data[:7] != b'\x7fELF\x02\x01\x01':
         raise ValueError('Expected a complete little-endian ELF64 library')
     header = struct.unpack_from('<16sHHIQQQIHHHHHH', data)
@@ -44,7 +44,7 @@ def validate(data):
                 if value >= len(table) or end < 0:
                     raise ValueError('Invalid dynamic library name')
                 needed.append(table[value:end].decode('ascii'))
-    if not loads or not needed or set(needed) - {'libc.so', 'libm.so', 'libdl.so'}:
+    if not loads or not needed or set(needed) - ({'libc.so', 'libm.so', 'libdl.so'} | set(allowed_libraries)):
         raise ValueError('Unexpected storage-library runtime dependencies')
     return dict(architecture='aarch64', loadSegments=loads, neededLibraries=needed, alignmentPassed=True)
 
@@ -52,8 +52,9 @@ def validate(data):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('library', type=Path)
+    parser.add_argument('--allow-library', action='append', default=[])
     args = parser.parse_args()
-    print(json.dumps(validate(args.library.read_bytes())))
+    print(json.dumps(validate(args.library.read_bytes(), args.allow_library)))
 
 
 if __name__ == '__main__':

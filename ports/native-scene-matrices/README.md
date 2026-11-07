@@ -7,8 +7,8 @@ The separate warm BB7 API requires explicit caller-owned, coherent cached state.
 See the contracts beside each runtime component for supported inputs and refusals.
 
 The library builds for Windows x64 and Android ARM64, API 33, with 16 KiB ELF
-segment alignment. Rendering, animation, gameplay and Android device execution
-remain unproven. Cold billboard cache generation, BB8 and a billboard scene walker
+segment alignment. A ROM-free component probe passed on one AYN Thor running Android 13/API 33.
+Rendering, animation and gameplay remain unproven. Cold billboard cache generation, BB8 and a billboard scene walker
 are outside this target's qualified scope.
 
 Configure with a qualified Clang or GCC C11 compiler. The Windows CI uses pinned
@@ -40,3 +40,13 @@ These portable components add no accepted ARM matching or ByteMatch progress
 credit. The original matrix capture provenance was superseded by the corrected
 capture-v2 qualification listed in the manifest; the matrix implementation stayed
 unchanged.
+
+The default build also produces `j2p_scene_probe` (or `j2p_scene_probe.exe`). Its
+fixtures are generated into the build directory by standard-library Python from
+the existing public synthetic tests. The four Python tests remain unchanged;
+host CTest adds the executable as a fifth test. Use
+`-DJ2P_BUILD_ROMFREE_PROBE=OFF` for a library-only build.
+
+The CI artifact includes the executable beside each library. See [DEVICE.md](DEVICE.md)
+for temporary, ROM-free Android execution and the precise scope of the recorded
+device result.
