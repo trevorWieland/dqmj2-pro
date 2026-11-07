@@ -9466,6 +9466,138 @@
       ]
     },
     {
+      "id": "674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6/arm9/main/data/020d8d84",
+      "buildSha256": "674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6",
+      "module": "main",
+      "kind": "data",
+      "section": ".rodata",
+      "address": "0x20d8d84",
+      "bytes": 128,
+      "storedBytes": 128,
+      "source": "src/runtime/goal_resume20261107/ctype_ascii_data/upper.c",
+      "sourceSha256": "5aafbbc865357bc13ef03394d9614bf182b5d3fd24aaae6513ea5ce1a9c01921",
+      "object": "work/goal-resume-20261107/ctype-ascii-data-source1/positive/020d8d84/data.o",
+      "objectSha256": "5f68e455aaebf9f89374b05e5cd0f17648331e251b0feff72bc6f8eb672326fc",
+      "compilerSha256": "7150fa4fe4cb6db6867ac530ec1a0754f6ca4df92868d963a7875196f9222880",
+      "compilerFlags": [
+        "-O3",
+        "-opt",
+        "speed",
+        "-proc",
+        "arm946e",
+        "-sym",
+        "on",
+        "-nolink"
+      ],
+      "dependencies": [],
+      "states": {
+        "dataMatched": true,
+        "moduleLinked": true
+      },
+      "evidence": "evidence/matches/cohort175-packet-13.json",
+      "sourceSection": ".rodata",
+      "sourceDependencies": []
+    },
+    {
+      "id": "674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6/arm9/main/data/020d8e04",
+      "buildSha256": "674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6",
+      "module": "main",
+      "kind": "data",
+      "section": ".rodata",
+      "address": "0x20d8e04",
+      "bytes": 256,
+      "storedBytes": 256,
+      "source": "src/runtime/goal_resume20261107/ctype_ascii_data/class_narrow.c",
+      "sourceSha256": "99e6be24cb640edc409bb56fa07b8fbf843a21800681fee1433d95720c39db84",
+      "object": "work/goal-resume-20261107/ctype-ascii-data-source1/positive/020d8e04/data.o",
+      "objectSha256": "8f1eb536bab55c33bde5bfa56e4e673f28594bb9f5593bd698ad97a1df563228",
+      "compilerSha256": "7150fa4fe4cb6db6867ac530ec1a0754f6ca4df92868d963a7875196f9222880",
+      "compilerFlags": [
+        "-O3",
+        "-opt",
+        "speed",
+        "-proc",
+        "arm946e",
+        "-sym",
+        "on",
+        "-nolink"
+      ],
+      "dependencies": [],
+      "states": {
+        "dataMatched": true,
+        "moduleLinked": true
+      },
+      "evidence": "evidence/matches/cohort175-packet-13.json",
+      "sourceSection": ".rodata",
+      "sourceDependencies": []
+    },
+    {
+      "id": "674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6/arm9/main/data/020d8f14",
+      "buildSha256": "674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6",
+      "module": "main",
+      "kind": "data",
+      "section": ".rodata",
+      "address": "0x20d8f14",
+      "bytes": 256,
+      "storedBytes": 256,
+      "source": "src/runtime/goal_resume20261107/ctype_ascii_data/class_wide.c",
+      "sourceSha256": "adb6a8be8b79c1d618cfa39cf50458f9e55ab7b78ffb1fb7099fa61b8269e06b",
+      "object": "work/goal-resume-20261107/ctype-ascii-data-source1/positive/020d8f14/data.o",
+      "objectSha256": "034ff756e420aa816b2d413abc28b703150488790c59bf64ac1da7626654f546",
+      "compilerSha256": "7150fa4fe4cb6db6867ac530ec1a0754f6ca4df92868d963a7875196f9222880",
+      "compilerFlags": [
+        "-O3",
+        "-opt",
+        "speed",
+        "-proc",
+        "arm946e",
+        "-sym",
+        "on",
+        "-nolink"
+      ],
+      "dependencies": [],
+      "states": {
+        "dataMatched": true,
+        "moduleLinked": true
+      },
+      "evidence": "evidence/matches/cohort175-packet-13.json",
+      "sourceSection": ".rodata",
+      "sourceDependencies": []
+    },
+    {
+      "id": "674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6/arm9/main/data/020d9068",
+      "buildSha256": "674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6",
+      "module": "main",
+      "kind": "data",
+      "section": ".rodata",
+      "address": "0x20d9068",
+      "bytes": 68,
+      "storedBytes": 68,
+      "source": "src/runtime/goal_resume20261107/material_mask_pivot/data.c",
+      "sourceSha256": "65b1de1f9492419f6e8229987a72b40352b30551dd92bec0ab96db71472aaec5",
+      "object": "work/goal-resume-20261107/material-mask-pivot-source1/data-positive/data.o",
+      "objectSha256": "423d1577d5ea81cd94178e68bc18bec2b97ad034c3273c921e263ef4f671a665",
+      "compilerSha256": "7150fa4fe4cb6db6867ac530ec1a0754f6ca4df92868d963a7875196f9222880",
+      "compilerFlags": [
+        "-O3",
+        "-opt",
+        "speed",
+        "-proc",
+        "arm946e",
+        "-sym",
+        "on",
+        "-nolink"
+      ],
+      "dependencies": [],
+      "states": {
+        "dataMatched": true,
+        "moduleLinked": true
+      },
+      "evidence": "evidence/matches/cohort175-packet-14-symbols.json",
+      "sourceSection": ".rodata",
+      "sourceDependencies": []
+    },
+    {
       "id": "674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6/arm9/main/data/020e041c",
       "buildSha256": "674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6",
       "module": "main",

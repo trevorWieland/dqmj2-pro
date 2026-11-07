@@ -1,0 +1,13 @@
+typedef unsigned short u16;
+typedef short s16;
+typedef unsigned int u32;
+typedef int s32;
+typedef struct {s16 x,y;} Point;
+typedef struct {void *field0,*render;} Widget;
+typedef char CoordinateBytes[sizeof(Point)==4?1:-1];
+extern u16 native_data_021c9698[];
+extern u32 native_data_021c4f78[];
+extern Widget **native_fn_02061dcc(s32);
+extern void native_fn_02049ffc(void *);
+extern u32 native_fn_0204abd4(s32,const u16 *,const Point *,u32,s32,s32);
+void native_main_020724f4(s32,u32);

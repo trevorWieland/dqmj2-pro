@@ -8,6 +8,8 @@ The build follows [pokebw2's separation of public sources and private inputs](ht
 
 The private `trevorWieland/dqmj2-pro-inputs` repository holds an immutable multipart archive and separately pinned supplemental reference archives. Its manifest binds the accepted source snapshot, public accepted-manifest hash and every archive part hash. It includes owned originals, pinned tools and the frozen replay metadata required by this custom build. A ROM and compiler alone do not close the historical replay dependencies. The `BUILD_INPUTS_DEPLOY_KEY` secret is a read-only key for this input repository; ByteMatch requires no credential.
 
+Cohort 175 preserves four historical Python verifier versions under `public_tools/frozen_validation/cohort175/`, with exact hashes and original paths in `public/frozen-validation/cohort175.json`. Current CI tooling remains active at its normal public paths. Historical packet commands require explicitly selecting their archived module versions; no C/header compiler input or normal closure runtime pin is redirected. The private bundle supplies neither version of these public Python files.
+
 The installer refuses traversal, links, conflicting inputs and replacement public source/configuration. Absent `src/**/*.json` files are private replay descriptors; existing public files at those paths cannot be replaced. Private inputs, build logs and objects are excluded from public Git and artifacts. Reusing the archive on a matching checkout preserves identical existing inputs.
 
 `public_tools/build_bytematch.py --native-only` verifies the inputs, recompiles the complete accepted source manifest, and genuinely links all twenty native modules using the pinned compiler, linker and dsd. Every module must equal its original initialized image, and symbol checks must pass. Additional initialized-data, BSS and composition profiles are compiled from their actual frozen sources. Original executable gaps and veneer scaffolding receive zero source credit. The admitted AuthStart function uses its exact scoped extraction rule; source bytes and compiler inputs remain unchanged.
@@ -18,16 +20,16 @@ Without `--native-only`, the wrapper also runs `reproduce.py` for the checksum-t
 
 ## Generated objdiff project
 
-Closed cohort 174 reconciles as follows. The function-code row is reproduced by a local diagnostic against the genuine linked images; publication requires a fresh successful CI run:
+Closed cohort 175 reconciles as follows. These are closed native source counts; fresh matching CI and objdiff reporting remain required for this public checkpoint:
 
 | Measurement | Accepted bytes | Denominator | Percentage |
 | --- | ---: | ---: | ---: |
-| Native initialized source, closed cohort 174 | 1,262,114 | 2,512,636 | 50.230674% |
-| Measured function code, objdiff | 1,153,314 | 2,130,952 | 54.122005% |
+| Native initialized source, closed cohort 175 | 1,265,646 | 2,512,636 | 50.371244% |
+| Measured function code, objdiff | Pending fresh report | Pending fresh report | Pending fresh report |
 
-Cohort 174 adds 94 exact source functions and 25,334 initialized function bytes. Newly measured extents add 8,052 bytes to both the function-code denominator and matched code; the total initialized denominator stays 2,512,636 bytes.
+Cohort 175 adds 12 exact source functions containing 2,824 initialized function bytes and four public C data records containing 708 initialized bytes. It also adds 52 qualified source migrations covering 13,176 bytes, with no additional function or byte credit for those existing identities.
 
-The initialized numerator is 1,153,314 function bytes, 108,776 separately accepted initialized-data bytes and 24 qualified alignment bytes. ByteMatch's page headline uses function-code matching with its own denominator. The last successful public run proved the 108,776 typed-data bytes; their source and accepted-data manifest are unchanged. Fresh CI must reconfirm them for this checkpoint; the local diagnostic does not grant typed-data credit. With that proof, the expected combined report numerator is 1,262,090 initialized bytes (50.229719%). The separately qualified 24-byte linker alignment remains unmatched in objdiff. The separately labeled [native initialized-source badge](../public/native-progress.svg) and [accounting record](../public/native-progress.json) preserve the closed 50.23% local milestone. Source-integrity CI checks that this record and badge agree with the closed manifests.
+The initialized numerator is 1,156,138 accepted function bytes, 109,484 separately accepted initialized-data bytes and 24 qualified alignment bytes. ByteMatch's page headline uses measured function code with its own denominator. Fresh CI must compile and link the full checkpoint and reconfirm all 450 initialized-data records before granting report credit. Actual objdiff counts will be measured from that report. The separately qualified 24-byte linker alignment remains outside source data/function credit. The separately labeled [native initialized-source badge](../public/native-progress.svg) and [accounting record](../public/native-progress.json) preserve the closed 50.37% local milestone. Source-integrity CI checks that this record and badge agree with the closed manifests.
 
 `public_tools/bytematch_project.py` generates `build/B2JJ-modified/objdiff.json`; do not edit that output. It reads the closed public accepted manifest and all three genuine module-link reports, covering 20 native modules and 2,512,636 initialized bytes. Program, CPU and module namespaces keep overlapping overlay and ARM7/ARM9 addresses distinct.
 

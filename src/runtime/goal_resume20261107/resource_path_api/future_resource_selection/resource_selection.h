@@ -1,0 +1,24 @@
+#include "../resource_path_api.h"
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef int s32;
+typedef s8 SelectionPair[2];
+typedef u32 BufferPair[2];
+extern u8 native_data_020dac3c[];
+extern u8 native_data_021b9bc8[],native_data_021b9bd0[],native_data_021b9bd4[];
+extern const u8 native_data_020ddde0[],native_data_020dddf8[],native_data_020dde10[];
+extern const u8 native_data_020dde28[],native_data_020dde3c[],native_data_020dde50[];
+extern const u8 native_data_020dde60[],native_data_020dde78[],native_data_020dde94[];
+extern const u8 native_data_020ddeb0[],native_data_020ddec4[];
+extern int native_fn_0201d444(u8 *,const u8 *,...);
+extern u32 native_fn_0202a498(u32,u32);
+extern u32 native_fn_02008c14(u32,u32,u32);
+extern u32 native_fn_02008ca4(u32,u32,u32);
+extern u32 native_fn_020625bc(void);
+extern u32 native_fn_020481b8(u32,u32,u32);
+extern u32 native_fn_02048308(void);
+extern u32 native_fn_0204540c(u32,const void *,u32,u32);
+u32 native_main_02061088(u32,u32,u32);
+u32 native_main_02061470(void);

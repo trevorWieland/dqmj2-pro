@@ -7,7 +7,7 @@ import time
 import unittest
 from pathlib import Path
 
-from build_bytematch import BundleError, build_outcome, install_bundle
+from build_bytematch import BundleError, build_outcome, install_bundle, member_path
 
 
 class PrivateInputTests(unittest.TestCase):
@@ -93,6 +93,39 @@ class PrivateInputTests(unittest.TestCase):
         self.pack([('src/runtime/layout.json', b'{"replacement":true}')])
         with self.assertRaises(BundleError):
             install_bundle(self.root, self.bundle)
+
+    def test_cohort175_exact_contracts_are_immutable_additions(self):
+        names = ('child-snd-reference-contract-v1.json', 'ten-consumer-contract-v2.json',
+                 'cohort174-parallel-wave20261105-s-specification.json')
+        for index, name in enumerate(names):
+            with self.subTest(name=name):
+                body = b'{"fixture":true}'
+                relative, target = member_path(self.root, name)
+                self.assertEqual(relative.as_posix(), name)
+                self.assertEqual(target, self.root / name)
+                self.pack([(name, body)])
+                result = install_bundle(self.root, self.bundle)
+                self.assertEqual(result['installedFiles'], 1)
+                self.assertEqual(target.read_bytes(), body)
+                self.assertEqual(install_bundle(self.root, self.bundle)['identicalExistingFiles'], 1)
+                companion = f'inputs/contract-atomic-{index}'
+                self.pack([(companion, b'owned fixture'), (name, b'{"changed":true}')])
+                with self.assertRaises(BundleError):
+                    install_bundle(self.root, self.bundle)
+                self.assertEqual(target.read_bytes(), body)
+                self.assertFalse((self.root / companion).exists())
+
+    def test_cohort175_contract_allowlist_does_not_allow_other_root_files(self):
+        for name in ('child-snd-reference-contract-v2.json', 'ten-consumer-contract-v3.json',
+                     'cohort175-parallel-wave20261105-s-specification.json',
+                     'CHILD-SND-REFERENCE-CONTRACT-V1.JSON', 'unrelated.json',
+                     'registered-input-paths-v1-20261107.json',
+                     'child-snd-reference-contract-v1.json:stream',
+                     'nested/child-snd-reference-contract-v1.json',
+                     'public_tools/registered_input_path_context.py', 'configure.py'):
+            with self.subTest(name=name):
+                with self.assertRaises(BundleError):
+                    member_path(self.root, name)
 
     def test_part_hash_mismatch_is_rejected(self):
         self.pack([("inputs/game.nds", b"owned")])
