@@ -76,6 +76,31 @@ class ByteMatchProjectTests(unittest.TestCase):
         with patch('bytematch_project.subprocess.check_output', return_value='public-head\n'), patch.dict(os.environ, {'GITHUB_SHA': ''}):
             return prepare(self.root, self.private, self.output, diagnostic=diagnostic)
 
+    def test_verified_data_inside_broad_executable_section_stays_data(self):
+        source = self.root / 'src/table.c'
+        source.write_text('const unsigned int table = 0;\n')
+        spans = {'m00': [dict(start=0x2000004, end=0x2000008, source='src/table.c', sourceSha256=digest(source), symbol='table')]}
+        sections = lambda unused, module: [(0x2000000, 0x2000008, True)] if module['name'] == 'm00' else []
+        with patch('bytematch_project.load_data_spans', return_value=spans), patch('bytematch_project.original_sections', side_effect=sections):
+            summary = self.export()
+        project = json.loads((self.output / 'objdiff.json').read_text())
+        unit = next(u for u in project['units'] if u['name'].endswith('/m00/02000004'))
+        self.assertEqual(summary['matchedTypedDataBytes'], 4)
+        self.assertEqual(unit['metadata']['source_path'], 'src/table.c')
+        self.assertTrue(unit['metadata']['complete'])
+        self.assertNotEqual(unit['base_path'], 'base/empty.o')
+        self.assertIn(b'.data\0', (self.output / unit['base_path']).read_bytes())
+
+    def test_data_cannot_promote_a_measured_function(self):
+        candidate = dict(self.row, id='unmatched', address='0x2000004', symbol='func_02000004')
+        with (self.private / 'ledger/functions.jsonl').open('a') as stream:
+            stream.write(json.dumps(candidate) + '\n')
+        spans = {'m00': [dict(start=0x2000004, end=0x2000008, source='src/value.c')]}
+        sections = lambda unused, module: [(0x2000000, 0x2000008, True)] if module['name'] == 'm00' else []
+        with patch('bytematch_project.load_data_spans', return_value=spans), patch('bytematch_project.original_sections', side_effect=sections):
+            with self.assertRaisesRegex(ValueError, 'data overlaps measured code'):
+                self.export()
+
     def test_full_denominator_scaffolding_receives_no_source_credit(self):
         summary = self.export()
         project = json.loads((self.output / 'objdiff.json').read_text())

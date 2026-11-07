@@ -398,7 +398,7 @@ def prepare(root, private, output, diagnostic=False, receipt=None, compilation=N
                 if namespace(candidate) != namespace(alias) or candidate['mode'] != alias['mode'] or begin != int(alias['address'], 0):
                     raise ValueError('Source alias crosses a physical function identity')
                 source = aliases[candidate['symbol']]
-            if data and (selection or candidate or known is True):
+            if data and (selection or candidate):
                 raise ValueError('Qualified initialized data overlaps measured code')
             code = bool(selection or candidate)
             symbols = [(n, o + selection[0] - begin, z, m) for n, o, z, m in selection[3]] if selection else [
