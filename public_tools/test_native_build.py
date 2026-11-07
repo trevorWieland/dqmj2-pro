@@ -197,14 +197,19 @@ class NativeBuildTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'new dedicated native build directory'):
             rebuild(self.root, self.compilation, output)
 
-    def child_entry_aliases(self, aliases, report_bindings=None):
+    def child_entry_aliases(self, aliases, report_bindings=None, native_symbols=None, later_symbols=None):
         item = dict(name='value', module='m00', address=self.unit['start'], bytes=4,
                     source=self.unit['source'], sourceSha256=self.unit['sourceSha256'],
                     object=self.unit['object'], objectSha256=self.unit['sha256'], exactBytes=True,
                     nativeSymbolEntries=aliases, relocations=[dict(symbol='callee')])
         write(self.root / 'evidence/child-aliases.json', dict(romSha256='a' * 64, program='child', processor='arm9',
-              matches=[item], nativeSymbolBindings=report_bindings or []))
-        write(self.root / 'recovery.json', dict(batches=[dict(report='evidence/child-aliases.json', kind='mixed')]))
+              matches=[item], nativeSymbolBindings=report_bindings or [], nativeSymbols=native_symbols or {}))
+        batches = [dict(report='evidence/child-aliases.json', kind='mixed')]
+        if later_symbols:
+            write(self.root / 'evidence/later-aliases.json', dict(romSha256='a' * 64, program='child',
+                  processor='arm9', matches=[], nativeSymbols=later_symbols))
+            batches.append(dict(report='evidence/later-aliases.json', kind='mixed'))
+        write(self.root / 'recovery.json', dict(batches=batches))
         canonical = dict(buildNamespace='a' * 64, modules=[dict(module='m00', processor='arm9')], sourceUnits=[self.unit])
         return selected_metadata(self.root, canonical, 'child', 'arm9')
 
@@ -223,6 +228,31 @@ class NativeBuildTests(unittest.TestCase):
         conflict = dict(binding, name='callee', address='0x2000008')
         with self.assertRaisesRegex(ValueError, 'Conflicting selected physical native binding'):
             self.child_entry_aliases({'callee': binding}, [conflict])
+
+    def test_thumb_entry_alias_preserves_existing_tagged_link_value(self):
+        binding = dict(program='child', processor='arm9', module='m00', mode='thumb',
+                       kind='function', address='0x2000004')
+        entries, symbols, bindings, metadata = self.child_entry_aliases(
+            {'callee': binding}, native_symbols={'callee': '0x2000005'})
+        self.assertEqual(symbols['callee'], '0x2000005')
+        self.assertEqual(bindings[0]['address'], '0x2000004')
+
+    def test_later_thumb_symbol_must_refer_to_the_same_physical_entry(self):
+        binding = dict(program='child', processor='arm9', module='m00', mode='thumb',
+                       kind='function', address='0x2000004')
+        entries, symbols, bindings, metadata = self.child_entry_aliases(
+            {'callee': binding}, later_symbols={'callee': '0x2000005'})
+        self.assertEqual(symbols['callee'], '0x2000004')
+        with self.assertRaisesRegex(ValueError, 'Conflicting selected native binding address'):
+            self.child_entry_aliases({'callee': binding}, later_symbols={'callee': '0x2000007'})
+
+    def test_mode_bit_equivalence_does_not_apply_to_arm_or_data_addresses(self):
+        for mode, kind in [('arm', 'function'), ('thumb', 'data')]:
+            with self.subTest(mode=mode, kind=kind):
+                binding = dict(program='child', processor='arm9', module='m00', mode=mode,
+                               kind=kind, address='0x2000004')
+                with self.assertRaisesRegex(ValueError, 'Conflicting selected native binding address'):
+                    self.child_entry_aliases({'callee': binding}, native_symbols={'callee': '0x2000005'})
 
     def test_entry_aliases_cannot_cross_program_or_processor_namespaces(self):
         for program, processor in [('other-child', 'arm9'), ('child', 'arm7'), (None, 'arm9')]:

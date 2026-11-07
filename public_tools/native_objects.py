@@ -80,6 +80,13 @@ def safe_flags(root, values):
     return result
 
 
+def binding_address(binding, value):
+    address = int(value, 0)
+    if binding and binding.get('kind') == 'function' and binding.get('mode') == 'thumb':
+        return address & ~1
+    return address
+
+
 def selected_metadata(root, canonical, program=None, processor=None):
     names = {m['module'] for m in canonical['modules'] if m.get('processor', processor) == processor}
     units = [u for u in canonical['sourceUnits'] if u['module'] in names]
@@ -112,13 +119,16 @@ def selected_metadata(root, canonical, program=None, processor=None):
         if program is None or (binding.get('program') or None) != program or binding.get('processor', processor) != processor:
             return
         physical = lambda b: ((b.get('program') or None), b.get('processor', processor), b.get('module'),
-                              b.get('kind'), b.get('mode'), int(b['address'], 0))
+                              b.get('kind'), b.get('mode'), binding_address(b, b['address']))
         previous = bindings.setdefault(binding['name'], binding)
         if physical(previous) != physical(binding):
             raise ValueError('Conflicting selected physical native binding: ' + binding['name'])
-        if binding['name'] in symbols and int(symbols[binding['name']], 0) != int(binding['address'], 0):
+        add_symbol(binding['name'], binding['address'])
+    def add_symbol(name, value):
+        binding = bindings.get(name)
+        if name in symbols and binding_address(binding, symbols[name]) != binding_address(binding, value):
             raise ValueError('Conflicting selected native binding address')
-        symbols[binding['name']] = binding['address']
+        symbols.setdefault(name, value)
     for batch in registry:
         pins = {(name.replace('\\', '/'), value) for name, value in batch.get('sourceHashes', {}).items()}
         if not sources.intersection(pins) and batch.get('kind') not in ('container', 'mixed'):
@@ -134,9 +144,7 @@ def selected_metadata(root, canonical, program=None, processor=None):
         elif report.get('processor') not in (None, processor):
             continue
         for name, value in report.get('nativeSymbols', {}).items():
-            if name in symbols and int(symbols[name], 0) != int(value, 0):
-                raise ValueError('Conflicting frozen native binding: ' + name)
-            symbols[name] = value
+            add_symbol(name, value)
         groups = [(e, 'function') for e in report.get('functionMatches', report.get('matches', report.get('functions', [])))]
         groups += [(e, 'data') for e in report.get('dataMatches', [])]
         groups += [(e, 'container') for e in report.get('containerMatches', [])]
