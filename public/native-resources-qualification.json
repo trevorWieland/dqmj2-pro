@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "scope": "Native filesystem and resource subsystem",
+  "sourceCredit": 0,
+  "matchingCredit": 0,
+  "originalAcceptedSourcesChanged": false,
+  "windowsQualifiedCompiler": "LLVM-MinGW 20261104 UCRT x86_64",
+  "windowsReleaseAndDebugTestsPassed": true,
+  "syntheticImagesPerHostRun": 144,
+  "resourceLoadsPerHostRun": 288,
+  "dictionaryQueriesPerHostRun": 576,
+  "materialSetterCallsPerHostRun": 576,
+  "rejectedPolicyCases": 18,
+  "malformedImagesRejected": 12,
+  "androidArchitecture": "aarch64",
+  "androidApi": 33,
+  "androidLoadAlignmentBytes": 16384,
+  "androidLinked": true,
+  "androidDeviceExecutionProven": false,
+  "rendered": false,
+  "wholeGameExecuted": false,
+  "publicFixturesContainOriginalInputs": false,
+  "sources": [
+    {
+      "path": "ports/common/guest_memory/guest_memory_20261106.c",
+      "sha256": "de79ef174e9060fe4f1a18fce34f3dccaa327d56e4cf63932b7e6bde9c79e9b7"
+    },
+    {
+      "path": "ports/common/guest_memory/guest_memory_20261106.h",
+      "sha256": "381e9f810f135385ef595dc71f4399bd051c35155ae695b10d898879c8672508"
+    },
+    {
+      "path": "ports/native-resources/CMakeLists.txt",
+      "sha256": "0a7877bd8ae7b970aafb28d7385d93ba7629bc6d9cc85186e37565356dff679a"
+    },
+    {
+      "path": "ports/native-resources/README.md",
+      "sha256": "03586678d13ea8900f4e61a966dd7a91bae83fb239ac8768a2c1b45201b774d2"
+    },
+    {
+      "path": "ports/native-resources/resource_api.py",
+      "sha256": "f463bfb891be5347918e186b8ced63cf619b9574e8dac56cdecd830743b69f00"
+    },
+    {
+      "path": "ports/native-resources/synthetic_resources.py",
+      "sha256": "8e4e4a7070f3d96463f81082077aac3d751eef592de6e2cab0a9592f7d7a41f3"
+    },
+    {
+      "path": "ports/native-resources/test_resources.py",
+      "sha256": "54b22bd442eec9c2d110d5777098fa4a04b0a10d0db60b99f4fd40056efff760"
+    },
+    {
+      "path": "ports/runtime/card_cache64/card_cache_wire_v2_20261106.c",
+      "sha256": "6ffde2ac421ecb18facfabd72c7a12297a1129650238bebe58f668fd28c9febe"
+    },
+    {
+      "path": "ports/runtime/card_reader64/card_reader_20261106.h",
+      "sha256": "1d08fe5ea88bc3e980fb78f544240c2fbbd2823df7c8c239e134bd7f16b26d8e"
+    },
+    {
+      "path": "ports/runtime/card_reader64/card_reader_wire_20261106.c",
+      "sha256": "847ad90d289b77641789250ef3491ad30005eba28c1f8f97788b59c1cc3fccc7"
+    },
+    {
+      "path": "ports/runtime/card_reader64/host_readonly_file_20261106.c",
+      "sha256": "0f0517e4fb3f62c9a3e085b1b6c1a5c4a2b8696b35ea3552dd27cf959ae20f22"
+    },
+    {
+      "path": "ports/runtime/resource64/g3d_dictionary_wire_20261106.c",
+      "sha256": "d8207d4fac48460bbf9ce1597b7743fa7daafed910ded3735dc0b45774a3220b"
+    },
+    {
+      "path": "ports/runtime/resource64/g3d_dictionary_wire_20261106.h",
+      "sha256": "a797470d5b7b73e560fe893ce9051c9f31faa9b250d9229acf55a10c2b78b3e5"
+    },
+    {
+      "path": "ports/runtime/resource64/g3d_texture_inline_exports_20261106.c",
+      "sha256": "ce50d6804643b9b5311cda7565bf4f1d13300654e195b8b6e6a26666ac9955bc"
+    },
+    {
+      "path": "ports/runtime/resource64/g3d_texture_material_20261106.c",
+      "sha256": "42f70c0479b2afc5ea71894b1ba95d6739c4fcf54140626800847bec25575b81"
+    },
+    {
+      "path": "ports/runtime/resource64/g3d_texture_material_20261106.h",
+      "sha256": "61f7d7226c9048767200ad30e7ab5962c046cdbd047b6571fb43a1aa7beaa26b"
+    },
+    {
+      "path": "ports/runtime/resource64/g3d_texture_types_20261106.h",
+      "sha256": "bc4ed4b16d14551643c5ce4d56de914013e16d4e81d3b853c129153b07cc51d1"
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_20261106.c",
+      "sha256": "7bacb2f0f4119646e72ee33e4aa6aaaeec15d24d9554e53336813990ed17fa90"
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_20261106.h",
+      "sha256": "68edfff32c9318f49c54bda74dbb0fc85e31be75abbbd069cd3035807127514e"
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_resource_bridge_20261106.c",
+      "sha256": "e7ae9932818c1e4e22847995d3b50c2c76e345684aece382a697955823e3e3f3"
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_types_20261106.h",
+      "sha256": "1d85024eba4e0033a38c8da6f0970c82bfb07ee8b4c5f3bc46be25dfaf6e3030"
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_views_20261106/fs_0200a7cc.c",
+      "sha256": "8998e8ed680929b490009415e95ad46285ecaee5be75c6d8b6a08c1731c36862"
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_views_20261106/fs_0200a968.c",
+      "sha256": "21a59eebc5ce0ddcd4eb7841201372d522d30b073cb94b69fc58efa0cf3edfd9"
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_views_20261106/fs_0200aa00.c",
+      "sha256": "9b546a43666e178fe03ef6000ddd408f2204860504b637a0996079948cf0f650"
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_views_20261106/fs_0200ab2c.c",
+      "sha256": "e9fa82de27aa2accab5812f07ad13cb9f3bfce5ca7b3a0d4bbf9e49214d1b24a"
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_views_20261106/fs_0200b0bc.c",
+      "sha256": "2f3461948755542e77c1dd24b2655532660f545968630dcf10ba31f3f1defa1e"
+    },
+    {
+      "path": "ports/runtime/resource64/resource_bridge_20261106.h",
+      "sha256": "76242f1d3634761e3adf67a5f2338eb5363d8b1fe5656994cbd3ed7b46a24d7d"
+    },
+    {
+      "path": "ports/runtime/resource64/resource_thunk_prototype_20261106.c",
+      "sha256": "d55f707c1ea5ee2a5f4e55eb972d7a4ced0e640b73ca7c43dbaa75b51ae41846"
+    },
+    {
+      "path": "src/runtime/20261031_allocation_dispatch_word_index/native_main_0202a37c.c",
+      "sha256": "f56ad6ece6d2af5980ba7edb35bfafe22402bb349fc009581a2af6264f44507d"
+    },
+    {
+      "path": "src/runtime/20261031_overlay_file_size250/context.h",
+      "sha256": "695aaabf88ce06fd1c789e36b334a03f743021506c0ae1ca1621b757d3b19925"
+    },
+    {
+      "path": "src/runtime/20261031_overlay_file_size250/file_size.c",
+      "sha256": "344b1450650d49c88ece5cf25c90c95153d8df279c4a6fb5098439e66e32342d"
+    },
+    {
+      "path": "src/runtime/20261031_resource_load/native_main_0203cb8c.c",
+      "sha256": "7a3de739e52e6a0bc80a4b17fa96a4ba5cd98bf5a6a02a971f2518495fcf74ee"
+    },
+    {
+      "path": "src/runtime/20261102_texture_pattern436/native_main_02034248.c",
+      "sha256": "ea631a9cd7b115f1d95a0f4e35ed3c5af7ca28456b80f0925c8b5f397ea6c1fa"
+    },
+    {
+      "path": "src/runtime/20261102_texture_pattern436/native_main_02034320.c",
+      "sha256": "d6c6011fc7364a6ed4094bbb85183f3462f8760c5c11f4e0761604779bb89aae"
+    }
+  ]
+}

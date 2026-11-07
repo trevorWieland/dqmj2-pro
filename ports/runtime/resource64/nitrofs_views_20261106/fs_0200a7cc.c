@@ -1,0 +1,16 @@
+#include "nitrofs_types_20261106.h"
+int native_main_0200a7cc (const char *str1, const char *str2, u32 len)
+{
+	int i;
+	for (i = 0; i < len; ++i) {
+		u32 c = (u32)(MI_ReadByte(str1 + i) - 'A');
+		u32 d = (u32)(MI_ReadByte(str2 + i) - 'A');
+		if (c <= 'Z' - 'A')
+			c += 'a' - 'A';
+		if (d <= 'Z' - 'A')
+			d += 'a' - 'A';
+		if (c != d)
+			return (int)(c - d);
+	}
+	return 0;
+}

@@ -14,6 +14,8 @@ An exact 175,959,612-byte ROM has been reconstructed locally using accepted sour
 
 The [native storage subsystem](ports/native-storage/README.md) builds on Windows x64 and Android ARM64. Its Windows host tests and Android link checks pass CI; complete game and Android device execution remain unproven.
 
+The [native resource subsystem](ports/native-resources/README.md) adds NitroFS loading, G3D dictionary lookup and the accepted texture/palette setters. It has standalone synthetic host tests and an Android ARM64 build, with no private inputs required. This subsystem adds no decompilation progress credit.
+
 ## Sources and checks
 
 - `src/`: reconstruction sources and authored headers, including selected implementations and prepared work. Inclusion here alone does not grant acceptance.
