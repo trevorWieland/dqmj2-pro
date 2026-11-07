@@ -1,0 +1,76 @@
+name: Native G3D asset pipeline
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ports/common/guest_memory/**
+      - ports/runtime/card_cache64/**
+      - ports/runtime/card_reader64/**
+      - ports/runtime/resource64/**
+      - ports/native-g3d-assets/**
+      - ports/native-storage/check_android_elf.py
+      - src/runtime/20261031_resource_load/**
+      - src/runtime/20261031_overlay_file_size250/**
+      - src/runtime/20261031_allocation_dispatch_word_index/**
+      - src/runtime/20261102_texture_pattern436/**
+      - .github/workflows/native-g3d-assets.yml
+  pull_request:
+    paths:
+      - ports/common/guest_memory/**
+      - ports/runtime/card_cache64/**
+      - ports/runtime/card_reader64/**
+      - ports/runtime/resource64/**
+      - ports/native-g3d-assets/**
+      - ports/native-storage/check_android_elf.py
+      - src/runtime/20261031_resource_load/**
+      - src/runtime/20261031_overlay_file_size250/**
+      - src/runtime/20261031_allocation_dispatch_word_index/**
+      - src/runtime/20261102_texture_pattern436/**
+      - .github/workflows/native-g3d-assets.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-g3d-assets:
+    runs-on: windows-2025
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: "3.13.5"
+      - name: Build and test Windows Release and Debug
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force work/toolchains | Out-Null
+          $nativeArchive = Join-Path (Get-Location) 'work/toolchains/llvm-mingw.zip'
+          Invoke-WebRequest -Uri 'https://github.com/mstorsjo/llvm-mingw/releases/download/20261104/llvm-mingw-20261104-ucrt-x86_64.zip' -OutFile $nativeArchive
+          if ((Get-FileHash -LiteralPath $nativeArchive -Algorithm SHA256).Hash.ToLowerInvariant() -ne '552191b5754c49a5a20723276a6fc56541ea1922c4c50b7b669022333fc1b40f') { throw 'Pinned LLVM-MinGW archive identity differs' }
+          Expand-Archive -LiteralPath $nativeArchive -DestinationPath work/toolchains
+          $nativeCompilerBin = Join-Path (Get-Location) 'work/toolchains/llvm-mingw-20261104-ucrt-x86_64/bin'
+          $nativeCompiler = Join-Path $nativeCompilerBin 'x86_64-w64-mingw32-clang.exe'
+          $env:PATH = "$nativeCompilerBin;$env:PATH"
+          foreach ($nativeConfiguration in @('Release', 'Debug')) {
+            $nativeBuild = "work/native-g3d-assets/windows-$nativeConfiguration"
+            cmake -S ports/native-g3d-assets -B $nativeBuild -G Ninja "-DCMAKE_C_COMPILER=$nativeCompiler" "-DCMAKE_BUILD_TYPE=$nativeConfiguration"
+            if ($LASTEXITCODE) { exit $LASTEXITCODE }
+            cmake --build $nativeBuild --parallel 2
+            if ($LASTEXITCODE) { exit $LASTEXITCODE }
+            ctest --test-dir $nativeBuild --output-on-failure
+            if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          }
+      - name: Build Android ARM64
+        shell: pwsh
+        run: |
+          $nativeNdk = Join-Path $env:ANDROID_HOME 'ndk/30.0.16248370'
+          $nativeToolchain = Join-Path $nativeNdk 'build/cmake/android.toolchain.cmake'
+          if (-not (Test-Path -LiteralPath $nativeToolchain)) { throw 'Pinned Android NDK is unavailable' }
+          cmake -S ports/native-g3d-assets -B work/native-g3d-assets/android -G Ninja "-DCMAKE_TOOLCHAIN_FILE=$nativeToolchain" -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-33 -DANDROID_STL=none -DBUILD_TESTING=OFF -DCMAKE_BUILD_TYPE=Release
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cmake --build work/native-g3d-assets/android --parallel 2
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          python ports/native-storage/check_android_elf.py work/native-g3d-assets/android/libj2p_native_g3d_assets.so
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
