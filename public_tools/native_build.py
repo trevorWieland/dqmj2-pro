@@ -15,6 +15,7 @@ from pathlib import Path
 from bytematch_project import DENOMINATOR, REPORTS, contained, digest, read, selected_rows, namespace, write
 from native_objects import FreshObjects, selected_metadata
 from public_manifest import verify
+from native_mb_context import register_context
 
 
 APPROVED_CHECKPOINTS = {
@@ -177,7 +178,7 @@ def host_arm9(root, work, config, canonical, fresh):
                   buildNamespace=fresh.manifest['romSha256'], kind='fresh-source-original-gap-native-link',
                   sourceReconstruction=False, commands=[], modules=[], replacements=[], sourceUnits=[])
     environment = dict(os.environ, LM_LICENSE_FILE=str(config['license']))
-    with attributes(builder, WORK=output), auth_extraction(builder, root, units) as context:
+    with attributes(builder, WORK=output), auth_extraction(builder, root, units) as context, register_context(builder, root, units):
         prepared = builder.prepare_units(spec, report)
         generated = builder.generated_config(prepared)
         def run(command):
