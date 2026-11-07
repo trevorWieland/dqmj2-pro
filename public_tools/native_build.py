@@ -1,5 +1,7 @@
 import argparse
 import contextlib
+import functools
+import hashlib
 import importlib
 import json
 import os
@@ -9,7 +11,7 @@ import time
 import uuid
 from pathlib import Path
 from bytematch_project import DENOMINATOR, REPORTS, contained, digest, read, selected_rows, namespace, write
-from native_objects import FreshObjects
+from native_objects import FreshObjects, selected_metadata
 from public_manifest import verify
 
 
@@ -48,6 +50,59 @@ def original_modules(root, manifest):
     return modules
 
 
+@contextlib.contextmanager
+def auth_extraction(builder, root, units):
+    matching = [u for u in units if u.get('function') == 'native_main_0209770c']
+    if not matching:
+        yield None
+        return
+    descriptor = contained(root, 'provenance/auth-http-context-function-route-v2-20261106.json')
+    declared = read(descriptor)
+    qualification = contained(root, 'evidence/verification/auth-context-production-routing-v2-qualification-20261106.json')
+    if digest(qualification) != '7429d3fceaf2e63a91f4b4e6f3d384631b5066f805bfb2ad4d24cbcf59c77423':
+        raise ValueError('Inherited private AuthStart qualification artifact differs')
+    proof = read(qualification)
+    if len(matching) != 1 or not proof['passed'] or proof['sourceCredit'] or proof['contextDataCredit'] or not proof['scopeNegativeControlsPassed'] or not proof['originalAllSharedChecksRetained']:
+        raise ValueError('Qualified AuthStart extraction scope or controls differ')
+    recipe = {name: proof['qualifiedCodeAndDescriptorHashes'][name] for name in (
+        'auth_context_function_extract_20261106.py', 'auth_context_route_v2_20261106.py', descriptor.relative_to(root).as_posix())}
+    for name, expected in recipe.items():
+        if digest(contained(root, name)) != expected:
+            raise ValueError('Qualified AuthStart helper or descriptor changed')
+    unit = matching[0]
+    if (unit['module'], unit['mode'], int(unit['start'], 0), int(unit['end'], 0), unit['source'], unit['sourceSha256']) != (
+            'main', 'thumb', 0x0209770c, 0x020977cc, declared['source'], declared['sourceSha256']):
+        raise ValueError('Qualified AuthStart source identity differs')
+    extractor = importlib.import_module('auth_context_function_extract_20261106')
+    if declared['sourceCredit'] or declared['contextDataCredit'] or proof['originalCompilerObjectSha256'] != declared['objectSha256']:
+        raise ValueError('Frozen AuthStart qualification provenance differs')
+    for name, expected in ((declared['ready'], declared['readySha256']),
+                           (declared['contextDataClaim'], declared['contextDataClaimSha256']),
+                           ('wave20261106_dwc_auth_next_context_link.py', declared['wholeObjectLinkHelperSha256'])):
+        if digest(contained(root, name)) != expected:
+            raise ValueError('Frozen AuthStart context input differs')
+    original = builder.split_symbol
+    def split(elf, name, output, *extra, **options):
+        if name != declared['name']:
+            return original(elf, name, output, *extra, **options)
+        source = Path(elf.stream.name)
+        before = digest(source)
+        intermediate = output.with_suffix('.context-source.o')
+        extractor.extract(elf, name, intermediate)
+        with intermediate.open('rb') as stream:
+            result = original(type(elf)(stream), name, output, *extra, **options)
+        if digest(source) != before:
+            raise ValueError('Fresh compiler object changed during qualified AuthStart extraction')
+        return result
+    with attributes(builder, split_symbol=split):
+        yield dict(descriptor=descriptor.relative_to(root).as_posix(), descriptorSha256=digest(descriptor),
+                   qualificationSha256=digest(qualification), originalFreshCompilerObjectUnchanged=True,
+                   qualificationProvenance='owner-supplied untracked private artifact', qualifiedRecipeHashesVerified=recipe,
+                   inheritedHistoricalPins={name: dict(sha256=expected, verified=False, replayed=False,
+                       available=(root / name).is_file()) for name, expected in proof['qualifiedCodeAndDescriptorHashes'].items() if name not in recipe},
+                   contextDataSourceCredit=0, historicalObjectReplayed=False, qualificationOraclesReplayed=False)
+
+
 def host_arm9(root, work, config, canonical, fresh):
     builder = importlib.import_module('build_modules')
     gap_alignment = importlib.import_module('data_gap_alignment')
@@ -63,11 +118,11 @@ def host_arm9(root, work, config, canonical, fresh):
                   buildNamespace=fresh.manifest['romSha256'], kind='fresh-source-original-gap-native-link',
                   sourceReconstruction=False, commands=[], modules=[], replacements=[], sourceUnits=[])
     environment = dict(os.environ, LM_LICENSE_FILE=str(config['license']))
-    with attributes(builder, WORK=output):
+    with attributes(builder, WORK=output), auth_extraction(builder, root, units) as context:
         prepared = builder.prepare_units(spec, report)
         generated = builder.generated_config(prepared)
         def run(command):
-            if not builder.run(command, output, environment, report):
+            if not builder.run(command, output, environment, report, timeout=600):
                 raise ValueError('Native ARM9 tool failed: ' + Path(str(command[0])).name)
         run([config['linker'], '-version'])
         run([config['dsd'], 'delink', '--config-path', generated, '--all-mapping-symbols'])
@@ -86,6 +141,7 @@ def host_arm9(root, work, config, canonical, fresh):
                       sourceLinkedBytes=sum(u['compiledBytes'] for u in report['sourceUnits']),
                       sourceBssBytes=sum(u.get('allocatedBytes', 0) for u in report['sourceUnits']))
         layout.annotate(report, output)
+        report['qualifiedAuthContextRoute'] = context
     return report
 
 
@@ -93,8 +149,11 @@ def host_arm7(root, work, config, fresh):
     builder = importlib.import_module('link_arm7')
     project = importlib.import_module('project')
     layout = read(contained(root, 'evidence/arm7/runtime-layout.json'))
-    functions, symbols = builder.accepted()
+    canonical = read(contained(root, 'evidence/linking/arm7-latest.json'))
+    functions, symbols, unused_bindings, metadata = selected_metadata(root, canonical, processor='arm7')
     functions = [fresh.entry(item) for item in functions]
+    for item in metadata:
+        fresh.entry(item)
     output = work / 'host-arm7'
     output.mkdir()
     report = dict(schemaVersion=1, createdUtc=project.now(), buildNamespace=fresh.manifest['romSha256'],
@@ -120,9 +179,11 @@ def child(root, work, config, fresh):
     modules, unused_candidates, layout = state.runtime_state()
     if not layout or len(modules) != 6:
         raise ValueError('Embedded native runtime inventory is incomplete')
-    plans, metadata = utility.accepted_by_cpu(layout['program'], [r['processor'] for r in layout['processors']])
-    for item in metadata:
-        fresh.entry(item)
+    canonical = read(contained(root, 'evidence/linking/utility-latest.json'))
+    plans = {r['processor']: selected_metadata(root, canonical, layout['program'], r['processor']) for r in layout['processors']}
+    for plan in plans.values():
+        for item in plan[3]:
+            fresh.entry(item)
     tail = read(contained(root, 'evidence/utility/itcm-tail.json'))
     module = next(m for m in modules if m['name'] == tail['module'])
     if module['sha256'] != tail['inputModuleSha256'] or not tail['supportsDeterministicLinkerZeroAlignment']:
@@ -135,10 +196,22 @@ def child(root, work, config, fresh):
     report = dict(schemaVersion=1, createdUtc=project.now(), buildNamespace=fresh.manifest['romSha256'],
                   program=layout['program'], modules=[], sourceUnits=[], sourceReconstructionComplete=False)
     imported = 0
+    original_linkage = []
     for processor in layout['processors']:
         functions, symbols, bindings, unused_metadata = plans[processor['processor']]
-        functions = [fresh.entry(item) for item in functions]
-        imported += sum(item.get('bytes', item.get('size', 0)) for item in functions if item.get('kind') == 'linkage')
+        for item in functions:
+            if item.get('kind') != 'linkage':
+                continue
+            module = next(m for m in modules if m['name'] == item['module'])
+            image = contained(root, module['binary']).read_bytes()
+            offset = int(item['address'], 0) - int(module['base'], 0)
+            size = item.get('bytes', item.get('size'))
+            if hashlib.sha256(image[offset:offset + size]).hexdigest() != item['sha256']:
+                raise ValueError('Original zero-credit linkage span differs from frozen metadata')
+            imported += size
+            original_linkage.append(dict(module=item['module'], address=item['address'], bytes=size,
+                                         sha256=item['sha256'], sourceCredit=0, input='measured-original-module-gap'))
+        functions = [fresh.entry(item) for item in functions if item.get('kind') != 'linkage']
         selected = [m for m in modules if m['processor'] == processor['processor']]
         def failure_report(path, value):
             write(work / 'diagnostics' / Path(path).name, value)
@@ -149,7 +222,8 @@ def child(root, work, config, fresh):
     report.update(allModuleBytesExact=all(m['exactBytes'] for m in report['modules']),
                   symbolCheckPassed=all(m['symbolCheckPassed'] for m in report['modules']),
                   sourceLinkedBytes=sum(u['compiledBytes'] for u in report['sourceUnits'] if u.get('kind') != 'linkage'),
-                  importedFrozenLinkageBytes=imported, importedLinkageSourceCredit=0)
+                  importedFrozenLinkageBytes=imported, importedLinkageSourceCredit=0,
+                  originalGapLinkageBytes=imported, originalGapLinkageRanges=original_linkage)
     return report
 
 
@@ -192,7 +266,9 @@ def rebuild(root, compilation, output, compiler_root=None, license_file=None, co
         raise ValueError('CI compilation start time must be positive')
     if compilation_not_before_ns is not None and compilation.stat().st_mtime_ns < compilation_not_before_ns:
         raise ValueError('Source compilation report predates this CI build')
-    manifest, unused_units, unused_pins, unused_summary = verify(root, root / 'public/accepted-functions.json')
+    source_verifier = importlib.import_module('public_manifest')
+    with attributes(source_verifier, include_names=functools.lru_cache(maxsize=None)(source_verifier.include_names)):
+        manifest, unused_units, unused_pins, unused_summary = verify(root, root / 'public/accepted-functions.json')
     if manifest.get('acceptedFunctions') != 11482:
         raise ValueError('This native driver requires the frozen cohort 172 function snapshot')
     modules = original_modules(root, manifest)

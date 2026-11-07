@@ -79,6 +79,111 @@ def safe_flags(root, values):
     return result
 
 
+def selected_metadata(root, canonical, program=None, processor=None):
+    names = {m['module'] for m in canonical['modules'] if m.get('processor', processor) == processor}
+    units = [u for u in canonical['sourceUnits'] if u['module'] in names]
+    def key(item, canonical_unit=False):
+        begin = int(item['start'] if canonical_unit else item['address'], 0)
+        size = int(item['end'], 0) - begin if canonical_unit else item.get('bytes', item.get('size'))
+        return item['module'], begin, size, item['source'].replace('\\', '/'), item['sourceSha256']
+    expected = {key(unit, True): unit for unit in units}
+    sources = {(u['source'].replace('\\', '/'), u['sourceSha256']) for u in units}
+    registry = read(contained(root, 'recovery.json'))['batches']
+    report_names = {b['report'] for b in registry}
+    preferred = {}
+    for row in read(contained(root, 'public/accepted-functions.json'))['functions']:
+        identity = (row['module'], int(row['address'], 0), row['bytes'], row['sourceUnit'], row['sourceSha256'])
+        if row.get('evidence') in report_names:
+            preferred[identity] = row['evidence']
+    for row in read(contained(root, 'public/accepted-data.json'))['records']:
+        identity = (row['module'], int(row['address'], 0), row['bytes'], row['source'].replace('\\', '/'), row['sourceSha256'])
+        if row.get('evidence') in report_names:
+            preferred[identity] = row['evidence']
+    selected, metadata, symbols, bindings = {}, {}, {}, {}
+    needed = {name.removeprefix('__native_entry_') for u in units for name in u.get('nativeEntryAliases', [])}
+    needed.update(r['name'].removeprefix('__native_entry_') for m in canonical['modules']
+                  if m['module'] in names for r in m.get('originalGapFunctionBindings', []))
+    def binding_rows(value):
+        if isinstance(value, dict):
+            return [dict(row, name=row.get('name', name)) for name, row in value.items() if isinstance(row, dict)]
+        return [row for row in value if isinstance(row, dict) and row.get('name')] if isinstance(value, list) else []
+    def add_binding(binding):
+        if program is None or (binding.get('program') or None) != program or binding.get('processor', processor) != processor:
+            return
+        physical = lambda b: ((b.get('program') or None), b.get('processor', processor), b.get('module'),
+                              b.get('kind'), b.get('mode'), int(b['address'], 0))
+        previous = bindings.setdefault(binding['name'], binding)
+        if physical(previous) != physical(binding):
+            raise ValueError('Conflicting selected physical native binding: ' + binding['name'])
+        if binding['name'] in symbols and int(symbols[binding['name']], 0) != int(binding['address'], 0):
+            raise ValueError('Conflicting selected native binding address')
+        symbols[binding['name']] = binding['address']
+    for batch in registry:
+        pins = {(name.replace('\\', '/'), value) for name, value in batch.get('sourceHashes', {}).items()}
+        if not sources.intersection(pins) and batch.get('kind') not in ('container', 'mixed'):
+            continue
+        report = read(contained(root, batch['report']))
+        if (report.get('program') or None) != program:
+            continue
+        if report.get('romSha256') != canonical['buildNamespace']:
+            raise ValueError('Frozen metadata belongs to another measured build')
+        if program is None:
+            if report.get('processor') != processor and not report.get('module', '').startswith('arm7'):
+                continue
+        elif report.get('processor') not in (None, processor):
+            continue
+        for name, value in report.get('nativeSymbols', {}).items():
+            if name in symbols and int(symbols[name], 0) != int(value, 0):
+                raise ValueError('Conflicting frozen native binding: ' + name)
+            symbols[name] = value
+        groups = [(e, 'function') for e in report.get('functionMatches', report.get('matches', report.get('functions', [])))]
+        groups += [(e, 'data') for e in report.get('dataMatches', [])]
+        groups += [(e, 'container') for e in report.get('containerMatches', [])]
+        groups += [(e, 'linkage') for e in report.get('linkageMatches', [])]
+        for entry, kind in groups:
+            item = {**report, **entry}
+            if (item.get('program') or None) != program:
+                continue
+            if processor is not None and item.get('processor', processor) != processor:
+                continue
+            if kind == 'container':
+                metadata[(item['source'], item.get('name'), item.get('processor'))] = item
+                continue
+            identity = key(item)
+            if identity not in expected:
+                continue
+            if identity in preferred and preferred[identity] != batch['report']:
+                continue
+            unit = expected[identity]
+            if kind == 'linkage':
+                item.update(kind='linkage', mode=item['entryMode'])
+                if item.get('ordinaryFunctionCredit') != 0:
+                    raise ValueError('Frozen linkage has source credit')
+            elif not (item.get('exactBytes') or item.get('exactAfterDeclaredRelocation') or item.get('kind') == 'bss' and item.get('exactZeroStorage')):
+                continue
+            name = unit.get('function') or unit.get('symbol')
+            if name and item.get('name') != name:
+                continue
+            relocations = item.get('relocations', [])
+            if isinstance(relocations, list):
+                needed.update(r['symbol'] for r in relocations if isinstance(r, dict) and r.get('symbol'))
+            for binding in binding_rows(entry.get('nativeSymbolBindings', [])):
+                add_binding(binding)
+            item['canonicalObject'] = unit['object']
+            item['canonicalObjectSha256'] = unit['sha256']
+            item['frozenMetadataReport'] = batch['report']
+            previous = selected.get(identity)
+            if previous is None or item.get('objectSha256') == unit['sha256']:
+                selected[identity] = item
+        for binding in binding_rows(report.get('nativeSymbolBindings', [])):
+            if binding['name'] in needed:
+                add_binding(binding)
+    if set(selected) != set(expected):
+        missing = sorted(set(expected) - set(selected))
+        raise ValueError('Frozen selected metadata is incomplete: ' + str(missing[:3]))
+    return list(selected.values()), symbols, list(bindings.values()), list(metadata.values())
+
+
 class FreshObjects:
     def __init__(self, root, compilation, output, compiler_root, license_file, runner=subprocess.run):
         self.root, self.output = root.resolve(), output.resolve()
@@ -91,6 +196,9 @@ class FreshObjects:
         self.fresh = compile_index(self.root, self.compilation, digest(self.manifest_path))
         self.compiler_root, self.license_file = compiler_root.resolve(), license_file.resolve()
         self.compilers, self.pins, self.contracts, self.records = {}, {}, {}, []
+        self.unavailable = set()
+        for name in ('public/accepted-functions.json', 'public/accepted-data.json'):
+            self.pins[contained(self.root, name)] = digest(contained(self.root, name))
         self.pins[self.compilation] = digest(self.compilation)
         for row in read(self.compilation)['results']:
             self.pins[contained(self.root, row['object'])] = row['objectSha256']
@@ -157,6 +265,7 @@ class FreshObjects:
         self.fresh[key] = obj
         self.pins[obj] = digest(obj)
         self.records.append(dict(source=source_name, compilerSha256=compiler_hash, compilerFlags=list(flags),
+                                 sourceSha256=digest(source), sourceDependencies=dependencies,
                                  object=obj.relative_to(self.root).as_posix(), objectSha256=digest(obj),
                                  command=command, status='freshly-compiled'))
         return obj
@@ -168,20 +277,34 @@ class FreshObjects:
             self.pin(row['path'], row['sha256'])
         original_name = item['object']
         original_hash = item.get('objectSha256', item.get('sha256'))
-        original = self.pin(original_name, original_hash)
         fresh = self.compile(key, item.get('sourceDependencies', []))
-        contract_key = (original, fresh)
-        if contract_key not in self.contracts:
-            self.contracts[contract_key] = object_contract(original) == object_contract(fresh)
-        if not self.contracts[contract_key]:
-            raise ValueError('Fresh allocated source sections, symbols, or relocations differ: ' + str(source))
+        original = None
+        candidates = [(original_name, original_hash)]
+        if item.get('canonicalObject'):
+            candidates.append((item['canonicalObject'], item['canonicalObjectSha256']))
+        for name, expected in candidates:
+            candidate = (self.root / name.replace('\\', '/')).resolve()
+            if candidate.is_relative_to(self.root) and candidate.is_file() and digest(candidate) == expected:
+                original = self.pin(name, expected)
+                break
+        if original is not None:
+            contract_key = (original, fresh)
+            if contract_key not in self.contracts:
+                self.contracts[contract_key] = object_contract(original) == object_contract(fresh)
+            if not self.contracts[contract_key]:
+                raise ValueError('Fresh allocated source sections, symbols, or relocations differ: ' + str(source))
+        else:
+            self.unavailable.add((original_name, original_hash))
+            object_contract(fresh)
         result['originalObject'] = original_name
         result['originalObjectSha256'] = original_hash
         result['object'] = fresh.relative_to(self.root).as_posix()
         result['objectSha256'] = digest(fresh)
-        if 'sha256' in result:
+        if 'sha256' in result and 'objectSha256' not in item:
             result['sha256'] = result['objectSha256']
         result['freshCompilationVerified'] = True
+        result['historicalObjectVerified'] = original is not None
+        result['nativeByteVerificationRequired'] = True
         return result
 
     def unit(self, unit):
@@ -210,6 +333,7 @@ class FreshObjects:
         if any(digest(path) != expected for path, expected in self.pins.items()):
             raise ValueError('Frozen inputs changed during focused native build')
         summary = dict(auxiliaryFreshCompilationUnits=len(self.records), equivalentObjectPairs=len(self.contracts),
+                       unavailableHistoricalObjects=len(self.unavailable),
                        originalInputFilesChecked=len(self.pins), originalInputFilesUnchanged=True,
                        results=self.records)
         write(self.output / 'report.json', summary)

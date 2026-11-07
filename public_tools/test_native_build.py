@@ -8,7 +8,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from bytematch_project import DENOMINATOR, digest, elf_object, write
 from native_build import attributes, original_modules, rebuild, verify_results
-from native_objects import FreshObjects, object_contract, safe_flags
+from native_objects import FreshObjects, object_contract, safe_flags, selected_metadata
 
 
 class NativeBuildTests(unittest.TestCase):
@@ -109,6 +109,14 @@ class NativeBuildTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Frozen inputs changed'):
             fresh.finish()
 
+    def test_closed_acceptance_metadata_cannot_change_during_native_build(self):
+        fresh = self.objects()
+        fresh.unit(self.unit)
+        updated = dict(self.data, compilerFlags=['-O0', '-proc', 'arm946e'])
+        write(self.root / 'public/accepted-data.json', dict(records=[updated]))
+        with self.assertRaisesRegex(ValueError, 'Frozen inputs changed'):
+            fresh.finish()
+
     def test_missing_closed_profile_cannot_gain_source_credit(self):
         unit = dict(self.unit, start='0x2000008', end='0x200000c')
         with self.assertRaisesRegex(ValueError, 'outside the closed function snapshot'):
@@ -133,11 +141,52 @@ class NativeBuildTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'zero source function credit'):
             self.objects().entry(dict(item, ordinaryFunctionCredit=1))
 
+    def test_missing_historical_cache_requires_new_native_proof_without_recreating_it(self):
+        historical = dict(name='value', module='m00', address=self.unit['start'], bytes=4,
+                          source=self.unit['source'], sourceSha256=self.unit['sourceSha256'],
+                          object=self.unit['object'], objectSha256=self.unit['sha256'],
+                          compilerSha256=self.compiler_hash, compilerFlags=self.function['compilerFlags'], exactBytes=True)
+        binding = dict(name='callee', program='', processor='arm9', module='m00', address='0x2000004', mode='arm')
+        write(self.root / 'evidence/selected.json', dict(romSha256='a' * 64, processor='arm9',
+              functionMatches=[historical], nativeSymbolBindings=[binding], nativeSymbols={'callee': '0x2000004'}))
+        write(self.root / 'recovery.json', dict(batches=[dict(report='evidence/selected.json', kind='functions',
+              sourceHashes={'src/value.c': self.unit['sourceSha256']})]))
+        canonical = dict(buildNamespace='a' * 64, modules=[dict(module='m00', processor='arm9')], sourceUnits=[self.unit])
+        self.old.unlink()
+        entries, symbols, bindings, metadata = selected_metadata(self.root, canonical, processor='arm9')
+        self.assertEqual(len(entries), 1)
+        self.assertEqual(symbols['callee'], '0x2000004')
+        result = self.objects().entry(entries[0])
+        self.assertFalse(result['historicalObjectVerified'])
+        self.assertTrue(result['nativeByteVerificationRequired'])
+        self.assertEqual(result['originalObjectSha256'], self.unit['sha256'])
+        self.assertEqual(result['objectSha256'], digest(self.current))
+        self.assertFalse(self.old.exists())
+
     def test_macro_flags_preserve_order_and_private_include_paths_are_rejected(self):
         options = ['-O2', '-DSAVED_TABLE', '-proc', 'arm946e']
         self.assertEqual(safe_flags(self.root, options), options)
         with self.assertRaises(ValueError):
             safe_flags(self.root, ['-i', 'inputs'])
+
+    def test_mixed_packet_selects_physical_namespace_before_reading_bindings(self):
+        item = dict(name='value', module='m00', address=self.unit['start'], bytes=4,
+                    source=self.unit['source'], sourceSha256=self.unit['sourceSha256'],
+                    object=self.unit['object'], objectSha256=self.unit['sha256'], exactBytes=True)
+        binding = dict(program='child', processor='arm9', module='m00', mode='arm', address='0x2000004')
+        wrong = dict(item, program=None, nativeSymbolBindings=[dict(binding, name='callee', address='0x2000008')])
+        write(self.root / 'evidence/mixed.json', dict(romSha256='a' * 64, program='child', processor='arm9',
+              functionMatches=[wrong, item], nativeSymbols={'callee': '0x2000004'},
+              nativeSymbolBindings={'callee': binding, 'diagnostic': 'not a physical binding'}))
+        write(self.root / 'recovery.json', dict(batches=[dict(report='evidence/mixed.json', kind='mixed')]))
+        unit = dict(self.unit, nativeEntryAliases=['__native_entry_callee'])
+        canonical = dict(buildNamespace='a' * 64, program='child',
+                         modules=[dict(module='m00', processor='arm9')], sourceUnits=[unit])
+        entries, symbols, bindings, metadata = selected_metadata(self.root, canonical, 'child', 'arm9')
+        self.assertEqual(len(entries), 1)
+        self.assertEqual(entries[0]['program'], 'child')
+        self.assertEqual(symbols['callee'], binding['address'])
+        self.assertEqual(bindings, [dict(binding, name='callee')])
 
     def test_native_outputs_require_new_work_directory(self):
         with self.assertRaisesRegex(ValueError, 'new dedicated native build directory'):
