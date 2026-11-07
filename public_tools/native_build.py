@@ -17,6 +17,24 @@ from native_objects import FreshObjects, selected_metadata
 from public_manifest import verify
 
 
+APPROVED_CHECKPOINTS = {
+    '1a3602d9eb57e0952f8bf003de2bf2a189294158e77469577ecfda26d10e8c60':
+        (172, '14ac8dcd6f8ab0009e5dd54d73cf31c928540776', 11482, 1224354),
+    '9325fb758e0e68446c4fe885b4fe5422b0b5c35fac0208a48cf49dfbbf7d6250':
+        (173, 'c7ef53f30f326f0d3b38d0eeb61186a1a3f9dd4c', 11546, 1236780),
+}
+
+
+def approved_checkpoint(manifest, manifest_hash):
+    expected = APPROVED_CHECKPOINTS.get(manifest_hash)
+    actual = (manifest.get('revision'), manifest.get('acceptedFunctions'), manifest.get('acceptedInitializedBytes'))
+    if (expected is None or actual != expected[1:]
+            or manifest.get('initializedDenominatorBytes') != DENOMINATOR
+            or manifest.get('romSha256') != '674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6'):
+        raise ValueError('Native driver requires an approved closed source checkpoint and exact manifest bytes')
+    return expected[0]
+
+
 def runtime(root):
     sys.path.insert(0, str(root))
     project = importlib.import_module('project')
@@ -310,8 +328,7 @@ def rebuild(root, compilation, output, compiler_root=None, license_file=None, co
     source_verifier = importlib.import_module('public_manifest')
     with attributes(source_verifier, include_names=functools.lru_cache(maxsize=None)(source_verifier.include_names)):
         manifest, unused_units, unused_pins, unused_summary = verify(root, root / 'public/accepted-functions.json')
-    if manifest.get('acceptedFunctions') != 11482:
-        raise ValueError('This native driver requires the frozen cohort 172 function snapshot')
+    approved_checkpoint(manifest, digest(root / 'public/accepted-functions.json'))
     modules = original_modules(root, manifest)
     project, config = runtime(root)
     builder = importlib.import_module('build_modules')
