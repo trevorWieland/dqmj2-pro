@@ -168,8 +168,9 @@ def selected_metadata(root, canonical, program=None, processor=None):
             relocations = item.get('relocations', [])
             if isinstance(relocations, list):
                 needed.update(r['symbol'] for r in relocations if isinstance(r, dict) and r.get('symbol'))
-            for binding in binding_rows(entry.get('nativeSymbolBindings', [])):
-                add_binding(binding)
+            for field in ('nativeSymbolBindings', 'nativeSymbolEntries'):
+                for binding in binding_rows(entry.get(field, [])):
+                    add_binding(binding)
             item['canonicalObject'] = unit['object']
             item['canonicalObjectSha256'] = unit['sha256']
             item['frozenMetadataReport'] = batch['report']
