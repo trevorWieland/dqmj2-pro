@@ -49,6 +49,17 @@ class SnapshotInputTests(unittest.TestCase):
         self.snapshot('recovery.json', b'new', previous=b'wrong')
         self.rejected()
 
+    def test_cohort175_root_contracts_never_become_mutable_snapshot_metadata(self):
+        from snapshot_inputs import MUTABLE_ROOTS
+        for name in ('child-snd-reference-contract-v1.json', 'ten-consumer-contract-v2.json',
+                     'cohort174-parallel-wave20261105-s-specification.json'):
+            with self.subTest(name=name):
+                self.assertNotIn(name, MUTABLE_ROOTS)
+                self.pack([('inputs/game.nds', b'owned fixture'), (name, b'old contract')])
+                self.snapshot(name, b'changed contract', previous=b'old contract')
+                self.rejected()
+                self.assertFalse((self.root / name).exists())
+
     def test_rom_cannot_be_replaced_even_with_matching_predecessor(self):
         self.pack([('inputs/game.nds', b'original')])
         self.snapshot('inputs/game.nds', b'changed', previous=b'original')

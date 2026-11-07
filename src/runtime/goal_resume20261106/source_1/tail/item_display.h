@@ -1,0 +1,11 @@
+typedef unsigned short u16;
+typedef short s16;
+typedef unsigned int u32;
+typedef int s32;
+typedef struct {s16 x,y;} Point;
+typedef char CoordinateBytes[sizeof(Point)==4?1:-1];
+extern u32 native_data_021c5df8[];
+extern u32 native_fn_02063144(s32);
+extern void native_fn_0204a448(s32,const Point *,u32,s32,u32,u32);
+extern void native_fn_0204a154(s32,const Point *,u32,u32,u32,u32);
+void native_main_0207483c(s32);

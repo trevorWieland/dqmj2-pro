@@ -1,0 +1,57 @@
+#include "../../resource_path_api.h"
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef signed short s16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef unsigned long long u64;
+typedef signed long long s64;
+typedef float f32;
+typedef double f64;
+#define M2C_FIELD(value, type, offset) (*(type)((s8 *)(value) + (offset)))
+#define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
+#define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
+#define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
+extern u8 native_data_ov000_0222eb8c[];
+extern u8 native_data_ov000_0222eb9c[];
+extern u8 native_data_ov000_0222ebb0[];
+extern u8 native_data_ov000_0222ebc4[];
+typedef struct {
+    u32 field_0;
+    u32 field_4;
+    u32 field_8;
+    u8 unknown_c[0x4];
+    u32 field_10;
+} Record_native_data_ov000_02231bf0;
+extern Record_native_data_ov000_02231bf0 native_data_ov000_02231bf0;
+u32 native_ov000_021df3f4(void) {
+    u32 temp_r0;
+    u32 temp_r0_2;
+    u32 temp_r0_3;
+    u32 temp_r0_4;
+    u32 var_r4;
+
+    var_r4 = 1;
+    temp_r0 = native_fn_0203cc3c(native_data_ov000_0222eb8c, -1);
+    native_data_ov000_02231bf0.field_8 = temp_r0;
+    if (temp_r0 == 0) {
+        var_r4 = 0;
+    }
+    temp_r0_2 = native_fn_0203cc3c(native_data_ov000_0222eb9c, -1);
+    native_data_ov000_02231bf0.field_0 = temp_r0_2;
+    if (temp_r0_2 == 0) {
+        var_r4 = 0;
+    }
+    temp_r0_3 = native_fn_0203cc3c(native_data_ov000_0222ebb0, -1);
+    native_data_ov000_02231bf0.field_4 = temp_r0_3;
+    if (temp_r0_3 == 0) {
+        var_r4 = 0;
+    }
+    temp_r0_4 = native_fn_0203cc3c(native_data_ov000_0222ebc4, -1);
+    if (temp_r0_4 == 0) {
+        var_r4 = 0;
+    }
+    native_data_ov000_02231bf0.field_10 = temp_r0_4;
+    return var_r4;
+}

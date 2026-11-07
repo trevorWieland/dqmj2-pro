@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "role": "cohort175-versioned-historical-public-proof-inputs",
+  "sourceRevision": "e56b4df0c067ec6fd83cb6d3205c59cb5308fd7c",
+  "sourceCredit": 0,
+  "entries": [
+    {
+      "originalPath": "public_tools/build_receipts.py",
+      "sourceRevision": "e56b4df0c067ec6fd83cb6d3205c59cb5308fd7c",
+      "sha256": "43837cd8f8ceaf6d100f8847c1505f1b0ffef5d07cac156f122258511fa7cd75",
+      "publishedPath": "public_tools/frozen_validation/cohort175/build_receipts.py",
+      "activePublicSha256": "584b1f2b00ef108e7387e08815e7a05052c1a2f1bf2d7c404c3ad40e51bba33b",
+      "evidenceReports": [
+        "evidence/matches/cohort175-packet-04.json",
+        "evidence/matches/cohort175-packet-05.json",
+        "evidence/matches/cohort175-packet-14-symbols.json",
+        "evidence/matches/cohort175-packet-15.json",
+        "evidence/matches/cohort175-packet-16.json",
+        "evidence/matches/cohort175-packet-17.json",
+        "evidence/matches/cohort175-packet-18.json",
+        "evidence/matches/cohort175-packet-19.json",
+        "evidence/matches/cohort175-packet-20.json",
+        "evidence/matches/cohort175-packet-21.json"
+      ],
+      "normalClosureRuntimeInput": false
+    },
+    {
+      "originalPath": "public_tools/data_progress.py",
+      "sourceRevision": "e56b4df0c067ec6fd83cb6d3205c59cb5308fd7c",
+      "sha256": "81cd90df105daafc5ef3dd9d73bd5bf151622de20a9a5287fba47b12bd3bd482",
+      "publishedPath": "public_tools/frozen_validation/cohort175/data_progress.py",
+      "activePublicSha256": "31a207dd2b0cfb5228244aebd7ad3e6c01d95f42e34f718fb3f0639ddce7f7b0",
+      "evidenceReports": [
+        "evidence/matches/cohort175-packet-04.json",
+        "evidence/matches/cohort175-packet-05.json",
+        "evidence/matches/cohort175-packet-14-symbols.json",
+        "evidence/matches/cohort175-packet-15.json",
+        "evidence/matches/cohort175-packet-16.json",
+        "evidence/matches/cohort175-packet-17.json",
+        "evidence/matches/cohort175-packet-18.json",
+        "evidence/matches/cohort175-packet-19.json",
+        "evidence/matches/cohort175-packet-20.json",
+        "evidence/matches/cohort175-packet-21.json"
+      ],
+      "normalClosureRuntimeInput": false
+    },
+    {
+      "originalPath": "public_tools/native_objects.py",
+      "sourceRevision": "e56b4df0c067ec6fd83cb6d3205c59cb5308fd7c",
+      "sha256": "c35d0e98204c6f839fe4d5fef7eb125b6e9f386ec18c90aa9da980aa51ee1392",
+      "publishedPath": "public_tools/frozen_validation/cohort175/native_objects.py",
+      "activePublicSha256": "31de3390bf694a7be4cc04d8a0c84b46b97d2ac40373b63e4a6b4e2cd6fa1765",
+      "evidenceReports": [
+        "evidence/matches/cohort175-packet-04.json",
+        "evidence/matches/cohort175-packet-05.json",
+        "evidence/matches/cohort175-packet-14-symbols.json",
+        "evidence/matches/cohort175-packet-15.json",
+        "evidence/matches/cohort175-packet-16.json",
+        "evidence/matches/cohort175-packet-17.json",
+        "evidence/matches/cohort175-packet-18.json",
+        "evidence/matches/cohort175-packet-19.json",
+        "evidence/matches/cohort175-packet-20.json",
+        "evidence/matches/cohort175-packet-21.json"
+      ],
+      "normalClosureRuntimeInput": false
+    },
+    {
+      "originalPath": "public_tools/public_manifest.py",
+      "sourceRevision": "e56b4df0c067ec6fd83cb6d3205c59cb5308fd7c",
+      "sha256": "80f38d97a29a4d888c7d80b51cce7ca7434a9340381a404c56517dcdf5cfe8be",
+      "publishedPath": "public_tools/frozen_validation/cohort175/public_manifest.py",
+      "activePublicSha256": "ea45c8877e852b75a0f8b2c2fa02f94d72a58b88507408f39c698c369b7f212c",
+      "evidenceReports": [
+        "evidence/matches/cohort175-packet-04.json",
+        "evidence/matches/cohort175-packet-05.json",
+        "evidence/matches/cohort175-packet-14-symbols.json",
+        "evidence/matches/cohort175-packet-15.json",
+        "evidence/matches/cohort175-packet-16.json",
+        "evidence/matches/cohort175-packet-17.json",
+        "evidence/matches/cohort175-packet-18.json",
+        "evidence/matches/cohort175-packet-19.json",
+        "evidence/matches/cohort175-packet-20.json",
+        "evidence/matches/cohort175-packet-21.json"
+      ],
+      "normalClosureRuntimeInput": false
+    }
+  ],
+  "scope": "Exact historical validation Python sources. Active public CI tooling remains separate; reproducing historical packet commands requires this versioned module path. No compiler C/header input or normal closure runtime pin is relocated."
+}

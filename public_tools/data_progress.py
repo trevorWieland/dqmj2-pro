@@ -6,8 +6,8 @@ from build_receipts import DENOMINATOR, REPORTS, digest, pinned_file, read
 from public_manifest import include_names
 
 
-DATA_RECORDS = 446
-DATA_BYTES = 108776
+DATA_RECORDS = 450
+DATA_BYTES = 109484
 DATA_KINDS = {'data', 'rodata', 'initialized-data'}
 GENERATED_VISIBILITY_COUNTS = {'public': 10, 'private-asset': 46}
 

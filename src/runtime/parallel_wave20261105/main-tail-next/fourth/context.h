@@ -1,0 +1,10 @@
+typedef unsigned char u8;
+typedef unsigned int u32;
+extern u8 native_data_021d69b0;
+extern void native_fn_020c48bc(void);
+extern void native_fn_020c48d0(u32,u32,u32);
+extern void native_fn_020c485c(void);
+extern void native_fn_020c48e8(u32);
+extern void native_fn_020c484c(u32);
+extern void native_fn_020c4928(u32,u32);
+extern void native_fn_020c48f8(u32);
