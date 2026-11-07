@@ -4,10 +4,11 @@ import struct
 import tempfile
 import time
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 from types import SimpleNamespace
 from bytematch_project import DENOMINATOR, digest, elf_object, write
-from native_build import attributes, original_modules, rebuild, verify_results
+from native_build import attributes, failure_status, main, original_modules, rebuild, verify_results, write_failure_status
 from native_objects import FreshObjects, object_contract, safe_flags, selected_metadata
 
 
@@ -208,6 +209,51 @@ class NativeBuildTests(unittest.TestCase):
     def test_ci_build_cannot_reuse_a_predating_source_compile_report(self):
         with self.assertRaisesRegex(ValueError, 'predates this CI build'):
             rebuild(self.root, self.compilation, self.root / 'work/too-old', compilation_not_before_ns=time.time_ns() + 1000000000)
+
+    def failure(self, path, message):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text('def fail(depth):\n    if depth: return fail(depth - 1)\n    raise ValueError(message)\n')
+        scope = dict(message=message)
+        exec(compile(path.read_text(), str(path), 'exec'), scope)
+        try:
+            scope['fail'](12)
+        except ValueError as error:
+            return error
+
+    def test_public_failure_has_only_bounded_owned_frame_locations(self):
+        secret = 'PRIVATE-INSTRUCTION-BYTES-0123456789abcdef'
+        error = self.failure(self.root / 'public_tools/fixture.py', secret)
+        write_failure_status(self.root, error)
+        path = self.root / 'build/B2JJ-modified/native-failure-status.json'
+        status = json.loads(path.read_text())
+        self.assertEqual(set(status), {'errorType', 'frames'})
+        self.assertEqual(status['errorType'], 'ValueError')
+        self.assertEqual(len(status['frames']), 8)
+        self.assertTrue(all(set(f) == {'file', 'line', 'function'} for f in status['frames']))
+        self.assertTrue(all(f['file'] == 'fixture.py' and f['function'] == 'fail' for f in status['frames']))
+        self.assertNotIn(secret, path.read_text())
+        self.assertNotIn(str(self.root), path.read_text())
+
+    def test_private_generated_frames_and_binary_input_paths_are_omitted(self):
+        error = self.failure(self.root / 'work/private/fixture.py', 'private source text')
+        self.assertEqual(failure_status(self.root, error)['frames'], [])
+        for name in ('work/private/report.json', 'tools/license.dat', '../outside/report.json', 'evidence/private.bin'):
+            error = FileNotFoundError(2, 'private message', str(self.root / name))
+            self.assertNotIn('missingInput', failure_status(self.root, error))
+        error = FileNotFoundError(2, 'private message', str(self.root / 'evidence/linking/missing.json'))
+        self.assertEqual(failure_status(self.root, error)['missingInput'], 'evidence/linking/missing.json')
+
+    def test_cli_failure_before_inner_receipt_writes_safe_status(self):
+        secret = 'PRIVATE-EARLY-FAILURE-RAW-HEX-0123456789abcdef'
+        arguments = ['native_build.py', '--root', str(self.root), '--compile-report', str(self.compilation)]
+        with patch('sys.argv', arguments), patch('native_build.rebuild', side_effect=AssertionError(secret)), patch('sys.stderr'):
+            with self.assertRaises(SystemExit) as stopped:
+                main()
+        self.assertEqual(stopped.exception.code, 1)
+        path = self.root / 'build/B2JJ-modified/native-failure-status.json'
+        status = json.loads(path.read_text())
+        self.assertEqual(status['errorType'], 'AssertionError')
+        self.assertNotIn(secret, path.read_text())
 
     def scope_fixture(self):
         modules, outputs = [], []

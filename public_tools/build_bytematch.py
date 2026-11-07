@@ -353,6 +353,13 @@ def main():
     (output / "build-receipt.json").write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
     summary = dict(buildPassed=receipt['buildPassed'], prepared=receipt['prepared'], phase=receipt.get('phase'), buildScope=receipt.get('buildScope', 'historical-full-replay'),
                    failureType=receipt.get('failureType'), failureReason=receipt.get('failureReason'))
+    native_status_path = output / 'native-failure-status.json'
+    if receipt.get('buildScope') == 'native-modules' and native_status_path.is_file() and native_status_path.stat().st_mtime_ns >= receipt.get('nativeStartedTimeNs', receipt['startedTimeNs']):
+        native_status = read_json(native_status_path)
+        if set(native_status) <= {'errorType', 'frames', 'missingInput'} and re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', native_status.get('errorType', '')):
+            safe_frames = native_status.get('frames', [])
+            if isinstance(safe_frames, list) and len(safe_frames) <= 8 and all(isinstance(frame, dict) and set(frame) == {'file', 'line', 'function'} and re.fullmatch(r'[A-Za-z0-9_.-]+\.py', frame['file']) and type(frame['line']) is int and re.fullmatch(r'[A-Za-z0-9_<>]+', frame['function']) for frame in safe_frames):
+                summary['nativeFailure'] = native_status
     compiled_path = root / 'build/public-source-compile/report.json'
     if compiled_path.is_file() and compiled_path.stat().st_mtime_ns >= receipt['startedTimeNs']:
         compiled = read_json(compiled_path)

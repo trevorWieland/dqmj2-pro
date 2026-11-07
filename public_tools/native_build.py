@@ -5,9 +5,11 @@ import hashlib
 import importlib
 import json
 import os
+import re
 import subprocess
 import sys
 import time
+import traceback
 import uuid
 from pathlib import Path
 from bytematch_project import DENOMINATOR, REPORTS, contained, digest, read, selected_rows, namespace, write
@@ -23,6 +25,45 @@ def runtime(root):
     config = project.configuration()
     project.native_dependencies(config)
     return project, config
+
+
+def failure_status(root, error):
+    root = root.resolve()
+    frames = []
+    for frame, line in traceback.walk_tb(error.__traceback__):
+        try:
+            path = Path(frame.f_code.co_filename).resolve()
+        except (OSError, TypeError, ValueError):
+            continue
+        if not path.is_relative_to(root):
+            continue
+        relative = path.relative_to(root)
+        owned = len(relative.parts) == 1 or relative.parts[0] == 'public_tools'
+        function = frame.f_code.co_name
+        if owned and path.is_file() and re.fullmatch(r'[A-Za-z_]\w*\.py', path.name):
+            if not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]{0,127}|<(?:module|listcomp|dictcomp|setcomp|genexpr|lambda)>', function):
+                function = '<unknown>'
+            frames.append(dict(file=path.name, line=line, function=function))
+    kind = type(error).__name__
+    status = dict(errorType=kind if re.fullmatch(r'[A-Za-z_]\w{0,63}', kind) else 'Exception', frames=frames[-8:])
+    if isinstance(error, OSError) and isinstance(error.filename, (str, os.PathLike)):
+        try:
+            missing = Path(error.filename).resolve()
+        except (OSError, TypeError, ValueError):
+            return status
+        if missing.is_relative_to(root):
+            relative = missing.relative_to(root)
+            public = len(relative.parts) == 1 or relative.parts[0] in {'public', 'public_tools', 'config', 'evidence', 'ledger', 'provenance'}
+            if public and missing.suffix in {'.json', '.yaml', '.yml', '.txt', '.py', '.lcf'} and re.fullmatch(r'[A-Za-z0-9_./-]+', relative.as_posix()):
+                status['missingInput'] = relative.as_posix()
+    return status
+
+
+def write_failure_status(root, error):
+    destination = (root / 'build/B2JJ-modified/native-failure-status.json').resolve()
+    if not root.is_dir() or not destination.is_relative_to(root.resolve()):
+        raise ValueError('Native failure status must remain inside the source root')
+    write(destination, failure_status(root, error))
 
 
 @contextlib.contextmanager
@@ -349,8 +390,10 @@ def main():
     try:
         receipt = rebuild(root, compilation, output, args.compiler_root, args.license_file, args.compilation_not_before_ns)
         print(json.dumps({k: v for k, v in receipt.items() if k != 'freshCompilation'}, indent=2))
-    except (OSError, ValueError, KeyError, TypeError, RuntimeError) as error:
-        parser.exit(1, type(error).__name__ + ': ' + str(error) + '\n')
+    except Exception as error:
+        traceback.print_exc()
+        write_failure_status(root, error)
+        parser.exit(1, 'Native rebuild failed; raw diagnostics remain in the private log.\n')
 
 
 if __name__ == '__main__':
