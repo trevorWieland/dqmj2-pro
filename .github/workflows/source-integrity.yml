@@ -35,6 +35,9 @@ jobs:
       - name: Reconcile initialized-source accounting and badge
         shell: pwsh
         run: python public_tools/progress_accounting.py --root .
+      - name: Check public data source visibility
+        shell: pwsh
+        run: python public_tools/data_progress.py --root . --check-public-sources
       - name: Check nonmatching source-display aliases
         shell: pwsh
         run: python public_tools/source_links.py --root .

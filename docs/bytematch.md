@@ -10,11 +10,11 @@ The private `trevorWieland/dqmj2-pro-inputs` repository holds an immutable multi
 
 The installer refuses traversal, links, conflicting inputs and replacement public source/configuration. Absent `src/**/*.json` files are private replay descriptors; existing public files at those paths cannot be replaced. Private inputs, build logs and objects are excluded from public Git and artifacts. Reusing the archive on a matching checkout preserves identical existing inputs.
 
-`public_tools/build_bytematch.py` verifies the inputs, recompiles the complete accepted source manifest, then executes `run_checks.py --clean`. The receipt binds the public Git revision, accepted manifest, fresh compiler report, fresh module-link reports and check results. The public compiler pass alone never authorizes a matching report.
+`public_tools/build_bytematch.py --native-only` verifies the inputs, recompiles the complete accepted source manifest, and genuinely links all twenty native modules using the pinned compiler, linker and dsd. Every module must equal its original initialized image, and symbol checks must pass. Additional initialized-data, BSS and composition profiles are compiled from their actual frozen sources. Original executable gaps and veneer scaffolding receive zero source credit. The admitted AuthStart function uses its exact scoped extraction rule; source bytes and compiler inputs remain unchanged.
 
-Before historical replay, it runs `reproduce.py` to rebuild and verify the checksum-tool prerequisite. Older overlay producers consume `oracle/results.json` for the pinned compiler flags; this generated file is recreated from public source and owned originals rather than imported from an older checkout.
+The receipt binds this public Git revision, the accepted manifest, the current compiler report and the three new native-link reports under a dedicated `work/` directory. Source compilation alone never authorizes a report. Historical cached source objects are optional comparison references; missing caches are recorded as unavailable and are never presented as verified or freshly compiled. The native tracking build inherits closed acceptance and semantic-generation qualifications. It does not rerun historical behavioral oracles or claim a fresh full ROM/container build.
 
-The historical workspace audit rejects any Git remote and requires external snapshot folders that do not exist on a clean runner. Those private-era conditions are superseded for public reporting by the [publication policy](public-reconstruction-policy.md). The wrapper records that historical failure and permits only this final audit exception: every build/oracle stage passed, source policy passed, and no recorded external file changed. Any other failure prevents report publication. This exception neither accepts new source nor establishes an overall source-only game build.
+Without `--native-only`, the wrapper also runs `reproduce.py` for the checksum-tool prerequisite and executes `run_checks.py --clean`. That full historical path retains its separate workspace-audit handling: every build/oracle stage and source policy must pass, with no recorded external file changes; only old no-remote/unavailable-snapshot conditions may be superseded by the [publication policy](public-reconstruction-policy.md). Other failures block that full-replay path.
 
 ## Generated objdiff project
 
@@ -23,9 +23,9 @@ The initial public checkpoint reconciles as follows:
 | Measurement | Accepted bytes | Denominator | Percentage |
 | --- | ---: | ---: | ---: |
 | Native initialized source, closed cohort 172 | 1,224,354 | 2,512,636 | 48.727870% |
-| Measured function code, objdiff diagnostic | 1,115,554 | 2,122,900 | 52.548588% |
+| Measured function code, objdiff | 1,115,554 | 2,122,900 | 52.548588% |
 
-The initialized numerator is 1,115,554 function bytes, 108,776 separately accepted initialized-data bytes and 24 qualified alignment bytes. ByteMatch's current page headline uses function-code matching and does not support the combined initialized metric. Its function-only report currently grants no data completion. The separately labeled [native initialized-source badge](../public/native-progress.svg) and [accounting record](../public/native-progress.json) preserve the local milestone without changing objdiff classifications or promoting original data to source credit. Source-integrity CI checks that this record and badge still agree with the closed manifests.
+The initialized numerator is 1,115,554 function bytes, 108,776 separately accepted initialized-data bytes and 24 qualified alignment bytes. ByteMatch's current page headline uses function-code matching and does not support the combined initialized metric. The native report also measures 108,776 bytes of genuinely compiled and linked typed data. Combined code and data therefore cover 1,224,330 initialized bytes (48.726915%), which rounds to the same 48.73% local milestone. The separately qualified 24-byte linker alignment remains unmatched in objdiff. The separately labeled [native initialized-source badge](../public/native-progress.svg) and [accounting record](../public/native-progress.json) preserve the local milestone without changing objdiff classifications or promoting original data to source credit. Source-integrity CI checks that this record and badge still agree with the closed manifests.
 
 `public_tools/bytematch_project.py` generates `build/B2JJ-modified/objdiff.json`; do not edit that output. It reads the closed public accepted manifest and all three genuine module-link reports, covering 20 native modules and 2,512,636 initialized bytes. Program, CPU and module namespaces keep overlapping overlay and ARM7/ARM9 addresses distinct.
 
@@ -53,7 +53,7 @@ Only `report.json` and `functional.json` are uploaded, in `B2JJ-modified_report`
 With the private input checkout available:
 
 ```powershell
-python public_tools/build_bytematch.py --root . --input-bundle private-inputs
+python public_tools/build_bytematch.py --root . --input-bundle private-inputs --native-only
 python public_tools/bytematch_project.py --root . --private-root .
 tools/objdiff/3.8.3/objdiff-cli.exe report generate --project build/B2JJ-modified -o build/B2JJ-modified/report.json
 ```
@@ -71,3 +71,9 @@ python check-source-links.py trevorWieland/dqmj2-pro --version B2JJ-modified --j
 ```
 
 Record its sampled found/absent/missing counts, commit and scope. An unregistered project or a report that has not been ingested cannot produce a source-link validation result. For future aliases, follow [ByteMatch source linking](https://bytematch.dev/docs/source-linking): generate a names header from the authoritative mapping instead of changing frozen function bodies or adding comments to authored code.
+
+## Data source visibility
+
+The [source visibility inventory](../public/data-source-visibility.json) binds every generated data declaration to the closed accepted-data manifest. Ten mathematical or typed SDK tables are public unchanged C. Forty-six declarations encode complete game assets and stay in the owned private inputs. Their report units retain their actual `generated/*.c` compiler-input paths, so those data source views are unavailable in public Git. Matching completion describes verified compilation and linkage; it does not imply that asset content is public. Standard report artifacts carry metrics and names without asset payloads. Public semantic encoders are linked separately in the inventory; their historical generation qualification is inherited, not rerun by the native tracking build.
+
+The source-definition sidecar also selects 67 exact header/include definitions from the accepted compiler closure, preventing a different SDK copy with the same function name from appearing in the source viewer.

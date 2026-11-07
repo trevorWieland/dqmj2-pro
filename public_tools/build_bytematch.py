@@ -267,6 +267,7 @@ def main():
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--input-bundle", type=Path, default=Path("private-inputs"))
     parser.add_argument("--prepare-only", action="store_true")
+    parser.add_argument("--native-only", action="store_true")
     args = parser.parse_args()
     root = args.root.resolve()
     bundle = args.input_bundle.resolve() if args.input_bundle.is_absolute() else root / args.input_bundle
@@ -304,15 +305,40 @@ def main():
                 if compiled.get("status") != "source-compilation-passed" or compiled.get("fullManifestCompiled") is not True or compiled.get("manifestSha256") != receipt["acceptedManifestSha256"] or compile_path.stat().st_mtime_ns < receipt["startedTimeNs"]:
                     raise BundleError("The complete fresh public source compilation did not pass")
                 receipt["publicSourceCompileReport"] = dict(path="build/public-source-compile/report.json", sha256=digest(compile_path), modifiedTimeNs=compile_path.stat().st_mtime_ns)
-                receipt['phase'] = 'bootstrap-checksum-tool-prerequisite'
-                print(json.dumps(dict(phase=receipt['phase'])), flush=True)
-                run_private(root, log, ['reproduce.py'])
-                print(json.dumps(dict(phase='replay-and-link-all-modules')), flush=True)
-                receipt['phase'] = 'replay-and-link-all-modules'
-                receipt['replayStartedTimeNs'] = time.time_ns()
-                build_exit = run_private(root, log, ["run_checks.py", "--clean"], allow_failure=True)
-                receipt["buildOutcome"] = build_outcome(root, build_exit, receipt["replayStartedTimeNs"])
-                receipt["reports"] = fresh_reports(root, receipt["replayStartedTimeNs"], accepted["romSha256"])
+                if args.native_only:
+                    receipt['buildScope'] = 'native-modules'
+                    receipt['phase'] = 'fresh-native-module-links'
+                    receipt['nativeStartedTimeNs'] = time.time_ns()
+                    print(json.dumps(dict(phase=receipt['phase'])), flush=True)
+                    native_output = root / 'work/nb' / uuid.uuid4().hex[:10]
+                    run_private(root, log, ['public_tools/native_build.py', '--root', str(root),
+                        '--compile-report', str(compile_path), '--out-dir', str(native_output),
+                        '--compiler-root', str(root / 'tools/mwccarm/mwccarm'),
+                        '--license-file', str(root / 'tools/mwccarm/mwccarm/license.dat'),
+                        '--compilation-not-before-ns', str(receipt['startedTimeNs'])])
+                    native_path = native_output / 'native-build-receipt.json'
+                    native = read_json(native_path)
+                    if native.get('nativeBuildPassed') is not True:
+                        raise BundleError('All native source links must pass')
+                    if type(native.get('startedTimeNs')) is not int or native['startedTimeNs'] < receipt['nativeStartedTimeNs']:
+                        raise BundleError('Native module receipt predates its invocation')
+                    receipt['nativeStartedTimeNs'] = native['startedTimeNs']
+                    receipt['nativeBuildReceipt'] = dict(path=native_path.relative_to(root).as_posix(),
+                        sha256=digest(native_path), modifiedTimeNs=native_path.stat().st_mtime_ns)
+                    receipt['reports'] = native['reports']
+                    receipt['buildOutcome'] = {key: native[key] for key in (
+                        'nativeBuildPassed', 'behavioralReplayPerformed', 'fullContainerBuildPerformed',
+                        'moduleCount', 'acceptedFunctionsLinked', 'allModuleBytesExact', 'allSymbolChecksPassed')}
+                else:
+                    receipt['phase'] = 'bootstrap-checksum-tool-prerequisite'
+                    print(json.dumps(dict(phase=receipt['phase'])), flush=True)
+                    run_private(root, log, ['reproduce.py'])
+                    print(json.dumps(dict(phase='replay-and-link-all-modules')), flush=True)
+                    receipt['phase'] = 'replay-and-link-all-modules'
+                    receipt['replayStartedTimeNs'] = time.time_ns()
+                    build_exit = run_private(root, log, ["run_checks.py", "--clean"], allow_failure=True)
+                    receipt["buildOutcome"] = build_outcome(root, build_exit, receipt["replayStartedTimeNs"])
+                    receipt["reports"] = fresh_reports(root, receipt["replayStartedTimeNs"], accepted["romSha256"])
                 if digest(accepted_path) != receipt["acceptedManifestSha256"]:
                     raise BundleError("Accepted manifest changed during the private build")
                 verify(root, accepted_path)
@@ -325,7 +351,7 @@ def main():
             log.write(type(error).__name__ + ": " + str(error) + "\n")
         receipt["finishedTimeNs"] = time.time_ns()
     (output / "build-receipt.json").write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
-    summary = dict(buildPassed=receipt['buildPassed'], prepared=receipt['prepared'], phase=receipt.get('phase'),
+    summary = dict(buildPassed=receipt['buildPassed'], prepared=receipt['prepared'], phase=receipt.get('phase'), buildScope=receipt.get('buildScope', 'historical-full-replay'),
                    failureType=receipt.get('failureType'), failureReason=receipt.get('failureReason'))
     compiled_path = root / 'build/public-source-compile/report.json'
     if compiled_path.is_file() and compiled_path.stat().st_mtime_ns >= receipt['startedTimeNs']:
@@ -336,7 +362,7 @@ def main():
                  failureClass='compiler-license' if 'license' in (unit.get('stdout', '') + unit.get('stderr', '')).lower() else 'compiler-or-object-check')
             for unit in compiled.get('results', []) if unit.get('status') != 'compiled'][:5]
     checks_path = root / REPORTS[0]
-    if checks_path.is_file() and checks_path.stat().st_mtime_ns >= receipt.get('replayStartedTimeNs', receipt['startedTimeNs']):
+    if checks_path.is_file() and checks_path.stat().st_mtime_ns >= receipt.get('nativeStartedTimeNs', receipt.get('replayStartedTimeNs', receipt['startedTimeNs'])):
         checks = read_json(checks_path)
         summary['checksState'] = checks.get('state')
         failed = [s for s in checks.get('steps', []) if s.get('exitCode')]

@@ -24,7 +24,7 @@ An exact 175,959,612-byte ROM has been reconstructed locally using accepted sour
 
 The public source checkpoint starts a clean Git history. Its manifest preserves exact source hashes from the local closed cohort 172, source revision `efe36ed2e7d16be9f2aae411f0dc0cb3eb89e6d5`, closure revision `14ac8dcd6f8ab0009e5dd54d73cf31c928540776`. Those local historical revisions and generated proof dumps are not included as public ancestors.
 
-Public CI checks declared source integrity without original inputs. The standalone compiler path recompiles actual sources with the declared compiler profiles; compilation alone does not establish a native match. Full original/source and ROM comparisons require owned inputs in a trusted local environment. Historical validation scripts also depend on generated evidence that is excluded from this initial source export; a fresh full public-checkout replay is not yet established.
+Pull-request CI verifies declared source integrity without original inputs. Default-branch CI recompiles the complete accepted sources and genuinely links all twenty native modules using owned private inputs, then checks their bytes and symbols against the originals. This native tracking build inherits the closed source qualifications; a full historical behavioral replay and fresh complete ROM/container build remain separate checks. See [data source visibility](docs/bytematch.md#data-source-visibility) for the public numerical tables and private generated asset declarations.
 
 ## Contributing
 

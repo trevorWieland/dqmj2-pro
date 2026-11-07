@@ -39,7 +39,7 @@ def source_path(value):
     if not isinstance(value, str) or not value or '\\' in value or ':' in value:
         raise ValueError('Source path must be repository relative')
     path = PurePosixPath(value)
-    if path.is_absolute() or '..' in path.parts or path.parts[0] not in {'src', 'include'}:
+    if path.is_absolute() or '..' in path.parts or path.parts[0] not in {'src', 'include', 'generated'}:
         raise ValueError('Source path leaves public source directories')
 
 
@@ -96,7 +96,18 @@ def main():
     args = parser.parse_args()
     report = json.loads(args.report.read_text(encoding='utf-8'))
     project = json.loads(args.project.read_text(encoding='utf-8'))
-    print(json.dumps(validate(report, project, args.denominator)))
+    result = validate(report, project, args.denominator)
+    export_path = args.project.parent / 'export-receipt.json'
+    if export_path.is_file():
+        exported = json.loads(export_path.read_text(encoding='utf-8'))
+        if exported.get('publishable') is True:
+            expected = {'matched_code': exported['acceptedFunctionCodeBytes'], 'complete_code': exported['acceptedFunctionCodeBytes'],
+                        'matched_data': exported['matchedTypedDataBytes'], 'complete_data': exported['matchedTypedDataBytes']}
+            if any(int(report['measures'].get(key, 0)) != value for key, value in expected.items()):
+                raise ValueError('objdiff matching counts differ from verified source compilation and linkage')
+            result['matchedCodeBytes'] = expected['matched_code']
+            result['matchedDataBytes'] = expected['matched_data']
+    print(json.dumps(result))
 
 
 if __name__ == '__main__':

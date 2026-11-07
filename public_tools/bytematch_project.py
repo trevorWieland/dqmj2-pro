@@ -6,7 +6,9 @@ import re
 import struct
 import subprocess
 from pathlib import Path, PurePosixPath
-from source_links import load_aliases, load_records, TABLE as ALIAS_TABLE
+from source_links import load_aliases, load_records, load_definition_paths, TABLE as ALIAS_TABLE, DEFINITIONS
+from build_receipts import receipt_check, validate_build_receipt
+from data_progress import load_data_spans
 
 
 DENOMINATOR = 2512636
@@ -183,25 +185,6 @@ def compile_index(root, path, manifest_hash):
     return result
 
 
-def receipt_check(root, private, receipt, manifest_hash):
-    data = read(receipt)
-    revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip()
-    if data.get('buildPassed') is not True or data.get('publicGitRevision') != revision or data.get('acceptedManifestSha256') != manifest_hash:
-        raise ValueError('Build receipt must bind a successful build to this public revision and manifest')
-    if os.environ.get('GITHUB_SHA') and os.environ['GITHUB_SHA'] != revision:
-        raise ValueError('Public build revision differs from CI revision')
-    started = data.get('replayStartedTimeNs', data.get('startedTimeNs', data.get('startTimeNs')))
-    if not isinstance(started, int):
-        raise ValueError('Build receipt lacks its start time')
-    for name in REPORTS:
-        relative = 'evidence/linking/' + name
-        path = contained(private, relative)
-        pin = data['reports'][relative]
-        if digest(path) != pin['sha256'] or path.stat().st_mtime_ns < started:
-            raise ValueError('Link report is stale or differs from fresh build receipt: ' + relative)
-    return revision
-
-
 def original_sections(private, module):
     if module.get('program') or module.get('processor') != 'arm9':
         return []
@@ -278,7 +261,11 @@ def prepare(root, private, output, diagnostic=False, receipt=None, compilation=N
     if manifest['initializedDenominatorBytes'] != DENOMINATOR:
         raise ValueError('Full initialized denominator is required')
     manifest_hash = digest(manifest_path)
-    revision = None if diagnostic else receipt_check(root, private, receipt or output / 'build-receipt.json', manifest_hash)
+    verified = None if diagnostic else validate_build_receipt(root, private, receipt or output / 'build-receipt.json', manifest_hash, compilation)
+    data_spans = load_data_spans(root, private, verified)
+    revision = verified['revision'] if verified else None
+    report_paths = verified['reports'] if verified else {name: contained(private, 'evidence/linking/' + name) for name in REPORTS}
+    compilation = verified['compilation'] if verified and verified.get('compilation') else compilation
     fresh = compile_index(root, compilation or root / 'build/public-source-compile/report.json', manifest_hash) if not diagnostic or compilation else {}
     inventory = read(contained(private, 'ledger/modules.json'))
     modules = inventory['modules']
@@ -295,7 +282,7 @@ def prepare(root, private, output, diagnostic=False, receipt=None, compilation=N
         accepted.setdefault(key, []).append(row)
     links, selections = {}, {}
     for filename in REPORTS:
-        report = read(contained(private, 'evidence/linking/' + filename))
+        report = read(report_paths[filename])
         if not report.get('allModuleBytesExact') or not report.get('symbolCheckPassed') or report['buildNamespace'] != manifest['romSha256']:
             raise ValueError('Real exact module linking and symbol checks are required')
         for module in report['modules']:
@@ -309,6 +296,8 @@ def prepare(root, private, output, diagnostic=False, receipt=None, compilation=N
     if set(links) != set(module_map):
         raise ValueError('Partial module link reports cannot be published')
     candidates = {}
+    definition_paths = load_definition_paths(root) if (root / DEFINITIONS).is_file() else {}
+    precise_locations, shown_definitions = {}, set()
     aliases = load_aliases(root) if (root / ALIAS_TABLE).is_file() else {}
     alias_records = {r['reportSymbol']: r for r in load_records(root)} if aliases else {}
     ledger_path = contained(private, 'ledger/functions.jsonl')
@@ -353,6 +342,9 @@ def prepare(root, private, output, diagnostic=False, receipt=None, compilation=N
                 for dependency in row.get('sourceDependencies', []):
                     source_file(root, dependency['path'], dependency['sha256'], hashes)
                 symbol = unit.get('symbols', {}).get(row['symbol']) or unit.get('function') or unit.get('symbol') or row['symbol']
+                definition = definition_paths.get((row['id'], symbol))
+                if definition:
+                    precise_locations[(name, int(row['address'], 0), int(row['address'], 0) + row['bytes'])] = definition
                 if fresh:
                     fresh_obj = fresh[(source, row['compilerSha256'], tuple(row['compilerFlags']))]
                     key = (obj, fresh_obj, symbol)
@@ -363,6 +355,8 @@ def prepare(root, private, output, diagnostic=False, receipt=None, compilation=N
                 symbols.append((symbol, int(row['address'], 0) - int(unit['start'], 0), row['bytes'], row['mode']))
                 credited.add(row['id'])
             selected.append((int(unit['start'], 0), int(unit['end'], 0), source, symbols))
+        source_data = data_spans.get(name, [])
+        nonoverlap([(a, b) for a, b, unused, unused_symbols in selected] + [(r['start'], r['end']) for r in source_data], base, base + len(original))
         sections = original_sections(private, module)
         real_candidates = []
         cursor = base
@@ -384,10 +378,16 @@ def prepare(root, private, output, diagnostic=False, receipt=None, compilation=N
             points.update(x for x in (begin, end) if base < x < base + len(original))
         for row in real_candidates:
             points.update((int(row['address'], 0), int(row['address'], 0) + row['bytes']))
+        for data in source_data:
+            points.update((data['start'], data['end']))
         ordered = sorted(points)
         spans = [(begin, end, next((s for s in selected if s[0] <= begin and end <= s[1]), None)) for begin, end in zip(ordered, ordered[1:])]
         for begin, end, selection in spans:
-            source = selection[2] if selection else 'src'
+            data = next((r for r in source_data if r['start'] <= begin and end <= r['end']), None)
+            source = selection[2] if selection else data['source'] if data else 'src'
+            if (name, begin, end) in precise_locations:
+                source = precise_locations[(name, begin, end)]
+                shown_definitions.add((name, begin, end))
             key = hashlib.sha256((physical + '/' + str(begin)).encode()).hexdigest()[:20]
             target = output / 'target' / (key + '.o')
             base_path = output / 'base' / (key + '.o')
@@ -398,21 +398,26 @@ def prepare(root, private, output, diagnostic=False, receipt=None, compilation=N
                 if namespace(candidate) != namespace(alias) or candidate['mode'] != alias['mode'] or begin != int(alias['address'], 0):
                     raise ValueError('Source alias crosses a physical function identity')
                 source = aliases[candidate['symbol']]
+            if data and (selection or candidate or known is True):
+                raise ValueError('Qualified initialized data overlaps measured code')
             code = bool(selection or candidate)
             symbols = [(n, o + selection[0] - begin, z, m) for n, o, z, m in selection[3]] if selection else [
                 (candidate['symbol'], 0, candidate['bytes'], candidate['mode'])] if candidate else []
-            unclassified = not code and known is not False
+            if data:
+                symbols = [(data.get('symbol') if data['start'] == begin and data['end'] == end else f'__source_data_{begin:08x}', 0, end - begin, 'data')]
+                symbols[0] = (symbols[0][0] or f'__source_data_{begin:08x}', *symbols[0][1:])
+            unclassified = not code and not data and known is not False
             if unclassified:
                 unknown_bytes += end - begin
                 symbols = [(f'__initialized_span_{begin:08x}', 0, end - begin, 'data')]
             elf_object(target, original[begin - base:end - base], symbols, code)
-            metadata = dict(source_path=source, complete=bool(selection), progress_categories=[category])
+            metadata = dict(source_path=source, complete=bool(selection or data), progress_categories=[category])
             if unclassified:
                 metadata['progress_categories'].append('unclassified')
             group = str(PurePosixPath(source).with_suffix('')) if selection or source != 'src' else 'unreconstructed'
             item = dict(name=group + '/' + physical + f'/{begin:08x}', target_path=target.relative_to(output).as_posix(),
                         base_path='base/empty.o', metadata=metadata)
-            if selection:
+            if selection or data:
                 elf_object(base_path, rebuilt[begin - base:end - base], symbols, code)
                 item['base_path'] = base_path.relative_to(output).as_posix()
             units.append(item)
@@ -439,9 +444,13 @@ def prepare(root, private, output, diagnostic=False, receipt=None, compilation=N
                    acceptedManifestSha256=manifest_hash, originalInitializedBytes=original_bytes, moduleCount=len(modules),
                    acceptedFunctions=len(credited), units=len(units), unclassifiedInitializedBytes=unknown_bytes,
                    freshCompilationVerified=bool(fresh),
+                   acceptedFunctionCodeBytes=sum(row['bytes'] for row in manifest['functions']),
+                   matchedTypedDataBytes=sum(r['end'] - r['start'] for ranges in data_spans.values() for r in ranges),
                    accounting='Final linked initialized image comparison. Only accepted and measured candidate function extents count as code. Unidentified initialized residuals enter a separate data budget, without invented functions; code percentage is not overall game completion.',
                    targetOnlyUnits=sum(u['base_path'] == 'base/empty.o' for u in units), functionalFunctions=len(functional),
                    absentSourceBaseline='base/empty.o contains no code, data, or functions; it is an explicit absence representation, not a compiled implementation.')
+    if set(precise_locations) != shown_definitions:
+        raise ValueError('A precise source definition did not cover one complete report unit')
     write(output / 'export-receipt.json', summary)
     return summary
 

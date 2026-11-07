@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: trevorWieland/dqmj2-pro-inputs
-          ref: b799786b3800730baf6aecb3943fbf5fceadffb3
+          ref: 08b95916080c86f201ba8ea144b6ca3f22a00348
           ssh-key: ${{ secrets.BUILD_INPUTS_DEPLOY_KEY }}
           persist-credentials: false
           path: private-inputs
@@ -43,7 +43,7 @@ jobs:
           python-version: "3.13.5"
       - name: Build the public source with verified private inputs
         shell: pwsh
-        run: python public_tools/build_bytematch.py --root . --input-bundle private-inputs
+        run: python public_tools/build_bytematch.py --root . --input-bundle private-inputs --native-only
       - name: Generate the complete objdiff project
         shell: pwsh
         run: python public_tools/bytematch_project.py --root . --private-root . --out-dir build/${{ matrix.version }}
