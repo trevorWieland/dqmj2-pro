@@ -9,7 +9,7 @@ class CheckpointGuardTests(unittest.TestCase):
                     initializedDenominatorBytes=DENOMINATOR,
                     romSha256='674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6')
 
-    def test_both_closed_checkpoints_are_approved(self):
+    def test_all_closed_checkpoints_are_approved(self):
         for sha, record in APPROVED_CHECKPOINTS.items():
             with self.subTest(cohort=record[0]):
                 self.assertEqual(approved_checkpoint(self.manifest(record), sha), record[0])
@@ -21,8 +21,8 @@ class CheckpointGuardTests(unittest.TestCase):
 
     def test_changed_snapshot_counts_or_input_are_rejected(self):
         sha, record = list(APPROVED_CHECKPOINTS.items())[-1]
-        for key, value in [('revision', '0' * 40), ('acceptedFunctions', 11482),
-                           ('acceptedInitializedBytes', 1236781), ('initializedDenominatorBytes', DENOMINATOR + 1),
+        for key, value in [('revision', '0' * 40), ('acceptedFunctions', record[2] + 1),
+                           ('acceptedInitializedBytes', record[3] + 1), ('initializedDenominatorBytes', DENOMINATOR + 1),
                            ('romSha256', '0' * 64)]:
             with self.subTest(field=key):
                 manifest = self.manifest(record)
