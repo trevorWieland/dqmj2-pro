@@ -16,6 +16,8 @@ The [native storage subsystem](ports/native-storage/README.md) builds on Windows
 
 The [native resource subsystem](ports/native-resources/README.md) adds NitroFS loading, G3D dictionary lookup and the accepted texture/palette setters. It has standalone synthetic host tests and an Android ARM64 build, with no private inputs required. This subsystem adds no decompilation progress credit.
 
+The [native scene matrix library](ports/native-scene-matrices/README.md) adds checked matrix commands, node poses, static scene events, per-shape snapshots, homogeneous POSITION records and an isolated warm billboard API. Its synthetic Windows tests and Android ARM64 build need no private inputs. These portable components add no decompilation progress credit.
+
 ## Sources and checks
 
 - `src/`: reconstruction sources and authored headers, including selected implementations and prepared work. Inclusion here alone does not grant acceptance.

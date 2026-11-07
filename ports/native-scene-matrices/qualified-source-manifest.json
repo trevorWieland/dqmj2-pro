@@ -1,0 +1,283 @@
+{
+  "status": "qualified-source-selection-with-public-build-and-host-tests",
+  "sourceSelection": {
+    "status": "coordinator-rehashed-qualified-native-publication-selection",
+    "files": [
+      {
+        "path": "ports/common/guest_memory/guest_memory_20261106.c",
+        "sha256": "de79ef174e9060fe4f1a18fce34f3dccaa327d56e4cf63932b7e6bde9c79e9b7",
+        "bytes": 2906
+      },
+      {
+        "path": "ports/common/guest_memory/guest_memory_20261106.h",
+        "sha256": "381e9f810f135385ef595dc71f4399bd051c35155ae695b10d898879c8672508",
+        "bytes": 910
+      },
+      {
+        "path": "ports/runtime/billboard_warm64/billboard_warm_20261107.c",
+        "sha256": "d5525f3ee71ea2eb9f770b811a66bd3eec81ee84e7f381473e910b42cf5fa6b7",
+        "bytes": 4315
+      },
+      {
+        "path": "ports/runtime/billboard_warm64/billboard_warm_20261107.h",
+        "sha256": "175dac8647ccd360da3bba83d2323abb75346f5d721bfcc723c71a8dc271910b",
+        "bytes": 1382
+      },
+      {
+        "path": "ports/runtime/billboard_warm64/billboard_warm_internal_20261107.h",
+        "sha256": "8ff11ac0e9b58cc0e7e8e23f0ce9c4e7c2fa11b1375202581aabe09747164694",
+        "bytes": 220
+      },
+      {
+        "path": "ports/runtime/billboard_warm64/billboard_warm_math_20261107.c",
+        "sha256": "e4595652dce7dda094b0bc3dff74c1596c51cd17697364dfcbb8b5bf11e9e498",
+        "bytes": 3565
+      },
+      {
+        "path": "ports/runtime/billboard_warm64/contract_20261107.txt",
+        "sha256": "17d2fef7bf37230bd3543e65cfcc7100ce6c2c5dee2644e85e7520ae17552777",
+        "bytes": 4802
+      },
+      {
+        "path": "ports/runtime/matrix64/matrix_20261106.c",
+        "sha256": "21b652a9ab3b9c4d209ce50ce31587aec1530c135e95ee774d5fa6f0ca1a993c",
+        "bytes": 6904
+      },
+      {
+        "path": "ports/runtime/matrix64/matrix_20261106.h",
+        "sha256": "a371b237d7fd3f1e884ceb32334040a2a90321001394a5417951fe9287d89878",
+        "bytes": 756
+      },
+      {
+        "path": "ports/runtime/node_pose64/node_pose_20261106.h",
+        "sha256": "1245f9f49b9d51d110e7312d75eb19fc33e9ae0ba72641127104e117e668d340",
+        "bytes": 973
+      },
+      {
+        "path": "ports/runtime/node_pose64/node_pose_arithmetic_20261106.c",
+        "sha256": "4591ea92d8170505428ef4b8a3068c348157890acedfe004f792a78ed0110326",
+        "bytes": 673
+      },
+      {
+        "path": "ports/runtime/node_pose64/node_pose_decode_20261106.c",
+        "sha256": "e09cc99a4d6caa8ecd8d8b5061c92faf123282b1949d9f2c28ab219614cca810",
+        "bytes": 5664
+      },
+      {
+        "path": "ports/runtime/node_pose64/node_pose_model_20261106.c",
+        "sha256": "8023facda68ab591f3dd081dc2206691992cab0436a19e21d497c7247066e663",
+        "bytes": 3474
+      },
+      {
+        "path": "ports/runtime/static_matrix_plan64/contract_20261107.txt",
+        "sha256": "8b4f2319f9454a437103eb22775b4a0505a1b47713ba65808f6c72376fdc2e31",
+        "bytes": 7844
+      },
+      {
+        "path": "ports/runtime/static_matrix_plan64/static_matrix_frame_20261107.c",
+        "sha256": "4786ce0a38218ff23cf130226c2ec8668945d64ec6c27bdbc6b04c1cf7f155d4",
+        "bytes": 2157
+      },
+      {
+        "path": "ports/runtime/static_matrix_plan64/static_matrix_internal_20261107.h",
+        "sha256": "716658749e2287552956b61fae0ffd9af281b3b571300d4c08b408f6a29f2806",
+        "bytes": 711
+      },
+      {
+        "path": "ports/runtime/static_matrix_plan64/static_matrix_plan_20261107.c",
+        "sha256": "1719dd2724cae8825a5c68f4305b0d3451f017e8c30c4c52e79b6678fc83899b",
+        "bytes": 3501
+      },
+      {
+        "path": "ports/runtime/static_matrix_plan64/static_matrix_plan_20261107.h",
+        "sha256": "4fd9f158ef372f5f3e0bcab7ba49e8aade34a4e40e20a0981a2f34992ecf4940",
+        "bytes": 461
+      },
+      {
+        "path": "ports/runtime/static_matrix_plan64/static_matrix_walk_20261107.c",
+        "sha256": "65e484455eab64119f9aece4103782956c166ba6d9285eedbf4f26235e5dda2c",
+        "bytes": 5246
+      },
+      {
+        "path": "ports/runtime/static_scene_events64/contract_20261107.txt",
+        "sha256": "2b6f239d4983fefba4acc1781fb9d576f17e8a2448e57cbf99484424e912bf14",
+        "bytes": 9328
+      },
+      {
+        "path": "ports/runtime/static_scene_events64/static_scene_bounds_20261107.c",
+        "sha256": "5509d1dac278469fb667ef07bb55ca6e886207e378fc9f08ae47e41b926ff195",
+        "bytes": 2681
+      },
+      {
+        "path": "ports/runtime/static_scene_events64/static_scene_build_20261107.c",
+        "sha256": "062e95f345f1f73ef368d1a36925b61bca11ae071a57b4f45e5b419c6aa5b92d",
+        "bytes": 5817
+      },
+      {
+        "path": "ports/runtime/static_scene_events64/static_scene_events_20261107.h",
+        "sha256": "4ba1f5e69796230ed30fa46922b214a5879901b2ecaa9af529591c9ae53f43fa",
+        "bytes": 2213
+      },
+      {
+        "path": "ports/runtime/static_scene_events64/static_scene_internal_20261107.h",
+        "sha256": "cda0db708e759e5771421662cdd283cdaf0aa10eafaaae3ae409b9b6d78f4799",
+        "bytes": 1071
+      },
+      {
+        "path": "ports/runtime/static_scene_events64/static_scene_material_20261107.c",
+        "sha256": "f4775a0986b9beb3113a49d25a425b692895ecc84cec65b34c93961dcbcd5efe",
+        "bytes": 2700
+      },
+      {
+        "path": "ports/runtime/static_scene_events64/static_scene_replay_20261107.c",
+        "sha256": "730ecf25dae232be37f011c4ff2b6932e385fc6ce844834b1a64eb743e6fdbb6",
+        "bytes": 8598
+      },
+      {
+        "path": "ports/runtime/static_scene_events64/static_scene_walk_20261107.c",
+        "sha256": "9b38ada9657bff51e4cd1c6659d7708fbe6e70adbd64c0613e14459f40ecf56e",
+        "bytes": 3805
+      },
+      {
+        "path": "ports/runtime/stream_position64/contract_20261107.txt",
+        "sha256": "4f29a79b9f8b785365de5e1db6986b7d754288b7b9f8911364ec55f7f7f22739",
+        "bytes": 8737
+      },
+      {
+        "path": "ports/runtime/stream_position64/position_display_20261107.c",
+        "sha256": "f5c12369fa31d789c2adfa0c56279c831d98da717739450c44068e11d5d4e64b",
+        "bytes": 3453
+      },
+      {
+        "path": "ports/runtime/stream_position64/position_internal_20261107.h",
+        "sha256": "f5bc562f768a56a8381537cfc62956e89427b6b39c78e180ef0727d91f6124cf",
+        "bytes": 927
+      },
+      {
+        "path": "ports/runtime/stream_position64/position_math_20261107.c",
+        "sha256": "3b6bafda495673801a0c09f200ec10395dbe0101425f4b8a059746808e3077f3",
+        "bytes": 2215
+      },
+      {
+        "path": "ports/runtime/stream_position64/position_walk_20261107.c",
+        "sha256": "aad8ceb4e37d863689dba70978e2f1be9f55ad8163fc630aaaeee63ffc0f99c3",
+        "bytes": 4011
+      },
+      {
+        "path": "ports/runtime/stream_position64/stream_position_20261107.c",
+        "sha256": "82bf9f9fe1ac235433de14d47bca8968a551f52aa63ee4e2cf21f97e23bfcaf1",
+        "bytes": 5785
+      },
+      {
+        "path": "ports/runtime/stream_position64/stream_position_20261107.h",
+        "sha256": "c19cc504a519fba9810d67b5eeba9cf1c9be4ae4eea0c47fbf3156d77d03fbdc",
+        "bytes": 1175
+      }
+    ],
+    "CFiles": 19,
+    "headers": 11,
+    "publicSafe": true,
+    "sourceCredit": 0,
+    "matchingCredit": 0,
+    "partialBillboardSceneIncluded": false,
+    "GPLReferenceOrPrivateAssetsIncluded": false,
+    "buildOrGameplayClaimAdded": false
+  },
+  "copiedSyntheticTests": [
+    {
+      "path": "ports/native-scene-matrices/tests/planner/test_planner.py",
+      "historicalPath": "work/goal-resume-20261107/static-matrix-plan-final/copied_smoke.py",
+      "sha256": "90ba4c79722df104a509dddd0c2befb889fdbaa05e36339fc296d4048ebe45e6"
+    },
+    {
+      "path": "ports/native-scene-matrices/tests/planner/synthetic-fixture.json",
+      "historicalPath": "work/goal-resume-20261107/static-matrix-plan-final/synthetic-fixture.json",
+      "sha256": "863d41795f627efa4d11cfadf044e8c8d6f585d0a19d782529dbf9e831e3b62b"
+    },
+    {
+      "path": "ports/native-scene-matrices/tests/scene/test_scene.py",
+      "historicalPath": "work/goal-resume-20261107/static-scene-events/copied_smoke_v2.py",
+      "sha256": "d8c59dd2883176cbe8bb2cf977c7eb29f3ab825a12e0c52de85d1e6ab376d263"
+    },
+    {
+      "path": "ports/native-scene-matrices/tests/scene/copied-synthetic-fixtures-v2.json",
+      "historicalPath": "work/goal-resume-20261107/static-scene-events/copied-synthetic-fixtures-v2.json",
+      "sha256": "c1a08327a1c4f3b702d0bb84049d15f3baeaf61f0964b6dd990a311f75755dcf"
+    },
+    {
+      "path": "ports/native-scene-matrices/tests/position/test_positions.py",
+      "historicalPath": "work/goal-resume-20261107/stream-position-qualification/copied_position_smoke.py",
+      "sha256": "1ccf26019ba861221dbbf7d9dd46f4876462991e9cb3a0d65fe49c53b705e071"
+    },
+    {
+      "path": "ports/native-scene-matrices/tests/position/copied-position-fixtures.json",
+      "historicalPath": "work/goal-resume-20261107/stream-position-qualification/copied-position-fixtures.json",
+      "sha256": "465f18eceddc41db83d017c70b20f331e0d301d5be7343589e829f38e4758951"
+    },
+    {
+      "path": "ports/native-scene-matrices/tests/warm/copied_run.py",
+      "historicalPath": "work/goal-resume-20261107/BB7-warm-production-qualification/copied_run.py",
+      "sha256": "73f00563db8c03b92ac7c572b478c563abc1b95deff06a2639d830caf383bc5f"
+    },
+    {
+      "path": "ports/native-scene-matrices/tests/warm/copied_numeric.py",
+      "historicalPath": "work/goal-resume-20261107/BB7-warm-production-qualification/copied_numeric.py",
+      "sha256": "ed5ba1a14d4b97ad6d6b42475a1dcac8515f4eff992f3183cdf15f8ea17e3fec"
+    },
+    {
+      "path": "ports/native-scene-matrices/tests/warm/synthetic_cases.py",
+      "historicalPath": "work/goal-resume-20261107/BB7-warm-production-qualification/synthetic_cases.py",
+      "sha256": "8697719a2b60c29c3a75b4c2e2fa63b2e1d4cab617e5d943fa8421cd9bc43edb",
+      "historicalSha256": "d9a6f8e9a8d28704b7fada850cebd484bf5a84dede3a438740fc4213e7ee1290",
+      "publicationTransformation": "Remove terminal blank line; identical parsed Python AST; historical input unchanged"
+    },
+    {
+      "path": "ports/native-scene-matrices/tests/warm/warm_api.py",
+      "historicalPath": "work/goal-resume-20261107/BB7-warm-production-qualification/warm_api.py",
+      "sha256": "1404c6b77263840e24ce69f356b064f78eb7c9b2fe0487e9ecd7090be577c44b"
+    }
+  ],
+  "sourceCredit": 0,
+  "matchingCredit": 0,
+  "matrixReferenceCorrection": "evidence/ports/goal-resume20261107-static-matrix-capture-v2-requalification.json",
+  "partialBillboardSceneIncluded": false,
+  "rendererOrGameExecutionClaim": false,
+  "WindowsReleaseAndDebugTestsPassed": true,
+  "AndroidApi33Arm64Linked": true,
+  "Android16KiBElfAlignmentPassed": true,
+  "AndroidDeviceExecuted": false,
+  "qualificationReferences": [
+    {
+      "path": "evidence/ports/goal-resume20261106-matrix64-production.json",
+      "sha256": "7d5e7e9816a305778e0a5f85761287e153b8400b10599d00c6963b590634d825"
+    },
+    {
+      "path": "evidence/ports/goal-resume20261106-node-pose-production.json",
+      "sha256": "e02986e1b1f4486d66f2b9220e27b508b080635a0cd94bfcdadb0afdad470167"
+    },
+    {
+      "path": "evidence/ports/goal-resume20261107-static-matrix-plan-production.json",
+      "sha256": "502724826da46f45084774660cefeb0fd432528d4dbcd17821240f99b60c1828"
+    },
+    {
+      "path": "evidence/ports/goal-resume20261107-static-scene-events.json",
+      "sha256": "2dd71053589407a214249eeaef3141b38b8464c4ea8ee0f87461339327180f0c"
+    },
+    {
+      "path": "evidence/ports/goal-resume20261107-stream-position-production.json",
+      "sha256": "357ee794780ed9d691d395d1945803d0ee2e03f68560117a273405d50e429b4e"
+    },
+    {
+      "path": "evidence/ports/goal-resume20261107-billboard-warm-production.json",
+      "sha256": "c6ec5cfe6572271733af1ba00d26222a2317469a2843ad59d513523b7e01ad0e"
+    },
+    {
+      "path": "evidence/ports/goal-resume20261107-static-matrix-capture-v2-requalification.json",
+      "sha256": "1e000a6e74cb7b98de52b26d416c03ec0c1ce991676fb221a5bca425c805081c"
+    },
+    {
+      "path": "evidence/ports/goal-resume20261107-static-matrix-capture-v2-extra-controls.json",
+      "sha256": "298cd965b379928e703fe37961ae714fca5c1ff3c0b99ca5df14998aa3d0bd5e"
+    }
+  ]
+}
