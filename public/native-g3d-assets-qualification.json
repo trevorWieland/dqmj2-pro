@@ -1,0 +1,337 @@
+{
+  "schemaVersion": 1,
+  "project": "ports/native-g3d-assets",
+  "status": "source-only-Windows-Release-Debug-tests-and-Android-link-passed",
+  "selectedCFiles": 26,
+  "transitiveCAndHeaderFiles": 39,
+  "projectFiles": 7,
+  "localPythonModules": 3,
+  "existingAndroidInspectionHelper": "ports/native-storage/check_android_elf.py",
+  "windows": {
+    "Release": {
+      "syntheticImages": 24,
+      "resourceLoads": 75,
+      "canonicalMaterialDecodes": 1224,
+      "decodedPixels": 78336,
+      "formats": [
+        3,
+        4,
+        5
+      ],
+      "compressedModes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explicitDistinctBanks": 2,
+      "outputSha256": "b93a3f780172a14d338dd71f15bfca5c3aff04afbc542831145563132bf2a78e",
+      "noPartialWritesVerified": true
+    },
+    "Debug": {
+      "syntheticImages": 24,
+      "resourceLoads": 75,
+      "canonicalMaterialDecodes": 1224,
+      "decodedPixels": 78336,
+      "formats": [
+        3,
+        4,
+        5
+      ],
+      "compressedModes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explicitDistinctBanks": 2,
+      "outputSha256": "b93a3f780172a14d338dd71f15bfca5c3aff04afbc542831145563132bf2a78e",
+      "noPartialWritesVerified": true
+    }
+  },
+  "rejectionCasesPerWindowsConfiguration": 30,
+  "android": {
+    "architecture": "aarch64",
+    "loadSegments": [
+      {
+        "offset": 0,
+        "address": 0,
+        "alignment": 16384
+      },
+      {
+        "offset": 10420,
+        "address": 26804,
+        "alignment": 16384
+      },
+      {
+        "offset": 32736,
+        "address": 65504,
+        "alignment": 16384
+      },
+      {
+        "offset": 33696,
+        "address": 82848,
+        "alignment": 16384
+      }
+    ],
+    "neededLibraries": [
+      "libm.so",
+      "libdl.so",
+      "libc.so"
+    ],
+    "alignmentPassed": true,
+    "api": 33,
+    "linked": true,
+    "executed": false,
+    "noUndefinedLinkFlag": true,
+    "sha256": "1329a47a8a85d7e5f4d19da6dbb585c03eb8c6d2e9c8c5d5a870b9a730df21f0",
+    "bytes": 201376
+  },
+  "sourceFiles": [
+    {
+      "path": "ports/common/guest_memory/guest_memory_20261106.c",
+      "sha256": "de79ef174e9060fe4f1a18fce34f3dccaa327d56e4cf63932b7e6bde9c79e9b7",
+      "bytes": 2906
+    },
+    {
+      "path": "ports/common/guest_memory/guest_memory_20261106.h",
+      "sha256": "381e9f810f135385ef595dc71f4399bd051c35155ae695b10d898879c8672508",
+      "bytes": 910
+    },
+    {
+      "path": "ports/native-g3d-assets/assets_api.py",
+      "sha256": "690edcc9e8936afc524be6475a02d7880dc87c614284d3392442600bf80ccfd8",
+      "bytes": 3552
+    },
+    {
+      "path": "ports/native-g3d-assets/assets_policy.c",
+      "sha256": "f3676892f6c74ce2d69ee0bb5f92da26f33fb1d1acd9c65c4cd7bda11003df74",
+      "bytes": 2069
+    },
+    {
+      "path": "ports/native-g3d-assets/assets_policy.h",
+      "sha256": "3ee87fa905c23ed00f58adb693af17f48a2ef1b543dfb48bf5659825f5f10468",
+      "bytes": 334
+    },
+    {
+      "path": "ports/native-g3d-assets/CMakeLists.txt",
+      "sha256": "373622bd44c6532ee4853f0179027a01e0a55a54c511e0beac8793512e675d11",
+      "bytes": 3663
+    },
+    {
+      "path": "ports/native-g3d-assets/README.md",
+      "sha256": "e3755dc9b242182a9732185210680b5f13b02038b2f9301b9a74f11430ab0e1e",
+      "bytes": 5840
+    },
+    {
+      "path": "ports/native-g3d-assets/synthetic_assets.py",
+      "sha256": "03b7ec218c481b33a90e6bacfdf081495df9dcbcad95cdff1f7e95cb2b4b6f72",
+      "bytes": 7754
+    },
+    {
+      "path": "ports/native-g3d-assets/test_assets.py",
+      "sha256": "a0fcae5fa8fac01a6916c7450acc3808d1f470e052caee94cc08bde935e2e67e",
+      "bytes": 9632
+    },
+    {
+      "path": "ports/native-storage/check_android_elf.py",
+      "sha256": "324c68afb243d1e8910265e12f5e2aca02bce8f2652f0fd45ae9b9933da5b823",
+      "bytes": 2964
+    },
+    {
+      "path": "ports/runtime/card_cache64/card_cache_wire_v2_20261106.c",
+      "sha256": "6ffde2ac421ecb18facfabd72c7a12297a1129650238bebe58f668fd28c9febe",
+      "bytes": 1548
+    },
+    {
+      "path": "ports/runtime/card_reader64/card_reader_20261106.h",
+      "sha256": "1d08fe5ea88bc3e980fb78f544240c2fbbd2823df7c8c239e134bd7f16b26d8e",
+      "bytes": 417
+    },
+    {
+      "path": "ports/runtime/card_reader64/card_reader_wire_20261106.c",
+      "sha256": "847ad90d289b77641789250ef3491ad30005eba28c1f8f97788b59c1cc3fccc7",
+      "bytes": 2243
+    },
+    {
+      "path": "ports/runtime/card_reader64/host_readonly_file_20261106.c",
+      "sha256": "0f0517e4fb3f62c9a3e085b1b6c1a5c4a2b8696b35ea3552dd27cf959ae20f22",
+      "bytes": 3479
+    },
+    {
+      "path": "ports/runtime/resource64/g3d_dictionary_wire_20261106.c",
+      "sha256": "d8207d4fac48460bbf9ce1597b7743fa7daafed910ded3735dc0b45774a3220b",
+      "bytes": 3132
+    },
+    {
+      "path": "ports/runtime/resource64/g3d_dictionary_wire_20261106.h",
+      "sha256": "a797470d5b7b73e560fe893ce9051c9f31faa9b250d9229acf55a10c2b78b3e5",
+      "bytes": 376
+    },
+    {
+      "path": "ports/runtime/resource64/g3d_file_blocks_20261106.c",
+      "sha256": "f355cfc4cd7fcdb768baaf5334bd6ecde3488a34fbcf000cb220b00386e1f61d",
+      "bytes": 2442
+    },
+    {
+      "path": "ports/runtime/resource64/g3d_file_blocks_20261106.h",
+      "sha256": "02c4e7460a900aca4e13ae10eaf40b1f07d09c5de6db2a7fe929c3070729d2bc",
+      "bytes": 287
+    },
+    {
+      "path": "ports/runtime/resource64/g3d_texture_inline_exports_20261106.c",
+      "sha256": "ce50d6804643b9b5311cda7565bf4f1d13300654e195b8b6e6a26666ac9955bc",
+      "bytes": 777
+    },
+    {
+      "path": "ports/runtime/resource64/g3d_texture_material_20261106.c",
+      "sha256": "42f70c0479b2afc5ea71894b1ba95d6739c4fcf54140626800847bec25575b81",
+      "bytes": 5528
+    },
+    {
+      "path": "ports/runtime/resource64/g3d_texture_material_20261106.h",
+      "sha256": "61f7d7226c9048767200ad30e7ab5962c046cdbd047b6571fb43a1aa7beaa26b",
+      "bytes": 305
+    },
+    {
+      "path": "ports/runtime/resource64/g3d_texture_types_20261106.h",
+      "sha256": "bc4ed4b16d14551643c5ce4d56de914013e16d4e81d3b853c129153b07cc51d1",
+      "bytes": 3613
+    },
+    {
+      "path": "ports/runtime/resource64/model_material_binding_20261106.c",
+      "sha256": "b727eb0fd334d1267572445d8088c34006ac0e76dcc1d9a3931a13e419c22c84",
+      "bytes": 5644
+    },
+    {
+      "path": "ports/runtime/resource64/model_material_binding_20261106.h",
+      "sha256": "8e5d9ef97f16117ac4d5b66890b9169cde2b77c64ca50fe8d0067d5f2bca5c79",
+      "bytes": 734
+    },
+    {
+      "path": "ports/runtime/resource64/model_material_decode_20261106.c",
+      "sha256": "6bca2e32da881fdbcf588a7f30e683f3a49a86546b7525ec726b635a1297ecfc",
+      "bytes": 1430
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_20261106.c",
+      "sha256": "7bacb2f0f4119646e72ee33e4aa6aaaeec15d24d9554e53336813990ed17fa90",
+      "bytes": 11729
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_20261106.h",
+      "sha256": "68edfff32c9318f49c54bda74dbb0fc85e31be75abbbd069cd3035807127514e",
+      "bytes": 877
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_resource_bridge_20261106.c",
+      "sha256": "e7ae9932818c1e4e22847995d3b50c2c76e345684aece382a697955823e3e3f3",
+      "bytes": 11444
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_types_20261106.h",
+      "sha256": "1d85024eba4e0033a38c8da6f0970c82bfb07ee8b4c5f3bc46be25dfaf6e3030",
+      "bytes": 6627
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_views_20261106/fs_0200a7cc.c",
+      "sha256": "8998e8ed680929b490009415e95ad46285ecaee5be75c6d8b6a08c1731c36862",
+      "bytes": 389
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_views_20261106/fs_0200a968.c",
+      "sha256": "21a59eebc5ce0ddcd4eb7841201372d522d30b073cb94b69fc58efa0cf3edfd9",
+      "bytes": 729
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_views_20261106/fs_0200aa00.c",
+      "sha256": "9b546a43666e178fe03ef6000ddd408f2204860504b637a0996079948cf0f650",
+      "bytes": 1375
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_views_20261106/fs_0200ab2c.c",
+      "sha256": "e9fa82de27aa2accab5812f07ad13cb9f3bfce5ca7b3a0d4bbf9e49214d1b24a",
+      "bytes": 1876
+    },
+    {
+      "path": "ports/runtime/resource64/nitrofs_views_20261106/fs_0200b0bc.c",
+      "sha256": "2f3461948755542e77c1dd24b2655532660f545968630dcf10ba31f3f1defa1e",
+      "bytes": 839
+    },
+    {
+      "path": "ports/runtime/resource64/resource_bridge_20261106.h",
+      "sha256": "76242f1d3634761e3adf67a5f2338eb5363d8b1fe5656994cbd3ed7b46a24d7d",
+      "bytes": 607
+    },
+    {
+      "path": "ports/runtime/resource64/resource_thunk_prototype_20261106.c",
+      "sha256": "d55f707c1ea5ee2a5f4e55eb972d7a4ced0e640b73ca7c43dbaa75b51ae41846",
+      "bytes": 617
+    },
+    {
+      "path": "ports/runtime/resource64/texture_decode_20261106.c",
+      "sha256": "40fb5c409a4487f3b0125621dcd6d16d94d4672a8c7d93e7256f9f541c05c52c",
+      "bytes": 4388
+    },
+    {
+      "path": "ports/runtime/resource64/texture_decode_20261106.h",
+      "sha256": "c0bf1c3286e9231b9d0c46bc041379e264e56c3384dd625458804acaeed507be",
+      "bytes": 608
+    },
+    {
+      "path": "ports/runtime/resource64/texture_tex0_input_20261106.c",
+      "sha256": "7bd56eb23f9b9962ebd0cdd72f611e1c5d4fe75918a17836680818d52bac02b5",
+      "bytes": 4728
+    },
+    {
+      "path": "src/runtime/20261031_allocation_dispatch_word_index/native_main_0202a37c.c",
+      "sha256": "f56ad6ece6d2af5980ba7edb35bfafe22402bb349fc009581a2af6264f44507d",
+      "bytes": 1110
+    },
+    {
+      "path": "src/runtime/20261031_overlay_file_size250/context.h",
+      "sha256": "695aaabf88ce06fd1c789e36b334a03f743021506c0ae1ca1621b757d3b19925",
+      "bytes": 214
+    },
+    {
+      "path": "src/runtime/20261031_overlay_file_size250/file_size.c",
+      "sha256": "344b1450650d49c88ece5cf25c90c95153d8df279c4a6fb5098439e66e32342d",
+      "bytes": 460
+    },
+    {
+      "path": "src/runtime/20261031_resource_load/native_main_0203cb8c.c",
+      "sha256": "7a3de739e52e6a0bc80a4b17fa96a4ba5cd98bf5a6a02a971f2518495fcf74ee",
+      "bytes": 1019
+    },
+    {
+      "path": "src/runtime/20261102_texture_pattern436/native_main_02034248.c",
+      "sha256": "ea631a9cd7b115f1d95a0f4e35ed3c5af7ca28456b80f0925c8b5f397ea6c1fa",
+      "bytes": 5780
+    },
+    {
+      "path": "src/runtime/20261102_texture_pattern436/native_main_02034320.c",
+      "sha256": "d6c6011fc7364a6ed4094bbb85183f3462f8760c5c11f4e0761604779bb89aae",
+      "bytes": 3837
+    }
+  ],
+  "privateInputsUsed": false,
+  "originalArmPayloadsUsed": false,
+  "originalOracleExecuted": false,
+  "downloadedAssetOrOraclePackageUsed": false,
+  "selfContainedLibrary": true,
+  "alternativeResourceBridgeLinked": false,
+  "matchingCredit": 0,
+  "sourceCredit": 0,
+  "callerSelectsTextureBank": true,
+  "rendering": false,
+  "sceneExecution": false,
+  "animation": false,
+  "worldOrScreenPositionsInferred": false,
+  "deviceExecuted": false,
+  "wholeGameExecuted": false,
+  "limitations": [
+    "Formats3,4,5 only; guarded duplicate binding policy",
+    "Caller owns resource-bank selection and external serialization",
+    "No renderer, VRAM upload, scene, animation, Android or AYN Thor execution"
+  ]
+}
