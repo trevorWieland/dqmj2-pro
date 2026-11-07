@@ -47,9 +47,36 @@ if(ANDROID)
         "-Wl,-z,max-page-size=16384" "-Wl,-z,common-page-size=16384" "-Wl,-z,noexecstack")
 endif()
 
+option(J2P_BUILD_ROMFREE_PROBE "Build the ROM-free native component probe" ON)
+if(J2P_BUILD_ROMFREE_PROBE)
+    find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    set(J2P_PROBE_HEADER "${CMAKE_CURRENT_BINARY_DIR}/generated/fixtures.h")
+    add_custom_command(OUTPUT "${J2P_PROBE_HEADER}"
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_LIST_DIR}/tests/native/generate_fixtures.py" "${J2P_PROBE_HEADER}"
+        DEPENDS
+            tests/native/generate_fixtures.py
+            tests/position/copied-position-fixtures.json
+            tests/scene/copied-synthetic-fixtures-v2.json
+            tests/warm/warm_api.py
+            tests/warm/synthetic_cases.py
+        VERBATIM)
+    add_executable(j2p_scene_probe tests/native/probe.c "${J2P_PROBE_HEADER}")
+    target_link_libraries(j2p_scene_probe PRIVATE j2p_native_scene_matrices)
+    target_include_directories(j2p_scene_probe PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
+    set_target_properties(j2p_scene_probe PROPERTIES C_STANDARD 11 C_STANDARD_REQUIRED ON C_EXTENSIONS OFF)
+    target_compile_options(j2p_scene_probe PRIVATE -Wall -Wextra -Werror -Wpedantic -fstrict-aliasing)
+    if(ANDROID)
+        target_link_options(j2p_scene_probe PRIVATE "-Wl,--no-undefined"
+            "-Wl,-z,max-page-size=16384" "-Wl,-z,common-page-size=16384" "-Wl,-z,noexecstack")
+    endif()
+endif()
+
 include(CTest)
 if(BUILD_TESTING AND NOT CMAKE_CROSSCOMPILING)
     find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    if(TARGET j2p_scene_probe)
+        add_test(NAME synthetic_native_probe COMMAND j2p_scene_probe)
+    endif()
     add_test(NAME synthetic_planner
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_LIST_DIR}/tests/planner/test_planner.py"
             "$<TARGET_FILE:j2p_native_scene_matrices>")

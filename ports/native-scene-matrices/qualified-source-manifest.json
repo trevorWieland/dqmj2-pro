@@ -245,7 +245,7 @@
   "WindowsReleaseAndDebugTestsPassed": true,
   "AndroidApi33Arm64Linked": true,
   "Android16KiBElfAlignmentPassed": true,
-  "AndroidDeviceExecuted": false,
+  "AndroidDeviceExecuted": true,
   "qualificationReferences": [
     {
       "path": "evidence/ports/goal-resume20261106-matrix64-production.json",
@@ -278,6 +278,17 @@
     {
       "path": "evidence/ports/goal-resume20261107-static-matrix-capture-v2-extra-controls.json",
       "sha256": "298cd965b379928e703fe37961ae714fca5c1ff3c0b99ca5df14998aa3d0bd5e"
+    }
+  ],
+  "AndroidDeviceEvidence": "evidence/ports/ayn-thor-native-scene-probe-20261107.json",
+  "nativeProbeFiles": [
+    {
+      "path": "ports/native-scene-matrices/tests/native/probe.c",
+      "sha256": "0b97a590f64fa14c98ae5b3029b07d625dc5d6311178cfa187b168d15c64fbe6"
+    },
+    {
+      "path": "ports/native-scene-matrices/tests/native/generate_fixtures.py",
+      "sha256": "f326c4de2e8d33de7737d2893871ee2605084c616008521b7805e8737582b152"
     }
   ]
 }

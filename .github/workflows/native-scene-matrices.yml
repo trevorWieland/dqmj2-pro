@@ -72,12 +72,17 @@ jobs:
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           python ports/native-storage/check_android_elf.py work/native-scene-matrices/android/libj2p_native_scene_matrices.so
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-      - name: Upload native libraries
+          python ports/native-storage/check_android_elf.py work/native-scene-matrices/android/j2p_scene_probe --allow-library libj2p_native_scene_matrices.so
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+      - name: Upload native libraries and runnable probe
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: native-scene-matrices
           path: |
             work/native-scene-matrices/windows-Release/*.dll
+            work/native-scene-matrices/windows-Release/j2p_scene_probe.exe
             work/native-scene-matrices/windows-Debug/*.dll
+            work/native-scene-matrices/windows-Debug/j2p_scene_probe.exe
             work/native-scene-matrices/android/libj2p_native_scene_matrices.so
+            work/native-scene-matrices/android/j2p_scene_probe
           if-no-files-found: error
