@@ -8,7 +8,7 @@ An in-progress reconstruction into readable C/C++, with justified assembly for m
 
 This repository contains the actual reconstruction sources, headers, DS configuration, compiler profiles and CLI tooling. Supply your own original inputs and pinned compiler; original ROMs, saves, extracted executable/data payloads and binary build products are not distributed.
 
-Closed cohort 173 covers **11,546 accepted functions and 1,236,780 initialized module bytes: 49.222410% of 2,512,636 bytes**. This is native initialized-source coverage, not overall game completion. The measured input is a modified `B2JJ` build with SHA-256 `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`; equivalence to a clean retail ROM has not been established.
+Closed cohort 174 covers **11,640 accepted functions and 1,262,114 initialized module bytes: 50.230674% of 2,512,636 bytes**. This is native initialized-source coverage, not overall game completion. The measured input is a modified `B2JJ` build with SHA-256 `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`; equivalence to a clean retail ROM has not been established.
 
 An exact 175,959,612-byte ROM has been reconstructed locally using accepted source together with remaining original executable scaffolding. **A complete source-only ROM, full clean replay and complete native Windows/Android execution remain unproven.**
 
@@ -26,7 +26,7 @@ The [native resource subsystem](ports/native-resources/README.md) adds NitroFS l
 - Root Python scripts: extraction, reconstruction, compiler interfaces, genuine linking, bounded original/source comparisons and regression machinery. Binary tools are pinned in `tools.lock.json`.
 - `docs/`: research and historical execution records, including explicit failures and unsupported cases. Historical references to private-only operation are superseded by the [publication policy](docs/public-reconstruction-policy.md).
 
-The public source checkpoint starts a clean Git history. Its manifest preserves exact source hashes from the local closed cohort 172, source revision `efe36ed2e7d16be9f2aae411f0dc0cb3eb89e6d5`, closure revision `14ac8dcd6f8ab0009e5dd54d73cf31c928540776`. Those local historical revisions and generated proof dumps are not included as public ancestors.
+The public repository began with a clean Git history at closed cohort 172 (source revision `efe36ed2e7d16be9f2aae411f0dc0cb3eb89e6d5`, closure revision `14ac8dcd6f8ab0009e5dd54d73cf31c928540776`). The current manifest binds the closed checkpoint listed above. Local historical revisions and generated proof dumps are not public ancestors.
 
 Pull-request CI verifies declared source integrity without original inputs. Default-branch CI recompiles the complete accepted sources and genuinely links all twenty native modules using owned private inputs, then checks their bytes and symbols against the originals. This native tracking build inherits the closed source qualifications; a full historical behavioral replay and fresh complete ROM/container build remain separate checks. See [data source visibility](docs/bytematch.md#data-source-visibility) for the public numerical tables and private generated asset declarations.
 

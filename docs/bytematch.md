@@ -18,16 +18,16 @@ Without `--native-only`, the wrapper also runs `reproduce.py` for the checksum-t
 
 ## Generated objdiff project
 
-Closed cohort 173 reconciles as follows. The function-code row is also reproduced by a local diagnostic against the genuine linked images; publication requires a fresh successful CI run:
+Closed cohort 174 reconciles as follows. The function-code row is reproduced by a local diagnostic against the genuine linked images; publication requires a fresh successful CI run:
 
 | Measurement | Accepted bytes | Denominator | Percentage |
 | --- | ---: | ---: | ---: |
-| Native initialized source, closed cohort 173 | 1,236,780 | 2,512,636 | 49.222410% |
-| Measured function code, objdiff | 1,127,980 | 2,122,900 | 53.133923% |
+| Native initialized source, closed cohort 174 | 1,262,114 | 2,512,636 | 50.230674% |
+| Measured function code, objdiff | 1,153,314 | 2,130,952 | 54.122005% |
 
-Cohort 173 measures and accepts exact source for 30 ARM7 functions whose sizes were previously unknown. Their 6,216 bytes now enter both the code denominator and matched code. They are included in the cohort's 12,426 new source bytes; the total initialized denominator stays 2,512,636 bytes.
+Cohort 174 adds 94 exact source functions and 25,334 initialized function bytes. Newly measured extents add 8,052 bytes to both the function-code denominator and matched code; the total initialized denominator stays 2,512,636 bytes.
 
-The initialized numerator is 1,127,980 function bytes, 108,776 separately accepted initialized-data bytes and 24 qualified alignment bytes. ByteMatch's page headline uses function-code matching with its own denominator. The last successful public run also proved the 108,776 typed-data bytes; their source and accepted-data manifest are unchanged. Fresh CI must reconfirm them for this checkpoint. The expected combined report numerator is 1,236,756 initialized bytes (49.221455%). The separately qualified 24-byte linker alignment remains unmatched in objdiff. The separately labeled [native initialized-source badge](../public/native-progress.svg) and [accounting record](../public/native-progress.json) preserve the closed 49.22% local milestone. Source-integrity CI checks that this record and badge agree with the closed manifests.
+The initialized numerator is 1,153,314 function bytes, 108,776 separately accepted initialized-data bytes and 24 qualified alignment bytes. ByteMatch's page headline uses function-code matching with its own denominator. The last successful public run proved the 108,776 typed-data bytes; their source and accepted-data manifest are unchanged. Fresh CI must reconfirm them for this checkpoint; the local diagnostic does not grant typed-data credit. With that proof, the expected combined report numerator is 1,262,090 initialized bytes (50.229719%). The separately qualified 24-byte linker alignment remains unmatched in objdiff. The separately labeled [native initialized-source badge](../public/native-progress.svg) and [accounting record](../public/native-progress.json) preserve the closed 50.23% local milestone. Source-integrity CI checks that this record and badge agree with the closed manifests.
 
 `public_tools/bytematch_project.py` generates `build/B2JJ-modified/objdiff.json`; do not edit that output. It reads the closed public accepted manifest and all three genuine module-link reports, covering 20 native modules and 2,512,636 initialized bytes. Program, CPU and module namespaces keep overlapping overlay and ARM7/ARM9 addresses distinct.
 
@@ -78,4 +78,4 @@ Record its sampled found/absent/missing counts, commit and scope. An unregistere
 
 The [source visibility inventory](../public/data-source-visibility.json) binds every generated data declaration to the closed accepted-data manifest. Ten mathematical or typed SDK tables are public unchanged C. Forty-six declarations encode complete game assets and stay in the owned private inputs. Their report units retain their actual `generated/*.c` compiler-input paths, so those data source views are unavailable in public Git. Matching completion describes verified compilation and linkage; it does not imply that asset content is public. Standard report artifacts carry metrics and names without asset payloads. Public semantic encoders are linked separately in the inventory; their historical generation qualification is inherited, not rerun by the native tracking build.
 
-The source-definition sidecar also selects 67 exact header/include definitions from the accepted compiler closure, preventing a different SDK copy with the same function name from appearing in the source viewer.
+The source-definition sidecar also selects 68 exact header/include definitions from the accepted compiler closure, preventing a different SDK copy with the same function name from appearing in the source viewer.

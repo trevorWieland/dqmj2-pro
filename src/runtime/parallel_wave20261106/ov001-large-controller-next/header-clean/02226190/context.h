@@ -1,0 +1,47 @@
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef signed short s16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef struct ChildView {
+    u8 unknown0[8];
+    u8 values8[6];
+} ChildView;
+typedef struct Object440 {
+    u8 unknown0[0x1e8];
+    ChildView *child1e8;
+    u8 unknown1ec[0x31e - 0x1ec];
+    u8 field31e;
+    u8 field31f;
+    u8 unknown320[2];
+    u8 field322;
+    u8 field323;
+    u8 unknown324[0x35e - 0x324];
+    u8 values35e[0x440 - 0x35e];
+} Object440;
+typedef struct Record40 {
+    u32 flags0;
+    u32 unknown4;
+    u16 lower8:8;
+    u16 field8:4;
+    u16 upper4:4;
+    u8 unknown10[14];
+    s16 field24;
+    u8 unknown26[14];
+} Record40;
+typedef char Object440Size[(sizeof(Object440) == 0x440) ? 1 : -1];
+typedef char Record40Size[(sizeof(Record40) == 40) ? 1 : -1];
+extern Record40 *native_fn_0207afec(s32);
+extern u32 native_fn_0207b004(s32, u32);
+extern s32 native_fn_0207b244(s32, s32, u8 *);
+extern u32 native_fn_ov001_021db8d0(Object440 *);
+extern s32 native_fn_ov001_021dbcbc(Object440 *);
+extern s32 native_fn_ov001_021dbd24(Object440 *);
+extern s32 native_fn_ov001_021dbd30(Object440 *);
+extern u32 native_fn_ov001_021e2b1c(s32, s32);
+extern s32 native_fn_ov001_02218430(Object440 *, s32 *, u32);
+extern u32 native_fn_ov001_02218524(Object440 *, u32);
+extern s32 native_fn_ov001_02218cf8(Object440 *, Object440 *, s32);
+extern void native_fn_02008e0c(const void *, void *, u32);
+extern s32 native_fn_ov001_02223f20(s32 *);
+s32 native_ov001_02226190(s32 *, Object440 *);

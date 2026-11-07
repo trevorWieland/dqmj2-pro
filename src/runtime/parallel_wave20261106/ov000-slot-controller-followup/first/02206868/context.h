@@ -1,0 +1,19 @@
+typedef unsigned char u8;
+typedef signed char s8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef int s32;
+typedef struct ResourceView {u8 opaque[24];u32 flags;} ResourceView;
+typedef struct LinkView {s8 first;u8 opaque[3];ResourceView *resource;} LinkView;
+typedef struct EntryView {LinkView *link;s8 field4;s8 field5;s8 field6;u8 opaque;} EntryView;
+extern EntryView*native_fn_02049ad0(s32);
+extern int native_fn_02049be4(EntryView*,u32,u32,u32,u8,u8,u8,u8,u32,s8,u32);
+void native_ov000_02206868(s32,u32,u32,u8,u8,u8,u8,s8,u32,u32*);
+
+typedef char EntrySize[(sizeof(EntryView)==8)?1:-1];
+typedef char LinkSize[(sizeof(LinkView)==8)?1:-1];
+typedef char ResourceFlags[((u32)&((ResourceView*)0)->flags==24)?1:-1];
+typedef char LinkResource[((u32)&((LinkView*)0)->resource==4)?1:-1];
+typedef char EntryTag[((u32)&((EntryView*)0)->field6==6)?1:-1];
+typedef char SignedByte[((s8)0x80==-128&&(s8)255==-1)?1:-1];
+typedef char UnsignedByte[((u8)-1==255)?1:-1];

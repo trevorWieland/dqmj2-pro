@@ -1,0 +1,27 @@
+typedef unsigned char u8;typedef signed char s8;typedef unsigned short u16;typedef signed short s16;typedef unsigned int u32;typedef int s32;
+typedef struct{u8 bytes[16];}SlotState;
+typedef struct{u8 opaque[16];s8 field16;}SetupContext;
+extern u8*native_fn_ov000_0221c658(void);
+extern SlotState*native_fn_ov000_0221c758(s8,u32,u32,u8,u8,u8,u8,s8,u32);
+extern void native_fn_ov000_0221c938(s32,u32,u32,u16,u32);
+extern void native_fn_ov000_0221c8dc(s32,u32,u8,s32,u32,u32);
+extern SlotState native_data_ov000_022461c4;
+typedef struct ResourceView{u8 opaque[24];u32 flags;u8 field28,field29,field30,field31;u8 opaque32[60];u8 field92,field93,field94,field95;u32 field96;}ResourceView;
+typedef struct LinkView{s8 first;u8 opaque[3];ResourceView*resource;}LinkView;
+typedef struct EntryView{LinkView*link;s8 field4,field5,field6;u8 opaque;}EntryView;
+typedef struct{u8 opaque[20];u32 field20;u8 opaque24[108];}Row132;
+typedef struct{u8 field0,field1,field2,field3,field4,field5;u8 opaque6[6];s32 field12,field16;u8 opaque20[8];Row132*rows28;u8 opaque32[8];u32 field40;}State44;
+extern EntryView*native_fn_02049ad0(s32);
+extern void native_fn_ov000_0221d05c(s32,u32);
+extern u32 native_fn_ov000_0221f6e8(s32,u8);
+extern State44 native_data_ov000_022463b0;
+SlotState*native_ov000_0221f910(void);
+
+typedef char EntrySize[(sizeof(EntryView)==8)?1:-1];
+typedef char LinkSize[(sizeof(LinkView)==8)?1:-1];
+typedef char LinkResource[((u32)&((LinkView*)0)->resource==4)?1:-1];
+typedef char ResourceFlags[((u32)&((ResourceView*)0)->flags==24)?1:-1];
+typedef char SetupTag[((u32)&((SetupContext*)0)->field16==16)?1:-1];
+typedef char SignedByte[((s8)0x80==-128&&(s8)255==-1)?1:-1];
+typedef char UnsignedByte[((u8)-1==255)?1:-1];
+typedef char WordWidth[(sizeof(u32)==4)?1:-1];
