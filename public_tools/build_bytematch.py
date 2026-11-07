@@ -217,6 +217,7 @@ def prepare_runtime(root, log):
         "'--output-path',str(Path.cwd()/'extract')],check=True) if not Path('extract/config.yaml').is_file() else None"
     )
     run_private(root, log, ["-c", command])
+    run_private(root, log, ['public_tools/runtime_originals.py', '--root', str(root)])
 
 
 def build_outcome(root, exit_code, started_ns):
