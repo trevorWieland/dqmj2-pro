@@ -1,0 +1,57 @@
+name: Native storage library
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ports/common/guest_memory/**
+      - ports/runtime/card_cache64/**
+      - ports/runtime/card_reader64/**
+      - ports/native-storage/**
+      - .github/workflows/native-storage.yml
+  pull_request:
+    paths:
+      - ports/common/guest_memory/**
+      - ports/runtime/card_cache64/**
+      - ports/runtime/card_reader64/**
+      - ports/native-storage/**
+      - .github/workflows/native-storage.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-storage:
+    runs-on: windows-2025
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: "3.13.5"
+      - name: Build Windows x64 with MSVC
+        shell: pwsh
+        run: |
+          $vswherePath = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio/Installer/vswhere.exe'
+          $visualStudioPath = & $vswherePath -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+          if ($LASTEXITCODE -or -not $visualStudioPath) { throw 'MSVC x64 toolchain is unavailable' }
+          & (Join-Path $visualStudioPath 'Common7/Tools/Launch-VsDevShell.ps1') -Arch amd64 -HostArch amd64 -SkipAutomaticLocation
+          cmake -S ports/native-storage -B work/native-storage/windows -G Ninja -DCMAKE_C_COMPILER=cl -DCMAKE_BUILD_TYPE=Release
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cmake --build work/native-storage/windows --config Release --parallel 2
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          ctest --test-dir work/native-storage/windows -C Release --output-on-failure
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+      - name: Build Android ARM64 with pinned NDK revision
+        shell: pwsh
+        run: |
+          $ndkPath = Join-Path $env:ANDROID_HOME 'ndk/30.0.16248370'
+          $toolchainPath = Join-Path $ndkPath 'build/cmake/android.toolchain.cmake'
+          if (-not (Test-Path -LiteralPath $toolchainPath)) { throw 'Pinned NDK 30.0.16248370 is unavailable' }
+          cmake -S ports/native-storage -B work/native-storage/android -G Ninja "-DCMAKE_TOOLCHAIN_FILE=$toolchainPath" -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-33 -DANDROID_STL=none -DBUILD_TESTING=OFF -DCMAKE_BUILD_TYPE=Release
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cmake --build work/native-storage/android --parallel 2
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          python ports/native-storage/check_android_elf.py work/native-storage/android/libj2p_native_storage.so
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }

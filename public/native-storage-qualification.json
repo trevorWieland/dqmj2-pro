@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "scope": "Native storage subsystem; no game execution or DS source-coverage credit",
+  "sourceCredit": 0,
+  "matchingCredit": 0,
+  "windowsSyntheticReadCases": 84,
+  "windowsRejectedPolicyCases": 4,
+  "androidArchitecture": "aarch64",
+  "androidApi": 33,
+  "androidLoadAlignmentBytes": 16384,
+  "androidDeviceExecutionProven": false,
+  "wholeGameExecuted": false,
+  "sources": [
+    {
+      "path": "ports/common/guest_memory/guest_memory_20261106.c",
+      "sha256": "de79ef174e9060fe4f1a18fce34f3dccaa327d56e4cf63932b7e6bde9c79e9b7",
+      "bytes": 2906
+    },
+    {
+      "path": "ports/common/guest_memory/guest_memory_20261106.h",
+      "sha256": "381e9f810f135385ef595dc71f4399bd051c35155ae695b10d898879c8672508",
+      "bytes": 910
+    },
+    {
+      "path": "ports/runtime/card_cache64/card_cache_wire_v2_20261106.c",
+      "sha256": "6ffde2ac421ecb18facfabd72c7a12297a1129650238bebe58f668fd28c9febe",
+      "bytes": 1548
+    },
+    {
+      "path": "ports/runtime/card_reader64/card_reader_wire_20261106.c",
+      "sha256": "847ad90d289b77641789250ef3491ad30005eba28c1f8f97788b59c1cc3fccc7",
+      "bytes": 2243
+    },
+    {
+      "path": "ports/runtime/card_reader64/host_readonly_file_20261106.c",
+      "sha256": "0f0517e4fb3f62c9a3e085b1b6c1a5c4a2b8696b35ea3552dd27cf959ae20f22",
+      "bytes": 3479
+    },
+    {
+      "path": "ports/runtime/card_reader64/card_reader_20261106.h",
+      "sha256": "1d08fe5ea88bc3e980fb78f544240c2fbbd2823df7c8c239e134bd7f16b26d8e",
+      "bytes": 417
+    },
+    {
+      "path": "ports/native-storage/CMakeLists.txt",
+      "sha256": "bf87f985695ef4c2d463f1b1e9f7d6801b146198e2fc558f467e119f8f592009",
+      "bytes": 1768
+    },
+    {
+      "path": "ports/native-storage/README.md",
+      "sha256": "085f9253ba22ee2932f678d015a48f9b6bcafdba71fd12631d356d8d741a6075",
+      "bytes": 2410
+    },
+    {
+      "path": "ports/native-storage/test_storage.py",
+      "sha256": "408455c81c6e1c372efac4f98b13bb529e0c071f725fe555208b11fb82b83715",
+      "bytes": 6172
+    },
+    {
+      "path": "ports/native-storage/check_android_elf.py",
+      "sha256": "324c68afb243d1e8910265e12f5e2aca02bce8f2652f0fd45ae9b9933da5b823",
+      "bytes": 2964
+    },
+    {
+      "path": ".github/workflows/native-storage.yml",
+      "sha256": "39860da76e3514bfe1b4a039ead4ad90df9267cd2968cfaa7e5806d257af9c11",
+      "bytes": 2256
+    }
+  ],
+  "localTools": {
+    "windowsCompiler": "LLVM-MinGW 20261104 / LLVM 23.1.5 / UCRT x86_64",
+    "androidCompiler": "NDK 30.0.16248370",
+    "cmake": "4.4.4",
+    "ninja": "1.13.2"
+  },
+  "privateOriginalReference": {
+    "cases": 84,
+    "actualReturns": {
+      "reader": 84,
+      "command": 165,
+      "cache": 148,
+      "copy": 148
+    },
+    "modeledCalleeReturns": 0,
+    "cardBusBoundary": "Synthetic complete 512-byte transfers; hardware timing and faults are outside this proof"
+  },
+  "limits": [
+    "Public tests use only deterministic generated data and do not run the private original oracle.",
+    "Mounted-filesystem parsing, resource consumers, graphics, input, audio and complete gameplay are separate work.",
+    "File handles and guest RAM require caller-owned lifetime and synchronization."
+  ]
+}
