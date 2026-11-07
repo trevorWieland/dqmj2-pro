@@ -9,6 +9,7 @@ from pathlib import Path
 from bytematch_project import compile_index, contained, digest, read, write
 from compile_sources import compiler_index
 from public_manifest import compiler_flags
+from native_mb_context import local_bss_profile
 
 
 def object_contract(path):
@@ -213,6 +214,9 @@ class FreshObjects:
         return path
 
     def profile(self, unit):
+        local = local_bss_profile(unit, self.manifest)
+        if local is not None:
+            return local
         source = unit['source'].replace('\\', '/')
         begin, end = int(unit['start'], 0), int(unit['end'], 0)
         if unit.get('kind', 'function') == 'function':
