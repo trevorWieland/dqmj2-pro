@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 
 from public_manifest import digest, verify
+from snapshot_inputs import apply_snapshot_files
 
 
 REPORTS = (
@@ -151,11 +152,14 @@ def install_bundle(root, bundle):
                     if staged.stat().st_size != member.size:
                         raise BundleError("Truncated private input member")
                     value = digest(staged)
-                    if target.exists() and (not target.is_file() or digest(target) != value):
-                        raise BundleError("Private input conflicts with an existing checkout file")
                     records.append((target, staged, value))
+        snapshot_count = apply_snapshot_files(root, bundle, stage, records, seen,
+            manifest.get('snapshotFiles', []), member_path, digest, BundleError)
         for inventory in inventories:
             bundle_parts(bundle, inventory)
+        for target, staged, value in records:
+            if target.exists() and (not target.is_file() or digest(target) != value):
+                raise BundleError("Private input conflicts with an existing checkout file")
         for directory in directories:
             directory.mkdir(parents=True, exist_ok=True)
         installed, reused = 0, 0
@@ -176,7 +180,8 @@ def install_bundle(root, bundle):
         if digest(accepted_path) != accepted_hash:
             raise BundleError("Private input installation changed the accepted manifest")
         return dict(snapshotRevision=manifest["snapshotRevision"], acceptedManifestSha256=accepted_hash,
-                    installedFiles=installed, identicalExistingFiles=reused, archiveParts=sum(map(len, archives)))
+                    installedFiles=installed, identicalExistingFiles=reused, archiveParts=sum(map(len, archives)),
+                    snapshotFiles=snapshot_count)
     finally:
         resolved_stage = stage.resolve()
         if resolved_stage.parent == work.resolve() and resolved_stage.is_relative_to(root) and stage.name.startswith("private-input-staging-"):

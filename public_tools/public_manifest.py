@@ -47,7 +47,7 @@ def compiler_flags(root, values):
         "-str": {"noreuse", "reuse"}, "-sym": {"on", "off"},
         "-w": {"off", "all", "error"},
     }
-    singles = {"-gccext,on", "-gccinc", "-interworking", "-nolink", "-thumb", "-c"}
+    singles = {"-gccext,on", "-gccinc", "-interworking", "-nolink", "-thumb", "-c", "-requireprotos"}
     result, directories, index = [], [], 0
     while index < len(values):
         flag = values[index]

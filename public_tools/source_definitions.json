@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "public_tools/source_links.py",
-  "acceptedManifestSha256": "1a3602d9eb57e0952f8bf003de2bf2a189294158e77469577ecfda26d10e8c60",
+  "acceptedManifestSha256": "9325fb758e0e68446c4fe885b4fe5422b0b5c35fac0208a48cf49dfbbf7d6250",
   "sourceCreditAdded": 0,
   "definitions": [
     {
@@ -874,6 +874,19 @@
       "translationUnitSha256": "5679fe0ee485eb3d0a70669478940be58c14176231aa52e19d1b921e33481380",
       "definitionPath": "src/arm7/20261102_wl_transmit_family1600/TxCtrl-base/ordinary_part5.inc",
       "definitionSha256": "e443a10713ec0add2768d683b315e5591b6c896ab7e8e2b7fa23a74b99062256"
+    },
+    {
+      "id": "674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6/arm9/main/arm/02015c70",
+      "program": "",
+      "processor": "arm9",
+      "module": "main",
+      "mode": "arm",
+      "address": "0x02015c70",
+      "reportSymbol": "MB_RegisterFile",
+      "translationUnit": "src/runtime/parallel_wave20261106/mb-local-context-next/register/register.c",
+      "translationUnitSha256": "80d436b52f4ddfa6f1c5fe27cbf92470504a7ca1c09de779c1ee0badba89d475",
+      "definitionPath": "src/runtime/parallel_wave20261106/mb-local-context-next/register/context_001.h",
+      "definitionSha256": "eb728c736b77f353f46b13ccba9c828320439d7ac803ad7da62bd47de7730b12"
     }
   ]
 }

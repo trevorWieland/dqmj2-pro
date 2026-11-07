@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from elf_metadata import inspect
-from public_manifest import ManifestError, digest, verify
+from public_manifest import ManifestError, compiler_flags, digest, verify
 
 
 class SourceTests(unittest.TestCase):
@@ -45,6 +45,14 @@ class SourceTests(unittest.TestCase):
         self.assertEqual(len(pins), 2)
         self.assertFalse(result["originalInputsRead"])
         self.assertFalse(result["nativeMatchingVerified"])
+
+    def test_required_prototypes_preserve_strict_warnings_and_reject_file_options(self):
+        flags = ['-O2', '-requireprotos', '-w', 'error']
+        actual, directories = compiler_flags(self.root, flags)
+        self.assertEqual(actual, flags)
+        self.assertEqual(directories, [])
+        with self.assertRaises(ManifestError):
+            compiler_flags(self.root, [*flags, '@private-options.txt'])
 
     def test_changed_header_rejected(self):
         (self.root / "src/value.h").write_text("#define VALUE 9\n", encoding="utf-8")
