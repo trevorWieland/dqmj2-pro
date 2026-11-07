@@ -20,16 +20,17 @@ Without `--native-only`, the wrapper also runs `reproduce.py` for the checksum-t
 
 ## Generated objdiff project
 
-Closed cohort 175 reconciles as follows. These are closed native source counts; fresh matching CI and objdiff reporting remain required for this public checkpoint:
+Closed cohort 175 reconciles as follows. [Matching CI run 42416508776](https://github.com/trevorWieland/dqmj2-pro/actions/runs/42416508776) freshly compiled and genuinely linked all twenty native modules on public commit `568db2f03ce1bc0f86c4eee2cb44841a61ee51d4`. A successful default-branch report is still required for ByteMatch ingestion:
 
 | Measurement | Accepted bytes | Denominator | Percentage |
 | --- | ---: | ---: | ---: |
 | Native initialized source, closed cohort 175 | 1,265,646 | 2,512,636 | 50.371244% |
-| Measured function code, objdiff | Pending fresh report | Pending fresh report | Pending fresh report |
+| Measured function code, objdiff | 1,156,138 | 2,130,952 | 54.254530% |
+| Measured initialized data, objdiff | 109,484 | 381,684 | 28.684462% |
 
 Cohort 175 adds 12 exact source functions containing 2,824 initialized function bytes and four public C data records containing 708 initialized bytes. It also adds 52 qualified source migrations covering 13,176 bytes, with no additional function or byte credit for those existing identities.
 
-The initialized numerator is 1,156,138 accepted function bytes, 109,484 separately accepted initialized-data bytes and 24 qualified alignment bytes. ByteMatch's page headline uses measured function code with its own denominator. Fresh CI must compile and link the full checkpoint and reconfirm all 450 initialized-data records before granting report credit. Actual objdiff counts will be measured from that report. The separately qualified 24-byte linker alignment remains outside source data/function credit. The separately labeled [native initialized-source badge](../public/native-progress.svg) and [accounting record](../public/native-progress.json) preserve the closed 50.37% local milestone. Source-integrity CI checks that this record and badge agree with the closed manifests.
+The initialized numerator is 1,156,138 accepted function bytes, 109,484 separately accepted initialized-data bytes and 24 qualified alignment bytes. ByteMatch's page headline uses measured function code with its own denominator. The matching run compiled and linked the full checkpoint and reconfirmed all 450 initialized-data records before granting report credit. Its standard report contains 11,652 matched functions of 15,306 measured functions; report SHA-256 is `d1cceb5c3fd0c945286554fdb5a8a4a8c725deeabbf46bd1b2ea0fe11564761e`. The separately qualified 24-byte linker alignment remains outside source data/function credit. The separately labeled [native initialized-source badge](../public/native-progress.svg) and [accounting record](../public/native-progress.json) preserve the closed 50.37% local milestone. Source-integrity CI checks that this record and badge agree with the closed manifests.
 
 `public_tools/bytematch_project.py` generates `build/B2JJ-modified/objdiff.json`; do not edit that output. It reads the closed public accepted manifest and all three genuine module-link reports, covering 20 native modules and 2,512,636 initialized bytes. Program, CPU and module namespaces keep overlapping overlay and ARM7/ARM9 addresses distinct.
 
