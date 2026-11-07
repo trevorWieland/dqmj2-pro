@@ -88,5 +88,14 @@
     "Public tests use only deterministic generated data and do not run the private original oracle.",
     "Mounted-filesystem parsing, resource consumers, graphics, input, audio and complete gameplay are separate work.",
     "File handles and guest RAM require caller-owned lifetime and synchronization."
-  ]
+  ],
+  "ci": {
+    "runId": 42330940864,
+    "url": "https://github.com/trevorWieland/dqmj2-pro/actions/runs/42330940864",
+    "headRevision": "73788f91a1f1b7911e22897c108825dcc8cc3eb3",
+    "windowsCompiler": "MSVC 19.51.36260.0",
+    "androidCompiler": "Clang 21.0.0",
+    "windowsHostTestsPassed": true,
+    "androidLinkPassed": true
+  }
 }

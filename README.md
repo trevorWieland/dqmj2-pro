@@ -8,9 +8,11 @@ An in-progress reconstruction into readable C/C++, with justified assembly for m
 
 This repository contains the actual reconstruction sources, headers, DS configuration, compiler profiles and CLI tooling. Supply your own original inputs and pinned compiler; original ROMs, saves, extracted executable/data payloads and binary build products are not distributed.
 
-The initial public checkpoint covers **11,482 accepted functions and 1,224,354 initialized module bytes: 48.727870% of 2,512,636 bytes**. This is native initialized-source coverage, not overall game completion. The measured input is a modified `B2JJ` build with SHA-256 `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`; equivalence to a clean retail ROM has not been established.
+Closed cohort 173 covers **11,546 accepted functions and 1,236,780 initialized module bytes: 49.222410% of 2,512,636 bytes**. This is native initialized-source coverage, not overall game completion. The measured input is a modified `B2JJ` build with SHA-256 `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`; equivalence to a clean retail ROM has not been established.
 
 An exact 175,959,612-byte ROM has been reconstructed locally using accepted source together with remaining original executable scaffolding. **A complete source-only ROM, full clean replay and complete native Windows/Android execution remain unproven.**
+
+The [native storage subsystem](ports/native-storage/README.md) builds on Windows x64 and Android ARM64. Its Windows host tests and Android link checks pass CI; complete game and Android device execution remain unproven.
 
 ## Sources and checks
 

@@ -93,3 +93,8 @@ The configuration needs an audited source selection: uncredited scaffold objects
 Objdiff code/data percentages use different accounting from initialized-module coverage; data totals can include BSS. Do not replace the accepted initialized-byte percentage with an objdiff figure. Do not derive fuzzy matching percentages from the existing byte-comparison counters. `metadata.complete` must reflect real source linking, and the report must retain original targets rather than obtaining an assumed match from a targetless complete unit.
 
 ByteMatch is a presentation layer. The full public source, build configuration and independent validation remain the reproducible evidence. Matching percentages, bounded behavior, semantic understanding, interpreted-source recovery and native platform execution remain separate dimensions.
+
+
+## Pinned private snapshot updates
+
+The CI input vault reuses its immutable original-image and compiler archives. A new source checkpoint may add hash-addressed private files or replace declared JSON/JSONL snapshot metadata only when the archived predecessor SHA-256 matches. Each replacement also pins its complete new bytes and accepted-source manifest. ROMs, compilers and public source cannot be replaced through this metadata mechanism. Existing conflicting checkout files cause installation to fail; use a fresh checkout for a different private snapshot. ByteMatch uses the public report artifact and needs no credential.

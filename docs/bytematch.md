@@ -18,16 +18,16 @@ Without `--native-only`, the wrapper also runs `reproduce.py` for the checksum-t
 
 ## Generated objdiff project
 
-The initial public checkpoint reconciles as follows:
+Closed cohort 173 reconciles as follows. The function-code row is also reproduced by a local diagnostic against the genuine linked images; publication requires a fresh successful CI run:
 
 | Measurement | Accepted bytes | Denominator | Percentage |
 | --- | ---: | ---: | ---: |
-| Native initialized source, closed cohort 172 | 1,224,354 | 2,512,636 | 48.727870% |
-| Measured function code, objdiff | 1,115,554 | 2,116,684 | 52.702910% |
+| Native initialized source, closed cohort 173 | 1,236,780 | 2,512,636 | 49.222410% |
+| Measured function code, objdiff | 1,127,980 | 2,122,900 | 53.133923% |
 
-The frozen function inventory leaves 30 ARM7 target-only candidate sizes unknown. Those 6,216 bytes remain unclassified initialized data; a later working ledger measured them, which explains the earlier 52.55% code estimate. Data matching changes no code classification.
+Cohort 173 measures and accepts exact source for 30 ARM7 functions whose sizes were previously unknown. Their 6,216 bytes now enter both the code denominator and matched code. They are included in the cohort's 12,426 new source bytes; the total initialized denominator stays 2,512,636 bytes.
 
-The initialized numerator is 1,115,554 function bytes, 108,776 separately accepted initialized-data bytes and 24 qualified alignment bytes. ByteMatch's current page headline uses function-code matching and does not support the combined initialized metric. The native report also measures 108,776 bytes of genuinely compiled and linked typed data. Combined code and data therefore cover 1,224,330 initialized bytes (48.726915%), which rounds to the same 48.73% local milestone. The separately qualified 24-byte linker alignment remains unmatched in objdiff. The separately labeled [native initialized-source badge](../public/native-progress.svg) and [accounting record](../public/native-progress.json) preserve the local milestone without changing objdiff classifications or promoting original data to source credit. Source-integrity CI checks that this record and badge still agree with the closed manifests.
+The initialized numerator is 1,127,980 function bytes, 108,776 separately accepted initialized-data bytes and 24 qualified alignment bytes. ByteMatch's page headline uses function-code matching with its own denominator. The last successful public run also proved the 108,776 typed-data bytes; their source and accepted-data manifest are unchanged. Fresh CI must reconfirm them for this checkpoint. The expected combined report numerator is 1,236,756 initialized bytes (49.221455%). The separately qualified 24-byte linker alignment remains unmatched in objdiff. The separately labeled [native initialized-source badge](../public/native-progress.svg) and [accounting record](../public/native-progress.json) preserve the closed 49.22% local milestone. Source-integrity CI checks that this record and badge agree with the closed manifests.
 
 `public_tools/bytematch_project.py` generates `build/B2JJ-modified/objdiff.json`; do not edit that output. It reads the closed public accepted manifest and all three genuine module-link reports, covering 20 native modules and 2,512,636 initialized bytes. Program, CPU and module namespaces keep overlapping overlay and ARM7/ARM9 addresses distinct.
 

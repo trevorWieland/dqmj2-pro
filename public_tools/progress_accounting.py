@@ -57,7 +57,7 @@ def main():
     for name, content in outputs(value).items():
         path = root / name
         if args.write:
-            path.write_text(content, encoding='utf-8')
+            path.write_bytes(content.encode('utf-8'))
         elif not path.is_file() or path.read_text(encoding='utf-8') != content:
             raise ValueError('Progress badge/accounting is stale: ' + name)
     print(json.dumps({key: value[key] for key in ('acceptedInitializedBytes', 'initializedDenominatorBytes', 'initializedSourcePercent')}))
