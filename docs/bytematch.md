@@ -27,7 +27,7 @@ Closed cohort 176 contains **11,660 accepted functions and 1,267,058 initialized
 | Scope | Matched bytes | Measured bytes | Percentage |
 | --- | ---: | ---: | ---: |
 | Native initialized source, closed cohort 176 | 1,267,058 | 2,512,636 | 50.427440% |
-| Measured function code, objdiff | 1,157,550 | 2,131,180 | 54.314983% |
+| Measured function code, objdiff | 1,157,550 | 2,131,180 | 54.314980% |
 
 The report contains 11,660 matched functions of 15,308 measured functions across 16,929 units and twenty modules. Two newly measured ARM7 functions move 228 bytes from unclassified data into the code budget; the initialized denominator stays unchanged. Its SHA-256 is `ab9a48d690316c9d942da77666fda0f99f04abd89754ad2910bfba3feb84c8ae`. All 450 accepted initialized-data extents agree with the manifest; incomplete and unreconstructed units receive zero matching credit. The separate 24-byte qualified alignment explains the difference between report code/data bytes and the initialized-source ledger.
 
