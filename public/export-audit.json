@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "sourceRevision": "e56b4df0c067ec6fd83cb6d3205c59cb5308fd7c",
-  "acceptedCohort": 175,
-  "acceptedSourceFiles": 13271,
+  "sourceRevision": "d52392cbeec27722998acf9a333451eaad23c1ef",
+  "acceptedCohort": 176,
+  "acceptedSourceFiles": 13285,
   "files": {
     ".gitattributes": {
       "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
@@ -2539,6 +2539,42 @@
     "cohort174_reference_one_shot_v1_20261106.py": {
       "sha256": "f9730be409dc3fee057a996b4f169d36f5e064bca9854eb5df9a6156a814d50b",
       "bytes": 8672
+    },
+    "cohort176_committed_context_v2.py": {
+      "sha256": "a2af091147b8cb3afa6345bf8e86ebc590d5cd35c2ff7daf2819f75d2591f7be",
+      "bytes": 5163
+    },
+    "cohort176_committed_context_v3.py": {
+      "sha256": "1af042bafb6175f089174922f34c0df95dbcb84402eb6e134ecfd62dc2f8510c",
+      "bytes": 10258
+    },
+    "cohort176_epoch_v1.py": {
+      "sha256": "37b1064068646ce6b42747e80e33d27107830a391b824b6a061b9cc73ef7676c",
+      "bytes": 10454
+    },
+    "cohort176_legacy_live_v2.py": {
+      "sha256": "73e69da6ca49e97a968e9811722ed52c743a8997ec5a134b309bbb02afd4174d",
+      "bytes": 15665
+    },
+    "cohort176_main_matching_workspace_scope.py": {
+      "sha256": "628d027d95d8509f0586a64da7878e3d12d4eee0998dc5330ba05cfa88587ad2",
+      "bytes": 16494
+    },
+    "cohort176_native_reference_v1.py": {
+      "sha256": "3f61259f921e99962002c5e6edee7b7bd55febf11b4f0e42eca14fa2f001f417",
+      "bytes": 14369
+    },
+    "cohort176_registered_paths_v1.py": {
+      "sha256": "120559c57cc10d4ddd819a97db5798c4f2087e61c17c5fa6bf11fd01745a5956",
+      "bytes": 5090
+    },
+    "cohort176_scope_acceptance_v1.py": {
+      "sha256": "81a9a52255a500d8cd0a580a6858bc64e8d746ef010f46e497ab0b1abdf0abd6",
+      "bytes": 11341
+    },
+    "cohort176_scope_state.py": {
+      "sha256": "0c3fcd7eda933054b858c77fc73a8919d612be18c053bbba3c7c8b2034d3636d",
+      "bytes": 7629
     },
     "collector_path_lookup_epoch_20261106.py": {
       "sha256": "33bdd30e2a341c099ef2237182b9131be0b7c16510c8c2b2e72d3633457973d4",
@@ -6944,6 +6980,14 @@
       "sha256": "9e026fb4c99b00c49bd354ffa664c19327402b647a29b1e2e32bc282e5e5837e",
       "bytes": 4779
     },
+    "docs/2026-11-07-source-cohort176-f.md": {
+      "sha256": "98fec5073e90bf1d213fb7c74710eb0891e421be6b090c9603a34b9619afdf11",
+      "bytes": 7406
+    },
+    "docs/2026-11-08-current-matching-workspace-scope.md": {
+      "sha256": "8014d67d4742aa834b4f5bb1e8ad02f041f0fedb0a71515fd04dc2821a579f02",
+      "bytes": 3597
+    },
     "draft_arm7.py": {
       "sha256": "f89450edb7e79b3018f9e5bfd60ab7d7686fe9f1f19137895a6dee498b5b2ca3",
       "bytes": 15483
@@ -7412,6 +7456,10 @@
       "sha256": "3403856be4fe6ae4db6f0c2f9c1f3b20fcd14fd85a6885091b9abb267f26f871",
       "bytes": 2010
     },
+    "finalize_cohort176_current_scope.py": {
+      "sha256": "62e8f9db3550514306e985283ee16e2dfe6b5c2c6f28c8a0c726364716c91b74",
+      "bytes": 8389
+    },
     "finalize_cohort_20261031_68.py": {
       "sha256": "f426d038793df01b03732cbdb4bedef7cb122b4716dd6acab5767aba107cd77d",
       "bytes": 3487
@@ -7543,6 +7591,10 @@
     "finalize_source_cohort_20261101.py": {
       "sha256": "03443a8f6e396be1f7b3e75d9a259f71115c76b95287a28169bb8f464d2ac2a2",
       "bytes": 3759
+    },
+    "finish_cohort176_current_scope.py": {
+      "sha256": "10fb4212fb91602750d77ab27e266f4615d0868a02864e3f68a2ce1beeae75b0",
+      "bytes": 7529
     },
     "finish_cohort98_package_20261101.py": {
       "sha256": "d71ea7345c5b1f383392c67ae23d69aada78632ec6c9a0a7160ab4a152350ec5",
@@ -14200,6 +14252,14 @@
       "sha256": "b6c5cd9b88a48192fe2afee9d6e2e4d1a22eebe4cc622b437569d0c1f8ae9710",
       "bytes": 14993
     },
+    "parallel_packet_binding_projection_v2.py": {
+      "sha256": "139e8bbe9867d7d2a1096734f4695ff519eebcc5f3553562e481fb2d30bd223c",
+      "bytes": 16381
+    },
+    "parallel_packet_native_unit_identity_v1.py": {
+      "sha256": "0d9c06332590857a7cf88e0c23f2cafafdbffad8fd700b92905cc5d13ac49aa7",
+      "bytes": 5841
+    },
     "parallel_status.py": {
       "sha256": "43dca9e4e05678fa587cf6b12ce4bbf51f0b14111f8a671fc00c5ba912e45b2c",
       "bytes": 7433
@@ -14284,6 +14344,14 @@
       "sha256": "a0fcae5fa8fac01a6916c7450acc3808d1f470e052caee94cc08bde935e2e67e",
       "bytes": 9632
     },
+    "ports/native-scene-matrices/tests/native/generate_fixtures.py": {
+      "sha256": "f326c4de2e8d33de7737d2893871ee2605084c616008521b7805e8737582b152",
+      "bytes": 3455
+    },
+    "ports/native-scene-matrices/tests/native/probe.c": {
+      "sha256": "0b97a590f64fa14c98ae5b3029b07d625dc5d6311178cfa187b168d15c64fbe6",
+      "bytes": 10656
+    },
     "ports/native-scene-matrices/tests/planner/test_planner.py": {
       "sha256": "90ba4c79722df104a509dddd0c2befb889fdbaa05e36339fc296d4048ebe45e6",
       "bytes": 2760
@@ -14315,6 +14383,10 @@
     "ports/native-scene-matrices/tests/warm/warm_api.py": {
       "sha256": "1404c6b77263840e24ce69f356b064f78eb7c9b2fe0487e9ecd7090be577c44b",
       "bytes": 7153
+    },
+    "ports/native-storage/check_android_elf.py": {
+      "sha256": "9f2dbb5f1bbfa2d36150f550124595cf9d373a50b1d609b96715bd43bfca236a",
+      "bytes": 3105
     },
     "ports/runtime/allocation_contracts_20261031.c": {
       "sha256": "2534e401d75a06603dd47cb0e43c48aaf17776fc51f99f2d9f020d87bf5957d3",
@@ -16639,6 +16711,10 @@
     "replay_parallel_packet.py": {
       "sha256": "4dadf32cc410056c4fec8379561d7ab023495f52cc20175c2f2e39f6829d1ca8",
       "bytes": 4345
+    },
+    "replay_parallel_packet_native_v4.py": {
+      "sha256": "2bb6ea899d9084d2009ea01ca50f752d43b36072c6031148d42ac7e70610a3cf",
+      "bytes": 4207
     },
     "replay_parallel_packet_typed_arm9.py": {
       "sha256": "3b82ff1e3d48709ceb4413457ca3fc0621245271964da3d7789268745a0fb0e8",
@@ -30219,6 +30295,74 @@
     "src/runtime/goal_resume20261107/material_mask_pivot/material_pivot.h": {
       "sha256": "231292a822bba1e1c0be296cb66592da9a7dcdb68e07b5bb89b821a9c3349118",
       "bytes": 404
+    },
+    "src/runtime/goal_resume20261107/oam_getter32_source1/get_position.c": {
+      "sha256": "78f79e12352ad649a28c5c2ef75c50fa3ff2f2e4f7aea6ee1051ba12d2e39800",
+      "bytes": 418
+    },
+    "src/runtime/goal_resume20261107/oam_getter32_source1/oam_getter.h": {
+      "sha256": "d1d38e01d399e15b93644db6c03c4c4a21df3804a1871713d05088890650032e",
+      "bytes": 558
+    },
+    "src/runtime/goal_resume20261107/ov001_candidate_filters_source1/0222595c/filter_categories.c": {
+      "sha256": "42de88de64cf7049af85afb3f437cb20fcf08609209b00f8427046e306a4ad01",
+      "bytes": 2187
+    },
+    "src/runtime/goal_resume20261107/ov001_candidate_filters_source1/0222595c/filter_categories.h": {
+      "sha256": "81cd6c68a61adfa921127d3c99804458d1dc66002d86dd3723331e28ee9078f5",
+      "bytes": 841
+    },
+    "src/runtime/goal_resume20261107/ov001_candidate_filters_source1/0222595c/iteration_order_02/filter_categories.h": {
+      "sha256": "81cd6c68a61adfa921127d3c99804458d1dc66002d86dd3723331e28ee9078f5",
+      "bytes": 841
+    },
+    "src/runtime/goal_resume20261107/ov001_candidate_filters_source1/0222595c/iteration_order_02/filter_categories_order.c": {
+      "sha256": "12cb5aee32d6c2db4f85387aacbbf7dda5ff8f76dad768e8d42d3ae8d7cd2582",
+      "bytes": 2187
+    },
+    "src/runtime/goal_resume20261107/ov001_candidate_filters_source1/02226290/child_score.h": {
+      "sha256": "87f7a192ad15fc0bdcdc6706a3f03010d8b899520faf32e951c6596854d2862c",
+      "bytes": 804
+    },
+    "src/runtime/goal_resume20261107/ov001_candidate_filters_source1/02226290/filter_child_flag.c": {
+      "sha256": "c32832cbf861c0555d8ad96a3aaf61398b25e5ba79d381b11b5144dbe968b119",
+      "bytes": 538
+    },
+    "src/runtime/goal_resume20261107/ov001_candidate_filters_source1/02226310/child_score.h": {
+      "sha256": "87f7a192ad15fc0bdcdc6706a3f03010d8b899520faf32e951c6596854d2862c",
+      "bytes": 804
+    },
+    "src/runtime/goal_resume20261107/ov001_candidate_filters_source1/02226310/filter_child_sum.c": {
+      "sha256": "6c7562b5a9e635082bfb5d7f2b2a649c000f5e674a085cf34f2aec098580c5f3",
+      "bytes": 811
+    },
+    "src/runtime/goal_resume20261107/ov001_candidate_filters_source1/022263d8/child_score.h": {
+      "sha256": "87f7a192ad15fc0bdcdc6706a3f03010d8b899520faf32e951c6596854d2862c",
+      "bytes": 804
+    },
+    "src/runtime/goal_resume20261107/ov001_candidate_filters_source1/022263d8/filter_child_min.c": {
+      "sha256": "9784173baff2ab43a300f46ed9e61102fdb6369ffd8168162f0a6d58d18bcef0",
+      "bytes": 810
+    },
+    "src/runtime/goal_resume20261107/ov001_candidate_filters_source1/02226598/compatibility_record.h": {
+      "sha256": "7151c045a41af6cc830b8ca2fab821b315a05f276186a70f927061525258020b",
+      "bytes": 562
+    },
+    "src/runtime/goal_resume20261107/ov001_candidate_filters_source1/02226598/filter_compatibility.c": {
+      "sha256": "837f849700a95b5f29a0b00c08e420ee00c58dca272ac783050da9da4cd40309",
+      "bytes": 735
+    },
+    "src/runtime/goal_resume20261107/ov001_candidate_filters_source1/feature264/feature_record.h": {
+      "sha256": "aa19f51ffd3b4e4cd69379fb10ac6938362b4d3799e0e4041d1884057bfe6e27",
+      "bytes": 472
+    },
+    "src/runtime/goal_resume20261107/ov001_candidate_filters_source1/feature264/filter_with_feature.c": {
+      "sha256": "fa6a7ad0865d3228bf785a9c5151e9071561ddaf105474d74a1827548d4747e0",
+      "bytes": 616
+    },
+    "src/runtime/goal_resume20261107/ov001_candidate_filters_source1/feature264/filter_without_feature.c": {
+      "sha256": "3d7774d028087afca787cab7f1a31c39de14824ea405c81eb13c4f2ecb1d8e14",
+      "bytes": 616
     },
     "src/runtime/goal_resume20261107/resource_path_api/encounter/20261029-field-metadata/field_metadata.h": {
       "sha256": "ce857929c29cfae0dc52a60f8accf154c0b488667423edefd02b423d7b93e79c",
@@ -69592,6 +69736,22 @@
       "sha256": "6661e4f446cbc7318b5fe3c0db338f42b210eecb654c97ac26d0071bbf09c64f",
       "bytes": 1161
     },
+    "src/utility/goal_resume20261107/source2_child_heap/checker432/heap_types.h": {
+      "sha256": "5410d6854ca7639dd7897631004a3c24e0442ecd79c582363ced95c979e4731e",
+      "bytes": 563
+    },
+    "src/utility/goal_resume20261107/source2_child_heap/constructors336/heap_types.h": {
+      "sha256": "5410d6854ca7639dd7897631004a3c24e0442ecd79c582363ced95c979e4731e",
+      "bytes": 563
+    },
+    "src/utility/goal_resume20261107/source2_child_heap/constructors336/initialize_heaps168.c": {
+      "sha256": "2b5fa1ccb815e41c6645ac1bb42ab6f4c1d7abc3a70f8c5d23d074b064e09f33",
+      "bytes": 1279
+    },
+    "src/utility/goal_resume20261107/source2_child_heap/current_heap60.c": {
+      "sha256": "b3b06bb04174f4603f9d26f0bfdf08af9f5c1d0db79afe563e96bfbcc8e56218",
+      "bytes": 737
+    },
     "src/utility/hardware/native_utility_child_arm9_itcm_dma_01ff81b4.s": {
       "sha256": "a10fdc264e4b9451b9a7a360b448b69f3fb45b0b31b9e2f07458ea82a162e942",
       "bytes": 845
@@ -76423,6 +76583,18 @@
     "test_child_reference.py": {
       "sha256": "0d001d5c06b2652070481bcb64a92a4064e00f382800976f331987765bd16e27",
       "bytes": 8568
+    },
+    "test_cohort176_deferred_v2.py": {
+      "sha256": "da5e7a3e36643b5d13d92596cf4d0a7aea7f710e17e18abb24b3ddbde91e3516",
+      "bytes": 10909
+    },
+    "test_cohort176_scope_integration.py": {
+      "sha256": "19c1e75f877b969060e3d09dc2fbca86863e8118ebb635112b4d8c08f7008ab4",
+      "bytes": 24549
+    },
+    "test_cohort176_successor_v2.py": {
+      "sha256": "c650b3b203c1f04bb9b3db6c6b6c3a1cbe6161b6b69d439909cee67a91a6296b",
+      "bytes": 18031
     },
     "test_explicit_c_frontend_qualification_20261102.py": {
       "sha256": "6b0760c9f3c68d301952ee752265f128e42d7edea8d56c42595bdd3b182a2596",
@@ -89629,8 +89801,8 @@
       "bytes": 1635
     },
     "public/accepted-functions.json": {
-      "sha256": "8d4d8623cd416b87d8700b970de1ad687c826064cd5745e9e1f2883ecea4d18b",
-      "bytes": 38876598
+      "sha256": "95c7f9ecffb2bed7077f70e544bd791971b786788af4c76a46c5e900bb936354",
+      "bytes": 38911820
     },
     "public/accepted-data.json": {
       "sha256": "e30a355351cffd4024176d23ca540e7babc5419faa3dd7615ac9f64f8a5b029b",

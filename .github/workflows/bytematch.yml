@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: trevorWieland/dqmj2-pro-inputs
-          ref: ffff6952c347c68a44958241c752e05cf21eec32
+          ref: c27be6cad6bc4a54277874597bee9f2f38ef373d
           ssh-key: ${{ secrets.BUILD_INPUTS_DEPLOY_KEY }}
           persist-credentials: false
           path: private-inputs
