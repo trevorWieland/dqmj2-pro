@@ -1,0 +1,72 @@
+name: Native display hosts
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ports/native-host/**
+      - ports/native-scene-matrices/**
+      - ports/runtime/**
+      - ports/common/guest_memory/**
+      - ports/native-storage/check_android_elf.py
+      - .github/workflows/native-display-hosts.yml
+  pull_request:
+    paths:
+      - ports/native-host/**
+      - ports/native-scene-matrices/**
+      - ports/runtime/**
+      - ports/common/guest_memory/**
+      - ports/native-storage/check_android_elf.py
+      - .github/workflows/native-display-hosts.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-hosts:
+    runs-on: windows-2025
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: "3.13.5"
+      - name: Set up pinned Windows compiler
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force work/toolchains | Out-Null
+          $nativeArchive = Join-Path (Get-Location) 'work/toolchains/llvm-mingw.zip'
+          Invoke-WebRequest -Uri 'https://github.com/mstorsjo/llvm-mingw/releases/download/20261104/llvm-mingw-20261104-ucrt-x86_64.zip' -OutFile $nativeArchive
+          if ((Get-FileHash -LiteralPath $nativeArchive -Algorithm SHA256).Hash.ToLowerInvariant() -ne '552191b5754c49a5a20723276a6fc56541ea1922c4c50b7b669022333fc1b40f') { throw 'Pinned compiler archive differs' }
+          Expand-Archive -LiteralPath $nativeArchive -DestinationPath work/toolchains
+          $nativeCompilerBin = Join-Path (Get-Location) 'work/toolchains/llvm-mingw-20261104-ucrt-x86_64/bin'
+          $nativeCompilerBin | Out-File -FilePath $env:GITHUB_PATH -Append
+      - name: Build and test Windows host
+        shell: pwsh
+        run: |
+          cmake -S ports/native-host/windows -B work/native-host/windows -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=x86_64-w64-mingw32-clang.exe
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cmake --build work/native-host/windows --parallel 2
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          ctest --test-dir work/native-host/windows --output-on-failure --timeout 15
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+      - name: Build signed Android development APK
+        shell: pwsh
+        run: |
+          $nativeManager = Join-Path $env:ANDROID_HOME 'cmdline-tools/latest/bin/sdkmanager.bat'
+          & $nativeManager 'platforms;android-33' 'build-tools;35.0.1'
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          $nativeNdk = Join-Path $env:ANDROID_HOME 'ndk/30.0.16248370'
+          $nativeJavaBin = Join-Path $env:JAVA_HOME 'bin'
+          python ports/native-host/android/build_apk.py --sdk $env:ANDROID_HOME --ndk $nativeNdk --jdk-bin $nativeJavaBin
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+      - name: Upload runnable hosts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: native-display-hosts
+          path: |
+            work/native-host/windows/j2p_native_host.exe
+            work/native-host/windows/libj2p_native_scene_matrices.dll
+            work/native-host/android/dqm-native-host.apk
+          if-no-files-found: error
