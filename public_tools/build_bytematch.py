@@ -24,7 +24,10 @@ REPORTS = (
 PRIVATE_DIRECTORIES = {"inputs", "tools", "deps", "extract", "generated", "evidence", "provenance", "ledger", "work", "nonmatching"}
 PRIVATE_FILES = {"recovery.json", "source-preferences.json", "interpreted-recovery.json", "manifest.json", "recovery-ownership.json", "source-map.json",
                  "child-snd-reference-contract-v1.json", "ten-consumer-contract-v2.json",
-                 "cohort174-parallel-wave20261105-s-specification.json"}
+                 "cohort174-parallel-wave20261105-s-specification.json",
+                 "cohort176-epoch-contract-v2.json", "cohort176-epoch-contract-v3.json",
+                 "cohort176-parallel-wave20261107-f-specification.json",
+                 "cohort176-source-packet-package.json"}
 
 
 class BundleError(ValueError):
