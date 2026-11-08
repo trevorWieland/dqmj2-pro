@@ -1,6 +1,7 @@
 import unittest
+from pathlib import Path
 from native_build import APPROVED_CHECKPOINTS, approved_checkpoint
-from bytematch_project import DENOMINATOR
+from bytematch_project import DENOMINATOR, digest, read
 
 
 class CheckpointGuardTests(unittest.TestCase):
@@ -13,6 +14,12 @@ class CheckpointGuardTests(unittest.TestCase):
         for sha, record in APPROVED_CHECKPOINTS.items():
             with self.subTest(cohort=record[0]):
                 self.assertEqual(approved_checkpoint(self.manifest(record), sha), record[0])
+
+    def test_published_checkpoint_is_approved(self):
+        root = Path(__file__).resolve().parents[1]
+        manifest = root / 'public/accepted-functions.json'
+        audit = read(root / 'public/export-audit.json')
+        self.assertEqual(approved_checkpoint(read(manifest), digest(manifest)), audit['acceptedCohort'])
 
     def test_same_count_with_unknown_manifest_hash_is_rejected(self):
         record = next(iter(APPROVED_CHECKPOINTS.values()))
