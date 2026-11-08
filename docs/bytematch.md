@@ -22,14 +22,16 @@ Without `--native-only`, the wrapper also runs `reproduce.py` for the checksum-t
 
 Closed cohort 176 contains **11,660 accepted functions and 1,267,058 initialized bytes: 50.427440% of 2,512,636 bytes**. It adds eight functions and 1,412 bytes to cohort 175, with no source migrations or initialized-data changes. The numerator is 1,157,550 accepted function bytes, 109,484 initialized-data bytes and 24 qualified alignment bytes. The alignment remains outside source function/data credit.
 
-The latest published ByteMatch report is still cohort 175, from [successful default-branch matching CI](https://github.com/trevorWieland/dqmj2-pro/actions/runs/42418795051):
+[Matching CI run 42470251187](https://github.com/trevorWieland/dqmj2-pro/actions/runs/42470251187) freshly compiled all 11,019 selected source units and genuinely linked all twenty native modules for closed checkpoint 176:
 
 | Scope | Matched bytes | Measured bytes | Percentage |
 | --- | ---: | ---: | ---: |
 | Native initialized source, closed cohort 176 | 1,267,058 | 2,512,636 | 50.427440% |
-| Published function-code report, cohort 175 | 1,156,138 | 2,130,952 | 54.254530% |
+| Measured function code, objdiff | 1,157,550 | 2,131,180 | 54.314983% |
 
-The published report contains 11,652 matched functions of 15,306 measured functions, with SHA-256 `d1cceb5c3fd0c945286554fdb5a8a4c725deeabbf46bd1b2ea0fe11564761e`. Fresh checkpoint-176 matching CI, its report and ByteMatch ingestion are pending. The [checkpoint qualification](closed-checkpoint-176.md) preserves the current matching-input scope, failed historical workspace gate and full-clean/native-game limits. The [initialized-source badge](../public/native-progress.svg) and [accounting record](../public/native-progress.json) preserve the closed local ledger; source-integrity CI checks their agreement with the manifests.
+The report contains 11,660 matched functions of 15,308 measured functions across 16,929 units and twenty modules. Two newly measured ARM7 functions move 228 bytes from unclassified data into the code budget; the initialized denominator stays unchanged. Its SHA-256 is `ab9a48d690316c9d942da77666fda0f99f04abd89754ad2910bfba3feb84c8ae`. All 450 accepted initialized-data extents agree with the manifest; incomplete and unreconstructed units receive zero matching credit. The separate 24-byte qualified alignment explains the difference between report code/data bytes and the initialized-source ledger.
+
+Default-branch CI publishes this version's report for ByteMatch. The [checkpoint qualification](closed-checkpoint-176.md) preserves the current matching-input scope, failed historical workspace gate and full-clean/native-game limits. The [initialized-source badge](../public/native-progress.svg) and [accounting record](../public/native-progress.json) preserve the closed local ledger; source-integrity CI checks their agreement with the manifests.
 
 `public_tools/bytematch_project.py` generates `build/B2JJ-modified/objdiff.json`; do not edit that output. It reads the closed public accepted manifest and all three genuine module-link reports, covering 20 native modules and 2,512,636 initialized bytes. Program, CPU and module namespaces keep overlapping overlay and ARM7/ARM9 addresses distinct.
 
