@@ -28,6 +28,11 @@ extern void native_fn_0206de64(s8 a);
 extern u32 native_fn_02049ad0(s8 a);
 extern s32 native_fn_02062aa0(void);
 extern u32 native_fn_020bb144(u32 index);
+extern void native_fn_020414b0(u32 a);
+extern void native_fn_02041560(u32 a);
+extern void native_fn_02041510(u32 a, u32 b, u32 c);
+extern u8 *native_fn_02067af4(s32 index);
+extern u32 native_fn_02067e54(u8 *record);
 
 extern void native_fn_ov006_021db5b4(void);
 extern void native_fn_ov006_021e9268(void);
@@ -164,4 +169,28 @@ u32 native_ov006_021e4e04(void) {
     native_fn_0205e7a8(0xFFFFFFFF, 87);
     native_fn_ov006_021e3f28(*(u32 *)(native_data_ov006_02218d30 + 0x20) != 0 ? 17 : 15);
     return 1;
+}
+
+/* 0x021de1ec: sum the per-slot values of the three active records. */
+u32 native_ov006_021de1ec(void) {
+    s32 i;
+    u32 total;
+    total = 0;
+    i = 0;
+    do {
+        u8 *record = native_fn_02067af4(i);
+        if (*(u32 *)(record + 0x14) != 0) {
+            total += native_fn_02067e54(record);
+        }
+        i++;
+    } while (i < 3);
+    return total;
+}
+
+/* 0x021ebabc: open the action menu for one slot with the 2/3 mode selector. */
+void native_ov006_021ebabc(u32 a, u32 flag) {
+    u32 mode = flag != 0 ? 3 : 2;
+    native_fn_020414b0(63);
+    native_fn_02041560(0);
+    native_fn_02041510(a, mode, 5);
 }
