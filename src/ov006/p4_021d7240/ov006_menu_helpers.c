@@ -210,3 +210,11 @@ u32 native_ov006_021de1a8(u32 a) {
     } while (i < 3);
     return total;
 }
+
+/* 0x021e6e2c: publish the two-word packet pair and the 2-byte row. */
+void native_ov006_021e6e2c(u32 a) {
+    u32 pair[2];
+    native_fn_0204518c(pair, a, 0);
+    native_fn_0204820c(pair[0], 0, pair[1]);
+    native_fn_0204820c(0x2207DBC, 0, 2);
+}
