@@ -16356,6 +16356,16 @@
    "glob": "src/runtime/goal_resume20261107/resource_path_api/runtime/parallel_wave20261106/ov006-resource-slot-next/third/021e6ef4/**",
    "module": "ov006",
    "compilerFlags": "p051"
+  },
+  {
+   "glob": "src/ov003/p5c_021dbd18/**",
+   "module": "ov003",
+   "compilerFlags": "p061"
+  },
+  {
+   "glob": "src/ov003/p5d_021dbd18/**",
+   "module": "ov003",
+   "compilerFlags": "p061"
   }
  ]
 }
