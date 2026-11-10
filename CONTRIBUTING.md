@@ -1,19 +1,76 @@
 # Contributing
 
-Use CLI tools and scripts. Coordinate disjoint ownership by program, CPU, module, mode and address range; overlapping overlay addresses are not interchangeable. One coordinator owns shared source selection, module integration and acceptance publication.
+## Coordination
 
-Claim a public work-chunk issue before starting. Give the program, CPU, module, ARM/Thumb mode, address range and intended source paths; recheck for concurrent claims. An open claim remains active until its owner releases it. Choose another range if ownership overlaps. After a contribution, record the commit, measured results, limitations and remaining ranges on the issue. Only the coordinator closes a chunk after its complete scope passes shared acceptance.
+Use CLI tools and scripts. Coordinate disjoint ownership by program, CPU, module, mode and address
+range; overlapping overlay addresses are not interchangeable. One coordinator owns shared source
+selection, module integration and acceptance publication.
 
-Before changing code, identify the measured original extent, incoming/outgoing bindings, consumed types, compiler profile and existing ownership. Use ordinary C/C++ for ordinary logic. Justify assembly for measured low-level contracts. Do not hide mismatches with binary patches, imported original bodies, arbitrary register constraints or open-ended flag/permutation searches.
+Claim a public work-chunk issue before starting. Give the program, CPU, module, ARM/Thumb mode,
+address range and intended source paths; recheck for concurrent claims. An open claim remains
+active until its owner releases it. Choose another range if ownership overlaps. After a
+contribution, record the commit, measured results, limitations and remaining ranges on the issue.
+Only the coordinator closes a chunk after its complete scope passes shared acceptance.
 
-Keep complete coherent packets with source/include hashes, exact compiler identity, reproduction commands, native boundaries, literal coverage, genuine relocations, wrong-C controls, typed interfaces and explicit bounded behavior. Private target inputs must be recreated from the contributor's own measured ROM. Keep original ROMs, saves, extracted payloads, compiler binaries and credentials out of commits and CI artifacts.
+## Honest reconstruction
 
-An isolated match remains pending until shared builds and regression checks preserve every earlier accepted match. Count accepted initialized bytes from a closed checkpoint. Keep source matching, semantic confidence, interpreted recovery and platform execution separate. Generated reports, hooks, provider bodies and scaffolding do not create additional source credit.
+Before changing code, identify the measured original extent, incoming/outgoing bindings, consumed
+types, compiler profile and existing ownership. Recover ordinary logic in matching C/C++; justify
+assembly only for measured low-level contracts. Never promote decompiler drafts, guessed field
+meanings, community names or binary scaffolding to source reconstruction. Keep overlays separate
+even when their load addresses overlap.
 
-For naming work, propose a descriptive alias and a precise observed contract with evidence and uncertainty first. Preserve canonical address identities and frozen accepted source until a separately revalidated migration is ready. Follow [semantic investigation](docs/semantic-understanding.md).
+The only valid evidence is code that compiles and compares. A description of a match is not a
+match, and a compile-only pass is not a comparison. Every accepted source change must compile,
+pass byte and relocation comparison plus bounded behavioral checks, link all affected modules and
+preserve earlier accepted matches. State which checks could not run. Never mark a nonmatching
+draft complete, and never hide a mismatch with binary patches, imported original bodies,
+arbitrary register constraints or open-ended flag searches.
 
-Keep changes focused on one coherent family. Match neighboring formatting; do not reformat unrelated source. Authored code has no comments and at most 500 physical lines per file; put explanations, naming hypotheses and uncertainty in documentation. Readability work must preserve frozen source identities until a separately validated migration is accepted. Do not copy leaked sources or replace measured contracts with plausible game semantics.
+## Comments and naming
 
-A pull request lists the exact reproduction commands and tool identities, affected functions and initialized bytes, byte/relocation and link results, behavioral and negative controls, and unsupported cases. State which checks could not run. A compile-only CI pass or a ByteMatch percentage does not replace module, regression and committed-closure gates. Never mark nonmatching drafts complete.
+Authored code may and should carry concise comments that explain mechanism and intent: why a
+range is read, what a packed field means, which hardware or ABI contract a call follows, and where
+a measured assumption is uncertain. Comment the non-obvious; do not narrate the obvious. Comments
+are part of the code and must stay true when the code changes.
 
-Put experiments and copied-root replays beneath `work/`. Preserve immutable proof inputs and receipts; prune completed disposable copies after checking live processes and runtime dependencies. Do not create sibling copies of the repository.
+Use meaningful names for functions, parameters and locals. Newly authored code must not introduce
+`func_XXXXXXXX`-style names where the mechanism is understood; name a routine by its observable
+behaviour or role. Where a contract is still unknown, keep the canonical address identity and say
+so in a comment instead of inventing a plausible game meaning.
+
+Keep every formatted authored code file within 500 physical lines as guidance. If splitting a file
+to satisfy the limit would make the code harder to read, prefer readability and explain the choice
+in review. Match neighboring formatting and do not reformat unrelated source.
+
+## Documentation
+
+Documentation belongs in comments next to the code, and in `docs/` only when it describes
+cross-cutting design that no single file can explain. Do not create per-packet evidence documents,
+acceptance receipts, manifest summaries or progress write-ups. Prose that restates a diff is stale
+as soon as the diff changes; a comment in the code moves with the code.
+
+## Progress
+
+Progress is computed by CI from a real build and comparison. Contributors must not commit progress
+percentages, manifests of accepted functions, evidence files or claims that the build passes. The
+workflow publishes what the checked-out code actually compiles and compares to; hand-maintained
+numbers and receipts are not a source of truth. Do not hand-edit or invent progress figures.
+
+## Private inputs
+
+Original ROMs and saves are private only: never commit, upload or reshare them. The same applies
+to extracted original payloads, compiler binaries and credentials. Private target inputs must be
+recreated from the contributor's own measured ROM. Generated build products, logs and dependency
+trees are not committed either.
+
+## Pull requests
+
+A pull request lists the exact reproduction commands and tool identities, the affected functions
+and ranges, byte and relocation results, link results, behavioral and negative controls, and
+unsupported cases. Keep changes focused on one coherent family. A ByteMatch percentage does not
+replace module, regression and behavioral gates.
+
+Put experiments and copied-root replays beneath `work/`. Preserve immutable proof inputs and prune
+completed disposable copies after checking live processes and runtime dependencies. Do not create
+sibling copies of the repository.
