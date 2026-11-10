@@ -461,10 +461,20 @@ def main():
     parser.add_argument('--private-root', type=Path, required=True)
     parser.add_argument('--out-dir', type=Path, default=Path('build/B2JJ-modified'))
     parser.add_argument('--receipt', type=Path)
-    parser.add_argument('--compile-report', type=Path)
+    parser.add_argument('--compile-report', type=Path, default=Path('build/repository-compile/report.json'))
     parser.add_argument('--diagnostic', action='store_true')
+    parser.add_argument('--legacy-manifest', action='store_true',
+                        help='Use the historical accepted-function/link-report project builder.')
     args = parser.parse_args()
     output = args.out_dir if args.out_dir.is_absolute() else args.root / args.out_dir
+    if not args.legacy_manifest:
+        from repo_build import build_project
+        compilation = args.compile_report if args.compile_report.is_absolute() else args.root / args.compile_report
+        try:
+            print(json.dumps(build_project(args.root, args.private_root, output, compilation), indent=2))
+        except (OSError, ValueError, KeyError, TypeError, struct.error) as error:
+            parser.exit(1, str(error) + '\n')
+        return
     try:
         print(json.dumps(prepare(args.root, args.private_root, output, args.diagnostic, args.receipt, args.compile_report), indent=2))
     except (OSError, ValueError, KeyError, TypeError, struct.error) as error:

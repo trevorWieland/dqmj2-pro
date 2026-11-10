@@ -23,16 +23,17 @@ The [native scene matrix library](ports/native-scene-matrices/README.md) adds ch
 ## Sources and checks
 
 - `src/`: reconstruction sources and authored headers, including selected implementations and prepared work. Inclusion here alone does not grant acceptance.
-- `public/accepted-functions.json`: the closed checkpoint's selected function identities, source/include hashes, compiler hashes and flags, namespace, dependencies and proof states.
+- `config/source_units.json`: the compilation rule for each source directory (module, processor, flags, load base and original image). Merging a source file into an existing directory is the only step needed for it to be compiled and measured; see [source units](docs/source-units.md).
+- `public/accepted-functions.json`: historical closed-checkpoint evidence retained for comparison. It is not read by the current build, which enumerates `src/` directly.
 - `public/accepted-data.json`: separately measured data and storage records. BSS does not increase the initialized-byte percentage.
 - `config/`: ARM9 sections, symbols, relocations and overlay configuration. ARM7 and embedded-program mappings are handled by the reconstruction scripts.
 - `public_tools/`: standalone source-integrity and compilation checks; see [public build instructions](docs/public-build.md).
 - Root Python scripts: extraction, reconstruction, compiler interfaces, genuine linking, bounded original/source comparisons and regression machinery. Binary tools are pinned in `tools.lock.json`.
 - `docs/`: research and historical execution records, including explicit failures and unsupported cases. Historical references to private-only operation are superseded by the [publication policy](docs/public-reconstruction-policy.md).
 
-The public repository began with a clean Git history at closed cohort 172 (source revision `efe36ed2e7d16be9f2aae411f0dc0cb3eb89e6d5`, closure revision `14ac8dcd6f8ab0009e5dd54d73cf31c928540776`). The current manifest binds the closed checkpoint listed above. Local historical revisions and generated proof dumps are not public ancestors.
+The public repository began with a clean Git history at closed cohort 172 (source revision `efe36ed2e7d16be9f2aae411f0dc0cb3eb89e6d5`, closure revision `14ac8dcd6f8ab0009e5dd54d73cf31c928540776`). Historical manifests bind the closed checkpoints listed in the docs; they are not the build input. Progress now comes from compiling the current `src/` tree in CI.
 
-Pull-request CI verifies declared source integrity without original inputs. Default-branch CI recompiles the complete accepted sources and genuinely links all twenty native modules using owned private inputs, then checks their bytes and symbols against the originals. This native tracking build inherits the closed source qualifications; a full historical behavioral replay and fresh complete ROM/container build remain separate checks. See [data source visibility](docs/bytematch.md#data-source-visibility) for the public numerical tables and private generated asset declarations.
+Pull-request CI verifies declared source integrity without original inputs. Default-branch CI resolves every `src/` file to a compilation rule, compiles every resolved C source with the pinned compiler, patches each function's ELF relocations against the measured symbol addresses, and reports byte-exact matches against the original module images. A full historical behavioral replay and fresh complete ROM/container build remain separate checks. See [data source visibility](docs/bytematch.md#data-source-visibility) for the public numerical tables and private generated asset declarations.
 
 ## Contributing
 
