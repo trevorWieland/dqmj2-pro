@@ -1,10 +1,10 @@
 /*
  * ov006 packet p4-1: display bring-up for the menu system.
  *
- * The 0x04000000 block is the DS main engine: 0x04000008 holds the four
- * background control words, 0x04000010..0x0400001C the affine parameters and
- * 0x04000000 DISPCNT. 0x04060000 is the engine-A background palette and the
- * 0x06000000 block is background VRAM (0x80000 bytes are cleared here).
+ * The 0x04000000 block is the DS main engine: 0x04000000 DISPCNT, 0x04000008
+ * the four background control words and 0x04000010..0x0400001C the affine
+ * parameters. The 0x06000000 block is background VRAM (0x80000 bytes are
+ * cleared here).
  */
 #include "context.h"
 

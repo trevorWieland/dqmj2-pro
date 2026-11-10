@@ -20,8 +20,9 @@ void native_ov006_021d7ae0(u32 index, u32 a, u32 b) {
 
 /* 0x021d7d28: build `count` sprites from packed 4-byte records.
  *
- * Each record is (type, x, y, style). The style nibbles accumulate a scale in
- * var_r8 so successive rows are spaced by style.x * style.y. */
+ * The record bytes are passed through to 0x02084924 as the sprite parameters.
+ * A running scale starts at 1 and grows by record[2] * record[3] per entry, so
+ * successive slots are spaced by that product. */
 u32 native_ov006_021d7d28(void *records, s32 count) {
     u8 low;
     u8 high;

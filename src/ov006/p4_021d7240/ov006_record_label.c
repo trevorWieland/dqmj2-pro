@@ -1,8 +1,8 @@
 /*
  * ov006 packet p4-1: label refresh for one character record.
  *
- * The record header at 0x021d9ed8 is 0x7a bytes of name text followed by the
- * four measured bounding boxes; each helper writes one bounds halfword.
+ * The record stores its text source at 0x7a and four bound halfwords at
+ * 0x24/0x26; each of the four helpers writes one of the bound halfwords.
  */
 #include "context.h"
 
