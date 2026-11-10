@@ -57,7 +57,7 @@ extern void native_fn_02067dd4(void);
 extern u32 native_fn_02067d54(void);
 extern u32 native_fn_02067b48(void);
 extern u32 native_fn_02067bd4(s32 index);
-extern void native_fn_02067bec(s32 index, u32 value);
+extern u32 native_fn_02067bec(u32 a, s32 index);
 extern u32 native_fn_02008e0c(u8 *dst, u8 *src, u32 size);
 extern u32 native_fn_02008d78(u8 *dst, u32 value, u32 size);
 

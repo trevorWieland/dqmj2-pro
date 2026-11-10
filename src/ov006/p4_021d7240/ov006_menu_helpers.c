@@ -194,3 +194,19 @@ void native_ov006_021ebabc(u32 a, u32 flag) {
     native_fn_02041560(0);
     native_fn_02041510(a, mode, 5);
 }
+
+/* 0x021de1a8: sum the per-slot values for one record owner. */
+u32 native_ov006_021de1a8(u32 a) {
+    s32 i;
+    u32 total;
+    total = 0;
+    i = 0;
+    do {
+        u8 *record = (u8 *)native_fn_02067bec(a, i);
+        if (*(u32 *)(record + 0x14) != 0) {
+            total += native_fn_02067e54(record);
+        }
+        i++;
+    } while (i < 3);
+    return total;
+}

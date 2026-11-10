@@ -16,7 +16,7 @@ extern Record_native_data_ov006_0220f2f4 native_data_ov006_0220f2f4;
 
 extern u32 native_fn_02067b48(void);
 extern u32 native_fn_02067bd4(s32 row);
-extern void native_fn_02067bec(s32 row, u32 value);
+extern u32 native_fn_02067bec(u32 a, s32 index);
 extern u32 native_fn_ov006_021da064(void);
 extern u32 native_fn_ov006_021de288(s32 row);
 
