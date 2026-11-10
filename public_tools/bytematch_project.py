@@ -169,10 +169,23 @@ def function_contract(path, name):
     return (hashlib.sha256(payload).hexdigest(), size, mode, tuple(sorted(relocs)), tuple(sorted(data_contracts)))
 
 
-def compile_index(root, path, manifest_hash):
+def compile_index(root, path, manifest_hash=None):
+    """Index the fresh compiler objects named by a compilation report.
+
+    Two report shapes are accepted: the enumeration report written by
+    ``repo_build`` (``status == "source-compilation-passed"`` with
+    ``fullRepositoryCompiled``), which lists every resolved ``src`` file, and the
+    historical manifest-bound report (``fullManifestCompiled``).  A manifest hash
+    is only enforced when the report itself carries one, so the enumeration path
+    needs no ``public/accepted-functions.json``.
+    """
     report = read(path)
-    if report.get('status') != 'source-compilation-passed' or report.get('fullManifestCompiled') is not True or report.get('manifestSha256') != manifest_hash:
-        raise ValueError('A complete fresh source-compilation report bound to this manifest is required')
+    if report.get('status') != 'source-compilation-passed':
+        raise ValueError('A complete fresh source-compilation report is required')
+    if report.get('fullRepositoryCompiled') is not True and report.get('fullManifestCompiled') is not True:
+        raise ValueError('The compilation report covers neither the whole repository nor a whole manifest')
+    if report.get('manifestSha256') is not None and manifest_hash is not None and report['manifestSha256'] != manifest_hash:
+        raise ValueError('The compilation report is bound to a different accepted manifest')
     result = {}
     for row in report['results']:
         obj = contained(root, row['object'])
@@ -215,8 +228,20 @@ def selected_rows(unit, module, accepted):
 
 
 def verify_compilation_equivalence(root, private, compilation):
+    """Cross-check fresh objects against the historical linked inputs.
+
+    This is a legacy-manifest check: the enumeration export derives ``complete``
+    from the measured bytes itself (``repo_build.build_project``), so when the
+    accepted manifest is absent there is nothing to compare and the check reports
+    that explicitly instead of failing.
+    """
     root, private = root.resolve(), private.resolve()
     manifest_path = contained(root, 'public/accepted-functions.json')
+    if not manifest_path.is_file():
+        return dict(verifiedFreshSourceFunctions=0, verifiedFunctionContracts=0,
+                    acceptedManifestSha256=None, manifestAbsent=True,
+                    publicSourceObjectsEquivalentToLinkedInputs=False,
+                    historicalLinkReportsDoNotEstablishFreshLinking=True)
     manifest = read(manifest_path)
     fresh = compile_index(root, compilation, digest(manifest_path))
     accepted, pins, contracts, verified = {}, {}, {}, set()
@@ -253,10 +278,20 @@ def verify_compilation_equivalence(root, private, compilation):
 
 
 def prepare(root, private, output, diagnostic=False, receipt=None, compilation=None):
+    """Historical manifest-bound project builder (``--legacy-manifest``).
+
+    The default builder is ``repo_build.build_project``, which emits one objdiff
+    unit per source-compilation result and computes ``complete`` from the measured
+    bytes.  This function remains for the manifest/report-driven export and now
+    fails with an explicit message when the accepted manifest is absent.
+    """
     root, private, output = root.resolve(), private.resolve(), output.resolve()
     if not output.is_relative_to(root / 'build') and not output.is_relative_to(root / 'work'):
         raise ValueError('Generated project must remain beneath the public root build/ or work/')
     manifest_path = contained(root, 'public/accepted-functions.json')
+    if not manifest_path.is_file():
+        raise ValueError('The legacy manifest export needs public/accepted-functions.json; '
+                         'run bytematch_project.py without --legacy-manifest to enumerate the compiled tree instead')
     manifest = read(manifest_path)
     if manifest['initializedDenominatorBytes'] != DENOMINATOR:
         raise ValueError('Full initialized denominator is required')

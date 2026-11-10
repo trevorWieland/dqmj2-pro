@@ -16366,6 +16366,11 @@
    "glob": "src/ov003/p5d_021dbd18/**",
    "module": "ov003",
    "compilerFlags": "p061"
+  },
+  {
+   "glob": "src/ov005/p1d_ov005/**",
+   "module": "ov005",
+   "compilerFlags": "p001"
   }
  ]
 }
