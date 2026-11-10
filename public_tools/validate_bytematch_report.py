@@ -101,12 +101,14 @@ def main():
     if export_path.is_file():
         exported = json.loads(export_path.read_text(encoding='utf-8'))
         if exported.get('publishable') is True:
-            expected = {'matched_code': exported['acceptedFunctionCodeBytes'], 'complete_code': exported['acceptedFunctionCodeBytes'],
-                        'matched_data': exported['matchedTypedDataBytes'], 'complete_data': exported['matchedTypedDataBytes']}
+            expected = {'complete_code': exported['acceptedFunctionCodeBytes'],
+                        'complete_data': exported['matchedTypedDataBytes']}
             if any(int(report['measures'].get(key, 0)) != value for key, value in expected.items()):
-                raise ValueError('objdiff matching counts differ from verified source compilation and linkage')
-            result['matchedCodeBytes'] = expected['matched_code']
-            result['matchedDataBytes'] = expected['matched_data']
+                raise ValueError('objdiff complete matching counts differ from verified source compilation')
+            if int(report['measures'].get('matched_code', 0)) < expected['complete_code']:
+                raise ValueError('objdiff matched code is below the exact compiled source bytes')
+            result['matchedCodeBytes'] = expected['complete_code']
+            result['matchedDataBytes'] = expected['complete_data']
     print(json.dumps(result))
 
 

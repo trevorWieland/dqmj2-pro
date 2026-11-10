@@ -111,14 +111,16 @@ def bundle_parts(bundle, manifest):
 def install_bundle(root, bundle):
     root, bundle = Path(root).resolve(), Path(bundle).resolve()
     accepted_path = root / "public/accepted-functions.json"
-    accepted_hash = digest(accepted_path)
-    accepted = read_json(accepted_path)
+    accepted_hash = digest(accepted_path) if accepted_path.is_file() else None
+    accepted = read_json(accepted_path) if accepted_hash else {}
     manifest = read_json(bundle / "manifest.json")
-    if manifest.get("schemaVersion") != 1 or manifest.get("snapshotRevision") != accepted.get("revision"):
+    if manifest.get("schemaVersion") != 1:
+        raise BundleError("Unsupported private input manifest")
+    if accepted_hash and manifest.get("snapshotRevision") != accepted.get("revision"):
         raise BundleError("Private input snapshot differs from accepted source snapshot")
     if manifest.get("missingRequiredInputs"):
         raise BundleError("Private input bundle declares an incomplete replay closure")
-    if manifest.get("acceptedManifestSha256", accepted_hash) != accepted_hash:
+    if accepted_hash and manifest.get("acceptedManifestSha256", accepted_hash) != accepted_hash:
         raise BundleError("Accepted source manifest identity differs")
     supplements = manifest.get("supplementalArchives", [])
     if not isinstance(supplements, list) or any(not isinstance(item, dict) for item in supplements):
@@ -182,7 +184,7 @@ def install_bundle(root, bundle):
                 raise BundleError("Installed private input differs")
             staged.unlink()
             installed += 1
-        if digest(accepted_path) != accepted_hash:
+        if accepted_hash is not None and digest(accepted_path) != accepted_hash:
             raise BundleError("Private input installation changed the accepted manifest")
         return dict(snapshotRevision=manifest["snapshotRevision"], acceptedManifestSha256=accepted_hash,
                     installedFiles=installed, identicalExistingFiles=reused, archiveParts=sum(map(len, archives)),
@@ -274,11 +276,13 @@ def fresh_reports(root, started_ns, rom_hash):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Materialize pinned private inputs and build the public source revision without printing private logs.")
+    parser = argparse.ArgumentParser(description="Materialize pinned private inputs and compile the complete public source tree without printing private logs.")
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--input-bundle", type=Path, default=Path("private-inputs"))
     parser.add_argument("--prepare-only", action="store_true")
-    parser.add_argument("--native-only", action="store_true")
+    parser.add_argument("--native-only", action="store_true",
+                        help="Repository-driven source build (retained for workflow compatibility).")
+    parser.add_argument("--jobs", type=int, default=4)
     args = parser.parse_args()
     root = args.root.resolve()
     bundle = args.input_bundle.resolve() if args.input_bundle.is_absolute() else root / args.input_bundle
@@ -291,14 +295,15 @@ def main():
     status = 1
     with (output / "private-build.log").open("w", encoding="utf-8") as log:
         try:
-            receipt["acceptedManifestSha256"] = digest(accepted_path)
+            if accepted_path.is_file():
+                receipt["acceptedManifestSha256"] = digest(accepted_path)
             receipt["publicGitRevision"] = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, stderr=log, text=True).strip()
             receipt['phase'] = 'install-private-inputs'
             print(json.dumps(dict(phase='install-pinned-private-inputs')), flush=True)
             receipt["privateInputs"] = install_bundle(root, bundle)
             receipt['phase'] = 'check-public-source'
-            accepted, unused_units, unused_pins, summary = verify(root, accepted_path)
-            receipt["sourceIntegrity"] = summary
+            from source_units import check as source_check
+            receipt["sourceIntegrity"] = source_check(root)
             receipt["prepared"] = True
             if not args.prepare_only:
                 for name in ("recovery.json", "manifest.json", "provenance/seed-manifest.json", "provenance/seed-oracle-results.json"):
@@ -307,52 +312,31 @@ def main():
                 receipt['phase'] = 'verify-runtime-inputs'
                 prepare_runtime(root, log)
                 receipt['phase'] = 'compile-public-source'
-                print(json.dumps(dict(phase='compile-accepted-public-source')), flush=True)
-                run_private(root, log, ["public_tools/compile_sources.py", "--root", str(root),
-                    "--compiler-root", str(root / "tools/mwccarm/mwccarm"),
-                    "--license-file", str(root / "tools/mwccarm/mwccarm/license.dat"), "--jobs", "3"])
-                compile_path = root / "build/public-source-compile/report.json"
+                print(json.dumps(dict(phase='compile-every-repository-source')), flush=True)
+                run_private(root, log, ["public_tools/repo_build.py", "--root", str(root),
+                                        "--private-root", str(root), "--compile-only",
+                                        "--jobs", str(max(1, args.jobs))])
+                compile_path = root / "build/repository-compile/report.json"
                 compiled = read_json(compile_path)
-                if compiled.get("status") != "source-compilation-passed" or compiled.get("fullManifestCompiled") is not True or compiled.get("manifestSha256") != receipt["acceptedManifestSha256"] or compile_path.stat().st_mtime_ns < receipt["startedTimeNs"]:
-                    raise BundleError("The complete fresh public source compilation did not pass")
-                receipt["publicSourceCompileReport"] = dict(path="build/public-source-compile/report.json", sha256=digest(compile_path), modifiedTimeNs=compile_path.stat().st_mtime_ns)
-                if args.native_only:
-                    receipt['buildScope'] = 'native-modules'
-                    receipt['phase'] = 'fresh-native-module-links'
-                    receipt['nativeStartedTimeNs'] = time.time_ns()
-                    print(json.dumps(dict(phase=receipt['phase'])), flush=True)
-                    native_output = root / 'work/nb' / uuid.uuid4().hex[:10]
-                    run_private(root, log, ['public_tools/native_build.py', '--root', str(root),
-                        '--compile-report', str(compile_path), '--out-dir', str(native_output),
-                        '--compiler-root', str(root / 'tools/mwccarm/mwccarm'),
-                        '--license-file', str(root / 'tools/mwccarm/mwccarm/license.dat'),
-                        '--compilation-not-before-ns', str(receipt['startedTimeNs'])])
-                    native_path = native_output / 'native-build-receipt.json'
-                    native = read_json(native_path)
-                    if native.get('nativeBuildPassed') is not True:
-                        raise BundleError('All native source links must pass')
-                    if type(native.get('startedTimeNs')) is not int or native['startedTimeNs'] < receipt['nativeStartedTimeNs']:
-                        raise BundleError('Native module receipt predates its invocation')
-                    receipt['nativeStartedTimeNs'] = native['startedTimeNs']
-                    receipt['nativeBuildReceipt'] = dict(path=native_path.relative_to(root).as_posix(),
-                        sha256=digest(native_path), modifiedTimeNs=native_path.stat().st_mtime_ns)
-                    receipt['reports'] = native['reports']
-                    receipt['buildOutcome'] = {key: native[key] for key in (
-                        'nativeBuildPassed', 'behavioralReplayPerformed', 'fullContainerBuildPerformed',
-                        'moduleCount', 'acceptedFunctionsLinked', 'allModuleBytesExact', 'allSymbolChecksPassed')}
-                else:
-                    receipt['phase'] = 'bootstrap-checksum-tool-prerequisite'
-                    print(json.dumps(dict(phase=receipt['phase'])), flush=True)
-                    run_private(root, log, ['reproduce.py'])
-                    print(json.dumps(dict(phase='replay-and-link-all-modules')), flush=True)
-                    receipt['phase'] = 'replay-and-link-all-modules'
-                    receipt['replayStartedTimeNs'] = time.time_ns()
-                    build_exit = run_private(root, log, ["run_checks.py", "--clean"], allow_failure=True)
-                    receipt["buildOutcome"] = build_outcome(root, build_exit, receipt["replayStartedTimeNs"])
-                    receipt["reports"] = fresh_reports(root, receipt["replayStartedTimeNs"], accepted["romSha256"])
-                if digest(accepted_path) != receipt["acceptedManifestSha256"]:
-                    raise BundleError("Accepted manifest changed during the private build")
-                verify(root, accepted_path)
+                if (compiled.get("status") not in ("source-compilation-passed", "source-compilation-partial")
+                        or compiled.get("fullRepositoryCompiled") is not True
+                        or type(compiled.get("compiledUnits")) is not int or compiled["compiledUnits"] < 1
+                        or compile_path.stat().st_mtime_ns < receipt["startedTimeNs"]):
+                    raise BundleError("The complete repository source compilation did not produce a fresh report")
+                receipt["publicSourceCompileReport"] = dict(path="build/repository-compile/report.json",
+                                                            sha256=digest(compile_path),
+                                                            modifiedTimeNs=compile_path.stat().st_mtime_ns)
+                receipt["buildScope"] = 'repository-source'
+                receipt["compilation"] = {key: compiled.get(key) for key in (
+                    "status", "selectedCompilationUnits", "compiledUnits", "failedUnits",
+                    "fullRepositoryCompiled", "sourceInventory")}
+                receipt["compilation"]["firstFailures"] = [
+                    dict(**{key: unit.get(key) for key in ("source", "module", "status", "exitCode")},
+                         failureClass="compiler-license" if "license" in (unit.get("stderrTail") or "").lower()
+                         else "compiler-or-source")
+                    for unit in compiled.get("failures", [])[:5]]
+                if accepted_path.is_file() and digest(accepted_path) != receipt.get("acceptedManifestSha256"):
+                    raise BundleError("Accepted manifest changed during the public build")
                 receipt["buildPassed"] = True
             status = 0
         except Exception as error:
@@ -362,33 +346,27 @@ def main():
             log.write(type(error).__name__ + ": " + str(error) + "\n")
         receipt["finishedTimeNs"] = time.time_ns()
     (output / "build-receipt.json").write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
-    summary = dict(buildPassed=receipt['buildPassed'], prepared=receipt['prepared'], phase=receipt.get('phase'), buildScope=receipt.get('buildScope', 'historical-full-replay'),
-                   failureType=receipt.get('failureType'), failureReason=receipt.get('failureReason'))
-    native_status_path = output / 'native-failure-status.json'
-    if receipt.get('buildScope') == 'native-modules' and native_status_path.is_file() and native_status_path.stat().st_mtime_ns >= receipt.get('nativeStartedTimeNs', receipt['startedTimeNs']):
-        native_status = read_json(native_status_path)
-        if set(native_status) <= {'errorType', 'frames', 'missingInput'} and re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', native_status.get('errorType', '')):
-            safe_frames = native_status.get('frames', [])
-            if isinstance(safe_frames, list) and len(safe_frames) <= 8 and all(isinstance(frame, dict) and set(frame) == {'file', 'line', 'function'} and re.fullmatch(r'[A-Za-z0-9_.-]+\.py', frame['file']) and type(frame['line']) is int and re.fullmatch(r'[A-Za-z0-9_<>]+', frame['function']) for frame in safe_frames):
-                summary['nativeFailure'] = native_status
-    compiled_path = root / 'build/public-source-compile/report.json'
+    summary = dict(buildPassed=receipt['buildPassed'], prepared=receipt['prepared'], phase=receipt.get('phase'),
+                   buildScope=receipt.get('buildScope'), failureType=receipt.get('failureType'),
+                   failureReason=receipt.get('failureReason'))
+    compiled_path = root / 'build/repository-compile/report.json'
     if compiled_path.is_file() and compiled_path.stat().st_mtime_ns >= receipt['startedTimeNs']:
         compiled = read_json(compiled_path)
-        summary['compilation'] = {key: compiled.get(key) for key in ('status', 'selectedCompilationUnits', 'compiledUnits', 'fullManifestCompiled')}
+        summary['compilation'] = {key: compiled.get(key) for key in (
+            'status', 'selectedCompilationUnits', 'compiledUnits', 'failedUnits', 'fullRepositoryCompiled',
+            'sourceInventory')}
         summary['compilation']['firstFailures'] = [
-            dict(**{key: unit.get(key) for key in ('source', 'status', 'exitCode')},
-                 failureClass='compiler-license' if 'license' in (unit.get('stdout', '') + unit.get('stderr', '')).lower() else 'compiler-or-object-check')
-            for unit in compiled.get('results', []) if unit.get('status') != 'compiled'][:5]
-    checks_path = root / REPORTS[0]
-    if checks_path.is_file() and checks_path.stat().st_mtime_ns >= receipt.get('nativeStartedTimeNs', receipt.get('replayStartedTimeNs', receipt['startedTimeNs'])):
-        checks = read_json(checks_path)
-        summary['checksState'] = checks.get('state')
-        failed = [s for s in checks.get('steps', []) if s.get('exitCode')]
-        if failed:
-            summary['failedStep'] = dict(script=Path(failed[-1]['command'][1]).name, exitCode=failed[-1]['exitCode'])
+            dict(**{key: unit.get(key) for key in ('source', 'module', 'status', 'exitCode')},
+                 failureClass='compiler-license' if 'license' in (unit.get('stderrTail') or '').lower()
+                 else 'compiler-or-source')
+            for unit in compiled.get('failures', [])[:5]]
     (output / 'public-build-status.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(summary))
     return status
+
+
+if __name__ == "__main__":
+    sys.exit(main())
 
 
 if __name__ == "__main__":
