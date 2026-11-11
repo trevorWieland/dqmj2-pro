@@ -64,3 +64,82 @@ was pruned from the private tree, so recovering them needs either a re-run of th
 link that produced them or a decision to accept the address-derived names. Until
 then `--check --allow-unresolved` passes at the baseline and fails if the count
 grows. The text map is stable across runs.
+
+## `permute.py` — deterministic allocation-form permuter
+
+Hand-matching stalls on one class of row: the C is reachable and compiles to the
+exact ledger size, but mwcc `-O2` picks a different register, stack slot or branch
+form. `permute.py` searches that shape space and accepts exactly one outcome:
+byte-and-relocation exactness against the overlay image.
+
+```bash
+python ops/permute.py --candidate ops/candidates/ov001_021d8fa4.json
+python ops/permute.py --module ov001 --address 0x021d8ff8 --size 120 \
+    --symbol native_ov001_021d8ff8 --source work/p2/cd/f8ff8.c --budget 60
+```
+
+A candidate is a JSON file with `module`, `address`, `size`, `symbol` and `source`
+(see `ops/candidates/`). No target bytes are stored: the expected bytes are read
+from the overlay image at run time, so candidates carry no evidence artifact. The
+compile and comparison path is the same one the packet verifiers use
+(`work/p2/check.py`), so a hit is a real hit.
+
+### Mutation set (deterministic order, then seeded composition)
+
+| # | shape | why it matters here |
+| --- | --- | --- |
+| 1 | swap adjacent local declarations | flips register assignment order |
+| 2 | hoist a local to the top of its block | changes live-range start |
+| 3 | signedness flip (`s32` <-> `u32`, ...) | `bgt` vs `bhi`, sign-extension shape |
+| 4 | `p[i]` <-> `*(p + i)` | index vs pointer addressing |
+| 5 | hex literal <-> named local | a literal is folded, a local is not (reciprocal multiply) |
+| 6 | swap `return 0` / `return 1` | if-conversion order of the two predicated moves |
+| 7 | swap any two declarations | the allocator does not always follow textual order |
+| 8 | split an inline call result into a local | produces the `mov r3, r0; cmp r3` tail shape |
+
+After the single-step list, a seeded composition pass combines pairs of shapes
+(`--seed`, default 0), which is the part of the space a hand search cannot reach
+while staying reproducible.
+
+`decomp-permuter` is vendored at
+`tools/decomp-permuter-8556c81d80d1c1af98a858c8f4dc951357f29139` (pinned commit
+`8556c81d80d1c1af98a858c8f4dc951357f29139`) and is the intended engine once the
+search needs AST-level and randomised mutations; the loop here is the
+deterministic subset that runs inside the packet harness with no extra state.
+
+### Proof rows (60 s budget each, 2.0/base, seed 0)
+
+| row | bytes | mutants | wall time | exact |
+| --- | --- | --- | --- | --- |
+| `ov001 0x021d8ff8` | 120 | 225 | 15.8 s | no |
+| `ov001 0x021d8f08` | 128 | 226 | 14.7 s | no |
+| `ov001 0x021d8fa4` | 84 | 3 | 0.2 s | no |
+
+The third row has no local declarations, so the declaration-driven mutations
+collapse to three: the tool is honest about a narrow space rather than inventive
+about it. The intended second corpus of Thumb near-misses
+(`work/worktrees/p1/permuter-candidates/`) did not exist in this checkout at run
+time, so nothing could be run against it; the tool takes any `--candidate` file,
+including rows from another module, so that corpus can be added without a code
+change once it lands.
+
+### Mechanism findings this lane produced
+
+These are recorded here because they are the reusable part of the work:
+
+1. `0x0202a954` takes **five** arguments; the fifth is a literal zero on the
+   stack, which is why the name buffer sits at `sp + 4` in both ov001 loaders.
+   A four-argument call is 4 bytes short and moves the buffer to `sp + 0`.
+2. `0x0202a8e0` is the ov001 size probe and its result must be held in a `u32`:
+   an `s32` comparison emits `bgt` where the overlay has `bhi`.
+3. The ov001 name tables copy **7** and **9** byte-pairs (0x0222d9b6 and
+   0x0222d9c4); the trailing character of the longer one is copied separately.
+   mwcc rotates the do-while decrement in front of the body, so the counters are
+   7 and 8 in source order.
+4. The recorded-flag bitmap is byte indexed — `index / 8` for the byte and
+   `index % 8` for the bit — and the divisor is proved by the signed-division
+   bias shift (`ror #29`, not `#27`).
+5. **Negative result:** do not extend the dsi/1.6sp2 compiler override to the
+   0x021fexxx sound cluster. It merges the three identical release blocks into a
+   loop (92 B against the original's unrolled 120 B), so 2.0/base is correct
+   there even though the field-load idiom differs.

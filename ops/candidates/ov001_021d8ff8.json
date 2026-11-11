@@ -1,0 +1,8 @@
+{
+  "module": "ov001",
+  "address": "0x021d8ff8",
+  "size": 120,
+  "symbol": "native_ov001_021d8ff8",
+  "source": "work/p2/cd/f8ff8.c",
+  "note": "Name-table loader. Body matches to offset 64; the tail wants `mov r3,r0; cmp r3,#144` where 2.0/base compares r0 directly. Parked in the ov001 0x021d2000 window packet."
+}
