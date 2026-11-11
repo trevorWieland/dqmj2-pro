@@ -452,6 +452,34 @@ def target_mode(module, address, name=None):
     return None
 
 
+def encode_thumb_branch(absolute, target, addend, arm):
+    """Encode a Thumb-2 BL (arm=False) or BLX (arm=True) immediate.
+
+    The architectural branch base is ``PC + 4`` for BL and ``Align(PC + 4, 4)`` for BLX, and
+    the compiler's relocation addend already carries the ``-4`` PC bias for a plain call
+    (``R_ARM_THM_CALL`` with addend -4).  The delta therefore has to be computed relative to
+    that base **without** adding another bias:
+
+        base  = absolute + 4              (BL)
+        base  = (absolute + 4) & ~3       (BLX)
+        delta = target + addend + 4 - base
+
+    For BL this reduces to ``target + addend - absolute``, which is the pre-existing formula.
+    Adding the ``+4`` twice shifts every BL by four bytes, which is exactly the regression this
+    helper exists to prevent.  Returns the two instruction halfwords.
+    """
+    base = ((absolute + 4) & ~3) if arm else (absolute + 4)
+    delta = target + addend + 4 - base
+    sign = (delta >> 24) & 1
+    i1 = (delta >> 23) & 1
+    i2 = (delta >> 22) & 1
+    j1 = (i1 ^ sign) ^ 1
+    j2 = (i2 ^ sign) ^ 1
+    first = 0xF000 | (sign << 10) | ((delta >> 12) & 0x3FF)
+    second = (0xE800 if arm else 0xF800) | (j1 << 13) | (j2 << 11) | ((delta >> 1) & 0x7FF)
+    return first, second
+
+
 def patch_function(function, module, base, sections, relocations, image):
     """Patch a compiled function's relocations into the measured image's shape.
 
@@ -523,21 +551,7 @@ def patch_function(function, module, base, sections, relocations, image):
                 value |= 1
             struct.pack_into('<I', body, offset, value & 0xFFFFFFFF)
         elif kind in (10, 11):  # R_ARM_THM_CALL / R_ARM_THM_JUMP24
-            # Thumb-2 BL / BLX immediate: S and imm10 live in the first halfword,
-            # J1/J2 and imm11 in the second.  The old Thumb-1 style packing (imm in
-            # the high halfword) silently produced the wrong bits for every Thumb
-            # call site, which is why Thumb units with calls never matched.
-            if addend is None:
-                addend = 0
-            pc = ((absolute + 4) & ~3) if mode == 'arm' else (absolute + 4)
-            delta = target + addend - pc
-            sign = (delta >> 24) & 1
-            i1 = (delta >> 23) & 1
-            i2 = (delta >> 22) & 1
-            j1 = (i1 ^ sign) ^ 1
-            j2 = (i2 ^ sign) ^ 1
-            first = (0xF000 if kind == 10 else 0x9000) | (sign << 10) | ((delta >> 12) & 0x3FF)
-            second = (0xE800 if mode == 'arm' else 0xF800) | (j1 << 13) | (j2 << 11) | ((delta >> 1) & 0x7FF)
+            first, second = encode_thumb_branch(absolute, target, addend or 0, mode == 'arm')
             struct.pack_into('<H', body, offset, first)
             struct.pack_into('<H', body, offset + 2, second)
         elif kind in (43, 44):  # R_ARM_MOVW_ABS_NC / R_ARM_MOVT_ABS
