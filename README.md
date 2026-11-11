@@ -15,9 +15,13 @@ second badge shows initialized native module bytes. [See the reconciliation](doc
 | --- | --- | --- |
 | Matched function code | **54.55911%** (1,161,558 of 2,128,990 bytes) | ByteMatch `B2JJ-modified`, commit `597d1c46` |
 | Functions matched | **11,717 of 15,308** (76.54%) | same ByteMatch report |
-| Current wave | **236 functions / 17,520 B** newly accepted | maintainer progress summary |
 | True backlog | **3,284 rows / 912,134 B** still unmatched | private `ledger/functions.jsonl`, unmatched rows with measured bytes |
 | Ledger rows | 16,073 (4,049 unmatched; 765 have no measured size) | same ledger |
+
+**Why the ledger and ByteMatch differ.** The private ledger records **12,024 matched rows**;
+ByteMatch measures **11,717 matched functions**. The gap (+307 rows) is merged work that has not
+been measured by a published ByteMatch run yet — the ledger updates per accepted row, ByteMatch
+only when its build runs. Neither number is wrong; they answer "accepted" versus "measured".
 
 This is native initialized-source coverage, not overall game completion. The measured input is a
 modified `B2JJ` build with SHA-256
