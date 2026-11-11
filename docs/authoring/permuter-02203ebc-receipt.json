@@ -1,0 +1,96 @@
+{
+  "kind": "permuter-acceptance",
+  "generatedAt": "2026-11-11T15:20:55-0600",
+  "workspace": "work/permuter/ov006_02203ebc_sp1",
+  "module": "ov006",
+  "address": "0x02203ebc",
+  "bytes": 48,
+  "mode": "thumb",
+  "symbol": "native_ov006_02203ebc",
+  "image": "extract\\arm9_overlays\\ov006.bin",
+  "imageSliceSha256": "0669744e4d999c284bc10efb759e307a0e1f39f9fd20edf8a9bccbca5f6b6cf6",
+  "compiler": "tools/mwccarm/mwccarm/2.0/sp1/mwccarm.exe",
+  "compilerSha256": "e76c86fa13ae71594c42f7b12b96b8bfd687632a2fe4a3d91e9d72a3cdc22c71",
+  "flags": [
+    "-O2",
+    "-enum",
+    "int",
+    "-char",
+    "signed",
+    "-str",
+    "noreuse",
+    "-proc",
+    "arm946e",
+    "-gccext,on",
+    "-fp",
+    "soft",
+    "-inline",
+    "off",
+    "-Cpp_exceptions",
+    "off",
+    "-RTTI",
+    "off",
+    "-interworking",
+    "-w",
+    "off",
+    "-sym",
+    "on",
+    "-gccinc",
+    "-nolink",
+    "-msgstyle",
+    "gcc"
+  ],
+  "permuterPin": "8556c81d80d1c1af98a858c8f4dc951357f29139",
+  "candidate": "src/ov006/permuter_20261111/native_ov006_02203ebc.c",
+  "checks": [
+    {
+      "name": "module image hash matches the workspace",
+      "ok": true,
+      "detail": "ov006.bin"
+    },
+    {
+      "name": "target.o is the image slice with relocation slots zeroed",
+      "ok": true,
+      "detail": "48 B, 2 slot(s)"
+    },
+    {
+      "name": "negative control: base.c does NOT reproduce the row",
+      "ok": true,
+      "detail": "score 1"
+    },
+    {
+      "name": "byte + relocation exactness against the module image",
+      "ok": true,
+      "detail": "score (0, 0), 48 B"
+    },
+    {
+      "name": "candidate .text equals target .text with slots zeroed",
+      "ok": true,
+      "detail": "48 B"
+    },
+    {
+      "name": "candidate relocations identical to the base object",
+      "ok": true,
+      "detail": "2 relocation(s)"
+    },
+    {
+      "name": "negative control: candidate does not match the slice at -2",
+      "ok": true,
+      "detail": "score 46"
+    },
+    {
+      "name": "negative control: candidate does not match the slice at +2",
+      "ok": true,
+      "detail": "score 46"
+    }
+  ],
+  "passed": true,
+  "score": [
+    0,
+    0
+  ],
+  "sourceSha256": "3277ade43861273970decb7c0573c22a893617836c54aeb0b82c6a31d5b25398",
+  "objectSha256": "f2196510a38c9c5cc8bf9ee2794eb2033df5539fc83f01b2a3cc6d34eab1b923",
+  "baseScore": 1,
+  "acceptedSource": null
+}
