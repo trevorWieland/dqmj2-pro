@@ -1,0 +1,44 @@
+{
+  "rows": [
+    {
+      "name": "02203ebc",
+      "symbol": "native_ov006_02203ebc",
+      "address": "0x02203EBC",
+      "bytes": 48,
+      "source": "ops/compiler_specs/02203ebc.c",
+      "label": "same-instruction: mask idiom (orrs vs cmp)"
+    },
+    {
+      "name": "021fb384",
+      "symbol": "native_ov006_021fb384",
+      "address": "0x021FB384",
+      "bytes": 24,
+      "source": "ops/compiler_specs/021fb384.c",
+      "label": "same-instruction: commutative adds"
+    },
+    {
+      "name": "021f4c80",
+      "symbol": "native_ov006_021f4c80",
+      "address": "0x021F4C80",
+      "bytes": 68,
+      "source": "ops/compiler_specs/021f4c80.c",
+      "label": "mixed: rule1 + rule3 + rule4"
+    },
+    {
+      "name": "021ff02c",
+      "symbol": "native_ov006_021ff02c",
+      "address": "0x021FF02C",
+      "bytes": 48,
+      "source": "ops/compiler_specs/021ff02c.c",
+      "label": "mixed: rule3 + rule4"
+    },
+    {
+      "name": "02203bc0",
+      "symbol": "native_ov006_02203bc0",
+      "address": "0x02203BC0",
+      "bytes": 24,
+      "source": "ops/compiler_specs/02203bc0.c",
+      "label": "non-queue control: load-count near miss"
+    }
+  ]
+}
