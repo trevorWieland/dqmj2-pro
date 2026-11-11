@@ -2730,6 +2730,13 @@
    "compilerFlags": "p001"
   },
   {
+   "glob": "src/main/p1p_main_small/**",
+   "module": "main",
+   "mode": "thumb",
+   "compilerFlags": "p032",
+   "compilerSha256": "7150fa4fe4cb6db6867ac530ec1a0754f6ca4df92868d963a7875196f9222880"
+  },
+  {
    "glob": "src/main/**",
    "module": "main",
    "compilerFlags": "p002",
