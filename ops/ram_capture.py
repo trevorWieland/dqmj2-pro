@@ -2,7 +2,8 @@
 
 Some data only exists after the program has run: `docs/data/unbacked-data.md`
 proves the 24-byte `species_roster` records at `0x021c4bf8` are in main BSS, and
-the script VM command block at `0x020fb264` is likewise runtime state. No static
+the script VM **output text block** at `0x020fb264` (cursor at `+0x80`, text array
+at `0x020fae64`, per `docs/scripts/vm.md` §3) is likewise runtime state. No static
 image can ever back them, so the only way to get the bytes is to capture RAM from
 a running instance and document exactly which state was captured.
 
@@ -52,6 +53,7 @@ Exit codes: 0 success, 1 refused (bad spec, provenance, size or range),
 import argparse
 import hashlib
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -139,10 +141,15 @@ def validate_spec(root, spec, manifest):
 
     module = module_for(manifest, spec['module'])
     base, end = module_span(root, module)
-    if not (base <= dump_base and dump_base + size <= end):
-        problems.append(f'dump range {dump_base:#x}-{dump_base + size:#x} is not inside '
-                        f'module {spec["module"]} ({base:#x}-{end:#x}); a dump of the wrong '
-                        f'size or base shifts every captured byte')
+    # A dump may be larger than the module — a debugger dump is usually the whole
+    # main-RAM window — but it must cover the module window from its base, because
+    # a dump that starts late or ends early silently shifts or truncates every byte.
+    if dump_base > base:
+        problems.append(f'dump starts at {dump_base:#x}, after the module base {base:#x}; '
+                        f'the dump must cover the module window from its base')
+    if dump_base + size < end:
+        problems.append(f'dump ends at {dump_base + size:#x}, before the module end {end:#x}; '
+                        f'capture the whole module window (image plus BSS)')
 
     for capture in spec['captures']:
         name = capture.get('name')
@@ -160,6 +167,39 @@ def validate_spec(root, spec, manifest):
             problems.append(f'capture {name} range {address:#x}-{address + length:#x} is outside '
                             f'the dump {dump_base:#x}-{dump_base + size:#x}')
     return problems
+
+
+def guard_manifest_destination(root, destination):
+    """Refuse a manifest destination that is the real manifest, ledger output or tracked.
+
+    `--apply-manifest` exists to hand the pipeline a *copy*; writing the private
+    manifest in place, or any tracked file, would silently change the project's
+    source of truth from a tool run.
+    """
+    target = Path(destination).resolve()
+    protected = (root / 'manifest.json').resolve()
+    if target == protected:
+        raise SystemExit('refusing --apply-manifest: destination is manifest.json itself; '
+                         'pass a copy path instead')
+    try:
+        relative = target.relative_to(root)
+    except ValueError:
+        # Anything outside the checkout is refused outright. This also covers the
+        # private tree's junctions: `ledger/` inside a worktree resolves to the
+        # parent repository, so a destination that *looks* local can be the real
+        # ledger. Only copies inside this checkout are allowed.
+        raise SystemExit(f'refusing --apply-manifest: {target} is outside {root}; '
+                         f'write the copy under build/ instead')
+    parts = relative.parts
+    if parts and parts[0] in ('ledger', 'extract', 'inputs', 'deps', 'tools', 'config', 'src'):
+        raise SystemExit(f'refusing --apply-manifest: {relative} is inside {parts[0]}/, '
+                         f'which the capture tool must not write')
+    tracked = subprocess.run(['git', '-C', str(root), 'ls-files', '--error-unmatch',
+                              str(relative)], capture_output=True, text=True)
+    if tracked.returncode == 0:
+        raise SystemExit(f'refusing --apply-manifest: {relative} is a tracked file; '
+                         f'write the copy under build/ instead')
+    return target
 
 
 def apply_to_manifest(root, manifest, entries):
@@ -249,8 +289,8 @@ def main(argv=None):
         fragment_path.write_text(json.dumps(fragment, indent=1) + '\n')
         print(f'fragment   {fragment_path.relative_to(root)} ({len(entries)} module entries)')
         if args.apply_manifest:
+            target = guard_manifest_destination(root, args.apply_manifest)
             merged = apply_to_manifest(root, manifest, entries)
-            target = Path(args.apply_manifest)
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text(json.dumps(merged, indent=1) + '\n')
             print(f'manifest   {target} ({len(merged["modules"])} modules)')
