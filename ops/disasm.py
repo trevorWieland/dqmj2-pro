@@ -58,6 +58,39 @@ def disassemble(root, name, address, size, mode='arm'):
         return result.stdout
 
 
+def pool_literals(root, name, address, size, mode='arm'):
+    """Yield (instruction address, literal address, literal word) for PC-relative loads.
+
+    Decoded from the raw instruction bytes rather than the rendered operand: the
+    literal pool of a short accessor often lives outside the row, so the table must
+    be read from the module image, not from the disassembled slice.
+    """
+    image_path, base = module_image(root, name)
+    image = image_path.read_bytes()
+    offset = address - base
+    code = image[offset:offset + size]
+    for index in range(0, len(code) - 1, 2 if mode == 'thumb' else 4):
+        if mode == 'thumb':
+            halfword = int.from_bytes(code[index:index + 2], 'little')
+            if (halfword & 0xF800) != 0x4800:      # ldr Rt, [pc, #imm8 * 4]
+                continue
+            instruction = address + index
+            literal_address = ((instruction + 4) & ~3) + (halfword & 0xFF) * 4
+        else:
+            word = int.from_bytes(code[index:index + 4], 'little')
+            if (word & 0x0F7F0000) != 0x051F0000:  # ldr Rt, [pc, #+/-imm12]
+                continue
+            instruction = address + index
+            immediate = word & 0xFFF
+            literal_address = instruction + 8 + (immediate if word & 0x00800000 else -immediate)
+        literal_offset = literal_address - base
+        if 0 <= literal_offset and literal_offset + 4 <= len(image):
+            literal = int.from_bytes(image[literal_offset:literal_offset + 4], 'little')
+        else:
+            literal = None
+        yield instruction, literal_address, literal
+
+
 def main():
     parser = argparse.ArgumentParser(description='Disassemble one measured function from a module image.')
     parser.add_argument('--root', type=Path, default=Path('.'))
@@ -65,9 +98,27 @@ def main():
     parser.add_argument('--address', required=True, help='function address, e.g. 0x21ec644')
     parser.add_argument('--bytes', type=int, required=True, help='function size in bytes (ledger row)')
     parser.add_argument('--mode', choices=sorted(TRIPLES), default='arm')
+    parser.add_argument('--resolve-pools', action='store_true',
+                        help='also print the literal each PC-relative load reads')
     args = parser.parse_args()
     try:
-        print(disassemble(args.root.resolve(), args.module, int(args.address, 0), args.bytes, args.mode), end='')
+        root = args.root.resolve()
+        address = int(args.address, 0)
+        _, base_hint = module_image(root, args.module)
+        print(disassemble(root, args.module, address, args.bytes, args.mode), end='')
+        if args.resolve_pools:
+            print('\n-- literal pools --')
+            found = False
+            for instruction, literal_address, literal in pool_literals(
+                    root, args.module, address, args.bytes, args.mode):
+                found = True
+                rendered = 'unreadable' if literal is None else f'{literal:#010x}'
+                note = ''
+                if literal is not None and base_hint <= literal < base_hint + 0x10000000:
+                    note = '  (address-like)'
+                print(f'  {instruction:#010x}: pool {literal_address:#010x} -> {rendered}{note}')
+            if not found:
+                print('  (no PC-relative loads in this row)')
     except (OSError, ValueError, KeyError, json.JSONDecodeError) as error:
         print(str(error), file=sys.stderr)
         return 1
