@@ -154,3 +154,78 @@ FPK/ASH reader and the inventory's CFG tooling for those.
 
 ## 8. What the tool proves today
 
+## 9. Assembler — `public_tools/scr_asm.py`
+
+Status: **first increment**, same scope as the disassembler. It consumes the exact listing format
+`scr_disasm.py` emits and produces the byte stream; the opcode table is parsed at run time from the
+matched dispatcher with `scr_disasm.parse_table`, so it cannot drift from section 2.
+
+### Listing syntax (exact)
+
+```
+0x00000000  21           walk_0
+0x00000001  e3 1c 05     .escape_skip 0x05
+0x00000004  e3 1b        .block_end
+0x00000006  ff           .byte 0xff   ; unknown opcode
+```
+
+Columns: address, hex bytes, statement, optional `; comment`. Statements and their encodings:
+
+| statement | bytes |
+| --- | --- |
+| `.end` | `00` |
+| `.block_end` | `e3 1b` |
+| `.escape_skip <byte>` | `e3 1c <byte>` |
+| `.escape <byte>` | `e3 <byte>` |
+| `.escape_15` | `e3 15` |
+| `.byte <byte>` | `<byte>` (undecoded) |
+| `<mnemonic>` from section 2 | the opcode byte that mnemonic maps to |
+
+Lines starting with `#` (the coverage summary) are ignored. The assembler also verifies that the
+listed hex bytes equal the encoding; a disagreement is reported as an error instead of silently
+following either side.
+
+### Refusal rule
+
+A listing containing anything the disassembler could not decode (`.byte`, `.escape`, `.escape_15`)
+is **refused**: the assembler will not invent the meaning of bytes the recovered model does not
+cover. `--allow-undecoded` emits them for inspection but still returns failure. This is deliberate:
+an assembler that silently passes unknown bytes through is a trap for a romhacker, not a tool.
+
+### Round-trip mode
+
+```
+python public_tools/scr_asm.py --root . --roundtrip --input listing.txt \
+    --image extract/files/<image> --offset <n>
+```
+
+It assembles the listing, compares it with the original image window, and prints statements,
+assembled bytes, matched/mismatched byte counts and the first disagreement. It exits non-zero on any
+mismatch or refusal.
+
+### Measured round-trip population
+
+Scanning `extract/files/` for terminator-ended runs of at least eight known opcodes finds **44 real
+files** where this text-VM fragment decoder applies. The two largest were round-tripped:
+
+| image | stream | bytes | result |
+| --- | --- | --- | --- |
+| `d2_ObjVsTitleData.bin` | offset `0x50da`, length 99 | 99 | 99 matched, 0 mismatched |
+| `flag.bin` | offset `0x5f0c`, length 49 | 49 | 49 matched, 0 mismatched |
+
+Round-trip rate on fully decoded windows: **148/148 bytes (100%), 0 refused**. That is the honest
+population: the text VM appears only as fragments inside 44 files; the rest of the corpus is not
+covered by this decoder, and those windows are refused rather than approximated.
+
+### Honest limitations
+
+* **Text-VM family only.** This assembles the 47-opcode dispatcher family of sections 1-4. It does
+  not assemble the interpreted SCR bytecode (SYS records, the 358-slot dispatch at `0x0205A68C`),
+  whose CFG coverage is partial and whose instruction widths are unknown in this document.
+* **The container is unchanged.** FPK/SCR framing (SCR magic, 4096-byte entry table, code at 4100,
+  FPK member tables) is documented in `docs/2026-10-29-interpreted-script-inventory.md`;
+  `scr_asm.py` neither reads nor writes it. A romhacker still needs the pinned FPK/ASH reader to get
+  a decoded image in and out of a container.
+* **Only complete windows round-trip.** Streams that start or end mid-command, or that contain
+  unknown opcodes, are refused by design; the 100% figure applies to the fully decoded windows
+  above, not to the whole 14.2 MB SCR corpus.
