@@ -374,3 +374,64 @@ ledger row or the processor profile, and `p001` vs `p004` alone changes this row
 codegen (see the rule above). The build also copies the source's quoted-include closure
 into the workspace, because the permuter's hardcoded `cpp -P -nostdinc` has no include
 path and its candidate files are written to a temp directory.
+
+### The relocation-only bucket was a patcher bug, not dead rows
+
+The first pass put ten accepted rows (156 B) in the relocation-only bucket:
+`0x021edc3c`, `0x021ef108`, `0x021ef84c`, `0x021f4f30`, `0x021f57e0`, `0x021f69e0`,
+`0x021fb7b0`, `0x021fd948`, `0x021fd954`, `0x022042ac`. Every one compiled to the exact
+measured size and was one byte off, with the whole difference inside a single
+`R_ARM_ABS32` relocation slot: the image stores a Thumb function's address **with bit 0
+set**, and the patcher stored the even address.
+
+`ops/form_search.py:relocate` now sets bit 0 for an `R_ARM_ABS32` whose symbol is a
+function (project naming `*_fn_*`, `func_*`) and whose target resolves to Thumb, using the
+same `TargetModes` evidence that decides `BL` vs `BLX`. After the fix all ten rows measure
+exact and the relocation-only bucket is empty in every module scanned so far. Two
+consequences worth keeping straight:
+
+* the public `bytematch` path compares relocation *contracts* rather than patching bytes,
+  so these rows were already counted in the ledger; the bug was in the local measurement
+  path (`ops/form_search.py`, `ops/compiler_matrix.py`, `ops/verify_permuter.py`), which
+  would have rejected a correct source for any row holding a function pointer literal;
+* `ops/test_form_search.py` pins the rule: Thumb function vs data vs ARM function, addend
+  ordering, the no-`modes` fallback, and the BL/BLX marker bits.
+
+The all-module queue scan (below) then found the second, different cause: `0x020337c4`
+(main, 364 B, two source files) named its pivot table `native_data_020d9aac` while the
+image's literal pool holds `0x020d90ac + {0,1,2,3}`. The shape was right and the pointer
+was 0xA00 high, so every objdump-level diff called it a match; only the byte comparison
+saw it. The corrected source is `src/main/permuter_20261111/native_main_020337c4.c`
+(verified `(0, 0)`, 364 B under its own rule: `2.0/sp1p5`, ARM, `-opt speed`). Both causes
+are recorded because they are the two ways a row lands in this bucket: the patcher
+dropped information, or the source named the wrong address.
+
+## The addressable market, measured (2026-11-11)
+
+`ops/permuter_candidates.py --modules all` over the whole tree: **12,002 compiled units**.
+
+| bucket | rows | bytes |
+| --- | --- | --- |
+| permuter-ready (textDiff <= 3) | **0** | **0** |
+| relocation-only | 2 (one row, two files; both since fixed) | 728 |
+| large normalized diff | 12 | 708 |
+| already exact under a declared rule | 4,948 | 224,738 |
+| skipped (no address in the file name, or no ledger row) | 7,011 | - |
+
+The skipped bucket is structural, not a failure: a source file whose name carries no
+`<8 hex>` address is either a data unit or a multi-function packet, and neither maps to a
+single ledger row.
+
+**So the true near-miss population is 0 rows / 0 bytes.** Every addressable source unit in
+the tree either reproduces its measured row exactly under a rule the build already knows
+(primary or alternate compiler/flag profile) or cannot be attributed to a row. The twelve
+large-diff rows -- `utility-child-arm7-wram` translated07/13/15/16/20 drafts and two main
+rows -- are the closest candidates, but they are not instruction-level near misses: a
+probed run on `0x038029f4` put the permuter's own base score at 300, about thirty differing
+instruction rows, which only looks close when counted in bytes (score 2).
+
+What that means operationally: the permuter has no queue to work through today, and the
+tool's value is now prospective -- it ranks new drafts. The scanner caches per
+(source hash, compiler, flags) under `work/permuter/`, so re-running after new sources land
+is minutes, not an hour. `docs/authoring/permuter-queue-v2.md` is the generated snapshot;
+the JSON beside it carries every row with its address, size, score and normalized diff.
