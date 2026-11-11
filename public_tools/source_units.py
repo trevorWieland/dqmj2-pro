@@ -18,8 +18,9 @@ import re
 from pathlib import Path, PurePosixPath
 
 CONFIG = 'config/source_units.json'
-FIELDS = ('module', 'processor', 'compilerFlags', 'loadAddressBase', 'originalImage')
+FIELDS = ('module', 'processor', 'compilerFlags', 'loadAddressBase', 'originalImage', 'mode')
 RULE_FIELDS = FIELDS + ('compilerSha256',)
+MODES = ('arm', 'thumb')
 EXCLUSIONS = ('src/nonmatching/**',)
 MODULES = {
     'main': 'arm9', 'itcm': 'arm9', 'dtcm': 'arm9', 'ov000': 'arm9', 'ov001': 'arm9',
@@ -93,6 +94,9 @@ def merge_chain(chain, modules, profiles, compilers, default_compiler):
     if module not in modules:
         raise SourceUnitError('Unknown or missing module in source-unit rule: ' + str(module))
     inventory = modules[module]
+    result.setdefault('mode', 'arm')
+    if result['mode'] not in MODES:
+        raise SourceUnitError('Source-unit mode must be one of ' + ', '.join(MODES) + ': ' + str(result['mode']))
     result.setdefault('processor', inventory['processor'])
     result.setdefault('loadAddressBase', inventory['loadAddressBase'])
     result.setdefault('originalImage', inventory['originalImage'])
