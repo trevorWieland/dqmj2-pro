@@ -22,7 +22,6 @@ assembled in RAM (`native_data_020fb264`), so a ROM file only ever contains frag
 """
 
 import argparse
-import json
 import re
 import sys
 from pathlib import Path
@@ -32,6 +31,9 @@ HANDLERS = {'native_fn_02047b90': 'text', 'native_fn_02047bfc': 'alt', 'native_f
 ESCAPE = 0xE3
 BLOCK_END = 0x1B
 ESCAPE_SKIP = 0x1C
+ESCAPE_15 = 0x15
+SCR_CODE_OFFSET = 4100
+FPK_MAGIC = b'FPK\x00'
 TERMINATOR = 0x00
 
 
@@ -89,9 +91,12 @@ def decode_stream(data, start, table, address_base=0):
                 index += 3
                 decoded += 3
                 continue
-            if byte in table:
-                pass
-            lines.append('%s  e3 %02x        .escape 0x%02x   ; length not proven' % (address, sub, sub))
+            if sub == ESCAPE_15:
+                lines.append('%s  e3 15        .escape_15    ; proven escape, length from native_fn_02046fc8 (unrecovered)' % address)
+                index += 2
+                unknown += 2
+                continue
+            lines.append('%s  e3 %02x        .escape 0x%02x   ; unknown escape sub-opcode' % (address, sub, sub))
             index += 2
             unknown += 2
             continue
@@ -118,7 +123,9 @@ def find_streams(data, table, minimum=4, limit=20, require_terminator=True):
             while index < len(data) and data[index] in table:
                 count += 1
                 index += 1
-            ended = index < len(data) and data[index] == TERMINATOR
+            ended = index < len(data) and (data[index] == TERMINATOR or
+                                           (data[index] == ESCAPE and index + 1 < len(data)
+                                            and data[index + 1] == BLOCK_END))
             if count >= minimum and (ended or not require_terminator):
                 runs.append((count, start))
             else:
@@ -141,6 +148,9 @@ def main():
     parser.add_argument('--limit', type=int, default=8, help='streams to list in --streams/--scan mode')
     parser.add_argument('--min', type=int, default=4, help='minimum run length (default 4)')
     parser.add_argument('--opcodes', action='store_true', help='print the proven opcode table')
+    parser.add_argument('--scr', action='store_true',
+                        help='image is a decoded SCR image: start at the documented code offset %d '
+                             '(after the 4096-byte entry table)' % 4100)
     args = parser.parse_args()
     root = args.root.resolve()
     table = parse_table(root / DECODER_SOURCE)
@@ -158,6 +168,13 @@ def main():
         print('image not found: ' + str(image), file=sys.stderr)
         return 2
     data = image.read_bytes()
+    if data[:4] == FPK_MAGIC:
+        print('%s is an FPK archive, not an SCR script image. Decode its member with the pinned '
+              'FPK/ASH reader described in docs/2026-10-29-interpreted-script-inventory.md, then '
+              'point --image (or --scr) at the decoded SCR image.' % args.image, file=sys.stderr)
+        return 1
+    if args.scr:
+        args.offset = SCR_CODE_OFFSET
     if args.streams or args.scan:
         runs = find_streams(data, table, minimum=args.min, limit=args.limit, require_terminator=args.streams)
         if not runs:

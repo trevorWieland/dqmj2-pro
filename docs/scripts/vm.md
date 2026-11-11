@@ -92,36 +92,65 @@ byte per command and says so.
 
 ## 5. Control flow — SYS / call / terminate
 
-* **Terminate:** proven, two forms — `0x00` ends a walk, `0xe3 0x1b` ends a block (§4).
-* **Call / return:** *unknown*. No matched function maintains a return address, call depth or
-  jump table.
-* **SYS (system service) nodes:** *unknown*. Nothing matched names or dispatches a SYS opcode.
-* **Branching:** *unknown*. The dispatcher has no jump target computation; the walk in §4 is
-  strictly linear.
+These statements are scoped to the **text VM family** documented above (the dispatcher
+`native_main_02047428` and its three handlers). They do **not** describe the interpreted SCR
+script system as a whole, which has its own, separately documented dispatcher (§7).
 
-## 6. Script image container — unknown
+* **Terminate:** proven for this family, two forms — `0x00` ends a walk, `0xe3 0x1b` ends a
+  block (§4).
+* **Call / return:** *unknown for this family*. No matched function in it maintains a return
+  address, call depth or jump table.
+* **Branching:** *unknown for this family*. The dispatcher computes no jump target; the walk
+  in §4 is strictly linear.
+* **SYS / system-service nodes:** **not part of this family.** The interpreted SCR system's SYS
+  dispatch is a separate, already-measured mechanism — the ARM9 dispatcher table at
+  `0x0205A68C` with 358 slots and a default block at `0x0205BCF0` (§7). This document makes no
+  claim about it beyond citing the inventory.
 
-The extract's `extract/files/*.m` images are `FPK` archives (`46 50 4b 00` magic, then
-file-name entries such as `k01e010a.nsbmd`), i.e. model/texture packs, **not** the command
-stream. The command block the VM reads (`native_data_020fb264`) is assembled in RAM, so no
-ROM image is known to contain a ready-made stream. The 297-image / 14.2 MB script body is
-therefore **not yet located** by this work; that is a container-format question, not an
-opcode question.
+## 6. Script image container — documented by the existing inventory
 
-## 7. What the tool proves today
+The SCR container is **already documented in the repository**; it is not an open question and
+this document must not imply otherwise. See
+[`docs/2026-10-29-interpreted-script-inventory.md`](../2026-10-29-interpreted-script-inventory.md)
+and `manifest.json` → `interpretedCoverage`:
 
-`public_tools/scr_disasm.py`:
+| measured item | value |
+| --- | --- |
+| Known member-zero script archives | 341 |
+| FPK member-table identities | 1,132 |
+| Distinct decoded script images | 297 |
+| Unique code-container bytes | 14,237,108 |
+| Reached opaque SYS nodes | 121,682 |
+| Uncovered container bytes | 104,232 |
+| Reconstructed ordinary script-source units | 0 |
 
-* `--opcodes` prints the 47-opcode table parsed from the matched dispatcher.
-* `--image … --offset … --length …` decodes a window: known opcodes as their proven
-  mnemonic and `(a,b,c)`, `0x00` as `.end`, `0xe3 0x1b` as `.block_end`, `0xe3 0x1c xx` as
-  `.escape_skip`, and **anything else as `.byte … ; unknown opcode`**, with a coverage line
-  (bytes read / decoded / undecoded).
-* `--streams` / `--scan` list the longest known-opcode runs in an image so a real stream can
-  be found if one exists.
+Decoded layout, from that inventory: **SCR magic, a 4096-byte table of 1024 signed entry
+offsets, then code starting at member offset 4100**. The archives themselves are FPK files
+(`FPK\x00` magic) whose members decode to those SCR images; duplicate member images reduce
+341 archives to 297 distinct images. `extract/files/*.e` are those archives — for example
+`d145.e` is an FPK container, and its decoded member is the 10,724-byte code interval named in
+the inventory.
 
-Tested on two real images from the private extract (`extract/files/ActTbl.bin`,
-`extract/files/AIActionTbl.bin`): no terminator-ended run of four or more known opcodes was
-found, and window decodes are dominated by unknown bytes (e.g. `ActTbl.bin` offset 0: 4 bytes
-read, 1 decoded as `.end`, 3 unknown → 25%). That is the honest state: the opcode table is
-proven, the container that stores streams is not.
+What this document adds is the *text VM* model (§1-§4), which is a different mechanism from the
+SCR bytecode. What it does not add, and never claimed, is a second container finding.
+
+## 7. Relationship to the interpreted SCR inventory
+
+The existing inventory and this document measure different things, and the difference is worth
+stating plainly:
+
+| | interpreted SCR inventory | this document / `scr_disasm.py` |
+| --- | --- | --- |
+| Subject | SCR bytecode in FPK members (297 images, 14,237,108 bytes) | the text VM family (`native_main_02047428` handlers) |
+| Container | documented: SCR magic, 4096-byte entry table, code at 4100 | not restated; cited only |
+| SYS dispatch | measured: table `0x0205A68C`, 358 slots, default `0x0205BCF0`, 121,682 opaque nodes | out of scope |
+| Opcode coverage | partial CFG over reached records, `completeControlFlowCoverageCertified: false` | 47 opcodes of one dispatcher family, parsed from matched source |
+| Output | CFG evidence artifacts (private, generated) | human-readable listing of a byte window |
+
+**What `scr_disasm.py` does not cover:** it does not parse FPK archives, does not decode
+members, does not read the 4096-byte SCR entry table, and does not decode SCR opcodes or SYS
+records. Pointing it at `extract/files/*.e` is refused with that explanation. Use the pinned
+FPK/ASH reader and the inventory's CFG tooling for those.
+
+## 8. What the tool proves today
+
