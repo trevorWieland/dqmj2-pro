@@ -1,0 +1,8 @@
+{
+  "module": "ov001",
+  "address": "0x021d8f08",
+  "size": 128,
+  "symbol": "native_ov001_021d8f08",
+  "source": "work/p2/cd/f8f08.c",
+  "note": "Nine-pair name-table loader with a trailing character. Same tail residual as 0x021d8ff8."
+}

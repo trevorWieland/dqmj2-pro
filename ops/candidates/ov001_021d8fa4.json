@@ -1,0 +1,8 @@
+{
+  "module": "ov001",
+  "address": "0x021d8fa4",
+  "size": 84,
+  "symbol": "native_ov001_021d8fa4",
+  "source": "work/p2/cd/f8fa4.c",
+  "note": "Bitmap cell test. Byte-size exact; the residual is the register role of the cell index and the lsl operands of the bit test."
+}
