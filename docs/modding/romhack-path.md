@@ -39,7 +39,46 @@ Replacements, both modes tested:
   appended bytes, archive `3,432 → 3,447` bytes.
 
 Limitation that matters: the tool edits **stored** bytes. It does not decompress or recompress the
-`ASH\0` container that script archives use, so a *decoded* edit cannot be put back yet.
+`ASH\0` container that script archives use, so a *decoded* edit cannot be put back yet (see the ASH
+section below).
+
+## ASH codec — header measured, token layer blocked
+
+`public_tools/ash_codec.py` documents and parses the container header; the token codec is not
+implemented, and the tool refuses to decode rather than guess.
+
+Measured header (identical structure in `d145.e`, `d000.e`, `d004.e`):
+
+```
+0x00  41 53 48 00        magic "ASH\0"
+0x04  e8 39 00 00        decoded size u32 LE (d145: 14,824 - matches the inventory's 4,100 + 10,724)
+0x08  64 00 00 00        constant 100 in every archive inspected
+0x0c  58 02 13 00        archive-specific word (0x00130258 / 0x00100515 / 0x001126d8)
+0x10  0a 53 43 52 00 ff 09 00 ...   identical across all three archives; literal "SCR\0" sits at
+                                    stored offset 0x11
+```
+
+The identical stream prefix across different scripts proves the codec is deterministic on identical
+input prefixes (an LZ/RLE family), not a content-dependent tree. The token layer is still unknown:
+brute force excluded every combination of flag-byte bit order and polarity, nibble/byte/high-bit
+16-bit match tokens, literal-run control bytes with 1- and 2-byte distances, and 3-byte match tokens,
+over stored offsets 8/12/16/17/20/21/100 - none produced 14,824 bytes starting with `SCR\0`. The
+remaining plausible family is a Huffman/bit-plane stage (the constant `0x64` = 100 could be a tree
+size), which cannot be implemented without a reference decode to validate against.
+
+**Missing evidence:** one known-good decoded member (or the pinned reader's source) as a validation
+oracle. The private inventory holds decoded hashes but not the bytes, and an unvalidated decoder is
+how archives get corrupted.
+
+```
+python public_tools/ash_codec.py --info extract/files/d145.e      # header fields, exit 0
+python public_tools/fpk_repack.py --archive extract/files/d145.e --decode-member 0 --out dec.bin
+                                                                 # refuses with the reason, exit 1
+```
+
+`fpk_repack.py` now has `--decode-member` / `--encode-member` wired to this codec, so the moment the
+token layer is validated the whole chain (decode -> edit -> encode -> repack) works with no further
+plumbing.
 
 ## Half 2 — text payload: FAIL (with the exact missing evidence)
 
@@ -89,8 +128,8 @@ character in the ROM.
 
 * **Changing displayed text.** The string builders are unmatched and the text block is runtime BSS
   in an uncovered gap.
-* **Re-inserting a decoded edit.** Script members are `ASH\0`-compressed; no compressor exists in
-  the public tooling.
+* **Re-inserting a decoded edit.** Script members are `ASH\0`-compressed; the header is measured but
+  the token layer is blocked (see the ASH section), so no compressor exists yet.
 * **Patching tables inside the ARM9 image.** The image is stored compressed, so the patch lane
   (`ops/mod_patch.py`) cannot reach table bytes; that needs the rebuild lane.
 
@@ -99,7 +138,7 @@ character in the ROM.
 1. Match `0x02047D50` and `0x02047C68` (208 + 216 B) and confirm which resource or table they read.
 2. If they read a table, locate that table in a captured image or in NitroFS, and add it to
    `docs/data/index.json` with a proven layout.
-3. Implement ASH decompression/compression, or prove the members are editable in their compressed
-   form.
+3. Validate an ASH decoder against one known-good decoded member, then implement compression; the
+   header parser and the repack wiring already exist.
 4. Only then: decode → change text → reassemble → repack → verify, which would turn this lens from
    PARTIAL to PASS.
