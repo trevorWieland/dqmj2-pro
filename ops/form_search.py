@@ -160,7 +160,7 @@ def main(argv=None):
         values = dict(zip(names, combination))
         source = template.substitute(values)
         path = work / 'candidate.c'
-        path.write_text(source)
+        path.write_text(source, encoding='utf-8')
         compiled = compile_source(cc, path, work / 'candidate.o', root)
         tried += 1
         if compiled.returncode != 0:
@@ -194,7 +194,7 @@ def main(argv=None):
                              if '\n' not in str(value))
         print(f'  {rank}. {current} len={length}  {rendered[:160]}')
     if args.keep:
-        Path(args.keep).write_text(template.substitute(values))
+        Path(args.keep).write_text(template.substitute(values), encoding='utf-8')
         print(f'winning source: {args.keep}')
     return 0 if best[0] == (0, 0) else 1
 
