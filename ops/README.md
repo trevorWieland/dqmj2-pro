@@ -107,21 +107,44 @@ while staying reproducible.
 search needs AST-level and randomised mutations; the loop here is the
 deterministic subset that runs inside the packet harness with no extra state.
 
-### Proof rows (60 s budget each, 2.0/base, seed 0)
+### Structural edits and hill climbing
 
-| row | bytes | mutants | wall time | exact |
-| --- | --- | --- | --- | --- |
-| `ov001 0x021d8ff8` | 120 | 225 | 15.8 s | no |
-| `ov001 0x021d8f08` | 128 | 226 | 14.7 s | no |
-| `ov001 0x021d8fa4` | 84 | 3 | 0.2 s | no |
+The second layer rewrites a single statement's expression tree and keeps the
+semantics fixed: split a condition operand into a named temporary, split an
+addition operand into a temporary, reorder commutative operands, swap the sides of
+a comparison, and insert an `(s32)` / `(u32)` cast around a condition operand.
+These are the shapes that produce the `mov r3, r0; cmp r3, ...` tail and the
+register-role swaps the hand search kept hitting.
 
-The third row has no local declarations, so the declaration-driven mutations
-collapse to three: the tool is honest about a narrow space rather than inventive
-about it. The intended second corpus of Thumb near-misses
-(`work/worktrees/p1/permuter-candidates/`) did not exist in this checkout at run
-time, so nothing could be run against it; the tool takes any `--candidate` file,
-including rows from another module, so that corpus can be added without a code
-change once it lands.
+Near-misses are scored (differing bytes plus length delta, compile failure worst)
+and the best `--beam` texts are expanded again, so the search climbs instead of
+restarting from the original every time. Exactness remains the only success
+condition; the score only steers.
+
+### Proof rows (40 s budget each, 2.0/base, seed 0, beam 4)
+
+| row | bytes | mutants | wall time | diff start -> best | exact |
+| --- | --- | --- | --- | --- | --- |
+| `ov001 0x021d8ff8` | 120 | 581 | 40.1 s | 18 -> 18 | no |
+| `ov001 0x021d8f08` | 128 | 555 | 40.0 s | 20 -> 20 | no |
+| `ov001 0x021d8fa4` | 84 | 125 | 8.5 s | 14 -> 14 | no |
+
+No row improved its diff and none reached exactness. The trajectory column is the
+important number: the search is exploring, but the diff is flat, which says the
+mutation set is the bottleneck rather than the scoring or the beam width. The
+next step for this lane is richer structural edits (temporary introduction across
+multi-statement spans, statement reordering inside a block), not a wider beam.
+
+### Second corpus (Thumb, module `main`)
+
+`C:\Users\trevo\Documents\RecProgramming\DQM\dqmj2pro-decomp\work\permuter-candidates\`
+holds seven Thumb near-misses (56-68 B) with their own `README.md` and shared
+`context.h`. Support for that corpus was added here: `load_module('main')` points
+the comparison at `extract/arm9/arm9.bin` with base `0x02000000` and appends
+`-thumb` to the compile line. The first probe row (`0x0208ba68`) does not compile
+through the harness yet — the `-thumb` compile needs its include path and flag
+placement reconciled with the corpus README's invocation — so the corpus is
+**not run** in this revision. That is the next concrete task for the lane.
 
 ### Mechanism findings this lane produced
 
