@@ -432,8 +432,21 @@ def target_mode(module, address, name=None):
 
 
 def patch_function(function, module, base, sections, relocations, image):
+    """Patch a compiled function's relocations into the measured image's shape.
+
+    ``R_ARM_ABS32`` (kind 2) always takes its target from the original image word at
+    the site: that word is exactly what the original linker wrote, while the ledger's
+    recorded dependency targets and the recovered runtime table can both be stale (a
+    captured object may predate the linked image).  Name resolution remains the
+    fallback when the site lies outside the mapped image.  Every other kind keeps the
+    existing order.  Returns the patched bytes, the unresolved names, the per-site
+    resolution counts and the sites left on the fallback because the image does not
+    cover them.
+    """
     body = bytearray(function['bytes'])
     unresolved = []
+    sources = collections.Counter()
+    outside = []
     for relocation in relocations.get(function['section'], []):
         if not (function['value'] <= relocation['where'] < function['value'] + function['size']):
             continue
@@ -443,15 +456,21 @@ def patch_function(function, module, base, sections, relocations, image):
         kind = relocation['type']
         absolute = function['address'] + offset
         mode = target_mode(module, target, relocation['symbol']['name']) if target is not None else None
+        resolution = 'name' if target is not None else None
         if kind in (1, 10) and relocation['symbol']['shndx'] == 0:
             decoded = decode_original_target(kind, image, absolute, base)
             if decoded is not None:
                 target, mode = decoded
-        if kind == 2 and target is None:
+                resolution = 'image'
+        if kind == 2:
             decoded = decode_original_target(kind, image, absolute, base)
             if decoded is not None:
                 target, mode = decoded
                 addend = 0
+                resolution = 'image'
+            elif resolution is None:
+                outside.append(dict(module=module.get('name'), address=absolute,
+                                    symbol=relocation['symbol']['name'], kind=kind))
         if target is None:
             # A symbol defined elsewhere in the same object can still fail the
             # section-relative rule (the compiler may place it in another section
@@ -461,11 +480,13 @@ def patch_function(function, module, base, sections, relocations, image):
             decoded = decode_original_target(kind, image, absolute, base)
             if decoded is not None:
                 target, mode = decoded
+                resolution = 'image'
                 if kind == 2:
                     addend = 0
         if target is None:
             unresolved.append(relocation['symbol']['name'])
             continue
+        sources[resolution or 'name'] += 1
         if kind == 1:  # R_ARM_PC24
             word = struct.unpack_from('<I', body, offset)[0]
             if addend is None:
@@ -504,7 +525,7 @@ def patch_function(function, module, base, sections, relocations, image):
             struct.pack_into('<I', body, offset, word)
         else:
             unresolved.append(relocation['symbol']['name'])
-    return bytes(body), unresolved
+    return bytes(body), unresolved, sources, outside
 
 
 def ledger_index(private_root):
@@ -794,6 +815,9 @@ def compiled_selections(root, private_root, compilation):
                  dependencySymbols=len(dependency_global), runtimePairs=runtime_paired,
                  runtimePairsAmbiguous=runtime_ambiguous,
                  relocationTargets=collections.defaultdict(lambda: dict(resolved=0, unresolved=0)),
+                 relocationSources=collections.defaultdict(collections.Counter),
+                 relocationOutsideImage=[],
+                 matchedBytesByModule=collections.Counter(),
                  compileFailures=len(report.get('failures', [])))
     for record in report.get('results', []):
         if record.get('status') not in ('compiled', 'prebuilt'):
@@ -825,14 +849,17 @@ def compiled_selections(root, private_root, compilation):
             if measured_size <= 0:
                 continue
             function['address'] = address
-            patched, unresolved = patch_function(function, module, base, profile['sections'],
-                                                 profile['relocations'], image)
+            patched, unresolved, sources, outside = patch_function(function, module, base, profile['sections'],
+                                                                  profile['relocations'], image)
             stats['unresolvedRelocations'] += len(unresolved)
             counter = stats['relocationTargets'][record['module']]
             sites = sum(1 for relocation in profile['relocations'].get(function['section'], [])
                         if function['value'] <= relocation['where'] < function['value'] + function['size'])
             counter['resolved'] += max(0, sites - len(unresolved))
             counter['unresolved'] += len(unresolved)
+            resolution_counter = stats['relocationSources'][record['module']]
+            resolution_counter.update(sources)
+            stats['relocationOutsideImage'].extend(outside)
             start = address - base
             target = image[start:start + measured_size]
             exact = len(patched) >= measured_size and patched[:measured_size] == target
@@ -851,6 +878,11 @@ def compiled_selections(root, private_root, compilation):
                 stats['duplicateAddresses'] += 1
             elif not exact and not previous['exact']:
                 stats['duplicateAddresses'] += 1
+    # Matched bytes per module, counted once per address so the sum equals
+    # matchedCodeBytes (a span can be selected by more than one compiled source).
+    for name, values in selections.items():
+        stats['matchedBytesByModule'][name] = sum(
+            item['size'] for item in values.values() if item['exact'])
     return ({name: [value for unused_address, value in sorted(values.items())]
              for name, values in selections.items()}, stats, report)
 
@@ -1025,6 +1057,10 @@ def build_project(root, private_root, out_dir, compilation):
         dependencySymbols=stats.get('dependencySymbols', 0),
         runtimePairs=stats.get('runtimePairs', 0), runtimePairsAmbiguous=stats.get('runtimePairsAmbiguous', 0),
         relocationTargets={name: dict(counts) for name, counts in sorted(stats.get('relocationTargets', {}).items())},
+        relocationSources={name: dict(counts) for name, counts in sorted(stats.get('relocationSources', {}).items())},
+        matchedBytesByModule=dict(sorted(stats.get('matchedBytesByModule', {}).items())),
+        relocationOutsideImage=stats.get('relocationOutsideImage', [])[:50],
+        relocationOutsideImageCount=len(stats.get('relocationOutsideImage', [])),
         sourceUnitConfigSha256=digest(root / CONFIG),
         accounting='Compiled source is compared byte-for-byte with the original module image after applying its '
                    'ELF relocations. complete is true only for an exact, full-size match; no manifest membership '
