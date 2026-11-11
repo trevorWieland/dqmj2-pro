@@ -1,0 +1,13 @@
+{
+  "input": "inputs/game.nds",
+  "output": "build/mods/title/game-title.nds",
+  "fixHeaderChecksum": true,
+  "patches": [
+    {
+      "offset": "0x00B",
+      "before": "50",
+      "after": "4D",
+      "note": "ROM title, last character: 'P' -> 'M' (DQM-JOKER2-P -> DQM-JOKER2-M)"
+    }
+  ]
+}
