@@ -194,3 +194,25 @@ These are recorded here because they are the reusable part of the work:
    0x021fexxx sound cluster. It merges the three identical release blocks into a
    loop (92 B against the original's unrolled 120 B), so 2.0/base is correct
    there even though the field-load idiom differs.
+
+## `accessor_pool.py` — pool-cluster measurement (and its negative result)
+
+Measures whether a module's ready rows cluster by **pool word**, and emits an
+ordered worklist (no-call rows first, then 3+ cluster members, then ascending size).
+
+```bash
+python ops/screen_candidates.py --module ov006 --json build/screen/ov006.json
+python ops/accessor_pool.py --module ov006
+```
+
+**Measured conclusion, 2026-11: pool-word clustering does not predict tractability,
+and the lane should not be re-opened on that basis.** On ov006 (570 ready rows, 450
+Thumb analysed, 763 distinct pool words, 123 clusters of three or more) the busiest
+words are memory-mapped registers (`0x04001008` x35, `0x04000008` x26,
+`0x01ff0000` x21) that every row touches. A row joins a cluster because it reads the
+same hardware, not because its C resembles its cluster-mates', so cluster membership
+carries no authoring information: four cluster rows were attempted and none matched
+(`0x02203EBC`, `0x02203EEC`, `0x02203F1C` at 48/48 with one halfword off; `0x021F6BCC`
+at 60/60 with one register off), while grouping by **body shape** in the 40-80 B band
+gives 11 families over 31 rows and a 75% first-try rate on the family template.
+Group by body, not by pool word.
