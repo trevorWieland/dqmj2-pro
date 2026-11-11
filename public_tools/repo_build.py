@@ -230,6 +230,9 @@ def compile_all(root, private_root, out_dir, jobs=4, timeout=180, limit=None, so
         stored = Path(unit['object'])
         source = (stored if stored.is_absolute() else private / stored).resolve()
         if not source.is_file():
+            if unit.get('origin') == 'ledger':
+                unattributed.append(unit['path'])
+                continue
             raise RepositoryBuildError('Prebuilt object is missing for ' + unit['path'] + ': ' + unit['object'])
         if digest(source) != unit['objectSha256']:
             raise RepositoryBuildError('Prebuilt object identity differs for ' + unit['path'])
@@ -249,6 +252,9 @@ def compile_all(root, private_root, out_dir, jobs=4, timeout=180, limit=None, so
     primary = [record for record in results if not record.get('alternate')]
     primary_compiled = [record for record in primary if record.get('status') in successful]
     primary_failed = [record for record in primary if record.get('status') not in successful]
+    unattributed_set = set(unattributed)
+    unattributed_rows = sum(len(rows) for (unused_module_name, source_name), rows in by_source.items()
+                            if source_name in unattributed_set)
     report = dict(
         schemaVersion=2,
         status='source-compilation-passed' if not failed else 'source-compilation-partial',
@@ -260,7 +266,7 @@ def compile_all(root, private_root, out_dir, jobs=4, timeout=180, limit=None, so
                              compiledSources=len(enumerated['compiled']),
                              assemblySources=len(assembly), prebuiltObjects=len(prebuilt),
                              excludedSources=len(enumerated['excluded'])),
-        unattributedSources=len(unattributed),
+        unattributedSources=len(unattributed), unattributedRows=unattributed_rows,
         selectedCompilationUnits=len(selected) + len(assembly) - len(unattributed) + len(prebuilt),
         compiledUnits=len(primary_compiled),
         failedUnits=len(primary_failed), alternateCompilations=len(tasks) - len(selected) - len(assembly),
@@ -564,7 +570,7 @@ def ledger_index(private_root):
     return by_address, by_symbol, by_source, count
 
 
-NON_C_PREBUILT_SUFFIXES = ('.inc', '.h', '.cpp')
+NON_C_PREBUILT_SUFFIXES = ('.inc', '.h')
 
 
 def ledger_prebuilt_units(by_source):
@@ -587,7 +593,7 @@ def ledger_prebuilt_units(by_source):
             conflicts.append(source)
             continue
         obj, sha = identities.pop()
-        units.append(dict(path=source, module=rows[0]['module'], processor=rows[0]['processor'],
+        units.append(dict(path=source, origin='ledger', module=rows[0]['module'], processor=rows[0]['processor'],
                           object=obj, objectSha256=sha,
                           compilerFlags=list(rows[0].get('compilerFlags') or []),
                           compilerSha256=rows[0].get('compilerSha256')))
