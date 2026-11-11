@@ -101,11 +101,10 @@ After the single-step list, a seeded composition pass combines pairs of shapes
 (`--seed`, default 0), which is the part of the space a hand search cannot reach
 while staying reproducible.
 
-`decomp-permuter` is vendored at
-`tools/decomp-permuter-8556c81d80d1c1af98a858c8f4dc951357f29139` (pinned commit
-`8556c81d80d1c1af98a858c8f4dc951357f29139`) and is the intended engine once the
-search needs AST-level and randomised mutations; the loop here is the
-deterministic subset that runs inside the packet harness with no extra state.
+`decomp-permuter` is now driven for real by `ops/permuter.py` (see the section below and
+`docs/authoring/permuter.md`); the loop here is the deterministic subset that runs inside
+the packet harness with no extra state, and stays the right tool when the row's edit is
+one of the eight shapes above.
 
 ### Structural edits and hill climbing
 
@@ -194,6 +193,39 @@ These are recorded here because they are the reusable part of the work:
    0x021fexxx sound cluster. It merges the three identical release blocks into a
    loop (92 B against the original's unrolled 120 B), so 2.0/base is correct
    there even though the field-load idiom differs.
+
+## `permuter.py` — real decomp-permuter workspaces, runs and acceptance
+
+The deterministic catalogue above cannot reach "the same instructions with a different
+register allocation" when the fix is an AST-level rewrite. `permuter.py` generates a
+complete [decomp-permuter] workspace for one ledger address — `base.c`, a `target.o`
+built from the module image with its relocation slots zeroed, `compile.sh` with the row's
+exact mwccarm flags, and `settings.toml` — runs the search for a bounded time, and hands
+the best candidate to `verify_permuter.py`, which is the only thing allowed to accept it.
+
+```bash
+git clone https://github.com/simonlindholm/decomp-permuter.git work/decomp-permuter
+git -C work/decomp-permuter checkout 8556c81d80d1c1af98a858c8f4dc951357f29139
+
+python ops/permuter.py build --module ov006 --address 0x02203EBC \
+    --src ops/compiler_specs/02203ebc.c
+python ops/permuter.py probe work/permuter/ov006_02203ebc
+python ops/permuter.py run   work/permuter/ov006_02203ebc --timeout 300
+python ops/verify_permuter.py work/permuter/ov006_02203ebc --source best.c
+```
+
+The permuter is never vendored: it is a pinned clone under `work/` (ignored) or the
+pinned import under `tools/` (ignored), and every workspace and receipt records the
+commit. `mwcc_objdump.py` is the Capstone `objdump -drz` shim the permuter parses, because
+no GNU-style ARM objdump exists in this tree.
+
+**Score 0 is not acceptance.** `verify_permuter.py` recompiles the candidate with the
+row's compiler and compares bytes and relocations against the module image, then requires
+two negative controls (the base source must fail; the shifted slices must fail) and
+relocation identity with the base object. Worked example, the build-selection trap, and
+the honest limits are in [`docs/authoring/permuter.md`](../docs/authoring/permuter.md).
+
+[decomp-permuter]: https://github.com/simonlindholm/decomp-permuter
 
 ## `accessor_pool.py` — pool-cluster measurement (and its negative result)
 
