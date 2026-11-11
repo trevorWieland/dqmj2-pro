@@ -5,7 +5,7 @@ the fields, **unknown** for stride and record count.
 
 These live in ARM7 WRAM (`0x0380_0000` region), so they are **not ROM tables**: they only
 exist once the sound driver has initialised. A dump of a ROM image cannot contain them;
-`tools/data_dump.py` rejects them for that reason.
+`public_tools/data_dump.py` rejects them for that reason.
 
 ## Player block — `0x03808420`
 

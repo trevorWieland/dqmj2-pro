@@ -39,7 +39,7 @@ established; inventing one would make the dictionary worse than empty.
 
 ## Dump status
 
-`tools/data_dump.py --table species_roster` refuses this table today: the address is
+`public_tools/data_dump.py --table species_roster` refuses this table today: the address is
 proven by the symbol name in matched source, but **no module image covers it**. The main
 ARM9 image ends at `0x020E33C0` and the overlay images start at `0x021D7240`, so
 `0x021C4BF8` sits in a gap between captured module images. Dumping it needs an image that

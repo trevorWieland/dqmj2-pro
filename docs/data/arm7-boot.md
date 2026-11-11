@@ -16,5 +16,5 @@ measured; the field meanings are not).
 The address and extent are measured facts: the typed-data snapshot only admits a record
 when it matched and the module linked. The *contents* are not decoded by any matched
 function, so the dictionary lists the blob and stops there. A modder can dump it
-(`tools/data_dump.py --table arm7_boot_parameters`) and see 24 bytes, but this document
+(`public_tools/data_dump.py --table arm7_boot_parameters`) and see 24 bytes, but this document
 makes no claim about what they mean.

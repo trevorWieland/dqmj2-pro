@@ -56,7 +56,7 @@
     "src/mechanics_save/20261030_roster_frame_mask.c",
     "src/runtime/runtime07/native_main_0206d23c.c"
    ],
-   "imageNote": "The address comes from the symbol name in matched source, but no module image covers it: main ends at 0x020E33C0 and the ov000..ov007 images start at 0x021D7240, so 0x021C4BF8 falls in a gap. tools/data_dump.py therefore refuses this table until the image set covers the range."
+   "imageNote": "The address comes from the symbol name in matched source, but no module image covers it: main ends at 0x020E33C0 and the ov000..ov007 images start at 0x021D7240, so 0x021C4BF8 falls in a gap. public_tools/data_dump.py therefore refuses this table until the image set covers the range."
   },
   {
    "id": "skill_records",
@@ -393,6 +393,25 @@
    "fields": [],
    "citations": [
     "src/arm7/boot/parameters.c",
+    "public/accepted-data.json"
+   ]
+  },
+  {
+   "id": "math_table_0x20d3fe0",
+   "family": "measured-data",
+   "title": "Measured math data blob (16 KiB)",
+   "doc": "misc-measured-data.md",
+   "module": "main",
+   "symbol": null,
+   "address": "0x020d3fe0",
+   "stride": 4,
+   "records": 4096,
+   "bytes": 16384,
+   "confidence": "inferred",
+   "note": "Address and size are measured typed-data facts (public/accepted-data.json, kind data, 16,384 stored bytes, source generated/math/20261031_sincos_data.c). No matched reader proves the element type or meaning, so the table is dumped as raw 4-byte words.",
+   "fields": [],
+   "citations": [
+    "generated/math/20261031_sincos_data.c",
     "public/accepted-data.json"
    ]
   }
