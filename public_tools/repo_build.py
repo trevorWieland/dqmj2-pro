@@ -385,12 +385,7 @@ def decode_original_target(kind, image, absolute, base):
 
 def symbol_address(symbol, module, base, function, sections):
     name = symbol['name']
-    runtime = module.get('runtime', {})
     if name:
-        if (module.get('name'), name) in runtime:
-            return runtime[(module['name'], name)][0]
-        if ('*', name) in runtime:
-            return runtime[('*', name)][0]
         row = module['symbols'].get(name)
         if row is not None:
             return int(row['address'], 0)
@@ -400,6 +395,12 @@ def symbol_address(symbol, module, base, function, sections):
         measured = (module.get('dependency_names_global') or {}).get(name)
         if measured is not None:
             return measured[0]
+        recovered = (module.get('runtime') or {}).get((module.get('name'), name))
+        if recovered is not None:
+            return recovered[0]
+        recovered = (module.get('runtime') or {}).get(('*', name))
+        if recovered is not None:
+            return recovered[0]
         match = ADDRESS.search(name)
         if match:
             return int(match.group(1), 16)
@@ -451,6 +452,17 @@ def patch_function(function, module, base, sections, relocations, image):
             if decoded is not None:
                 target, mode = decoded
                 addend = 0
+        if target is None:
+            # A symbol defined elsewhere in the same object can still fail the
+            # section-relative rule (the compiler may place it in another section
+            # of the same object).  The original image encodes the true target at
+            # this site, which is the same evidence used for linker-resolved
+            # externals, so fall back to it rather than dropping the relocation.
+            decoded = decode_original_target(kind, image, absolute, base)
+            if decoded is not None:
+                target, mode = decoded
+                if kind == 2:
+                    addend = 0
         if target is None:
             unresolved.append(relocation['symbol']['name'])
             continue
@@ -631,14 +643,74 @@ def image_cache(root, modules):
     return cache
 
 
-def recover_runtime_symbols(root, report, modules, images, by_address, by_symbol, addresses_by_module):
+def pair_functions(functions, source_rows, by_address):
+    """Pair compiled function symbols with the ledger rows that produced them.
+
+    Returns ``[(function, row or None)]`` in the caller's order.  A symbol whose
+    name carries its address pairs directly; the remaining ones pair by a unique
+    size, then by the single remaining row of the source, then in address/definition
+    order when the counts match.  ``None`` means the pairing is ambiguous, and the
+    caller must leave that function unmeasured rather than decode a guess: this is
+    the same pairing the measurement uses, so a decoded address here is the address
+    the measurement will patch.
+    """
+    def direct_row(function):
+        match = ADDRESS.search(function['name'])
+        return by_address.get(int(match.group(1), 16)) if match else None
+
+    direct_rows = [direct_row(function) for function in functions]
+    direct_addresses = {int(row['address'], 0) for row in direct_rows if row is not None}
+    remaining_rows = [row for row in source_rows if int(row['address'], 0) not in direct_addresses]
+    order_pair = len(functions) - len([row for row in direct_rows if row is not None]) == len(remaining_rows)
+    provisional = {}
+    claimed = set(direct_addresses)
+    pending = [function for function, row in zip(functions, direct_rows) if row is None]
+    while pending:
+        progress = False
+        for function in list(pending):
+            same = [row for row in remaining_rows if int(row['address'], 0) not in claimed
+                    and row['bytes'] == function['size']]
+            if len(same) == 1:
+                provisional[id(function)] = same[0]
+                claimed.add(int(same[0]['address'], 0))
+                pending.remove(function)
+                progress = True
+        if not progress:
+            break
+    result, used = [], set()
+    for function, direct in zip(functions, direct_rows):
+        row = direct if direct is not None else provisional.get(id(function))
+        if row is None:
+            remaining = [item for item in source_rows if int(item['address'], 0) not in used]
+            same_size = [item for item in remaining if item['bytes'] == function['size']]
+            if len(same_size) == 1:
+                row = same_size[0]
+            elif len(remaining) == 1 and remaining[0]['bytes'] >= function['size']:
+                row = remaining[0]
+            elif order_pair and remaining:
+                row = remaining[0]
+        if row is not None:
+            used.add(int(row['address'], 0))
+        result.append((function, row))
+    return result
+
+
+def recover_runtime_symbols(root, report, modules, images, by_address, by_symbol, addresses_by_module,
+                            by_source=None):
     """Recover linker-resolved runtime/libc symbol addresses from the original image.
 
-    A few compiler-runtime helpers (``_ffix``, ``_fmul``, ``strlen``, ...) are
-    resolved by the original linker from libraries that are not part of the
-    public tree.  Their call sites exist in the original image, so the target
-    address can be read from the original instruction.  A name is admitted only
-    when its decoded address is consistent across at least one site.
+    A few compiler-runtime helpers (``_ffix``, ``_fmul``, ``strlen``, ``MI_CpuClear32``)
+    are resolved by the original linker from libraries that are not part of the
+    public tree.  Their call sites exist in the original image, so the target address
+    can be read from the original instruction.  A name is admitted only when its
+    decoded address is consistent across at least one site.
+
+    The function being decoded must sit at the address the measured image has for it,
+    otherwise the decoded branch reads unrelated bytes.  Compiled symbols are
+    therefore paired with ledger rows through :func:`pair_functions` — the same
+    pairing the measurement uses — instead of requiring an address-bearing symbol
+    name, which is what left the SDK calls inside ``saved_*``/``WL_*`` functions
+    unresolved.  Ambiguous pairings are skipped and counted.
     """
     candidates = collections.defaultdict(collections.Counter)
     global_addresses = {}
@@ -647,6 +719,7 @@ def recover_runtime_symbols(root, report, modules, images, by_address, by_symbol
     symbols_by_module = collections.defaultdict(dict)
     for (module_name, symbol), row in by_symbol.items():
         symbols_by_module[module_name][symbol] = row
+    paired = ambiguous = 0
     for record in report.get('results', []):
         if record.get('status') not in ('compiled', 'prebuilt'):
             continue
@@ -658,11 +731,14 @@ def recover_runtime_symbols(root, report, modules, images, by_address, by_symbol
         module['global_addresses'] = global_addresses
         base = int(module['loadAddressBase'], 0)
         image = images[record['module']]
-        for function in profile['functions']:
-            match = ADDRESS.search(function['name'])
-            if not match:
+        source_rows = list((by_source or {}).get((record['module'], record['source'].replace('\\', '/')), []))
+        functions = sorted(profile['functions'], key=lambda item: (item['section'], item['value']))
+        for function, row in pair_functions(functions, source_rows, module['by_address']):
+            if row is None:
+                ambiguous += 1
                 continue
-            address = int(match.group(1), 16)
+            paired += 1
+            address = int(row['address'], 0)
             if (record['module'], address) not in by_address:
                 continue
             function['address'] = address
@@ -685,7 +761,7 @@ def recover_runtime_symbols(root, report, modules, images, by_address, by_symbol
     for (module_name, name), values in candidates.items():
         (value, mode), count = values.most_common(1)[0]
         runtime[(module_name, name)] = (value, mode)
-    return runtime
+    return runtime, paired, ambiguous
 
 
 def compiled_selections(root, private_root, compilation):
@@ -710,11 +786,13 @@ def compiled_selections(root, private_root, compilation):
     for (module_name, address), row in by_address.items():
         global_addresses.setdefault(address, row)
     dependency_by_module, dependency_global = dependency_names(private_root, by_symbol)
-    runtime = recover_runtime_symbols(root, report, modules, images, by_address, by_symbol, addresses_by_module)
+    runtime, runtime_paired, runtime_ambiguous = recover_runtime_symbols(
+        root, report, modules, images, by_address, by_symbol, addresses_by_module, by_source)
     selections = collections.defaultdict(dict)
     stats = dict(compiledObjects=0, mappedFunctions=0, exactFunctions=0, unmatchedFunctions=0,
                  duplicateAddresses=0, unresolvedRelocations=0, runtimeSymbols=len(runtime),
-                 dependencySymbols=len(dependency_global),
+                 dependencySymbols=len(dependency_global), runtimePairs=runtime_paired,
+                 runtimePairsAmbiguous=runtime_ambiguous,
                  relocationTargets=collections.defaultdict(lambda: dict(resolved=0, unresolved=0)),
                  compileFailures=len(report.get('failures', [])))
     for record in report.get('results', []):
@@ -736,51 +814,12 @@ def compiled_selections(root, private_root, compilation):
         base = int(module['loadAddressBase'], 0)
         image = images[record['module']]
         source_rows = list(by_source.get((record['module'], record['source'].replace('\\', '/')), []))
-        used_addresses = set()
         functions = sorted(profile['functions'], key=lambda item: (item['section'], item['value']))
-
-        def direct_row(function):
-            match = ADDRESS.search(function['name'])
-            return by_address.get((record['module'], int(match.group(1), 16))) if match else None
-
-        direct_rows = [direct_row(function) for function in functions]
-        direct_addresses = {int(row['address'], 0) for row in direct_rows if row is not None}
-        remaining_rows = [row for row in source_rows if int(row['address'], 0) not in direct_addresses]
-        order_pair = len(functions) - len([row for row in direct_rows if row is not None]) == len(remaining_rows)
-        provisional = {}
-        claimed = set(direct_addresses)
-        pending = [function for function, row in zip(functions, direct_rows) if row is None]
-        while pending:
-            progress = False
-            for function in list(pending):
-                same = [row for row in remaining_rows if int(row['address'], 0) not in claimed
-                        and row['bytes'] == function['size']]
-                if len(same) == 1:
-                    provisional[id(function)] = same[0]
-                    claimed.add(int(same[0]['address'], 0))
-                    pending.remove(function)
-                    progress = True
-            if not progress:
-                break
-        for function in functions:
-            row = direct_row(function)
-            if row is None:
-                row = provisional.get(id(function))
-            if row is None:
-                remaining = [item for item in source_rows
-                             if int(item['address'], 0) not in used_addresses]
-                same_size = [item for item in remaining if item['bytes'] == function['size']]
-                if len(same_size) == 1:
-                    row = same_size[0]
-                elif len(remaining) == 1 and remaining[0]['bytes'] >= function['size']:
-                    row = remaining[0]
-                elif order_pair and remaining:
-                    row = remaining[0]
+        for function, row in pair_functions(functions, source_rows, module['by_address']):
             if row is None:
                 stats['unmatchedFunctions'] += 1
                 continue
             address = int(row['address'], 0)
-            used_addresses.add(address)
             target_size = row['bytes']
             measured_size = min(function['size'], target_size)
             if measured_size <= 0:
@@ -984,6 +1023,7 @@ def build_project(root, private_root, out_dir, compilation):
         unmatchedFunctions=stats['unmatchedFunctions'], duplicateAddresses=stats['duplicateAddresses'],
         unresolvedRelocations=stats['unresolvedRelocations'], runtimeSymbols=stats.get('runtimeSymbols', 0),
         dependencySymbols=stats.get('dependencySymbols', 0),
+        runtimePairs=stats.get('runtimePairs', 0), runtimePairsAmbiguous=stats.get('runtimePairsAmbiguous', 0),
         relocationTargets={name: dict(counts) for name, counts in sorted(stats.get('relocationTargets', {}).items())},
         sourceUnitConfigSha256=digest(root / CONFIG),
         accounting='Compiled source is compared byte-for-byte with the original module image after applying its '
