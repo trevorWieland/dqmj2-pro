@@ -1,0 +1,26 @@
+{
+  "DECLS": [
+    "    u32 field;",
+    "    u32 field;\n    u32 result;",
+    "    u16 field;"
+  ],
+  "GATE": [
+    "    if ((native_data_027fffa8 & 0x8000) >> 15)\n        return 0;",
+    "    if (native_data_027fffa8 & 0x8000)\n        return 0;",
+    "    if ((native_data_027fffa8 >> 15) & 1)\n        return 0;"
+  ],
+  "FIELD": [
+    "    field = *(u16 *)(*(u8 **)(native_data_ov006_0221c18c + 4) + 0x32);",
+    "    field = *(u16 *)(*(u32 *)(native_data_ov006_0221c18c + 4) + 0x32);"
+  ],
+  "TEST": [
+    "    field &= mask;\n    return mask == field;",
+    "    field &= mask;\n    return field == mask;",
+    "    field &= mask;\n    return !(field ^ mask);",
+    "    field &= mask;\n    return (field ^ mask) == 0;",
+    "    field &= mask;\n    return (mask ^ field) == 0;",
+    "    field &= mask;\n    if (field != mask)\n        return 0;\n    return 1;",
+    "    field &= mask;\n    if (mask != field)\n        return 0;\n    return 1;",
+    "    return (u16)(field & mask) == (u16)mask;"
+  ]
+}
