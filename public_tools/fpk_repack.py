@@ -130,6 +130,29 @@ def replace(archive, data, index, new_bytes):
     return rebuild(data[:8], rebuilt, bytes(payload)), 'rebuilt'
 
 
+def ash(path, member_index, decode, out):
+    """Extract or replace a member's decoded payload via the ASH codec, when it works."""
+    import ash_codec
+    data = Path(path).read_bytes()
+    count, table_end, members = parse(data)
+    offset = members[member_index]['offset']
+    size = members[member_index]['size']
+    stored = data[offset:offset + size]
+    if stored[:4] != b'ASH\x00':
+        raise SystemExit('member %d is not ASH-compressed' % member_index)
+    if decode:
+        decoded = ash_codec.decompress(stored)
+        out.write_bytes(decoded)
+        print('decoded member %d: %d -> %d bytes' % (member_index, size, len(decoded)))
+        return 0
+    decoded = Path(out).read_bytes()
+    stored_new = ash_codec.compress(decoded)
+    new_archive, mode = replace(path, data, member_index, stored_new)
+    print('re-encoded member %d: %d decoded -> %d stored bytes (%s)'
+          % (member_index, len(decoded), len(stored_new), mode))
+    return 0
+
+
 def main():
     parser = argparse.ArgumentParser(description='List, verify or repack an FPK archive.')
     parser.add_argument('--archive', '--list', dest='archive', help='archive to inspect')
@@ -138,6 +161,10 @@ def main():
     parser.add_argument('--member', type=int, help='member index for --replace')
     parser.add_argument('--bytes', type=Path, help='file holding the new stored bytes')
     parser.add_argument('--out', type=Path, help='output archive for --replace')
+    parser.add_argument('--decode-member', type=int, metavar='N',
+                        help='decode member N through the ASH codec and write it to --out')
+    parser.add_argument('--encode-member', type=int, metavar='N',
+                        help='encode --out as member N through the ASH codec and write the archive')
     args = parser.parse_args()
     if not args.archive:
         print('--archive is required', file=sys.stderr)
@@ -161,6 +188,17 @@ def main():
         print('round-trip: %s (%d -> %d bytes, sha256 %s)'
               % ('identical' if ok else 'DIFFERENT', len(data), len(rebuilt), digest(rebuilt)))
         return 0 if ok else 1
+
+    if args.decode_member is not None or args.encode_member is not None:
+        if args.out is None:
+            print('--decode-member/--encode-member need --out', file=sys.stderr)
+            return 2
+        index = args.decode_member if args.decode_member is not None else args.encode_member
+        try:
+            return ash(path, index, args.decode_member is not None, args.out)
+        except NotImplementedError as error:
+            print('ASH codec refused: %s' % error, file=sys.stderr)
+            return 1
 
     if args.replace:
         if args.member is None or args.bytes is None or args.out is None:
