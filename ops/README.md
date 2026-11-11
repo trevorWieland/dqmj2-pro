@@ -216,3 +216,33 @@ carries no authoring information: four cluster rows were attempted and none matc
 at 60/60 with one register off), while grouping by **body shape** in the 40-80 B band
 gives 11 families over 31 rows and a 75% first-try rate on the family template.
 Group by body, not by pool word.
+
+## Parked: ov006 `0x021F4C80` quartet (deliberate template design)
+
+The four rows `0x021F4C80`, `0x021F4CC4`, `0x021F4D08`, `0x021F4D4C` (68 B each) are
+a call chain: each member reads `*(0x0221C060) + 0x34`, extracts a channel field and
+an offset, calls `0x021F4944(3, offset)` and, when `offset >= 0xC0`, calls
+`0x02204970(arg, <next member>|1)` with the next member's address as a Thumb function
+pointer (`0x021F4CC5`, `0x021F4D09`, `0x021F4D4D`, `0x021F4D91`).
+
+**Status: parked.** The leader does not converge; four source forms were tried and the
+closest is 64 of 68 bytes with the first difference at byte 0. The blocker is
+**allocation, not mechanism** — the record read, the mask shift and the two calls are
+all understood; what the source cannot express is the original's combination of a
+volatile-like dead store of the channel field (`str r0, [sp, #4]`, never read) with the
+offset kept in a register and spilled around the first call:
+
+```
+image: 10b5 82b0 041c 0c48 0068 406b 0168 0b48 0840 000c 0190 0806 010e 0091 0c31 0091 0320 ...
+form : 10b5 82b0 041c 0e48 0068 0068 406b 0168 0c48 0840 000c 0190 0806 000e 0090 0098 ...
+                                            ^^^^ extra load                    ^^^^^^^^^^ volatile offset
+```
+
+Forms tried: a stack struct with two fields (mwcc promotes and drops the dead store);
+a pointer to that struct (72 B); `volatile` on the channel only (64 B, closest); and
+`volatile` on both fields (76 B, frame right but the offset gains a load/store pair).
+The image's `ldr r0,[pool] / ldr r0,[r0] / ldr r0,[r0,#0x34]` chain is also emitted as
+`ldr / ldr / ldr #0x34` by every form here, one load longer than the image's two.
+
+A future pass should start from the frame shape (`push {r4,lr}; sub sp,#8` with the
+channel at `[sp, #4]`) rather than from the field arithmetic.
