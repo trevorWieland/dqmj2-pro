@@ -25,9 +25,19 @@ import form_search  # noqa: E402
 
 
 def installed_builds(root):
+    """Every compiler under tools/mwccarm, however the install nests it.
+
+    The pinned tree nests as ``mwccarm/<version>/<variant>/``, while a recovered
+    build can sit directly as ``tools/mwccarm/<year>/<tag>/``.
+    """
     builds = []
-    for compiler in sorted((root / 'tools/mwccarm/mwccarm').glob('*/*/mwccarm.exe')):
-        builds.append((f'{compiler.parent.parent.name}/{compiler.parent.name}', compiler))
+    seen = set()
+    for compiler in sorted((root / 'tools/mwccarm').rglob('mwccarm.exe')):
+        label = f'{compiler.parent.parent.name}/{compiler.parent.name}'
+        if label in seen:
+            continue
+        seen.add(label)
+        builds.append((label, compiler))
     return builds
 
 
