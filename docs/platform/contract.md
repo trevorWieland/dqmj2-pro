@@ -66,8 +66,11 @@ the file and function. Items without a matched reader are marked **UNKNOWN** and
 * The NitroFS mount/read API on the guest side is unidentified; `ports/native-storage` explicitly
   keeps the mount parser as separate work.
 * `native_fn_020042e0` (display control setter) has a proven ABI but unknown identity.
-* The reconstructed `main` at `0x02000c34` is not in matched source yet, so the exact call order of
-  the loop is currently read from disassembly, not from matched code.
+* The `main` entry at `0x02000c34` now has reconstructed source
+  (`src/main/p3g_main_02000c34/native_main_02000c34.c`), but the **first calls in its chain are
+  still unmatched**: `0x02026b28` (388 B) and `0x020ba490` (212 B), both `functionMatched: false`
+  in `ledger/functions.jsonl`. The loop's entry order therefore comes from the reconstructed source,
+  not from matched callees.
 
 ## 4. Coverage of the existing port work
 

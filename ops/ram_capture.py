@@ -214,9 +214,72 @@ def apply_to_manifest(root, manifest, entries):
     return merged
 
 
+def rehearsal_spec(manifest, dump_relpath):
+    """Synthetic but structurally valid capture spec for module main."""
+    rom = (manifest.get('rom') or {}).get('sha256', '0' * 64)
+    return {
+        'dump': dump_relpath,
+        'dumpBase': '0x02000000',
+        'module': 'main',
+        'provenance': {
+            'buildSha256': rom,
+            'tool': 'ram_capture --rehearse (synthetic dump)',
+            'capturePoint': 'rehearsal: monster farm open, 15 roster slots filled (synthetic bytes)',
+            'timestampUtc': '2026-11-11T00:00:00Z',
+        },
+        'captures': [
+            {'name': 'ram-roster', 'address': '0x021c4bf8', 'bytes': 15 * 24},
+        ],
+    }
+
+
+def write_rehearsal_dump(root, manifest, scratch):
+    """Write the synthetic main-RAM window and return (spec, dump path, span)."""
+    module = module_for(manifest, 'main')
+    base, end = module_span(root, module)
+    span = end - base
+    data = bytearray((index * 37 + 11) & 0xff for index in range(span))
+    roster = 0x021c4bf8
+    for slot in range(15):
+        offset = roster - base + slot * 24
+        data[offset:offset + 24] = bytes([
+            15 - slot, 0x00,               # species id, flags
+            slot + 1, 0x00,                # level-ish
+            0x40 + slot, 0x30 + slot, 0x20 + slot, 0x10 + slot,   # stats
+            0x01 + slot, 0x00, 0x00, 0x00,
+            slot, 0x00, 0x00, 0x00,
+            0x10 + slot, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0x00,
+        ])
+    dump = scratch / 'dump.bin'
+    dump.parent.mkdir(parents=True, exist_ok=True)
+    dump.write_bytes(bytes(data))
+    spec = rehearsal_spec(manifest, str(dump.relative_to(root)).replace('\\', '/'))
+    return spec, dump, (base, end)
+
+
+def rehearse(root, manifest, scratch):
+    scratch = scratch.resolve()
+    if not scratch.is_relative_to(root / 'work') and scratch != root / 'work':
+        raise SystemExit(f'refusing --rehearse: scratch {scratch} must be under {root / "work"}')
+    spec, dump, span = write_rehearsal_dump(root, manifest, scratch)
+    problems = validate_spec(root, spec, manifest)
+    if problems:
+        print('refusing rehearsal (the synthesised dump failed validation):', file=sys.stderr)
+        for problem in problems:
+            print(f'  {problem}', file=sys.stderr)
+        return 1
+    print(f'rehearsal  synthetic main window {span[0]:#010x}-{span[1]:#010x} '
+          f'({span[1] - span[0]} bytes) at {dump.relative_to(root)}')
+    fragment = scratch / 'manifest-modules.json'
+    code = main(['--spec', str(dump.with_suffix('.spec.json')), '--root', str(root),
+                 '--out-dir', str(scratch / 'extract-ram'), '--fragment', str(fragment)])
+    return code
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('--spec', required=True, help='capture spec JSON')
+    parser.add_argument('--spec', help='capture spec JSON')
     parser.add_argument('--root', default=str(ROOT), help='private checkout root')
     parser.add_argument('--out-dir', default=DEFAULT_RAM_DIR,
                         help=f'where slices are written (default {DEFAULT_RAM_DIR})')
@@ -224,11 +287,35 @@ def main(argv=None):
     parser.add_argument('--dry-run', action='store_true', help='validate and report, write nothing')
     parser.add_argument('--apply-manifest', metavar='PATH',
                         help='write a manifest copy with the new module entries merged in')
+    parser.add_argument('--fragment', metavar='PATH',
+                        help='where to write the manifest module fragment (default build/ram-capture)')
+    parser.add_argument('--rehearse', action='store_true',
+                        help='generate a synthetic main dump, validate and emit into --scratch')
+    parser.add_argument('--scratch', default=str(ROOT / 'work' / 'ram-rehearsal'),
+                        help='scratch directory for --rehearse (must be under work/)')
     args = parser.parse_args(argv)
 
     root = Path(args.root).resolve()
-    spec = json.loads(Path(args.spec).read_text())
     manifest = load_manifest(root)
+    if args.rehearse:
+        scratch = Path(args.scratch).resolve()
+        if not scratch.is_relative_to(root / 'work'):
+            print(f'refusing --rehearse: scratch {scratch} must be under {root / "work"}',
+                  file=sys.stderr)
+            return 1
+        spec, dump, span = write_rehearsal_dump(root, manifest, scratch)
+        (scratch / 'dump.spec.json').write_text(json.dumps(spec, indent=1) + '\n')
+        print(f'rehearsal  synthetic main window {span[0]:#010x}-{span[1]:#010x} '
+              f'({span[1] - span[0]} bytes) at {dump.relative_to(root)}')
+        args.spec = str(scratch / 'dump.spec.json')
+        args.out_dir = str(scratch / 'extract-ram')
+        args.fragment = str(scratch / 'manifest-modules.json')
+        args.check = False
+        args.dry_run = False
+        args.apply_manifest = None
+    if not args.spec:
+        parser.error('--spec is required unless --rehearse is used')
+    spec = json.loads(Path(args.spec).read_text())
 
     problems = validate_spec(root, spec, manifest)
     if problems:
@@ -283,7 +370,8 @@ def main(argv=None):
         })
 
     fragment = {'schemaVersion': 1, 'modules': entries}
-    fragment_path = root / 'build' / 'ram-capture' / 'manifest-modules.json'
+    fragment_path = (Path(args.fragment) if args.fragment else
+                     root / 'build' / 'ram-capture' / 'manifest-modules.json')
     if not (args.check or args.dry_run):
         fragment_path.parent.mkdir(parents=True, exist_ok=True)
         fragment_path.write_text(json.dumps(fragment, indent=1) + '\n')
@@ -295,6 +383,9 @@ def main(argv=None):
             target.write_text(json.dumps(merged, indent=1) + '\n')
             print(f'manifest   {target} ({len(merged["modules"])} modules)')
 
+    if args.rehearse:
+        print('rehearsal module entries:')
+        print(json.dumps(entries, indent=1))
     if args.check:
         print('\n--check: validation passed, nothing written')
     elif args.dry_run:
