@@ -84,7 +84,7 @@ def permuter_text_diff(root, base_obj, image_slice, mode, scratch):
     return sum(1 for left, right in zip(before, after) if left != right) + abs(len(before) - len(after))
 
 
-def scan(root, module, under, max_score):
+def scan(root, module, under, max_score, timeout=60, max_text_diff=3):
     config = source_units.load_config(root)
     enumerated = source_units.enumerate_sources(root, config)
     rows = ledger_rows(root, module)
@@ -93,13 +93,16 @@ def scan(root, module, under, max_score):
     scratch = root / 'work/permuter/.scan'
     scratch.mkdir(parents=True, exist_ok=True)
 
-    ready, exact, relocation_only, skipped = [], [], [], []
-    for unit in enumerated['compiled']:
+    ready, exact, relocation_only, far, skipped = [], [], [], [], []
+    units = [unit for unit in enumerated['compiled']
+             if unit['module'] == module and (not under or unit['path'].startswith(under))]
+    seen = 0
+    for unit in units:
         path = unit['path']
-        if under and not path.startswith(under):
-            continue
-        if unit['module'] != module:
-            continue
+        seen += 1
+        if seen % 25 == 0:
+            print(f'  {seen}/{len(units)} units, {len(ready)} ready, {len(exact)} exact, '
+                  f'{len(relocation_only)} relocation-only', file=sys.stderr, flush=True)
         match = ADDRESS.search(path)
         if not match:
             skipped.append((path, 'no address in the file name'))
@@ -114,7 +117,12 @@ def scan(root, module, under, max_score):
         thumb = '-thumb' in unit['compilerFlags']
         compiler = root / unit['compilerPath']
         obj = scratch / (Path(path).stem + '.o')
-        built = permuter.compile_object(root, root / path, obj, flags, thumb, compiler=compiler)
+        try:
+            built = permuter.compile_object(root, root / path, obj, flags, thumb,
+                                            compiler=compiler, timeout=timeout)
+        except Exception as error:  # includes subprocess.TimeoutExpired
+            skipped.append((path, 'compile failed: ' + str(error)))
+            continue
         if built.returncode:
             skipped.append((path, 'compile failed'))
             continue
@@ -134,12 +142,14 @@ def scan(root, module, under, max_score):
         elif len(actual) == size and score <= max_score:
             diff = permuter_text_diff(root, obj, wanted, row['mode'], scratch)
             record['textDiff'] = diff
-            if diff:
+            if diff is None or diff == 0:
+                relocation_only.append(record)
+            elif diff <= max_text_diff:
                 ready.append(record)
             else:
-                relocation_only.append(record)
-    ready.sort(key=lambda item: (item['score'], item['bytes'], item['address']))
-    return ready, exact, relocation_only, skipped
+                far.append(record)
+    ready.sort(key=lambda item: (item.get('textDiff') or 0, item['score'], item['bytes'], item['address']))
+    return ready, exact, relocation_only, far, skipped
 
 
 def main(argv=None):
@@ -151,15 +161,24 @@ def main(argv=None):
                         help='largest differing-byte score to report as permuter-ready')
     parser.add_argument('--json', help='write the full scan here')
     parser.add_argument('--limit', type=int, default=40)
+    parser.add_argument('--max-text-diff', type=int, default=3,
+                        help='largest normalized instruction-row diff that still counts as a near miss')
+    parser.add_argument('--timeout', type=float, default=60.0,
+                        help='per-unit compile timeout in seconds (default 60)')
     args = parser.parse_args(argv)
     root = Path(args.root).resolve()
 
-    ready, exact, relocation_only, skipped = scan(root, args.module, args.under, args.max_score)
+    ready, exact, relocation_only, far, skipped = scan(root, args.module, args.under, args.max_score, args.timeout, args.max_text_diff)
     print(f'permuter-ready rows ({len(ready)}): exact compiled size, bytes differ')
     print(f'{"address":>10s} {"bytes":>5s} {"score":>5s} {"mode":5s} {"compiler":8s} source')
     for record in ready[:args.limit]:
         print(f'{record["address"]:>10s} {record["bytes"]:5d} {record["score"]:5d} '
               f'{record["mode"]:5s} {record["sourceCompiler"]:8s} {record["path"]}')
+    print(f'\nexact-size but a large normalized diff ({len(far)}) -- byte score is small, '
+          'instruction stream is not: not a near miss')
+    for record in far[:args.limit]:
+        print(f'{record["address"]:>10s} {record["bytes"]:5d} {record["score"]:5d} '
+              f'textdiff={record.get("textDiff")}  {record["path"]}')
     print(f'\nexact-size but relocation-only ({len(relocation_only)}) -- the permuter sees '
           'these as already matching; fix the link/relocation, not the source')
     for record in relocation_only[:args.limit]:
@@ -177,7 +196,7 @@ def main(argv=None):
         if not destination.is_absolute():
             destination = root / args.json
         destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_text(json.dumps(dict(module=args.module, ready=ready, exact=exact,
+        destination.write_text(json.dumps(dict(module=args.module, ready=ready, far=far, exact=exact,
                                                relocationOnly=relocation_only, skipped=skipped), indent=1) + '\n',
                                encoding='utf-8')
         print(f'\nreport: {destination}')

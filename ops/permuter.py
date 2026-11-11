@@ -174,13 +174,13 @@ def compiler_path(root, override=None):
     return path
 
 
-def compile_object(root, source, obj, flags, thumb, compiler=None):
+def compile_object(root, source, obj, flags, thumb, compiler=None, timeout=None):
     """Compile one translation unit the way the ledger rows were measured."""
     env = dict(os.environ, LM_LICENSE_FILE=str(root / LICENSE))
     command = [str(compiler_path(root, compiler))]
     # -thumb has to precede -c: mwcc reads the mode flag before the compile action.
     command += list(flags) + (['-thumb'] if thumb else []) + ['-c', str(source), '-o', str(obj)]
-    return subprocess.run(command, capture_output=True, text=True, env=env)
+    return subprocess.run(command, capture_output=True, text=True, env=env, timeout=timeout)
 
 
 def object_text(path):

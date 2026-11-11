@@ -351,12 +351,20 @@ python ops/verify_permuter.py work/permuter/ov006_<addr> --source best.c --emit 
 
 Three buckets come out of the scan, and only the first is permuter work:
 
-* **permuter-ready** — exact compiled size, bytes differ, and the difference survives the
-  shim's normal form (`textDiff > 0`). The last condition matters: a row whose only
-  difference sits inside a relocation slot renders as the same `bl <target>` on both
-  sides, so the permuter sees score 0 and does nothing. Those rows come back as
-  **relocation-only** and need the link/relocation fixed, not the source.
-* **relocation-only** — exact size, byte diff, `textDiff == 0`. See above.
+* **permuter-ready** — exact compiled size, bytes differ, and the difference is *small in
+  the shim's normal form* (`textDiff <= 3` instruction rows by default). Both tests are
+  needed. The first full `src/runtime` scan (962 units) called **259 rows ready on the byte
+  score alone**; the normalized diff showed 246 of them at roughly 70+ differing rows, i.e.
+  one byte of encoding difference that desynchronizes the instruction stream or sits in a
+  shape the randomizer cannot reach. Calibration on `src/runtime/ov006-thumb01` (358 units):
+  95 already exact, 8 relocation-only, 246 large-diff, **0 true near-misses**. A run on three
+  of the byte-level "ready" rows confirmed it — 90 s each, base scores 705-905, best 805, no
+  zero, which is the expected outcome for a row that is not in the allocation class.
+* **relocation-only** — exact size, byte diff, `textDiff == 0`. The diff sits in a
+  relocation slot, both sides render `bl <target>`, the permuter reports score 0 and does
+  nothing. Fix the link/relocation, not the source.
+* **large normalized diff** — exact size and a small byte score but tens of differing rows.
+  Not a near miss; byte score over-reports these badly.
 * **already exact** — the source reproduces the row under its own rule. That is ledger
   reconciliation (`ops/reconcile_ledger.py`), not a permuter job.
 
