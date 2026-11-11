@@ -340,6 +340,12 @@ def symbol_address(symbol, module, base, function, sections):
         row = module['symbols'].get(name)
         if row is not None:
             return int(row['address'], 0)
+        measured = (module.get('dependency_names') or {}).get(name)
+        if measured is not None:
+            return measured[0]
+        measured = (module.get('dependency_names_global') or {}).get(name)
+        if measured is not None:
+            return measured[0]
         match = ADDRESS.search(name)
         if match:
             return int(match.group(1), 16)
@@ -360,6 +366,13 @@ def target_mode(module, address, name=None):
     row = module.get('by_address', {}).get(address)
     if row is not None:
         return row.get('mode')
+    if name:
+        measured = (module.get('dependency_names') or {}).get(name)
+        if measured is not None and measured[1]:
+            return measured[1]
+        measured = (module.get('dependency_names_global') or {}).get(name)
+        if measured is not None and measured[1]:
+            return measured[1]
     return None
 
 
@@ -453,6 +466,59 @@ def ledger_index(private_root):
     for rows in by_source.values():
         rows.sort(key=lambda item: int(item['address'], 0))
     return by_address, by_symbol, by_source, count
+
+
+def dependency_names(private_root, by_symbol):
+    """Map relocation symbol names to the addresses the ledger measured for them.
+
+    The address ledger records every relocation of every accepted function as
+    ``{"symbol": name, "target": address, "targetModule": module}``.  Names that
+    are not address-encoded (``native_copy``, ``WL_ReadByte``, ``saved_record_by_id``
+    or a source-defined name such as ``saved_projection_value``) are exactly the
+    ones the fresh compiler emits but the module symbol table cannot resolve, so
+    this table closes the gap from measured evidence: the target is the value the
+    original linker resolved, not a guess.
+
+    A name is admitted per module when its recorded targets agree, and globally
+    only when every module that uses it agrees on one address.
+    """
+    path = Path(private_root) / 'ledger/functions.jsonl'
+    candidates = collections.defaultdict(collections.Counter)
+    if not path.is_file():
+        return {}, {}
+    with path.open(encoding='utf-8') as stream:
+        for line in stream:
+            line = line.strip()
+            if not line:
+                continue
+            row = json.loads(line)
+            for dependency in row.get('dependencies') or []:
+                name = dependency.get('symbol') or ''
+                if not name or ADDRESS.search(name) and name.endswith('%08x' % int(ADDRESS.search(name).group(1), 16)):
+                    continue
+                if name in by_symbol.get((row.get('module'), name), ()):
+                    continue
+                target = dependency.get('target')
+                if isinstance(target, str) and target.lower().startswith('0x'):
+                    value = int(target, 16)
+                elif isinstance(target, int):
+                    value = target
+                else:
+                    found = ADDRESS.search(str(target))
+                    if not found:
+                        continue
+                    value = int(found.group(1), 16)
+                module = dependency.get('targetModule') or row.get('module')
+                candidates[(module, name)][(value, dependency.get('targetMode'))] += 1
+    per_module, global_names = {}, collections.defaultdict(collections.Counter)
+    for (module, name), values in candidates.items():
+        (value, mode), count = values.most_common(1)[0]
+        per_module.setdefault(module, {})[name] = (value, mode, count)
+        global_names[name][(value, mode)] += count
+    for name, values in global_names.items():
+        (value, mode), count = values.most_common(1)[0]
+        global_names[name] = (value, mode, count)
+    return per_module, dict(global_names)
 
 
 def accepted_data(root, build_sha256):
@@ -589,10 +655,13 @@ def compiled_selections(root, private_root, compilation):
     global_addresses = {}
     for (module_name, address), row in by_address.items():
         global_addresses.setdefault(address, row)
+    dependency_by_module, dependency_global = dependency_names(private_root, by_symbol)
     runtime = recover_runtime_symbols(root, report, modules, images, by_address, by_symbol, addresses_by_module)
     selections = collections.defaultdict(dict)
     stats = dict(compiledObjects=0, mappedFunctions=0, exactFunctions=0, unmatchedFunctions=0,
                  duplicateAddresses=0, unresolvedRelocations=0, runtimeSymbols=len(runtime),
+                 dependencySymbols=len(dependency_global),
+                 relocationTargets=collections.defaultdict(lambda: dict(resolved=0, unresolved=0)),
                  compileFailures=len(report.get('failures', [])))
     for record in report.get('results', []):
         if record.get('status') != 'compiled':
@@ -608,6 +677,8 @@ def compiled_selections(root, private_root, compilation):
         module['by_address'] = addresses_by_module.get(record['module'], {})
         module['global_addresses'] = global_addresses
         module['runtime'] = runtime
+        module['dependency_names'] = dependency_by_module.get(record['module'], {})
+        module['dependency_names_global'] = dependency_global
         base = int(module['loadAddressBase'], 0)
         image = images[record['module']]
         source_rows = list(by_source.get((record['module'], record['source'].replace('\\', '/')), []))
@@ -664,6 +735,11 @@ def compiled_selections(root, private_root, compilation):
             patched, unresolved = patch_function(function, module, base, profile['sections'],
                                                  profile['relocations'], image)
             stats['unresolvedRelocations'] += len(unresolved)
+            counter = stats['relocationTargets'][record['module']]
+            sites = sum(1 for relocation in profile['relocations'].get(function['section'], [])
+                        if function['value'] <= relocation['where'] < function['value'] + function['size'])
+            counter['resolved'] += max(0, sites - len(unresolved))
+            counter['unresolved'] += len(unresolved)
             start = address - base
             target = image[start:start + measured_size]
             exact = len(patched) >= measured_size and patched[:measured_size] == target
@@ -853,6 +929,8 @@ def build_project(root, private_root, out_dir, compilation):
         mappedFunctions=stats['mappedFunctions'], exactFunctions=stats['exactFunctions'],
         unmatchedFunctions=stats['unmatchedFunctions'], duplicateAddresses=stats['duplicateAddresses'],
         unresolvedRelocations=stats['unresolvedRelocations'], runtimeSymbols=stats.get('runtimeSymbols', 0),
+        dependencySymbols=stats.get('dependencySymbols', 0),
+        relocationTargets={name: dict(counts) for name, counts in sorted(stats.get('relocationTargets', {}).items())},
         sourceUnitConfigSha256=digest(root / CONFIG),
         accounting='Compiled source is compared byte-for-byte with the original module image after applying its '
                    'ELF relocations. complete is true only for an exact, full-size match; no manifest membership '
