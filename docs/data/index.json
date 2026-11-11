@@ -56,7 +56,7 @@
     "src/mechanics_save/20261030_roster_frame_mask.c",
     "src/runtime/runtime07/native_main_0206d23c.c"
    ],
-   "imageNote": "The address comes from the symbol name in matched source, but no module image covers it: main ends at 0x020E33C0 and the ov000..ov007 images start at 0x021D7240, so 0x021C4BF8 falls in a gap. public_tools/data_dump.py therefore refuses this table until the image set covers the range."
+   "imageNote": "The address comes from the symbol name in matched source, but no module image covers it: main ends at 0x020E3300 and the ov000..ov007 images start at 0x021D7240, so 0x021C4BF8 falls in a gap. public_tools/data_dump.py therefore refuses this table until the image set covers the range."
   },
   {
    "id": "skill_records",
