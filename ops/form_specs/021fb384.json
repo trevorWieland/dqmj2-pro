@@ -1,0 +1,10 @@
+{
+  "PARAM": ["u32 value", "s32 value"],
+  "EXPR": [
+    "native_fn_02002480(*(u16 *)(native_data_ov006_0221c0ec + 4), 0x1D) + value",
+    "value + native_fn_02002480(*(u16 *)(native_data_ov006_0221c0ec + 4), 0x1D)",
+    "native_fn_02002480(*(u16 *)(native_data_ov006_0221c0ec + 4), 0x1D) + (s32)value",
+    "(s32)native_fn_02002480(*(u16 *)(native_data_ov006_0221c0ec + 4), 0x1D) + (s32)value",
+    "native_fn_02002480(*(u16 *)(native_data_ov006_0221c0ec + 4), 0x1D) - -value"
+  ]
+}
