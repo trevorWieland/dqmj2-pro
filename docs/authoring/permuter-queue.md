@@ -9,6 +9,29 @@ the smallest member is the suggested first permute target.
 - passing families (not queued): 2
 - singleton rows (not queued as families): 473
 
+## 2026-11-11 BLX-mode reclassification
+
+274 of the 629 unmatched Thumb rows in ov006 and main contain a BLX immediate
+(1,068 sites, 179 distinct ARM targets). The measurement pipeline used to expand
+every `R_ARM_THM_CALL` as a `BL`, so these rows scored a phantom 2-byte miss at the
+second halfword and were queued as source/form work. The pipeline now resolves the
+target's mode from the ledger (see
+[the BLX-mode fix](2026-11-11-blx-mode-fix.md)); that artifact is gone.
+
+- **4 rows are now byte-exact and shipped**: `021fb384`, `021ff02c`, `021ff05c`,
+  `021ff08c` (`src/ov006/p5_ov006_blx_mode`). All four were exactly 2 bytes short
+  before the fix.
+- **2 rows** have a compiled best-known source that is still a shape mismatch
+  (`0208ba68`: 44 -> 42 differing bytes; `02094208`: 26 -> 25).
+- **268 rows** have no best-known source. They are *BLX-reachable*: every BLX
+  target resolves to ARM, so branch encoding no longer blocks them; they still
+  need an ordinary source form. Zero BLX targets remain unresolved.
+- Family 14 below (`021ff02c`, `021ff05c`, `021ff08c`) is complete and removed from
+  active permuter work. The other families are unchanged.
+
+Reproduce with `python ops/blx_rescreen.py --candidates ...`; the full per-row
+classification is in `permuter-queue.json` under `blxModeFix`.
+
 | # | module | family | rows | bytes | first row | reasons |
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | ov006 | `push sub adds ldr ldr ldr ldr ldr` | 12 | 984 | `021f4c80` (68 B) | rule1 branch on call result; rule1 post-call reload; rule3 stack=3; rule4 record chain |
@@ -24,7 +47,7 @@ the smallest member is the suggested first permute target.
 | 11 | ov006 | `push ldr movs adds bl cmp beq movs` | 3 | 504 | `021f6768` (156 B) | rule1 branch on call result; rule2 saved=2; rule4 record chain |
 | 12 | ov006 | `push movs adds blx cmp bne movs lsls` | 3 | 352 | `02200c0c` (96 B) | rule1 branch on call result; rule2 saved=2; rule4 record chain |
 | 13 | ov006 | `push ldr ldr bl ldr movs ldrh movs` | 3 | 224 | `021fd984` (72 B) | rule4 record chain |
-| 14 | ov006 | `push sub ldr ldr ldr adds ldrb str` | 3 | 144 | `021ff02c` (48 B) | rule3 stack=2; rule4 record chain |
+| 14 | ov006 | `push sub ldr ldr ldr adds ldrb str` | 3 | 144 | `021ff02c` (48 B) | **matched 2026-11-11** (BLX-mode fix); rule3 stack=2; rule4 record chain |
 | 15 | ov006 | `push cmp bne b movs ldrsh cmp bls` | 2 | 1476 | `021ee348` (696 B) | rule1 branch on call result; rule4 record chain; rule5 branch-merged address select |
 | 16 | ov006 | `push ldr ldr ldr cmp beq b adds` | 2 | 824 | `021fa7f8` (392 B) | rule1 branch on call result; rule4 record chain |
 | 17 | main | `push sub adds movs str ldr adds adds` | 2 | 800 | `020aa894` (228 B) | rule1 branch on call result; rule1 post-call reload; rule2 saved=4; rule3 stack=10; rule3 stack=3; rule4 record chain |

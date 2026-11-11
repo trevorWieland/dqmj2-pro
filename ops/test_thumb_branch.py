@@ -41,6 +41,21 @@ class ThumbBranchTests(unittest.TestCase):
         self.assertEqual(marker_mode(blx, 0), 'arm')
         self.assertEqual(marker_mode(bl, 0), 'thumb')
 
+    def test_blx_marker_with_j1_clear(self):
+        # BLX clears bit 12; J1 is free. 0xC8xx is a valid BLX with J1 == 0 and
+        # the old (second & 0xF800) == 0xE800 test misclassified it as BL.
+        self.assertEqual(marker_mode(bytes.fromhex('38f600c8'), 0), 'arm')
+        first, second = encode(0x021FB38E, 0x02002480, -4, mode='arm')
+        self.assertEqual(second & 0xD000, 0xC000)
+
+    def test_mode_override_matches_arm_flag(self):
+        self.assertEqual(encode(0x021FB38E, 0x02002480, -4, mode='arm'),
+                         encode(0x021FB38E, 0x02002480, -4, arm=True))
+        self.assertEqual(encode(0x021FB38E, 0x02002480, -4, mode='thumb'),
+                         encode(0x021FB38E, 0x02002480, -4, arm=False))
+        with self.assertRaises(ValueError):
+            encode(0x021FB38E, 0x02002480, -4, mode='arm7')
+
     def test_blx_base_is_aligned(self):
         # BLX relative to Align(PC+4,4): the same inputs must not encode as a BL.
         arm_words = encode(0x021EDA60, 0x02026144, -4, arm=True)

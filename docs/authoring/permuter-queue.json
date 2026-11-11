@@ -522,6 +522,8 @@
       "bytes": 144,
       "first": "021ff02c",
       "firstBytes": 48,
+      "status": "matched",
+      "matchedBy": "2026-11-11 BLX-mode fix; shipped as src/ov006/p5_ov006_blx_mode",
       "reasons": [
         "rule3 stack=2",
         "rule4 record chain"
@@ -916,5 +918,28 @@
         "rule4 record chain"
       ]
     }
-  ]
+  ],
+  "blxModeFix": {
+    "date": "2026-11-11",
+    "document": "docs/authoring/2026-11-11-blx-mode-fix.md",
+    "screenedRows": 629,
+    "blxRows": 274,
+    "blxSites": 1068,
+    "blxTargets": 179,
+    "blxRowsByModule": {
+      "ov006": 168,
+      "main": 106
+    },
+    "exactAfterFix": [
+      "021fb384",
+      "021ff02c",
+      "021ff05c",
+      "021ff08c"
+    ],
+    "blxOnlyTwoByteMissToExact": 4,
+    "improvedStillDiff": 2,
+    "needsSourceBlxReachable": 268,
+    "needsSourceBlxUnresolved": 0,
+    "shippedSources": "src/ov006/p5_ov006_blx_mode"
+  }
 }

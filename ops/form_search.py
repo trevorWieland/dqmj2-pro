@@ -19,13 +19,18 @@ and the measured image, then the absolute length difference as a tie-break. A sc
 ``(0, 0)`` means the combination reproduces the image exactly.
 
 The row's image slice comes from the module image named in ``manifest.json``; branch
-relocations are expanded through :mod:`ops.thumb_branch`, which is the mode-aware
-encoder (BLX base aligned, marker read from the second halfword).
+relocations are expanded through :mod:`ops.thumb_branch` with the target's mode
+resolved by :class:`TargetModes` (ledger address, module, then accepted source
+file). A Thumb branch's mode is never read from the compiler's placeholder
+halfword: mwccarm emits the ``BL`` form for every interworking call.
 """
 import argparse
+import collections
+import fnmatch
 import itertools
 import json
 import os
+import re
 import string
 import struct
 import subprocess
@@ -42,6 +47,182 @@ FLAGS = ['-O2', '-enum', 'int', '-char', 'signed', '-str', 'noreuse', '-proc', '
          '-RTTI', 'off', '-interworking', '-w', 'off', '-sym', 'on', '-gccinc',
          '-nolink', '-msgstyle', 'gcc']
 ADDRESS = __import__('re').compile(r'([0-9a-fA-F]{8})$')
+SOURCE_ADDRESS = __import__('re').compile(r'native_(?:fn_|data_)?[A-Za-z0-9_]+?_([0-9a-fA-F]{8})$')
+
+
+class TargetModes:
+    """Resolve a Thumb branch target's instruction set from project evidence.
+
+    The compiler emits one ``R_ARM_THM_CALL`` for both a Thumb ``BL`` and an ARM
+    ``BLX``; the object's placeholder halfword is always the ``BL`` form. The
+    mode therefore has to come from the *target*, strongest evidence first:
+
+    1. the ledger row at the target address (``mode``), or the ledger row whose
+       measured extent contains it (a mid-function ARM entry);
+    2. the ledger row for the target symbol (name aliases);
+    3. the target module's mode when every ledger row in it agrees;
+    4. the existing accepted source file's mode (``config/source_units.json``
+       rule profile, ``-thumb`` or not);
+    5. no evidence: ``None``, and the caller falls back to ``BL``.
+
+    ``relocate`` uses this to encode BLX for ARM targets. A caller can still
+    pass an explicit ``arm`` hint, which wins over all of the above.
+    """
+
+    def __init__(self, root, module=None):
+        self.root = Path(root)
+        self.caller = module
+        self.by_address = {}
+        self.by_module_address = {}
+        self.by_symbol = {}
+        self.extents = []
+        self.module_extents = collections.defaultdict(list)
+        self.module_modes = {}
+        self.module_ranges = []
+        self.source_paths = {}
+        self._loaded = False
+        self._source_loaded = False
+        self._exact_rules = {}
+        self._wildcard_rules = []
+        self._profiles = {}
+
+    def _load(self):
+        if self._loaded:
+            return
+        self._loaded = True
+        ledger = self.root / 'ledger/functions.jsonl'
+        modes_by_module = collections.defaultdict(set)
+        rows = []
+        if ledger.is_file():
+            with ledger.open(encoding='utf-8') as stream:
+                for line in stream:
+                    line = line.strip()
+                    if line:
+                        rows.append(json.loads(line))
+        for row in rows:
+            mode = row.get('mode')
+            if mode not in ('arm', 'thumb'):
+                continue
+            address = int(row['address'], 0)
+            self.by_address.setdefault(address, mode)
+            if row.get('module'):
+                self.by_module_address.setdefault((row['module'], address), mode)
+                modes_by_module[row['module']].add(mode)
+            if row.get('bytes'):
+                self.extents.append((address, address + int(row['bytes']), mode))
+                if row.get('module'):
+                    self.module_extents[row['module']].append(
+                        (address, address + int(row['bytes']), mode))
+            if row.get('symbol'):
+                self.by_symbol.setdefault(row['symbol'], mode)
+        self.extents.sort()
+        for extents in self.module_extents.values():
+            extents.sort()
+        for module, modes in modes_by_module.items():
+            if len(modes) == 1:
+                self.module_modes[module] = next(iter(modes))
+        self._load_module_ranges()
+
+    def _load_module_ranges(self):
+        manifest = self.root / 'manifest.json'
+        if not manifest.is_file():
+            return
+        document = json.loads(manifest.read_text(encoding='utf-8-sig'))
+        for module in document.get('modules', []):
+            size = module.get('bytes')
+            if type(size) is not int or size <= 0 or 'base' not in module:
+                continue
+            base = int(str(module['base']), 0)
+            self.module_ranges.append((size, base, base + size, module['name']))
+        # Smallest range first, so an overlay beats a containing program image.
+        self.module_ranges.sort()
+
+    def _load_source_index(self):
+        if self._source_loaded:
+            return
+        self._source_loaded = True
+        config = self.root / 'config/source_units.json'
+        if not config.is_file():
+            return
+        document = json.loads(config.read_text(encoding='utf-8'))
+        self._profiles = document.get('flagProfiles', {})
+        self._wildcard_rules = [rule for rule in document.get('rules', [])
+                                if any(char in rule.get('glob', '') for char in '*?[')]
+        self._wildcard_rules.sort(key=lambda rule: len(rule['glob']), reverse=True)
+        for rule in document.get('rules', []):
+            glob = rule.get('glob', '')
+            if glob and not any(char in glob for char in '*?['):
+                self._exact_rules[glob] = rule
+        for path in (self.root / 'src').rglob('*'):
+            if path.suffix.lower() not in ('.c', '.s', '.cpp', '.inc') or not path.is_file():
+                continue
+            match = SOURCE_ADDRESS.search(path.stem)
+            if match:
+                self.source_paths.setdefault(int(match.group(1), 16),
+                                             path.relative_to(self.root).as_posix())
+
+    def _rule_mode(self, relative):
+        rule = self._exact_rules.get(relative)
+        if rule is None:
+            for candidate in self._wildcard_rules:
+                if fnmatch.fnmatch(relative, candidate['glob']):
+                    rule = candidate
+                    break
+        if rule is None:
+            return None
+        if rule.get('mode') in ('arm', 'thumb'):
+            return rule['mode']
+        flags = self._profiles.get(rule.get('compilerFlags'), [])
+        return 'thumb' if '-thumb' in flags else 'arm'
+
+    def _module_of(self, target):
+        for unused_size, start, end, name in self.module_ranges:
+            if start <= target < end:
+                return name
+        return None
+
+    @staticmethod
+    def _containing(extents, target):
+        for start, end, mode in extents:
+            if start <= target < end:
+                return mode
+            if start > target:
+                break
+        return None
+
+    def resolve(self, target, symbol=None):
+        """Return ``(mode, evidence)``; mode is ``'arm'``, ``'thumb'`` or ``None``."""
+        self._load()
+        if target is not None and self.caller:
+            mode = self.by_module_address.get((self.caller, target))
+            if mode:
+                return mode, 'ledger-address'
+            mode = self._containing(self.module_extents.get(self.caller, []), target)
+            if mode:
+                return mode, 'ledger-extent'
+        if target is not None:
+            mode = self.by_address.get(target)
+            if mode:
+                return mode, 'ledger-address'
+            mode = self._containing(self.extents, target)
+            if mode:
+                return mode, 'ledger-extent'
+        if symbol:
+            mode = self.by_symbol.get(symbol)
+            if mode:
+                return mode, 'ledger-symbol'
+        if target is not None:
+            module = self._module_of(target)
+            if module and module in self.module_modes:
+                return self.module_modes[module], 'module-mode'
+            self._load_source_index()
+            relative = self.source_paths.get(target)
+            if relative:
+                mode = self._rule_mode(relative)
+                if mode:
+                    return mode, 'source-file'
+        return None, 'fallback'
+
 
 
 def default_compiler(root):
@@ -66,11 +247,11 @@ def symbol_address(name):
     return int(match.group(1), 16)
 
 
-def compile_source(cc, source, obj, root):
+def compile_source(cc, source, obj, root, flags=None):
     env = dict(os.environ, LM_LICENSE_FILE=str(root / 'tools/mwccarm/mwccarm/license.dat'))
     # -thumb has to precede -c: mwcc reads the mode flag before the compile action.
-    return subprocess.run([str(cc), *FLAGS, '-thumb', '-c', str(source), '-o', str(obj)],
-                          capture_output=True, text=True, env=env)
+    return subprocess.run([str(cc), *(flags or FLAGS), '-thumb', '-c', str(source),
+                           '-o', str(obj)], capture_output=True, text=True, env=env)
 
 
 def read_object(obj):
@@ -100,15 +281,25 @@ def read_object(obj):
     return text, defined, relocations
 
 
-def relocate(text, base, relocations, defined):
+def relocate(text, base, relocations, defined, modes=None, arm=None):
+    """Patch a compiled object's relocations at ``base``.
+
+    ``modes`` is a :class:`TargetModes`; when omitted, Thumb branches fall back to
+    ``BL``. ``arm`` is an explicit caller hint (``True``/``False``) that wins over
+    the resolved target mode. The object's placeholder halfword is deliberately
+    *not* used as evidence: mwccarm always emits the BL form, including for a
+    Thumb caller of an ARM callee.
+    """
     out = bytearray(text)
     for offset, kind, symbol, addend in relocations:
         target = defined.get(symbol) or symbol_address(symbol)
         if kind in (10, 30):
             place = base + offset
-            marker = int.from_bytes(text[offset + 2:offset + 4], 'little')
-            arm = (marker & 0xF800) == 0xE800 if kind == 10 else False
-            first, second = encode_thumb_branch(place, target, addend, arm)
+            if arm is None:
+                mode = modes.resolve(target, symbol)[0] if modes is not None else None
+            else:
+                mode = 'arm' if arm else 'thumb'
+            first, second = encode_thumb_branch(place, target, addend, mode=mode)
             struct.pack_into('<H', out, offset, first)
             struct.pack_into('<H', out, offset + 2, second)
         elif kind == 2:
@@ -146,6 +337,7 @@ def main(argv=None):
     template = string.Template(Path(args.template).read_text(encoding='utf-8'))
     grid = json.loads(Path(args.grid).read_text(encoding='utf-8'))
     cc = default_compiler(root)
+    modes = TargetModes(root, args.module)
     work = Path(args.work or root / 'build/form_search')
     work.mkdir(parents=True, exist_ok=True)
 
@@ -169,7 +361,7 @@ def main(argv=None):
             continue
         text, defined, relocations = read_object(work / 'candidate.o')
         try:
-            actual = relocate(text, address, relocations, defined)
+            actual = relocate(text, address, relocations, defined, modes=modes)
         except ValueError:
             continue
         current = score(actual, want)

@@ -1,6 +1,15 @@
 # Thumb BLX-immediate blocker — resolution
 
-Status: evidence report. Conclusion: the 179 ov006 rows are **not blocked by the compiler**. mwccarm
+Status (2026-11-11): **fixed**. The relocation rule below is implemented in
+`ops/form_search.py`, `ops/compiler_matrix.py`, `ops/link_compare.py` and
+`public_tools/repo_build.py`, with the target-mode evidence hierarchy of
+[the BLX-mode fix](../authoring/2026-11-11-blx-mode-fix.md). Re-measurement:
+274 of 629 unmatched ov006/main Thumb rows contain a BLX immediate; 4 are now
+byte-exact and shipped, 268 are BLX-reachable and need an ordinary source, 0
+targets are unresolved. The 179-row count below is the historical sample that
+proved the mechanism.
+
+Status at time of writing: evidence report. Conclusion: the 179 ov006 rows are **not blocked by the compiler**. mwccarm
 always emits a Thumb `BL` plus an `R_ARM_THM_CALL` relocation; the image's `BLX` is what the
 interworking relocation step produces from that `BL`. Applying the relocation with the ARM-target
 rule reproduces the rows byte-exactly. One row is delivered as a demonstration.
@@ -119,3 +128,20 @@ should not be used while the relocation rule is fixable.
   fallback is specified but not demonstrated.
 * Which acceptance step currently expands `R_ARM_THM_CALL` was not traced; the row-level proof shows
   the mechanism, and the re-screen is the next step.
+
+## 7. Follow-up (2026-11-11)
+
+The recommended workaround was implemented. Two details differ from the first draft of this report:
+
+* the marker test is bit 12 (`second & 0xD000 == 0xC000`), not `0xE800`: a BLX
+  site whose `J1` is clear encodes `0xC8xx`, and the old `0xF800` mask classified
+  it as a `BL`;
+* the mode is resolved from the target (ledger address, containing extent,
+  symbol, module, accepted source), never from the object's placeholder.
+
+The re-screen covered 629 unmatched Thumb rows (not only the 179-row sample):
+274 contain a BLX immediate (1,068 sites, 179 ARM targets). Four rows are now
+byte-exact and shipped (`0x021FB384`, `0x021FF02C`, `0x021FF05C`,
+`0x021FF08C`); 268 are BLX-reachable with no best-known source; two compiled
+forms remain shape mismatches. See
+[the BLX-mode fix](../authoring/2026-11-11-blx-mode-fix.md).

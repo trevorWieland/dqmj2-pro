@@ -398,7 +398,9 @@ def decode_original_target(kind, image, absolute, base):
         i1, i2 = 1 - (j1 ^ s), 1 - (j2 ^ s)
         immediate = (s << 24) | (i1 << 23) | (i2 << 22) | ((high & 0x3FF) << 12) | ((low & 0x7FF) << 1)
         immediate = sign_extend(immediate, 25)
-        if (low & 0xF800) == 0xE800:
+        # BL leaves bit 12 set; BLX clears it. 0xE800 is only the J1 == 1
+        # spelling of BLX, so test the discriminating bit, not the marker byte.
+        if (low & 0xD000) == 0xC000:
             return ((absolute + 4) & ~3) + immediate, 'arm'
         return absolute + 4 + immediate, 'thumb'
     return None
@@ -433,15 +435,26 @@ def symbol_address(symbol, module, base, function, sections):
 
 
 def target_mode(module, address, name=None):
+    """Resolve a Thumb branch target's mode from measured evidence, strongest first.
+
+    1. the ledger row at the target address (``mode``);
+    2. the target module's mode when every ledger row in it agrees;
+    3. recovered runtime/dependency metadata for the symbol;
+    4. ``None`` -- the caller encodes the fallback ``BL``.
+    """
+    row = module.get('by_address', {}).get(address)
+    if row is not None and row.get('mode') in ('arm', 'thumb'):
+        return row['mode']
+    modes = {item.get('mode') for item in (module.get('by_address') or {}).values()
+             if item.get('mode') in ('arm', 'thumb')}
+    if len(modes) == 1:
+        return next(iter(modes))
     runtime = module.get('runtime', {})
     if name:
         if (module.get('name'), name) in runtime:
             return runtime[(module['name'], name)][1]
         if ('*', name) in runtime:
             return runtime[('*', name)][1]
-    row = module.get('by_address', {}).get(address)
-    if row is not None:
-        return row.get('mode')
     if name:
         measured = (module.get('dependency_names') or {}).get(name)
         if measured is not None and measured[1]:
