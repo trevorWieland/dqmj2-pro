@@ -1,0 +1,27 @@
+{
+  "DECLS": [
+    "    s32 channel;\n    s32 offset;",
+    "    volatile s32 channel;\n    s32 offset;",
+    "    s32 channel;\n    volatile s32 offset;",
+    "    volatile s32 channel;\n    volatile s32 offset;",
+    "    register s32 channel;\n    register s32 offset;"
+  ],
+  "READ_BLOCK": [
+    "    u32 value = *(u32 *)(*(u32 *)(*native_data_ov006_0221c060 + 0x34));",
+    "    u32 block = *native_data_ov006_0221c060;\n    u32 record = *(u32 *)(block + 0x34);\n    u32 value = *(u32 *)record;",
+    "    u32 block = *native_data_ov006_0221c060;\n    u32 value = *(u32 *)((block_view *)block)->record;",
+    "    u32 value = ((block_view *)(*native_data_ov006_0221c060))->record;\n    value = *(u32 *)value;"
+  ],
+  "CHANNEL_ASSIGN": [
+    "channel = (s32)((value & 0x01FF0000) >> 16);",
+    "channel = (s32)((value >> 16) & 0x1FF);",
+    "channel = (s32)(value >> 16) & 0x1FF;"
+  ],
+  "OFFSET_ASSIGN": [
+    "offset = (s32)(value & 0xFF);"
+  ],
+  "OFFSET_BIAS": ["0xC"],
+  "MODE_ARG": ["3"],
+  "THRESHOLD": ["0xC0"],
+  "CALLBACK": ["0x021F4CC5"]
+}
