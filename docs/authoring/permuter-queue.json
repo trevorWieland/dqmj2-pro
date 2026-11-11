@@ -1,0 +1,920 @@
+{
+  "generatedFrom": {
+    "filter": "ops/harvest_filter.py",
+    "ledger": "ledger/functions.jsonl",
+    "root": "."
+  },
+  "scannedRows": 617,
+  "families": 46,
+  "familyRows": 140,
+  "familyBytes": 21422,
+  "passingFamilies": 2,
+  "singletonRows": 473,
+  "top": [
+    {
+      "module": "ov006",
+      "prefix": "push sub adds ldr ldr ldr ldr ldr",
+      "members": [
+        {
+          "address": "021f2f60",
+          "bytes": 104
+        },
+        {
+          "address": "021f2fc8",
+          "bytes": 104
+        },
+        {
+          "address": "021f3edc",
+          "bytes": 76
+        },
+        {
+          "address": "021f3f28",
+          "bytes": 76
+        },
+        {
+          "address": "021f42a4",
+          "bytes": 88
+        },
+        {
+          "address": "021f42fc",
+          "bytes": 88
+        },
+        {
+          "address": "021f4354",
+          "bytes": 88
+        },
+        {
+          "address": "021f43ac",
+          "bytes": 88
+        },
+        {
+          "address": "021f4c80",
+          "bytes": 68
+        },
+        {
+          "address": "021f4cc4",
+          "bytes": 68
+        },
+        {
+          "address": "021f4d08",
+          "bytes": 68
+        },
+        {
+          "address": "021f4d4c",
+          "bytes": 68
+        }
+      ],
+      "rows": 12,
+      "bytes": 984,
+      "first": "021f4c80",
+      "firstBytes": 68,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule1 post-call reload",
+        "rule3 stack=3",
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push ldr ldr bl ldr ldr bl ldr",
+      "members": [
+        {
+          "address": "021f7a10",
+          "bytes": 112
+        },
+        {
+          "address": "021f8e1c",
+          "bytes": 128
+        },
+        {
+          "address": "021f95a4",
+          "bytes": 128
+        },
+        {
+          "address": "021fb958",
+          "bytes": 104
+        },
+        {
+          "address": "021fc248",
+          "bytes": 112
+        },
+        {
+          "address": "021fc564",
+          "bytes": 112
+        },
+        {
+          "address": "021fd6c4",
+          "bytes": 112
+        },
+        {
+          "address": "021fde3c",
+          "bytes": 112
+        },
+        {
+          "address": "021fe0f4",
+          "bytes": 112
+        }
+      ],
+      "rows": 9,
+      "bytes": 1032,
+      "first": "021fb958",
+      "firstBytes": 104,
+      "reasons": [
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push sub str ldr movs ldr add ldr",
+      "members": [
+        {
+          "address": "021ff7ec",
+          "bytes": 140
+        },
+        {
+          "address": "021ff878",
+          "bytes": 140
+        },
+        {
+          "address": "021ff904",
+          "bytes": 140
+        },
+        {
+          "address": "021ff990",
+          "bytes": 140
+        },
+        {
+          "address": "021ffbc4",
+          "bytes": 132
+        },
+        {
+          "address": "021ffc48",
+          "bytes": 132
+        },
+        {
+          "address": "021ffccc",
+          "bytes": 132
+        },
+        {
+          "address": "021ffd50",
+          "bytes": 132
+        }
+      ],
+      "rows": 8,
+      "bytes": 1088,
+      "first": "021ffbc4",
+      "firstBytes": 132,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule1 post-call reload",
+        "rule2 saved=4",
+        "rule3 stack=2",
+        "rule3 stack=3",
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push sub adds ldr movs ldr add ldr",
+      "members": [
+        {
+          "address": "021f2464",
+          "bytes": 64
+        },
+        {
+          "address": "021f25c8",
+          "bytes": 60
+        },
+        {
+          "address": "021f4404",
+          "bytes": 76
+        },
+        {
+          "address": "021ffa1c",
+          "bytes": 100
+        },
+        {
+          "address": "021ffb68",
+          "bytes": 92
+        },
+        {
+          "address": "022005d8",
+          "bytes": 132
+        },
+        {
+          "address": "02200974",
+          "bytes": 84
+        }
+      ],
+      "rows": 7,
+      "bytes": 608,
+      "first": "021f25c8",
+      "firstBytes": 60,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule1 post-call reload",
+        "rule3 stack=1",
+        "rule3 stack=2",
+        "rule4 record chain",
+        "rule5 branch-merged address select"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "ldr ldrh movs lsls ands asrs beq movs",
+      "members": [
+        {
+          "address": "02203ebc",
+          "bytes": 48
+        },
+        {
+          "address": "02203eec",
+          "bytes": 48
+        },
+        {
+          "address": "02203f1c",
+          "bytes": 48
+        },
+        {
+          "address": "02203f4c",
+          "bytes": 96
+        },
+        {
+          "address": "0220400c",
+          "bytes": 96
+        },
+        {
+          "address": "0220406c",
+          "bytes": 96
+        },
+        {
+          "address": "0220410c",
+          "bytes": 68
+        }
+      ],
+      "rows": 7,
+      "bytes": 500,
+      "first": "02203ebc",
+      "firstBytes": 48,
+      "reasons": [
+        "rule4 record chain",
+        "rule6 mask-equality idiom"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push movs bl cmp bne movs bl cmp",
+      "members": [
+        {
+          "address": "021f5a00",
+          "bytes": 76
+        },
+        {
+          "address": "021f5d10",
+          "bytes": 112
+        },
+        {
+          "address": "021fa9c8",
+          "bytes": 540
+        },
+        {
+          "address": "021fcc90",
+          "bytes": 292
+        },
+        {
+          "address": "021fd4ac",
+          "bytes": 212
+        }
+      ],
+      "rows": 5,
+      "bytes": 1232,
+      "first": "021f5a00",
+      "firstBytes": 76,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule2 saved=3",
+        "rule3 stack=1",
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push bl cmp beq cmp beq pop movs",
+      "members": [
+        {
+          "address": "021f5c90",
+          "bytes": 56
+        },
+        {
+          "address": "021f5f30",
+          "bytes": 72
+        },
+        {
+          "address": "021f6fcc",
+          "bytes": 52
+        },
+        {
+          "address": "021fd41c",
+          "bytes": 56
+        },
+        {
+          "address": "021fdf64",
+          "bytes": 52
+        }
+      ],
+      "rows": 5,
+      "bytes": 288,
+      "first": "021f6fcc",
+      "firstBytes": 52,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule3 stack=1"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push sub ldr add movs ldrb adds strb",
+      "members": [
+        {
+          "address": "021f5aa4",
+          "bytes": 152
+        },
+        {
+          "address": "021fb4cc",
+          "bytes": 132
+        },
+        {
+          "address": "021fc8b8",
+          "bytes": 176
+        },
+        {
+          "address": "021fd1ec",
+          "bytes": 152
+        }
+      ],
+      "rows": 4,
+      "bytes": 612,
+      "first": "021fb4cc",
+      "firstBytes": 132,
+      "reasons": [
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push sub adds ldr ldr adds adds ldr",
+      "members": [
+        {
+          "address": "021f3030",
+          "bytes": 108
+        },
+        {
+          "address": "021f309c",
+          "bytes": 108
+        },
+        {
+          "address": "021f3e3c",
+          "bytes": 80
+        },
+        {
+          "address": "021f3e8c",
+          "bytes": 80
+        }
+      ],
+      "rows": 4,
+      "bytes": 376,
+      "first": "021f3e3c",
+      "firstBytes": 80,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule1 post-call reload",
+        "rule3 stack=3",
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push adds adds cmp beq ldr adds str",
+      "members": [
+        {
+          "address": "021ecad0",
+          "bytes": 220
+        },
+        {
+          "address": "021ecbac",
+          "bytes": 216
+        },
+        {
+          "address": "021ecc84",
+          "bytes": 162
+        }
+      ],
+      "rows": 3,
+      "bytes": 598,
+      "first": "021ecc84",
+      "firstBytes": 162,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule2 saved=3",
+        "rule2 saved=4",
+        "rule3 stack=1",
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push ldr movs adds bl cmp beq movs",
+      "members": [
+        {
+          "address": "021f5bcc",
+          "bytes": 192
+        },
+        {
+          "address": "021f6768",
+          "bytes": 156
+        },
+        {
+          "address": "021fcab0",
+          "bytes": 156
+        }
+      ],
+      "rows": 3,
+      "bytes": 504,
+      "first": "021f6768",
+      "firstBytes": 156,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule2 saved=2",
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push movs adds blx cmp bne movs lsls",
+      "members": [
+        {
+          "address": "02200c0c",
+          "bytes": 96
+        },
+        {
+          "address": "02200c6c",
+          "bytes": 128
+        },
+        {
+          "address": "02200cec",
+          "bytes": 128
+        }
+      ],
+      "rows": 3,
+      "bytes": 352,
+      "first": "02200c0c",
+      "firstBytes": 96,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule2 saved=2",
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push ldr ldr bl ldr movs ldrh movs",
+      "members": [
+        {
+          "address": "021fd984",
+          "bytes": 72
+        },
+        {
+          "address": "021fdb48",
+          "bytes": 72
+        },
+        {
+          "address": "021fdcd0",
+          "bytes": 80
+        }
+      ],
+      "rows": 3,
+      "bytes": 224,
+      "first": "021fd984",
+      "firstBytes": 72,
+      "reasons": [
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push sub ldr ldr ldr adds ldrb str",
+      "members": [
+        {
+          "address": "021ff02c",
+          "bytes": 48
+        },
+        {
+          "address": "021ff05c",
+          "bytes": 48
+        },
+        {
+          "address": "021ff08c",
+          "bytes": 48
+        }
+      ],
+      "rows": 3,
+      "bytes": 144,
+      "first": "021ff02c",
+      "firstBytes": 48,
+      "reasons": [
+        "rule3 stack=2",
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push cmp bne b movs ldrsh cmp bls",
+      "members": [
+        {
+          "address": "021ee348",
+          "bytes": 696
+        },
+        {
+          "address": "021ee9a4",
+          "bytes": 780
+        }
+      ],
+      "rows": 2,
+      "bytes": 1476,
+      "first": "021ee348",
+      "firstBytes": 696,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule4 record chain",
+        "rule5 branch-merged address select"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push ldr ldr ldr cmp beq b adds",
+      "members": [
+        {
+          "address": "021f83c8",
+          "bytes": 432
+        },
+        {
+          "address": "021fa7f8",
+          "bytes": 392
+        }
+      ],
+      "rows": 2,
+      "bytes": 824,
+      "first": "021fa7f8",
+      "firstBytes": 392,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "main",
+      "prefix": "push sub adds movs str ldr adds adds",
+      "members": [
+        {
+          "address": "02098574",
+          "bytes": 572
+        },
+        {
+          "address": "020aa894",
+          "bytes": 228
+        }
+      ],
+      "rows": 2,
+      "bytes": 800,
+      "first": "020aa894",
+      "firstBytes": 228,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule1 post-call reload",
+        "rule2 saved=4",
+        "rule3 stack=10",
+        "rule3 stack=3",
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push ldr ldr ldr cmp bne adds ldrb",
+      "members": [
+        {
+          "address": "021f8244",
+          "bytes": 388
+        },
+        {
+          "address": "021fa484",
+          "bytes": 412
+        }
+      ],
+      "rows": 2,
+      "bytes": 800,
+      "first": "021f8244",
+      "firstBytes": 388,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule2 saved=2",
+        "rule4 record chain",
+        "rule5 branch-merged address select"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push sub add movs strh strh strh strh",
+      "members": [
+        {
+          "address": "021f2c84",
+          "bytes": 616
+        },
+        {
+          "address": "021f91f4",
+          "bytes": 148
+        }
+      ],
+      "rows": 2,
+      "bytes": 764,
+      "first": "021f91f4",
+      "firstBytes": 148,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule1 post-call reload",
+        "rule2 saved=4",
+        "rule3 stack=18",
+        "rule3 stack=4",
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push movs bl cmp beq movs bl movs",
+      "members": [
+        {
+          "address": "021f3660",
+          "bytes": 400
+        },
+        {
+          "address": "021f4828",
+          "bytes": 284
+        }
+      ],
+      "rows": 2,
+      "bytes": 684,
+      "first": "021f4828",
+      "firstBytes": 284,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule2 saved=2",
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push sub ldr add ldrh strh ldrh strh",
+      "members": [
+        {
+          "address": "021f4014",
+          "bytes": 536
+        },
+        {
+          "address": "021f9a44",
+          "bytes": 128
+        }
+      ],
+      "rows": 2,
+      "bytes": 664,
+      "first": "021f9a44",
+      "firstBytes": 128,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule1 post-call reload",
+        "rule2 saved=4",
+        "rule3 stack=10",
+        "rule3 stack=4",
+        "rule4 record chain",
+        "rule5 branch-merged address select"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push bl cmp bls b adds add ldrh",
+      "members": [
+        {
+          "address": "0220238c",
+          "bytes": 308
+        },
+        {
+          "address": "022024e4",
+          "bytes": 352
+        }
+      ],
+      "rows": 2,
+      "bytes": 660,
+      "first": "0220238c",
+      "firstBytes": 308,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule2 saved=2",
+        "rule4 record chain",
+        "rule5 branch-merged address select"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push sub ldr bl cmp beq ldr movs",
+      "members": [
+        {
+          "address": "021f317c",
+          "bytes": 316
+        },
+        {
+          "address": "021f4464",
+          "bytes": 292
+        }
+      ],
+      "rows": 2,
+      "bytes": 608,
+      "first": "021f4464",
+      "firstBytes": 292,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule2 saved=4",
+        "rule4 record chain",
+        "rule5 branch-merged address select"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push sub add ldr adds movs ldrb adds",
+      "members": [
+        {
+          "address": "021f65d4",
+          "bytes": 260
+        },
+        {
+          "address": "021fa2b4",
+          "bytes": 324
+        }
+      ],
+      "rows": 2,
+      "bytes": 584,
+      "first": "021f65d4",
+      "firstBytes": 260,
+      "reasons": [
+        "rule1 post-call reload",
+        "rule2 saved=4",
+        "rule3 stack=1",
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push sub adds movs add strb strh strh",
+      "members": [
+        {
+          "address": "021ed33c",
+          "bytes": 324
+        },
+        {
+          "address": "021ed480",
+          "bytes": 220
+        }
+      ],
+      "rows": 2,
+      "bytes": 544,
+      "first": "021ed480",
+      "firstBytes": 220,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule1 post-call reload",
+        "rule2 saved=3",
+        "rule2 saved=4",
+        "rule3 stack=6",
+        "rule3 stack=7",
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push str adds adds adds blx adds ldr",
+      "members": [
+        {
+          "address": "021ee6ac",
+          "bytes": 240
+        },
+        {
+          "address": "021eed5c",
+          "bytes": 232
+        }
+      ],
+      "rows": 2,
+      "bytes": 472,
+      "first": "021eed5c",
+      "firstBytes": 232,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule1 post-call reload",
+        "rule2 saved=4",
+        "rule3 stack=1",
+        "rule4 record chain",
+        "rule5 branch-merged address select"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push sub ldr add ldm stm ldm stm",
+      "members": [
+        {
+          "address": "021f94ac",
+          "bytes": 248
+        },
+        {
+          "address": "021f9b38",
+          "bytes": 112
+        }
+      ],
+      "rows": 2,
+      "bytes": 360,
+      "first": "021f9b38",
+      "firstBytes": 112,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule1 post-call reload",
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push adds cmp blt cmp bge ldr lsls",
+      "members": [
+        {
+          "address": "021f39e8",
+          "bytes": 144
+        },
+        {
+          "address": "021f4ac4",
+          "bytes": 140
+        }
+      ],
+      "rows": 2,
+      "bytes": 284,
+      "first": "021f4ac4",
+      "firstBytes": 140,
+      "reasons": [
+        "rule4 record chain",
+        "rule5 branch-merged address select"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push sub adds adds adds adds adds bl",
+      "members": [
+        {
+          "address": "021ed768",
+          "bytes": 124
+        },
+        {
+          "address": "021ed7e4",
+          "bytes": 136
+        }
+      ],
+      "rows": 2,
+      "bytes": 260,
+      "first": "021ed768",
+      "firstBytes": 124,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule1 post-call reload",
+        "rule2 saved=4",
+        "rule3 stack=1",
+        "rule4 record chain"
+      ]
+    },
+    {
+      "module": "ov006",
+      "prefix": "push ldr ldr ldr movs strb ldr ldr",
+      "members": [
+        {
+          "address": "021feb5c",
+          "bytes": 104
+        },
+        {
+          "address": "021fff94",
+          "bytes": 148
+        }
+      ],
+      "rows": 2,
+      "bytes": 252,
+      "first": "021feb5c",
+      "firstBytes": 104,
+      "reasons": [
+        "rule1 branch on call result",
+        "rule2 saved=3",
+        "rule4 record chain"
+      ]
+    }
+  ]
+}
