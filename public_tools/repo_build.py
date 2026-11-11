@@ -19,6 +19,7 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import struct
 import subprocess
 import tempfile
@@ -128,12 +129,18 @@ def compile_all(root, private_root, out_dir, jobs=4, timeout=180, limit=None, so
     compilers, license_file, default_compiler = compiler_inventory(root, config)
     enumerated = enumerate_sources(root, config)
     selected = [unit for unit in enumerated['compiled'] if unit['path'].endswith(COMPILE_SUFFIXES)]
+    assembly = list(enumerated.get('assembly') or [])
+    prebuilt = list(enumerated.get('prebuilt') or [])
     if sources:
         wanted = {name.replace('\\', '/') for name in sources}
         selected = [unit for unit in selected if unit['path'] in wanted]
-        missing = wanted - {unit['path'] for unit in selected}
+        assembly = [unit for unit in assembly if unit['path'] in wanted]
+        prebuilt = [unit for unit in prebuilt if unit['path'] in wanted]
+        claimed = {unit['path'] for unit in selected} | {unit['path'] for unit in assembly} | {unit['path'] for unit in prebuilt}
+        missing = wanted - claimed
         if missing:
-            raise RepositoryBuildError('Requested source is not a compiled repository unit: ' + ', '.join(sorted(missing)[:5]))
+            raise RepositoryBuildError('Requested source is not a compiled, assembled or prebuilt repository unit: '
+                                       + ', '.join(sorted(missing)[:5]))
     if limit:
         selected = selected[:limit]
     out_dir = Path(out_dir).resolve()
@@ -177,22 +184,62 @@ def compile_all(root, private_root, out_dir, jobs=4, timeout=180, limit=None, so
             record.update(status='compile-or-object-failed', exitCode=-1, error=type(error).__name__ + ': ' + str(error))
         return record
 
+    unused_by_address, unused_by_symbol, by_source, unused_ledger_rows = ledger_index(private_root)
     tasks = []
     for unit in selected:
         tasks.append(dict(unit, profileFlags=unit['compilerFlags'], alternate=False))
         for index, alternate in enumerate(unit.get('alternates', [])):
             tasks.append(dict(unit, profileFlags=alternate['compilerFlags'], alternate=True,
                               alternateIndex=index, compilerSha256=alternate['compilerSha256']))
+    rows_by_path = {}
+    for (unused_module, source_name), source_rows in by_source.items():
+        rows_by_path.setdefault(source_name, []).extend(source_rows)
+    unattributed = []
+    for unit in assembly:
+        rows = list(rows_by_path.get(unit['path'].replace('\\', '/'), []))
+        if not rows:
+            unattributed.append(unit['path'])
+            continue
+        unit = dict(unit, module=rows[0]['module'], processor=rows[0]['processor'])
+        profiles = {}
+        for row in rows:
+            flags = tuple(row.get('compilerFlags') or [])
+            identity = row.get('compilerSha256') or default_compiler
+            if not flags:
+                raise RepositoryBuildError('Non-C source row has no compiler flags: ' + unit['path'])
+            profiles[(identity, flags)] = profiles.get((identity, flags), 0) + 1
+        for index, (identity, flags) in enumerate(sorted(profiles)):
+            tasks.append(dict(unit, profileFlags=list(flags), compilerSha256=identity, alternate=False,
+                              nonC=True, nonCProfile=index))
     with short_paths(root) as (unused_root, short):
         with concurrent.futures.ThreadPoolExecutor(max_workers=max(1, min(int(jobs), 16))) as pool:
             results = list(pool.map(lambda task: compile_unit(task, short), tasks))
     if any(digest(path) != identity for identity, path in compilers.items()):
         raise RepositoryBuildError('A pinned compiler changed during repository compilation')
-    compiled = [record for record in results if record.get('status') == 'compiled']
-    failed = [record for record in results if record.get('status') != 'compiled']
+    prebuilt_records = []
+    for unit in prebuilt:
+        stored = Path(unit['object'])
+        source = (stored if stored.is_absolute() else private / stored).resolve()
+        if not source.is_file():
+            raise RepositoryBuildError('Prebuilt object is missing for ' + unit['path'] + ': ' + unit['object'])
+        if digest(source) != unit['objectSha256']:
+            raise RepositoryBuildError('Prebuilt object identity differs for ' + unit['path'])
+        key = hashlib.sha256(('prebuilt:' + unit['path'] + ':' + unit['objectSha256']).encode()).hexdigest()[:24]
+        obj = objects / (key + '.o')
+        shutil.copyfile(source, obj)
+        prebuilt_records.append(dict(source=unit['path'], module=unit['module'], processor=unit['processor'],
+                                     compilerFlags=list(unit['compilerFlags']),
+                                     object=obj.relative_to(root).as_posix(),
+                                     compilerSha256=unit['compilerSha256'], alternate=False, alternateIndex=None,
+                                     status='prebuilt', objectSha256=unit['objectSha256'], exitCode=0,
+                                     startedTimeNs=time.time_ns()))
+    results.extend(prebuilt_records)
+    successful = ('compiled', 'prebuilt')
+    compiled = [record for record in results if record.get('status') in successful]
+    failed = [record for record in results if record.get('status') not in successful]
     primary = [record for record in results if not record.get('alternate')]
-    primary_compiled = [record for record in primary if record.get('status') == 'compiled']
-    primary_failed = [record for record in primary if record.get('status') != 'compiled']
+    primary_compiled = [record for record in primary if record.get('status') in successful]
+    primary_failed = [record for record in primary if record.get('status') not in successful]
     report = dict(
         schemaVersion=2,
         status='source-compilation-passed' if not failed else 'source-compilation-partial',
@@ -202,12 +249,19 @@ def compile_all(root, private_root, out_dir, jobs=4, timeout=180, limit=None, so
         configSha256=digest(root / CONFIG),
         sourceInventory=dict(allSourceFiles=len(enumerated['files']),
                              compiledSources=len(enumerated['compiled']),
+                             assemblySources=len(assembly), prebuiltObjects=len(prebuilt),
                              excludedSources=len(enumerated['excluded'])),
-        selectedCompilationUnits=len(selected), compiledUnits=len(primary_compiled),
-        failedUnits=len(primary_failed), alternateCompilations=len(tasks) - len(selected),
-        fullRepositoryCompiled=len(primary) == len(selected) == len(enumerated['compiled']),
-        compilePolicy='Every resolved C source is compiled. A non-ledger draft that does not compile is recorded '
-                      'as an unmeasured unit; it never becomes source credit. An unresolved rule is fatal.',
+        unattributedSources=len(unattributed),
+        selectedCompilationUnits=len(selected) + len(assembly) - len(unattributed) + len(prebuilt),
+        compiledUnits=len(primary_compiled),
+        failedUnits=len(primary_failed), alternateCompilations=len(tasks) - len(selected) - len(assembly),
+        fullRepositoryCompiled=(len(primary) == len(selected) + len(assembly) - len(unattributed) + len(prebuilt)
+                                == len(enumerated['compiled']) + len(assembly) - len(unattributed) + len(prebuilt)),
+        compilePolicy='Every resolved C source is compiled, every .s/.cpp unit with measured ledger rows is assembled '
+                      'or compiled with those row flags, and every configured prebuilt object is used or fails the '
+                      'build. A non-ledger draft that does not compile is recorded as an unmeasured unit; it never '
+                      'becomes source credit. An unresolved rule or a missing prebuilt object is fatal.',
+        unattributed=unattributed,
         results=[dict(record) for record in compiled],
         failures=[{key: record.get(key) for key in ('source', 'module', 'status', 'exitCode', 'stderrTail', 'error',
                                                     'alternate', 'alternateIndex')}
@@ -460,7 +514,7 @@ def ledger_index(private_root):
             by_address.setdefault((row['module'], address), row)
             by_symbol.setdefault((row['module'], row['symbol']), row)
             source = (row.get('sourceUnit') or '').replace('\\', '/')
-            if source.endswith(('.c', '.s')):
+            if source.endswith(('.c', '.s', '.cpp', '.inc', '.h')):
                 by_source[(row['module'], source)].append(row)
             count += 1
     for rows in by_source.values():
@@ -594,7 +648,7 @@ def recover_runtime_symbols(root, report, modules, images, by_address, by_symbol
     for (module_name, symbol), row in by_symbol.items():
         symbols_by_module[module_name][symbol] = row
     for record in report.get('results', []):
-        if record.get('status') != 'compiled':
+        if record.get('status') not in ('compiled', 'prebuilt'):
             continue
         profile = elf_profile((Path(root) / record['object']).read_bytes())
         module = dict(modules[record['module']])
@@ -664,7 +718,7 @@ def compiled_selections(root, private_root, compilation):
                  relocationTargets=collections.defaultdict(lambda: dict(resolved=0, unresolved=0)),
                  compileFailures=len(report.get('failures', [])))
     for record in report.get('results', []):
-        if record.get('status') != 'compiled':
+        if record.get('status') not in ('compiled', 'prebuilt'):
             continue
         obj = (root / record['object']).resolve()
         if not obj.is_file() or digest(obj) != record.get('objectSha256'):
