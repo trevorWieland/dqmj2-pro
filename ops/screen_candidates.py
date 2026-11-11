@@ -17,8 +17,10 @@ another:
 
    Duplicates are bucketed: **same-module body**, **other-module body at the same
    address** (still a real duplicate for credit purposes) and **data symbol**.
-2. **Only BLX-immediate is toolchain-blocked.** ``blx rN`` is a register call and
-   encodes fine; ``blx 0x...`` needs the immediate encoder and is excluded.
+2. **BLX-immediate is authorable.** The acceptance path expands
+   ``R_ARM_THM_CALL`` according to the measured callee mode: BL for a Thumb target,
+   BLX-immediate for an ARM target (``public_tools/test_thumb_branches.py`` pins
+   both). ``blx`` rows are therefore counted and reported but do not block.
 3. **Boot floor is a documented range**, not a per-module dictionary. Any row below
    :data:`BOOT_FLOOR` is scaffolding the project does not author by hand.
 4. **A disassembly failure is "unknown"**, never silently folded into ``blx``.
@@ -131,8 +133,8 @@ def screen(root, module, max_bytes):
             if row.get('processor') == 'arm9' and row.get('module') == module
             and row['states'].get('functionMatched') is False and row.get('bytes')]
     defs = definitions(root)
-    stats = {'boot floor': [], 'duplicate': [], 'blx immediate': [], 'unknown': [],
-             'over max bytes': [], 'ready': []}
+    stats = {'boot floor': [], 'duplicate': [], 'unknown': [],
+             'over max bytes': [], 'ready': [], 'blx immediate': []}
     for row in rows:
         address = int(row['address'], 16)
         key = f'{address:08x}'
@@ -157,7 +159,7 @@ def screen(root, module, max_bytes):
             listing = result.stdout.lower()
             # BLX-immediate names a target address; `blx rN` is a register call.
             if re.search(r'\bblx\s+0x[0-9a-f]+', listing):
-                flags.append('blx immediate')
+                stats.setdefault('blx immediate', []).append(entry)
         if not flags:
             flags.append('ready')
         for flag in flags:
@@ -187,7 +189,7 @@ def main(argv=None):
     print(f'    same-module body:                   {same}')
     print(f'    other-module body (same address):   {other}')
     print(f'    data symbol:                        {data}')
-    print(f'  blx immediate (toolchain-blocked):    {len(stats["blx immediate"])}')
+    print(f'  blx immediate (authorable):           {len(stats["blx immediate"])}')
     print(f'  unknown (disassembly failed):         {len(stats["unknown"])}')
     print(f'  over --max-bytes:                     {len(stats["over max bytes"])}')
     print(f'  READY (no rule tripped):              {len(stats["ready"])}')
@@ -202,7 +204,7 @@ def main(argv=None):
             'bootFloor': len(stats['boot floor']),
             'duplicates': len(duplicates),
             'duplicateBuckets': {'sameModule': same, 'otherModule': other, 'data': data},
-            'blxImmediate': len(stats['blx immediate']),
+            'blxImmediateAuthorable': len(stats['blx immediate']),
             'unknown': len(stats['unknown']),
             'ready': [{'address': f'{e["address"]:#010x}', 'bytes': e['bytes'], 'mode': e['mode']}
                       for e in ready],

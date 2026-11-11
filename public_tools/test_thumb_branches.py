@@ -43,6 +43,22 @@ class ThumbBranchTests(unittest.TestCase):
         # image word at 0x0208B722 is 0xE900F77B.
         self.check(0x0208B722, 0x02006924, -4, True, 0xF77B, 0xE900)
 
+    def test_ov006_blx_immediate_sites(self):
+        # Three real R_ARM_THM_CALL sites whose callee is ARM: the original linker
+        # expanded each to the BLX form (0xE800 marker in the second halfword).  The
+        # callee mode is measured, not assumed -- the image word itself says ARM.
+        self.check(0x021EDA60, 0x02026144, -4, True, 0xF638, 0xEB70)
+        self.check(0x021EDB3E, 0x02006B7C, -4, True, 0xF619, 0xE81E)
+        self.check(0x021EDCFE, 0x0200F48C, -4, True, 0xF621, 0xEBC6)
+
+    def test_ov006_blx_marker_is_arm_only(self):
+        # The same site encoded as Thumb (BL) must not produce the image word: the
+        # expansion has to follow the measured callee mode, not a default.
+        first, second = encode_thumb_branch(0x021EDA60, 0x02026144, -4, False)
+        self.assertNotEqual((first, second), (0xF638, 0xEB70),
+                            'a Thumb expansion must not reproduce an ARM-word site')
+        self.assertEqual(second & 0xF800, 0xF800)
+
     def test_bias_is_not_applied_twice(self):
         # A +4 error is the regression this guards: the same inputs must not produce
         # a word that decodes four bytes short.
