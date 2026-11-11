@@ -1,0 +1,449 @@
+{
+ "schemaVersion": 1,
+ "note": "Every field here is taken from a matched source file that reads or writes it. 'proven-by-code' means the layout comes from a typedef or fixed offset in that file; 'inferred' means the address or stride came from a measured sibling; 'unknown' means nothing in matched code constrains it. Do not upgrade a marker without a citation.",
+ "tables": [
+  {
+   "id": "species_roster",
+   "family": "species",
+   "title": "Roster slot records (species id per roster slot)",
+   "doc": "species-and-rosters.md",
+   "module": "main",
+   "symbol": "native_data_021c4bf8",
+   "address": "0x021c4bf8",
+   "stride": 24,
+   "records": "unknown",
+   "bytes": "unknown",
+   "confidence": "proven-by-code",
+   "fields": [
+    {
+     "offset": 10,
+     "name": "species",
+     "type": "s16",
+     "confidence": "proven-by-code",
+     "evidence": "src/mechanics_save/20261030_roster_species_predicate.c (native_main_0206db00): native_data_021c4bf8[sprite].species compared against 139, 176, 188, 254, 350, 425, 426"
+    },
+    {
+     "offset": 1,
+     "name": "count",
+     "type": "u8",
+     "confidence": "proven-by-code",
+     "evidence": "src/mechanics_save/20261030_roster_frame_mask.c (native_main_0206d114): reads native_data_021c4bf9[sprite * 24], i.e. offset 1 of the same record"
+    },
+    {
+     "offset": 2,
+     "name": "first",
+     "type": "s8",
+     "confidence": "proven-by-code",
+     "evidence": "src/mechanics_save/20261030_roster_frame_mask.c (native_main_0206d114): index = native_data_021c4bfa[sprite * 24], i.e. offset 2 of the same record"
+    },
+    {
+     "offset": 0,
+     "name": "padding",
+     "type": "u8",
+     "confidence": "inferred",
+     "evidence": "declared in the Slot typedef of src/mechanics_save/20261030_roster_frame_mask.c, but no matched function reads offset 0"
+    },
+    {
+     "offset": 3,
+     "name": "tail",
+     "type": "u8[21]",
+     "confidence": "unknown",
+     "evidence": "declared in roster_frame_mask.c; no matched reader"
+    }
+   ],
+   "citations": [
+    "src/mechanics_save/20261030_roster_species_predicate.c (native_main_0206db00)",
+    "src/mechanics_save/20261030_roster_frame_mask.c",
+    "src/runtime/runtime07/native_main_0206d23c.c"
+   ],
+   "imageNote": "The address comes from the symbol name in matched source, but no module image covers it: main ends at 0x020E3300 and the ov000..ov007 images start at 0x021D7240, so 0x021C4BF8 falls in a gap. public_tools/data_dump.py therefore refuses this table until the image set covers the range."
+  },
+  {
+   "id": "skill_records",
+   "family": "skills",
+   "title": "Skill record: thresholds, action entries, feature flags",
+   "doc": "skills.md",
+   "module": "main",
+   "symbol": null,
+   "address": "unknown",
+   "stride": 60,
+   "records": "unknown",
+   "bytes": "unknown",
+   "confidence": "proven-by-code",
+   "note": "Passed by pointer; no matched code takes its address, so the base is unknown. Layout and stride come from the accessor's own typedef and indexing.",
+   "fields": [
+    {
+     "offset": 0,
+     "name": "threshold",
+     "type": "u8[10]",
+     "confidence": "inferred",
+     "evidence": "declared in the NativeSkillRecord typedef of src/mechanics_save/20261029_skill_entry_member.c; native_main_0207adb0 only reads actions[].id and actions[].inputs, so these two stay inferred"
+    },
+    {
+     "offset": 10,
+     "name": "actions[].id",
+     "type": "u8",
+     "confidence": "proven-by-code",
+     "evidence": "src/mechanics_save/20261029_skill_entry_member.c (native_main_0207adb0): entry = record->actions + index; if (entry->id != 0)"
+    },
+    {
+     "offset": 11,
+     "name": "actions[].inputs[3]",
+     "type": "u8[3]",
+     "confidence": "proven-by-code",
+     "evidence": "src/mechanics_save/20261029_skill_entry_member.c (native_main_0207adb0): return entry->inputs[member]"
+    },
+    {
+     "offset": 50,
+     "name": "features",
+     "type": "u8[10]",
+     "confidence": "inferred",
+     "evidence": "declared in the NativeSkillRecord typedef of src/mechanics_save/20261029_skill_entry_member.c; native_main_0207adb0 only reads actions[].id and actions[].inputs, so these two stay inferred"
+    }
+   ],
+   "citations": [
+    "src/mechanics_save/20261029_skill_entry_member.c (native_main_0207adb0)"
+   ]
+  },
+  {
+   "id": "item_descriptors",
+   "family": "items",
+   "title": "Per-item descriptor block (kind, subtype)",
+   "doc": "items.md",
+   "module": "main",
+   "symbol": null,
+   "address": "unknown",
+   "stride": "unknown",
+   "records": "unknown",
+   "bytes": "unknown",
+   "confidence": "proven-by-code",
+   "note": "The block is obtained by id from native_fn_02065d88(int); only two field offsets are proven.",
+   "fields": [
+    {
+     "offset": 40,
+     "name": "kind",
+     "type": "u8",
+     "confidence": "proven-by-code",
+     "evidence": "src/mechanics_save/20261029_item_eligibility.c: kind = FIELD_AT(native_fn_02065d88(item_id), u8 *, 0x28)"
+    },
+    {
+     "offset": 41,
+     "name": "subtype",
+     "type": "u8",
+     "confidence": "proven-by-code",
+     "evidence": "src/mechanics_save/20261029_item_eligibility.c: subtype = (s32) FIELD_AT(native_fn_02065d88(item_id), u8 *, 0x29)"
+    }
+   ],
+   "citations": [
+    "src/mechanics_save/20261029_item_eligibility.c (native_main_02065e44)"
+   ]
+  },
+  {
+   "id": "save_money",
+   "family": "save",
+   "title": "Save block money record",
+   "doc": "save-format.md",
+   "module": "main",
+   "symbol": "native_main",
+   "address": "unknown",
+   "stride": 32,
+   "records": 1,
+   "bytes": "unknown",
+   "confidence": "proven-by-code",
+   "fields": [
+    {
+     "offset": 0,
+     "name": "prefix",
+     "type": "u8[0x1c]",
+     "confidence": "unknown"
+    },
+    {
+     "offset": 28,
+     "name": "gold",
+     "type": "s32",
+     "confidence": "proven-by-code",
+     "evidence": "src/save_accessors.c (save_gold_get, save_gold_adjust, save_gold_halve): typedef struct { u8 prefix[0x1c]; int gold; } NativeMoney"
+    }
+   ],
+   "citations": [
+    "src/save_accessors.c"
+   ]
+  },
+  {
+   "id": "save_bank_header",
+   "family": "save",
+   "title": "Save bank / section header",
+   "doc": "save-format.md",
+   "module": "main",
+   "symbol": "native_main",
+   "address": "unknown",
+   "stride": 144,
+   "records": "unknown",
+   "bytes": "unknown",
+   "confidence": "proven-by-code",
+   "fields": [
+    {
+     "offset": 0,
+     "name": "marker",
+     "type": "u32",
+     "confidence": "proven-by-code",
+     "evidence": "src/save_accessors.c (save_bank_validate): NativeSaveBank.marker"
+    },
+    {
+     "offset": 4,
+     "name": "total_length",
+     "type": "u32",
+     "confidence": "proven-by-code",
+     "evidence": "src/save_accessors.c (save_bank_validate): NativeSaveBank.total_length"
+    },
+    {
+     "offset": 8,
+     "name": "payload_length",
+     "type": "u32",
+     "confidence": "proven-by-code",
+     "evidence": "src/save_accessors.c (save_bank_validate): NativeSaveBank.payload_length"
+    },
+    {
+     "offset": 12,
+     "name": "prefix",
+     "type": "u8[0x1c]",
+     "confidence": "unknown"
+    },
+    {
+     "offset": 40,
+     "name": "header_word_28",
+     "type": "u32",
+     "confidence": "proven-by-code",
+     "evidence": "src/save_accessors.c (save_payload_header28_valid): NativeSaveBank.header_word_28"
+    },
+    {
+     "offset": 44,
+     "name": "rest",
+     "type": "u8[0x5c]",
+     "confidence": "unknown"
+    },
+    {
+     "offset": 136,
+     "name": "payload_sum",
+     "type": "u32",
+     "confidence": "proven-by-code",
+     "evidence": "src/save_accessors.c (save_payload_valid, save_payload_header28_valid): NativeSaveBank.payload_sum"
+    },
+    {
+     "offset": 140,
+     "name": "header_sum",
+     "type": "u32",
+     "confidence": "proven-by-code",
+     "evidence": "src/save_accessors.c (save_bank_validate): NativeSaveBank.header_sum"
+    }
+   ],
+   "citations": [
+    "src/save_accessors.c"
+   ]
+  },
+  {
+   "id": "saved_record",
+   "family": "save",
+   "title": "Saved monster record (species field)",
+   "doc": "save-format.md",
+   "module": "main",
+   "symbol": null,
+   "address": "unknown",
+   "stride": 26,
+   "records": "unknown",
+   "bytes": "unknown",
+   "confidence": "proven-by-code",
+   "fields": [
+    {
+     "offset": 0,
+     "name": "prefix",
+     "type": "u8[24]",
+     "confidence": "unknown"
+    },
+    {
+     "offset": 24,
+     "name": "species",
+     "type": "s16",
+     "confidence": "proven-by-code",
+     "evidence": "src/mechanics_save/20261030_record_descriptor_nibble.c: typedef struct { u8 prefix[24]; s16 species; } SavedRecord; used as native_fn_020449d4(record->species)"
+    }
+   ],
+   "citations": [
+    "src/mechanics_save/20261030_record_descriptor_nibble.c (native_main_020640b4)"
+   ]
+  },
+  {
+   "id": "arm7_player_view",
+   "family": "arm7-sound",
+   "title": "ARM7 sound player block",
+   "doc": "arm7-sound.md",
+   "module": "arm7-wram",
+   "symbol": "native_host_arm7_data_03808420",
+   "address": "0x03808420",
+   "stride": 36,
+   "records": "unknown",
+   "bytes": "unknown",
+   "confidence": "proven-by-code",
+   "note": "WRAM structure, not a ROM table. NativePlayerFlags is a one-byte u8 bitfield, so flags occupies offset 0 and playerId offset 1; the file asserts sizeof(NativePlayerView) == 36.",
+   "fields": [
+    {
+     "offset": 0,
+     "width": 1,
+     "name": "flags",
+     "type": "u8 bitfield (NativePlayerFlags)",
+     "confidence": "proven-by-code",
+     "evidence": "src/arm7/20261030_seq_init/native_arm7_wram_037ffef0.c (native_arm7_wram_037ffef0): typedef struct NativePlayerFlags { u8 active : 1; ... }"
+    },
+    {
+     "offset": 1,
+     "width": 1,
+     "name": "playerId",
+     "type": "u8",
+     "confidence": "proven-by-code",
+     "evidence": "src/arm7/20261030_seq_init/native_arm7_wram_037ffef0.c (native_arm7_wram_037ffef0): follows the 1-byte flags"
+    },
+    {
+     "offset": 8,
+     "width": 16,
+     "name": "tracks",
+     "type": "u8[16]",
+     "confidence": "proven-by-code",
+     "evidence": "src/arm7/20261030_seq_init/native_arm7_wram_037ffef0.c (native_arm7_wram_037ffef0)"
+    }
+   ],
+   "citations": [
+    "src/arm7/20261030_seq_init/native_arm7_wram_037ffef0.c",
+    "src/arm7/20261030_seq_main/native_arm7_wram_037fff54.c",
+    "src/arm7/20261030_seq_public/native_arm7_wram_038002f0.c"
+   ]
+  },
+  {
+   "id": "arm7_track_view",
+   "family": "arm7-sound",
+   "title": "ARM7 sound track initializer",
+   "doc": "arm7-sound.md",
+   "module": "arm7-wram",
+   "symbol": "native_host_arm7_data_03808660",
+   "address": "0x03808660",
+   "stride": 64,
+   "records": "unknown",
+   "bytes": "unknown",
+   "confidence": "proven-by-code",
+   "note": "WRAM structure written by the ARM7 sequencer; the file asserts sizeof(NativeTrackInitializerView) == 64, so the stride is proven but the record count is not.",
+   "fields": [
+    {
+     "offset": 1,
+     "name": "panRange",
+     "type": "u8",
+     "confidence": "proven-by-code",
+     "evidence": "src/arm7/20261030_seq_access/native_arm7_wram_03801884.c (native_arm7_wram_03801884)"
+    },
+    {
+     "offset": 4,
+     "name": "volume",
+     "type": "u8",
+     "confidence": "proven-by-code",
+     "evidence": "src/arm7/20261030_seq_access/native_arm7_wram_03801884.c (native_arm7_wram_03801884)"
+    },
+    {
+     "offset": 5,
+     "name": "expression",
+     "type": "u8",
+     "confidence": "proven-by-code",
+     "evidence": "src/arm7/20261030_seq_access/native_arm7_wram_03801884.c (native_arm7_wram_03801884)"
+    },
+    {
+     "offset": 6,
+     "name": "pitchBend",
+     "type": "s8",
+     "confidence": "proven-by-code",
+     "evidence": "src/arm7/20261030_seq_access/native_arm7_wram_03801884.c (native_arm7_wram_03801884)"
+    },
+    {
+     "offset": 7,
+     "name": "bendRange",
+     "type": "u8",
+     "confidence": "proven-by-code",
+     "evidence": "src/arm7/20261030_seq_access/native_arm7_wram_03801884.c (native_arm7_wram_03801884)"
+    },
+    {
+     "offset": 8,
+     "name": "pan",
+     "type": "s8",
+     "confidence": "proven-by-code",
+     "evidence": "src/arm7/20261030_seq_neighbors/native_arm7_wram_03800aa8.c (native_arm7_wram_03800aa8)"
+    }
+   ],
+   "citations": [
+    "src/arm7/20261030_seq_access/native_arm7_wram_03801884.c",
+    "src/arm7/20261030_seq_init/native_arm7_wram_037ffef0.c",
+    "src/arm7/20261030_seq_neighbors/native_arm7_wram_03800aa8.c"
+   ]
+  },
+  {
+   "id": "arm7_boot_parameters",
+   "family": "boot",
+   "title": "ARM7 boot parameter block",
+   "doc": "arm7-boot.md",
+   "module": "arm7-boot",
+   "symbol": "native_data",
+   "address": "0x02380204",
+   "stride": 1,
+   "records": 24,
+   "bytes": 24,
+   "confidence": "inferred",
+   "note": "Address and size come from the measured typed-data snapshot (public/accepted-data.json, kind rodata, 24 stored bytes, source src/arm7/boot/parameters.c). The field meanings are unknown: no matched reader decodes them.",
+   "fields": [],
+   "citations": [
+    "src/arm7/boot/parameters.c",
+    "public/accepted-data.json"
+   ]
+  },
+  {
+   "id": "math_table_0x20d3fe0",
+   "family": "measured-data",
+   "title": "Measured math data blob (16 KiB)",
+   "doc": "misc-measured-data.md",
+   "module": "main",
+   "symbol": null,
+   "address": "0x020d3fe0",
+   "stride": 4,
+   "records": 4096,
+   "bytes": 16384,
+   "confidence": "inferred",
+   "note": "Address and size are measured typed-data facts (public/accepted-data.json record arm9/main/initialized-data/020d3fe0, kind initialized-data, section .rodata, 16,384 stored bytes, source generated/math/20261031_sincos_data.c). 16,384 / 4 = 4,096 records. No matched reader proves the element type or meaning, so the table is dumped as raw 4-byte words.",
+   "fields": [],
+   "citations": [
+    "generated/math/20261031_sincos_data.c",
+    "public/accepted-data.json"
+   ]
+  }
+ ],
+ "unknown_families": [
+  {
+   "family": "monster-stats",
+   "status": "unknown",
+   "note": "No matched code reads a per-species stat block. Searched src/ for species/monster/stat readers; the only proven species access is the roster slot record above. Address not established, so nothing is listed."
+  },
+  {
+   "family": "growth-curves",
+   "status": "unknown",
+   "note": "No matched code reads a growth/experience curve table. Not listed rather than guessed."
+  },
+  {
+   "family": "encounter-tables",
+   "status": "unknown",
+   "note": "No matched code indexes an encounter table; encounter semantics are unresolved in the ledger's own unknowns."
+  },
+  {
+   "family": "items-table-base",
+   "status": "unknown",
+   "note": "Item descriptors are reached through native_fn_02065d88(int); the table base and stride are not established by matched code."
+  },
+  {
+   "family": "skills-table-base",
+   "status": "unknown",
+   "note": "Skill records are passed by pointer; no matched code takes a fixed address."
+  }
+ ]
+}
