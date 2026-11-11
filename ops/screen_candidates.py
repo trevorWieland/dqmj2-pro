@@ -1,85 +1,168 @@
 """Screen unclaimed rows for a module before authoring a packet.
 
-Three rules have each cost a round of rework, so they live in a tool rather than in
-a checklist:
+Four rules have each cost a round of rework, so they live in a tool rather than in
+a checklist, and each one is evaluated **independently** so no bucket can hide
+another:
 
-1. **Whole-tree duplicate grep.** A row is skipped when its address string appears
-   anywhere under ``src/`` (``.c``, ``.h``, ``.s``, ``.inc``, ``.cpp``), including
-   ``src/transplants/`` and every batch directory. On ov006 this excludes 345 of
-   671 unmatched rows — the ledger lags the source tree and the tree is
-   authoritative.
-2. **BL vs BLX.** Rows containing ``blx`` are toolchain-blocked (the immediate
-   encoder is incomplete) and are excluded; rows with ``bl`` are authorable now that
-   the Thumb BL encoder landed. Screening uses ``ops/disasm.py`` in the row's own
-   mode, so ARM and Thumb rows are judged by their real instruction stream.
-3. **Boot floor.** Rows below the module's first real function are codegen-hostile
-   and are excluded by a per-module floor.
+1. **Duplicate detection requires a definition, not a mention.** A row is a
+   duplicate only when some file under ``src/`` *defines* a symbol for that address:
 
-Usage
------
-    python ops/screen_candidates.py --module ov006
-    python ops/screen_candidates.py --module ov006 --max-bytes 120 --json out.json
+   * a ``.c`` function definition whose header starts at column 0 and names
+     ``native_(<module>_)?<addr>`` — extern declarations, call sites and comments do
+     not count;
+   * in ``.s``, an exported symbol for that name (``.global``/``.type`` or a bare
+     label);
+   * a data symbol (``native_data_...<addr>``) is classified separately, because a
+     data definition does not claim the function body.
 
-Output is a human table plus, with --json, a machine-readable list of ready rows.
-Exit status is 0 when at least one row is ready.
+   Duplicates are bucketed: **same-module body**, **other-module body at the same
+   address** (still a real duplicate for credit purposes) and **data symbol**.
+2. **Only BLX-immediate is toolchain-blocked.** ``blx rN`` is a register call and
+   encodes fine; ``blx 0x...`` needs the immediate encoder and is excluded.
+3. **Boot floor is a documented range**, not a per-module dictionary. Any row below
+   :data:`BOOT_FLOOR` is scaffolding the project does not author by hand.
+4. **A disassembly failure is "unknown"**, never silently folded into ``blx``.
 """
 import argparse
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCES = ('.c', '.h', '.s', '.inc', '.cpp')
-# First authorable address per module; anything below is boot-floor scaffolding.
-BOOT_FLOOR = {'ov006': 0x021D8000, 'ov000': 0x021D8000, 'ov001': 0x021D8000}
+SOURCES = ('.c', '.s', '.inc', '.cpp')
+
+# The overlay loads at 0x021d7240; everything before this address is loader
+# scaffolding rather than ordinary game code, and the project does not author it by
+# hand. Documented here once instead of a per-module dictionary.
+BOOT_FLOOR = 0x021D8000
+
+ADDRESS_SUFFIX = re.compile(r'([0-9a-f]{8})$')
+DEFINITION = re.compile(r'^(?:[A-Za-z_][\w \t\*]*[\s\*]+)?(native_[A-Za-z0-9_]+)\s*\(')
+ASM_EXPORT = re.compile(r'^\s*\.(?:global|globl|type)\s+(native_[A-Za-z0-9_]+)')
+ASM_LABEL = re.compile(r'^(native_[A-Za-z0-9_]+):')
+COMMENTS = re.compile(r'/\*.*?\*/|//[^\n]*', re.S)
 
 
-def source_corpus(root):
-    corpus = {}
+def strip_comments(text, suffix):
+    if suffix in ('.c', '.cpp', '.inc'):
+        return COMMENTS.sub('', text)
+    return re.sub(r'@[^\n]*|;[^\n]*', '', text)
+
+
+def module_of(name):
+    """Module embedded in a ``native_<module>_<addr>`` name, or None."""
+    match = re.match(r'native_(?:fn_|data_)?(.+?)_[0-9a-f]{8}$', name)
+    return match.group(1).replace('_', '-') if match else None
+
+
+def definitions(root):
+    """Map address string -> list of (kind, path, name) definition records."""
+    found = {}
     for path in (root / 'src').rglob('*'):
-        if path.suffix.lower() in SOURCES and path.is_file():
-            try:
-                corpus[path.relative_to(root).as_posix()] = path.read_text(
-                    encoding='utf-8', errors='replace')
-            except OSError:
+        suffix = path.suffix.lower()
+        if suffix not in SOURCES or not path.is_file():
+            continue
+        try:
+            text = strip_comments(path.read_text(encoding='utf-8', errors='replace'), suffix)
+        except OSError:
+            continue
+        relative = path.relative_to(root).as_posix()
+        if suffix == '.s':
+            for line in text.splitlines():
+                match = ASM_EXPORT.match(line) or ASM_LABEL.match(line)
+                if not match:
+                    continue
+                name = match.group(1)
+                address = ADDRESS_SUFFIX.search(name)
+                if address:
+                    found.setdefault(address.group(1), []).append((suffix, relative, name))
+            continue
+        lines = text.splitlines()
+        for index, line in enumerate(lines):
+            if line[:1] in (' ', '\t') or not line:
+                continue          # column 0 only: definitions, not locals or calls
+            if line.rstrip().endswith(';') or line.startswith('extern'):
+                continue          # a declaration/prototype is a mention, not a body
+            match = DEFINITION.match(line)
+            if not match:
                 continue
-    return corpus
+            # A body opens a brace on this line or the next non-blank one.
+            tail = line[match.end() - 1:]
+            if '{' not in tail:
+                following = next((candidate for candidate in lines[index + 1:] if candidate.strip()),
+                                 '')
+                if '{' not in following:
+                    continue
+            name = match.group(1)
+            address = ADDRESS_SUFFIX.search(name)
+            if address:
+                found.setdefault(address.group(1), []).append((suffix, relative, name))
+        # data definitions: `type native_data_<...>_<addr>[...] = ...` or a bare
+        # declaration with initialiser; treated as a data record, not a body.
+        for match in re.finditer(r'^(?:[A-Za-z_][\w \t\*]*[\s\*]+)?'
+                                 r'(native_data_[A-Za-z0-9_]+)\s*(?:\[[^\]]*\])?\s*=',
+                                 text, re.M):
+            name = match.group(1)
+            address = ADDRESS_SUFFIX.search(name)
+            if address:
+                found.setdefault(address.group(1), []).append(('data', relative, name))
+    return found
 
 
-def screen(root, module, max_bytes, corpus):
+def classify(records, module):
+    """Bucket the definition records for one address."""
+    buckets = {'same-module body': [], 'other-module body': [], 'data symbol': []}
+    for suffix, path, name in records:
+        if name.startswith('native_data_') or suffix == 'data':
+            buckets['data symbol'].append(f'{path}:{name}')
+        elif module_of(name) == module:
+            buckets['same-module body'].append(f'{path}:{name}')
+        else:
+            buckets['other-module body'].append(f'{path}:{name}')
+    return buckets
+
+
+def screen(root, module, max_bytes):
     ledger = [json.loads(line) for line in
               (root / 'ledger/functions.jsonl').read_text(encoding='utf-8').splitlines() if line]
     rows = [row for row in ledger
             if row.get('processor') == 'arm9' and row.get('module') == module
             and row['states'].get('functionMatched') is False and row.get('bytes')]
-    floor = BOOT_FLOOR.get(module, 0)
-    ready, duplicates, blx_blocked, boot = [], [], [], []
+    defs = definitions(root)
+    stats = {'boot floor': [], 'duplicate': [], 'blx immediate': [], 'unknown': [],
+             'over max bytes': [], 'ready': []}
     for row in rows:
         address = int(row['address'], 16)
         key = f'{address:08x}'
-        if any(key in text for text in corpus.values()):
-            duplicates.append((address, row['bytes'], row['mode']))
-            continue
-        if address < floor:
-            boot.append((address, row['bytes'], row['mode']))
-            continue
+        entry = {'address': address, 'bytes': row['bytes'], 'mode': row['mode']}
+        # Each rule is evaluated independently; a row can trip several.
+        flags = []
+        if address < BOOT_FLOOR:
+            flags.append('boot floor')
+        buckets = classify(defs.get(key, []), module)
+        if any(buckets.values()):
+            entry['buckets'] = {name: items for name, items in buckets.items() if items}
+            flags.append('duplicate')
         if max_bytes and row['bytes'] > max_bytes:
-            continue
+            flags.append('over max bytes')
         result = subprocess.run([sys.executable, str(root / 'ops/disasm.py'), '--module', module,
                                  '--address', hex(address), '--bytes', str(row['bytes']),
                                  '--mode', row['mode'], '--root', str(root)],
                                 capture_output=True, text=True)
-        listing = result.stdout.lower()
         if result.returncode != 0:
-            blx_blocked.append((address, row['bytes'], row['mode']))
-            continue
-        if 'blx' in listing:
-            blx_blocked.append((address, row['bytes'], row['mode']))
-            continue
-        ready.append((address, row['bytes'], row['mode'],
-                      'bl' in listing.replace('.', ' ').split()))
-    return rows, ready, duplicates, blx_blocked, boot
+            flags.append('unknown')          # never counted as blx
+        else:
+            listing = result.stdout.lower()
+            # BLX-immediate names a target address; `blx rN` is a register call.
+            if re.search(r'\bblx\s+0x[0-9a-f]+', listing):
+                flags.append('blx immediate')
+        if not flags:
+            flags.append('ready')
+        for flag in flags:
+            stats[flag].append(entry)
+    return rows, stats
 
 
 def main(argv=None):
@@ -91,29 +174,41 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     root = Path(args.root).resolve()
-    corpus = source_corpus(root)
-    rows, ready, duplicates, blx_blocked, boot = screen(root, args.module, args.max_bytes, corpus)
+    rows, stats = screen(root, args.module, args.max_bytes)
 
-    print(f'src files scanned: {len(corpus)}')
     print(f'unmatched {args.module} rows: {len(rows)}')
-    print(f'  already defined under src/ (whole-tree grep): {len(duplicates)}')
-    print(f'  boot floor (below {BOOT_FLOOR.get(args.module, 0):#x}):        {len(boot)}')
-    print(f'  blx-bearing (toolchain-blocked):              {len(blx_blocked)}')
-    print(f'  ready to author:                              {len(ready)}')
-    ready.sort(key=lambda item: (item[1], item[0]))
-    for address, size, mode, has_bl in ready[:30]:
-        print(f'    {address:08x} {size:5d} B {mode:5s} {"bl" if has_bl else "  "}')
+    print('each rule is evaluated independently, so the counts overlap:')
+    print(f'  boot floor (below {BOOT_FLOOR:#x}):     {len(stats["boot floor"])}')
+    duplicates = stats['duplicate']
+    same = sum(1 for entry in duplicates if entry['buckets'].get('same-module body'))
+    other = sum(1 for entry in duplicates if entry['buckets'].get('other-module body'))
+    data = sum(1 for entry in duplicates if entry['buckets'].get('data symbol'))
+    print(f'  duplicate definitions:                {len(duplicates)}')
+    print(f'    same-module body:                   {same}')
+    print(f'    other-module body (same address):   {other}')
+    print(f'    data symbol:                        {data}')
+    print(f'  blx immediate (toolchain-blocked):    {len(stats["blx immediate"])}')
+    print(f'  unknown (disassembly failed):         {len(stats["unknown"])}')
+    print(f'  over --max-bytes:                     {len(stats["over max bytes"])}')
+    print(f'  READY (no rule tripped):              {len(stats["ready"])}')
+
+    ready = sorted(stats['ready'], key=lambda entry: (entry['bytes'], entry['address']))
+    for entry in ready[:30]:
+        print(f'    {entry["address"]:08x} {entry["bytes"]:5d} B {entry["mode"]}')
     if args.json_path:
         Path(args.json_path).write_text(json.dumps({
             'module': args.module,
             'unmatched': len(rows),
+            'bootFloor': len(stats['boot floor']),
             'duplicates': len(duplicates),
-            'boot_floor': len(boot),
-            'blx_blocked': len(blx_blocked),
-            'ready': [{'address': f'{a:#010x}', 'bytes': s, 'mode': m} for a, s, m, _ in ready],
+            'duplicateBuckets': {'sameModule': same, 'otherModule': other, 'data': data},
+            'blxImmediate': len(stats['blx immediate']),
+            'unknown': len(stats['unknown']),
+            'ready': [{'address': f'{e["address"]:#010x}', 'bytes': e['bytes'], 'mode': e['mode']}
+                      for e in ready],
         }, indent=1) + '\n')
         print(f'report written: {args.json_path}')
-    return 0 if ready else 1
+    return 0 if stats['ready'] else 1
 
 
 if __name__ == '__main__':
