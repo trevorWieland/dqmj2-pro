@@ -3,7 +3,7 @@
 /* Program the display control pairs after handing the two tables to the helper. */
 void native_ov006_021f70f8(void)
 {
-    native_fn_ov006_021f27d4(&native_data_0220dcb8, &native_data_02004cd8);
+    native_fn_ov006_021f27d4(&native_data_0220dcb8, native_fn_02004cd8);
     *(u16 *)0x04001008 = (*(u16 *)0x04001008 & ~3) | 3;
     *(u16 *)0x0400100A = (*(u16 *)0x0400100A & ~3) | 3;
     *(u16 *)0x0400000A = (*(u16 *)0x0400000A & ~3) | 3;
