@@ -1,7 +1,12 @@
 # Runtime RAM capture
 
-Status: specification plus tooling. **No runtime was executed and no real capture
-was performed.** The rehearsal in this document uses a generated buffer.
+Status: **harness implemented and exercised.** A non-interactive DeSmuME 0.9.13
+(Lua) path produces a full `main`-window dump, `ops/ram_capture.py` validates and
+slices it, and a real save was driven to the in-game **Switch Monsters** screen.
+That screen populated **6 of the 15 roster slots** — exactly the six monsters the
+save owns (three party, three reserve). Slots 6-14 are zero because the save has no
+more monsters, not because the capture failed. No synthetic bytes are used below;
+every number comes from a dump listed in §6.
 
 ## Why this exists
 
@@ -10,97 +15,130 @@ run:
 
 - `species_roster` at **`0x021c4bf8`**, 24-byte records, inside **main BSS**
   (`0x020e3300`–`0x021d7240`, 999,232 bytes, recorded as `expectedBssBytes` in
-  `manifest.json` and as the `.bss` span in the delinks files);
-- the script VM's **output text block** at **`0x020fb264`** (`native_data_020fb264`),
-  likewise runtime state. `docs/scripts/vm.md` §3 proves it: the write handlers
-  advance a byte cursor stored at `native_data_020fb264 + 0x80`, and the text itself
-  is a `u16`-indexed array at `native_data_020fae64` addressed by that cursor.
+  `manifest.json`);
+- the script VM's **output text block** at **`0x020fb264`**, likewise runtime state
+  (`docs/scripts/vm.md` §3: byte cursor at `+0x80`, text array at `0x020fae64`).
 
-BSS is zero-filled at load and never file-backed, so no ROM extraction can produce
-these bytes. A RAM dump taken from a running instance is the only source, and it
-has to carry provenance or it is unusable: bytes from an unknown build, at an
-unknown point in the game, prove nothing.
+BSS is zero-filled at load, so only a dump from a running instance can supply these
+bytes, and it must carry provenance or it proves nothing.
 
-## 1. What is available locally for runtime execution
+## 1. Emulator identity and install
 
-**Nothing that this deliverable may use.** Findings:
+| item | value |
+| --- | --- |
+| emulator | DeSmuME 0.9.13 x64 SSE2 (Windows frontend) |
+| source | `desmume-0.9.13-win64.zip`, official GitHub release `release_0_9_13` |
+| URL | https://github.com/TASEmulators/desmume/releases/download/release_0_9_13/desmume-0.9.13-win64.zip |
+| zip size / sha256 | 6,086,795 B / `cbf710b8e6b29f0904e289a9b9a895548a2d7c7af5a3145c8279b97a69a09276` |
+| executable | `DeSmuME_0.9.13_x64.exe`, 40,140,800 B, sha256 `1ca4e771b92f38a1cef4fc2a61f7d729a638f94d0e56f7948eeeb472000cf32c` |
+| install dir | `tools/desmume/0.9.13-win64/` (gitignored) |
 
-- no emulator is bundled or installed in the checkout; there is no emulator
-  directory, no wrapper script, and no ROM-running harness anywhere in `tools/`,
-  `ops/` or the tracked tree;
-- `docs/2026-10-27-toolchain.md` records melonDS 1.1 as "an upstream candidate, not
-  an installed or validated tool here. No emulator instance was launched." The
-  project has historically avoided melonDS sessions, so it is not a permitted
-  capture tool for this lane;
-- `ports/runtime/` is a source-mapping area (generated C ports), not an emulator.
+The official zip is missing the two Lua runtime DLLs, so Lua scripting cannot run
+out of the box (`lua51.dll was not found`). Both are shipped, prebuilt and x64, in
+the official **source** release `desmume-0.9.13.tar.xz`
+(sha256 `5734450e0c25f442dd44cda6a40410fd65470f4fe2fa1eb9f0b7b6dae22dabaf`), inside
+`desmume/src/frontend/windows/lua/lua.7z` under `x64/`:
 
-Therefore this lane delivers **specification and tooling only**. Capturing is a
-human, offline, muted action with a permitted tool, recorded in the spec; nothing
-here automates or performs it.
-
-### Permitted tools (for a human with the ROM and a host)
-
-Either of these, on an isolated machine, muted, with a copy of the save:
-
-| tool | how to get a memory dump | notes |
+| file | bytes | sha256 |
 | --- | --- | --- |
-| DeSmuME 0.9.11+ | Debugger → Tools → Dump Memory; pick address + size | writes a raw little-endian `.bin` |
-| no$gba 2.8 | Utility → Dump memory | raw `.bin`, address range configurable |
+| `lua51.dll` | 11,776 | `a85ced1c2078348684b74bcc20074f63a73d02881e5dcd002581ed757d8adf86` |
+| `lua5.1.dll` | 314,880 | `23719300fa4ae3116e97c313b838945bb2c1e02094daee8165939059aaad82c5` |
 
-Both are offline reference tools; neither is installed here and neither is run by
-this deliverable. Do not attach a debugger, do not enable audio, and do not run
-with the original save — use a copy.
+Both must sit next to `DeSmuME_0.9.13_x64.exe`. `ops/emulate_capture.py` checks for
+them and exits 2 with instructions if absent.
 
-## 2. What state to capture
+## 2. Non-interactive path (verified)
 
-| target | address | bytes | state the game must be in |
-| --- | --- | --- | --- |
-| roster | `0x021c4bf8` | **360** (15 records × 24 B) | roster **populated**: the monster farm or party screen open with all 15 slots filled, so no record is a zero placeholder |
-| VM output text block | `0x020fb264` | 1024 (block + cursor at `+0x80`; the printed text array sits at `0x020fae64`) | **mid-scene**: a scene that has printed text, not the title screen and not a paused menu |
+0.9.13 has **no command-line Lua option** (`--help` lists `--frameskip`,
+`--start-paused`, `--load-slot`, `--play-movie`, no Lua, and **no `--disable-gui`**).
+The supported automation hook is `[Scripting] AutoLoad` in `desmume.ini`:
 
-Dump the whole main-RAM window rather than the two ranges. The tool requires the
-dump to **cover the module window from its base** (`0x02000000`–`0x021d7240`:
-`930,560` image bytes plus `999,232` BSS bytes, from `manifest.json`), and a dump
-may be larger than that — a real debugger dump is usually the full 4 MiB
-`0x02000000`–`0x02400000`, which is accepted and sliced from. What is refused is a
-dump that starts after the module base or ends before the module end, because every
-captured byte would silently shift.
+1. on ROM load, `OpenCore()` builds `<lua path>\<rom base>.lua`; the default Lua
+   path is `<exe dir>\Lua` (`mc.cpp`/`path.cpp` defaults are exe-relative);
+2. if the file exists it creates the Lua window and sets `IDC_EDIT_LUAPATH`, which
+   fires `EN_CHANGE -> UpdateFileEntered -> PostMessage(IDC_BUTTON_LUARUN)`;
+3. the script runs with no keystrokes or mouse clicks.
 
-Record while dumping, and put all of it in the spec:
+`tools/desmume/0.9.13-win64/Lua/game.lua` is therefore a one-line shim:
 
-- `buildSha256`: SHA-256 of the **exact ROM image** used (copy it from
-  `manifest.json` `rom.sha256` if you used `inputs/game.nds` — the tool refuses a
-  mismatch);
-- `tool`: emulator name and version, plus the menu path used;
-- `capturePoint`: one sentence describing the in-game state;
-- `timestampUtc`: when the dump was taken.
-
-## 3. Running the capture tool
-
-```bash
-# validate only — no output written
-python ops/ram_capture.py --spec captures/ram-roster-20261110.json --check
-
-# slice, hash, write extract/ram/, emit the manifest fragment
-python ops/ram_capture.py --spec captures/ram-roster-20261110.json
-
-# additionally write a manifest copy with the new module entries merged in
-python ops/ram_capture.py --spec captures/ram-roster-20261110.json \
-    --apply-manifest build/ram-capture/manifest-with-ram.json
+```lua
+dofile([[<absolute path to work/emulator/capture.lua>]])
 ```
 
-Spec:
+This **is displayed on the desktop** — the host has an interactive session
+(session 1), and DeSmuME is a GUI application. There is no headless mode for this
+frontend. "Non-interactive" here means: no human input is required; the window may
+be left in the background, and screenshots are taken by the wrapper via
+`CopyFromScreen` while the script has called `emu.pause()`.
+
+Two runtime behaviours cost real debugging time and are load-bearing:
+
+- **Save import.** A bare raw 64 KiB save is read as *empty*: `BackupDevice::readFooter()`
+  fails, `_info` is zeroed, `_fsize = 0`, and the game shows no save data. DeSmuME
+  `.dsv` = raw bytes + footer:
+  `DESMUME_BACKUP_FOOTER_TXT` + `<6 u32 LE: written, padded, type, addr_size, size, version=0>`
+  + `|-DESMUME SAVE-|` (122 bytes for this title). 65,536 bytes maps to
+  `save_types[3]` = **EEPROM 512kbit**, `addr_size=2`. The wrapper writes this footer.
+- **Input injection.** Calling `joypad.set()` from the script's own flow is deferred
+  to the next input-processing window and did **not** reach `NDS_getFinalUserInput()`
+  in testing (`joypad.get()` stayed empty, no menu movement). Injecting from an
+  `emu.registerbefore()` callback works, because that callback runs inside
+  `NDS_beginProcessingInput()/NDS_endProcessingInput()`. `capture.lua` does this.
+  Button field names are `A,B,X,Y,L,R,start,select,up,down,left,right,debug,lid`
+  (lowercase spellings matter; unknown keys are silently ignored). Touch is
+  `stylus.set({x=,y=,touch=})`, driven by timeline steps `FRAMES:tap=X,Y`.
+
+## 3. Files
+
+| path | role |
+| --- | --- |
+| `ops/emulate_capture.py` | wrapper: install checks, scratch copies, `.dsv` import, shim + ini, launch, wait, screenshot, spec, `ram_capture.py` validation/slice, roster report |
+| `work/emulator/capture.lua` | authoritative Lua script: warm-up, button/touch timeline, 1,929,792-byte dump, optional savestate save/load, pause/exit |
+| `work/emulator/specs/*.json` | capture specs (provenance + ranges) |
+| `work/emulator/dumps/*.bin` | raw dumps (gitignored) |
+| `ops/ram_capture.py` | validates/slices a dump and emits manifest module entries |
+
+`ops/ram_capture.py` was **missing from `main`** in this checkout (the canonical copy
+survived under `work/publish/ops/`); it was restored verbatim before use. The same is
+true for the original `docs/data/` tree.
+
+## 4. Working procedure
+
+```powershell
+# boot baseline: BSS must be zero; proves the whole pipeline
+python ops/emulate_capture.py --name boot --frames 120 --slice
+
+# save -> world -> X menu -> page to "Switch Monsters" -> open the 15-slot list
+python ops/emulate_capture.py --name roster-6 --frames 5 --load-state 9 `
+  --timeline "100:right;40:;2:A;160:" --slice `
+  --screenshot work/emulator/switch-open.png
+```
+
+`--load-state 9` is the checkpoint state saved once the X menu is open (see §5 for how
+it was reached). Reaching the 15-slot screen from that checkpoint is the reliable
+path; the raw menu page sequence is `Items -> Spells and Abilities -> Equipment ->
+... -> Switch Monsters` and a held RIGHT advances roughly one page per 20 frames.
+The first command is fully reproducible from a cold start; the second reads a local
+DeSmuME savestate (`tools/desmume/0.9.13-win64/StateSlots/`), which is not part of
+the repository.
+
+Environment variables consumed by `capture.lua`:
+`DQM_CAPTURE_OUT`, `DQM_CAPTURE_LOG`, `DQM_CAPTURE_FRAMES`, `DQM_CAPTURE_TIMELINE`,
+`DQM_CAPTURE_SAVESTATE`, `DQM_CAPTURE_LOADSTATE`, `DQM_CAPTURE_PAUSE`,
+`DQM_CAPTURE_EXIT`, `DQM_CAPTURE_DEBUG` (logs `joypad.get()` readback).
+
+Roster spec used for the validated capture (`work/emulator/specs/roster-6.json`):
 
 ```json
 {
-  "dump": "work/ram/roster.bin",
+  "dump": "work/emulator/dumps/switch-open.bin",
   "dumpBase": "0x02000000",
   "module": "main",
   "provenance": {
     "buildSha256": "674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6",
-    "tool": "DeSmuME 0.9.11 (Debugger > Tools > Dump Memory)",
-    "capturePoint": "monster farm open, 15 roster slots filled",
-    "timestampUtc": "2026-11-10T21:00:00Z"
+    "tool": "DeSmuME 0.9.13 x64 SSE2 (Windows), Lua 5.1 capture.lua via memory.readbyterange",
+    "capturePoint": "save loaded (Akira), X menu -> Switch Monsters screen: 6 of 15 roster records populated (3 party + 3 reserve), 9 slots zero",
+    "timestampUtc": "..."
   },
   "captures": [
     {"name": "ram-roster", "address": "0x021c4bf8", "bytes": 360},
@@ -109,94 +147,82 @@ Spec:
 }
 ```
 
-The tool refuses, with exit `1` and nothing written, when:
+## 5. What was proved, and what was not
 
-- a provenance field is missing, or `buildSha256` differs from `manifest.json`
-  `rom.sha256` (bytes from another build are not evidence);
-- the dump does not cover the module window the manifest claims (`main` =
-  `0x02000000`–`0x021d7240`, image plus `expectedBssBytes`): a dump that starts late
-  or ends early silently shifts or truncates every byte. A dump **larger** than the
-  window is accepted;
-- `--apply-manifest` targets `manifest.json` itself, a file inside the private
-  trees (`ledger/`, `extract/`, `inputs/`, `deps/`, `tools/`, `config/`, `src/`), a
-  tracked file, or any path outside the checkout — a worktree's `ledger/` is a
-  junction to the parent repository, so an apparently local copy can be the real
-  ledger. Only a copy under `build/` is writable;
-- a capture range leaves the module, leaves the dump, or has a non-positive size.
-
-Each accepted capture is written to `extract/ram/<name>_<address>.bin` and gets a
-manifest module entry (`name`, `base`, `loadAddressBase`, `binary`, `bytes`,
-`sha256`, `kind: runtime-capture`, and the full provenance including the dump hash).
-`public_tools/data_dump.py` then treats it as an ordinary module: point the data
-dictionary table's `module` at the capture name.
-
-## 4. How to validate a real capture
-
-Mechanical validation is the tool's job; semantic validation is the point of the
-capture and has to be done by eye against the dump:
-
-1. `--check` passes (provenance, ranges, sizes).
-2. **Roster sanity** — heuristics, not proof. The slice must be 15 records × 24 B
-   with:
-   - `species` (`s16` at `+10`) inside the set the matched readers compare against
-     — `139, 176, 188, 254, 350, 425, 426` appear in `native_main_0206db00`, so a
-     *plausible* roster contains several of them. This is a provenance check on the
-     game state, not a layout proof;
-   - `count` (`u8` at `+1`) and `first` (`s8` at `+2`) **small values (1–4)**. This
-     is an **unproven sanity heuristic**: the fields are proven to exist at those
-     offsets, but no matched code constrains their range, so a larger value is not
-     by itself evidence of a bad capture;
-   - no record that is entirely `0x00` or entirely `0xFF` — an empty slot or
-     uninitialised memory rather than a populated roster. Also a heuristic.
-3. **VM text block sanity** — supported by `docs/scripts/vm.md` §3, which proves
-   the byte cursor lives at `native_data_020fb264 + 0x80`. A plausible capture has
-   that cursor byte well below the 1024-byte block (a text run of normal length),
-   the block is not uniform fill, and the `u16` array at `0x020fae64` addressed by
-   the cursor contains text values rather than pointers. The block is **not** a
-   command stream: do not validate it as opcodes.
-4. Record the observed values in the capture's commit message or PR description —
-   the bytes are private, the observation is the evidence.
-
-## 5. Rehearsal performed by this deliverable
-
-No emulator, no ROM execution. A synthetic dump was generated
-(`work/p2/make_synthetic_ram.py`, scratch, gitignored): a 1,929,792-byte buffer
-covering `0x02000000`–`0x021d7240` with a deterministic pattern, 15 roster records
-filled at `0x021c4bf8` (species `139, 176, 188, 254, 350, 425, 426, …`) and a
-4,096-byte pattern block at `0x020fb264`. A second 4 MiB buffer covering the full
-`0x02000000`–`0x02400000` window was generated to prove that a larger-than-module
-dump is accepted and sliced.
-
-Proved with it:
+Proved mechanically:
 
 | check | result |
 | --- | --- |
-| `--check` validation and slicing | passes; `ram-roster` 360 B at `0x021c4bf8`, `ram-scriptvm` 4096 B at `0x020fb264` |
-| slice + hash + fragment emission | `extract/ram/*.bin` written, manifest fragment with two module entries |
-| `data_dump.dumpability()` on the merged manifest | `dumpable` |
-| `data_dump.read_table()` from the captured module | 15 rows, species column `139, 176, 188, 254, 350, 425, 426, …` |
-| full 4 MiB window dump | accepted, sliced from |
-| truncated dump (4 KiB) | refused, exit 1, "dump ends … before the module end" |
-| capture past the module end | refused, exit 1 |
-| wrong build hash | refused, exit 1, explicit hash mismatch |
-| `--apply-manifest manifest.json` | refused, exit 1 |
-| `--apply-manifest ledger/modules.json` (junction to the parent repo) | refused, exit 1, "outside the checkout" |
-| `--apply-manifest ops/ram_capture.py` (tracked) | refused, exit 1, "tracked file" |
-| `--apply-manifest build/.../copy.json` | accepted |
+| emulator launches the ROM | window title `DeSmuME 0.9.13 x64 SSE2 | DRAGON QUEST MONSTERS Joker2 PROFESSIONAL`; log reports `ROM serial: NTR-B2JJ-JPN` |
+| Lua runs with no user input | `[Scripting] AutoLoad` opens the Lua window and runs `capture.lua` |
+| dump size/base | exactly 1,929,792 B at `0x02000000` (the whole `main` window) |
+| boot baseline | roster slice all zero, `ram_capture.py --check` passes |
+| wrong-size dump refused | a 1,929,728-byte dump was rejected with "dump ends … before the module end" |
+| save import | title menu shows **Continue** enabled and a real save preview (Akira, 3 monsters, 86:10:48) |
+| script VM block | 1,458–1,474 non-zero bytes of 4,096, cursor@+0x80 = 2…25 |
+| roster after opening the X menu | 3 of 15 records non-zero: species `263, 403, 403` exactly matching the three party monsters (Nighty, ConkaI, ConkaII) |
+| roster after opening **Switch Monsters** | **6 of 15** records non-zero: species `263, 403, 403, 65, 260, 405`; slots 6-14 zero; the screen lists six monsters (3 party + 3 reserve) |
+| slicing | `extract/ram/ram-roster_021c4bf8.bin` (360 B, sha256 `cd20f431…4f2a0`), `extract/ram/ram-scriptvm_020fb264.bin` (4,096 B, sha256 `a32af9e0…203f69`), manifest fragment with 2 entries |
 
-**No real capture was performed, and nothing here claims the roster contents are
-known.** The synthetic bytes exist only to exercise the tool's slicing, verification
-and manifest emission.
+**Not proved / not reached:** a 15-of-15 roster. The array capacity is 15
+(15 x 24 = 360 B); this save owns six monsters, so six records populate and nine stay
+zero. That is a property of the save, not of the capture. Species `263, 403, 65, 260,
+405` are outside the ids previously named as "proven" (139/176/188/254/350/425/426);
+that set is a predicate for a special sprite in one matched reader, not a species
+enumeration, so the mismatch is not evidence against the capture. Field layout of the
+six records (species at +0x0A, 800-byte-stride id at +0x04, heap pointers at +0x10/+0x14)
+is recorded in `docs/data/species-and-rosters.md`; the 24-byte record is a reference
+entry, so level/HP/stats are not in it.
 
-## 6. Out of scope
+Cold-start navigation is timing-sensitive: an `A` press before the title menu has
+finished drawing starts **New Game** instead of Continue (several attempts then show
+a long intro with no roster). The menu also ignores `X` while the post-load scene is
+still running. Working anchors observed: title menu ready ≈ frame 900–1,200 after
+launch; save preview ≈ 240 frames after Continue; world ≈ 700–900 frames after Load;
+`X` accepted once the character has moved (e.g. 60 frames of `down`).
 
-- Installing or running an emulator, or automating gameplay, from this repository.
-- Audio, graphics or save-file extraction; anything that would need the original
-  save rather than a copy.
-- Proving the roster **record count** is 15 (that follows from the 360-byte block
-  the parent lane specified; a real capture is what confirms it).
-- The `native_data_020fb264` command block's internal layout — this lane captures
-  bytes, it does not decode the VM.
-- Any change to `manifest.json`, `ledger/` or `public/accepted-functions.json`: the
-  tool writes a fragment and an optional manifest **copy**; promoting a capture to
-  the real manifest is an integrator decision.
+A follow-up capture at the same state with --dump-length 4194304 (4 MiB,
+0x02000000-0x02400000, work/emulator/dumps/heap-4m.bin) includes the heap and was
+used to dereference the record pointers; the stat objects were found outside the
+24-byte records, at 0x021bd710 (Nighty) and neighbours. See
+docs/data/species-and-rosters.md for the object layout and the equipment caveat.
+
+## 6. Evidence files
+
+| file | bytes | sha256 |
+| --- | --- | --- |
+| `work/emulator/dumps/boot-wrapper.bin` (boot, zero roster) | 1,929,792 | `23057f29a20bf66526cd3cb0ba563b9a12086b19aed88032ad395b008e79e548` |
+| `work/emulator/dumps/menu-open.bin` (3/15 roster, items page) | 1,929,792 | `1d963ea616d1b256e97d5c73be002e5e8d8d3a39fd677133f05305da77e4848d` |
+| `work/emulator/dumps/switch-open.bin` (**6/15 roster, Switch Monsters**) | 1,929,792 | `16b4899f1b7393551d147cea1efe2b9744781ea59a21a83c25337b0911ef8d2f` |
+| `work/emulator/dumps/roster.bin` (cold-boot attempt, zero roster) | 1,929,792 | `834c3efa2c4527246518ffa0a435002cd3ee3ba0390f71e82d2385dafeff9c67` |
+
+`inputs/game.nds` and `inputs/save.sav` were hashed, copied, and never modified;
+the scratch copies under `work/emulator/scratch/` and the emulator's `Battery/`
+directory are disposable.
+
+## 7. What remains
+
+1. **Fill all 15 slots.** The 15-slot array and its screen are reached and captured
+   (6 records). Filling 15 requires a save that owns 15 monsters; this save owns six.
+2. **Cold-start determinism**: the exact frame windows differ per run (see the timing
+   note above). The checkpoint-state route used for `roster-6` is deterministic; a
+   cold-start script needs the anchors re-confirmed on a quiet host.
+3. **Promote the fragment** (integrator step, not done here):
+
+   ```powershell
+   # writes a manifest COPY with the two runtime-capture module entries merged in
+   python ops/ram_capture.py --spec work/emulator/specs/roster-6.json `
+       --apply-manifest build/ram-capture/manifest-with-ram.json
+   ```
+
+   `ops/ram_capture.py` refuses to write `manifest.json` itself; the integrator merges
+   `build/ram-capture/manifest-modules.json` (2 entries: `ram-roster`, `ram-scriptvm`)
+   into the real manifest by hand.
+4. Semantic validation of the VM text block (cursor value, text array) — the bytes
+   are captured, the decoding is out of scope here.
+
+## 8. Out of scope
+
+- Audio, graphics or save-file extraction beyond the copy needed to load the save.
+- Redistributing the ROM, the save, or the dumps; all three stay private/ignored.
+- Filling all 15 roster slots: that needs a save with 15 monsters, not a code change.
