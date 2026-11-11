@@ -523,17 +523,23 @@ def patch_function(function, module, base, sections, relocations, image):
                 value |= 1
             struct.pack_into('<I', body, offset, value & 0xFFFFFFFF)
         elif kind in (10, 11):  # R_ARM_THM_CALL / R_ARM_THM_JUMP24
+            # Thumb-2 BL / BLX immediate: S and imm10 live in the first halfword,
+            # J1/J2 and imm11 in the second.  The old Thumb-1 style packing (imm in
+            # the high halfword) silently produced the wrong bits for every Thumb
+            # call site, which is why Thumb units with calls never matched.
             if addend is None:
                 addend = 0
-            if kind == 10 and mode == 'arm':
-                immediate = (target + addend - (absolute & ~3)) >> 1
-                low = 0xE800
-            else:
-                immediate = (target + addend - absolute) >> 1
-                low = 0xF800
-            high = 0xF000 if kind == 10 else 0x9000
-            struct.pack_into('<H', body, offset, high | ((immediate >> 11) & 0x7FF))
-            struct.pack_into('<H', body, offset + 2, low | (immediate & 0x7FF))
+            pc = ((absolute + 4) & ~3) if mode == 'arm' else (absolute + 4)
+            delta = target + addend - pc
+            sign = (delta >> 24) & 1
+            i1 = (delta >> 23) & 1
+            i2 = (delta >> 22) & 1
+            j1 = (i1 ^ sign) ^ 1
+            j2 = (i2 ^ sign) ^ 1
+            first = (0xF000 if kind == 10 else 0x9000) | (sign << 10) | ((delta >> 12) & 0x3FF)
+            second = (0xE800 if mode == 'arm' else 0xF800) | (j1 << 13) | (j2 << 11) | ((delta >> 1) & 0x7FF)
+            struct.pack_into('<H', body, offset, first)
+            struct.pack_into('<H', body, offset + 2, second)
         elif kind in (43, 44):  # R_ARM_MOVW_ABS_NC / R_ARM_MOVT_ABS
             if addend is None:
                 addend = 0
