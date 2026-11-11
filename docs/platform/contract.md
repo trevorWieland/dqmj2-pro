@@ -71,6 +71,11 @@ the file and function. Items without a matched reader are marked **UNKNOWN** and
   still unmatched**: `0x02026b28` (388 B) and `0x020ba490` (212 B), both `functionMatched: false`
   in `ledger/functions.jsonl`. The loop's entry order therefore comes from the reconstructed source,
   not from matched callees.
+* ~~No public link path~~ — **closed**: `ports/recompile/` compiles `main()` and `0x020C225C` with the
+  pinned `mwccarm`, assembles a minimal `startup.s`, sets `MWLibraries`, and links a flat ARM9 image
+  with `mwldarm` (entry `0x02000000`, 1,824-byte ELF / 232-byte flat binary) against an empty stub
+  platform layer. The image links but performs no hardware initialisation, because the boot register
+  writer `0x02026B28` is still unmatched — that function, not the linker, is now the blocking target.
 
 ## 4. Coverage of the existing port work
 

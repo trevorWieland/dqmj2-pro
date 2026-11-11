@@ -3,13 +3,14 @@
 Verification that each lens is *served*, not merely present: every step below was executed against
 the current tree (`origin/main` `5669d1c5`) with the private inputs, following the documented path
 literally. Results are PASS / PARTIAL / FAIL with the exact stopping step and the smallest next
-action. Two lenses are PARTIAL by evidence, not by guesswork.
+action. RECOMPILATION moved from PARTIAL to PASS the same day once `ports/recompile/` was added;
+MOD (data edits) and ROMHACK (text repack) remain PARTIAL by evidence, not by guesswork.
 
 | lens | verdict | stops at | smallest next action |
 | --- | --- | --- | --- |
 | 1. **MOD** (patch surface) | **PASS** for the documented patch lane; **PARTIAL** for data edits | table byte at file offset `0xD7FE0` is refused (`MISMATCH`) because the ARM9 image is compressed | expose the rebuild lane (`pack_exact.py` + DSProtect serialisation) or document it as the only data path |
 | 2. **ROMHACK** (script text) | **PARTIAL** | an edited listing assembles and lands exactly, but there is no container repack step, and listings carry opcodes, not display text | a member→FPK→ROM repack tool, plus recovering the text payload the opcodes reference |
-| 3. **RECOMPILATION** (stub platform) | **PARTIAL** | all three translation units compile; `mwldarm` cannot link without a linker command file and the Metrowerks library path | ship a minimal `stub.lcf` + startup stub in the tree, or use the private LCF templates |
+| 3. **RECOMPILATION** (stub platform) | **PASS** (closed 2026-11-11) | links end to end: `ports/recompile/` compiles `main()` + `0x020C225C` + stubs, assembles `startup.s`, and `mwldarm` produces a flat ARM9 image (entry `0x02000000`, 232-byte flat binary) | none for the link path; the next target is the boot register writer `0x02026B28` |
 | 4. **ENGINE PORT** (next-needs list) | **PASS** as an inventory deliverable | nothing — the list and the blocking target are identified | recover `0x02026B28` (388 B), the boot register writer |
 
 ---
@@ -73,28 +74,48 @@ image. The smallest next action is the container repack path (the project has `p
 
 ## Lens 3 — RECOMPILATION: a stub platform attempt
 
-Followed `docs/platform/contract.md` §2 step 1. Scratch tree: `main.c` = the newly matched
-`src/main/p3g_main_02000c34/native_main_02000c34.c`, `boot.c` = the matched boot-floor function
-`src/main/p3g_main_02000c34/native_main_020c225c.c`, and `stubs.c` = a hand-written platform layer
-implementing the 16 imported services plus `reset()` calling `main()`.
+Followed `docs/platform/contract.md` §2 step 1 against the tree as it stood *before* the fix below:
+`main.c` = the matched `src/main/p3g_main_02000c34/native_main_02000c34.c`, `boot.c` = the matched
+boot-floor function `native_main_020c225c.c`, `stubs.c` = a hand-written platform layer implementing
+the 16 imported services plus `reset()`.
 
-| step | command | result |
-| --- | --- | --- |
-| 1. compile main | `mwccarm.exe -O2 … -proc arm946e -c main.c` | exit 0 |
-| 2. compile boot floor | same for `boot.c` | exit 0 |
-| 3. compile stubs | same for `stubs.c` | exit 0 |
-| 4. link | `mwldarm.exe -o out.elf main.o boot.o stubs.o` | `Linker Error: Linker command file error at line 23 / File not found: STATICINIT`; warnings `Environment variable 'MWLibraries' not found` |
-| 5. link with a hand-written LCF | `mwldarm.exe -o out2.elf stub.lcf main.o boot.o stubs.o` | `Linker command file error at line 8` (LCF syntax), no output produced |
+| step | result |
+| --- | --- |
+| compile all three units with `mwccarm` | exit 0 each |
+| link with `mwldarm` (default LCF) | `Linker command file error at line 23 / File not found: STATICINIT`; `Environment variable 'MWLibraries' not found` |
+| link with a hand-written LCF | `Linker command file error at line 8` |
 
-**Where it stops:** at the link step. Compiling is *not* the blocker — three translation units of
-real matched source compile cleanly with the pinned compiler. The public tree ships no linker
-command file, no startup code and no library path for a stub platform, and the pinned toolchain's
-LCF templates (`ARM9-TEG-C.lcf.template` and friends) live only in the private toolchain directory.
+**Original verdict: PARTIAL, stopping at the link step.**
 
-**Smallest next action:** add a minimal public `stub.lcf` (single memory region at `0x02000000`,
-`.text/.rodata/.data/.bss`) plus a `reset` entry stub, and record the required
-`MWLibraries`/`MWLibraryFiles` environment. That would turn this from "compile only" into "linkable
-boot floor", which is exactly what the contract's porting order asks for.
+### Closed the same day — `ports/recompile/` (now PASS)
+
+The blocker was four toolchain details, none of them decompilation work:
+
+1. the LCF needs Metrowerks syntax (`#` comments, `>` to allocate a segment and `>>` to append, no
+   spaces around `ORIGIN=`/`LENGTH=`), derived from the pinned `test2.lcf`/`ARM9-TEG-C.lcf.template`;
+2. `mwasmarm` spells the core `arm5TE`, not `arm946e`;
+3. `mwasmarm` rejects local numeric labels and `@` comments;
+4. `MWLibraryFiles` is a list of archive names, not a directory, so this flat image must leave it
+   unset; `MWLibraries` alone is enough.
+
+`ports/recompile/` now carries `stub.lcf`, `startup.s`, `stubs.c`, `build.ps1` and `build.sh`.
+Measured run:
+
+```
+compiled  src/main/p3g_main_02000c34/native_main_02000c34.c -> build/recompile/main.o
+compiled  src/main/p3g_main_02000c34/native_main_020c225c.c -> build/recompile/boot.o
+compiled  ports/recompile/stubs.c -> build/recompile/stubs.o
+assembled ports/recompile/startup.s -> build/recompile/startup.o
+linked    build/recompile/stub.elf
+entry     0x02000000
+size      1824 bytes (ELF container)
+```
+
+Linked symbols include the matched sources themselves: `main` is `0x0200006c`, 0x50 bytes — the same
+80 bytes the ledger measures. `llvm-objcopy -O binary` yields a **232-byte flat ARM9 image**. It
+links, it is not the game: no VRAM/OAM upload, no input reader, no sound, no ARM7 image, every
+imported service stubbed. **Verdict: PASS** for the link path; the remaining blocker for a *bootable*
+image is the unmatched boot register writer `0x02026B28`.
 
 ## Lens 4 — ENGINE PORT: what the next porter needs
 

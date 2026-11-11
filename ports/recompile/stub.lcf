@@ -1,0 +1,48 @@
+# Minimal linker command file for a flat ARM9 stub image.
+#
+# Derived from the pinned NitroSDK templates (ARM9-TEG-C.lcf.template and the working
+# test2.lcf in the same toolchain directory), stripped of every game-specific directive:
+# no overlays, no ITCM/DTCM regions, no static initialiser tables, no component lists.
+#
+# Directives used, and why:
+# MEMORY { code (RWX) : ORIGIN=0x02000000, LENGTH=... }
+# One read/write/executable region at the ARM9 load address. 0x02000000 is the
+# measured main-module load address (docs/modding/README.md header table, offset 0x028).
+# 0x00200000 is one region's worth of headroom, not a measured size.
+# SECTIONS { .text: { ... } > code }
+# Everything is placed in load order inside that region. Because load address == run
+# address, __data_load_start == __data_start and the startup copy is a no-op; the copy
+# code is still present so a split load/run layout can use the same startup.
+# __bss_start / __bss_end / __data_start / __data_end / __data_load_start
+# Linker-defined symbols consumed by startup.s. Kept explicit rather than relying on
+# toolchain magic so the startup code is readable.
+# . = ALIGN(4): ARM requires word-aligned sections; the templates align to 32 for cache lines.
+#
+MEMORY {
+    code (RWX) : ORIGIN=0x02000000, LENGTH=0x00200000
+}
+
+SECTIONS {
+    .text:{
+        startup.o (.text)
+        * (.text)
+        * (.rodata)
+        . = ALIGN(4);
+        __data_load_start = .;
+    } > code
+
+    .data:{
+        __data_start = .;
+        * (.data)
+        . = ALIGN(4);
+        __data_end = .;
+    } >> code
+
+    .bss:{
+        __bss_start = .;
+        * (.bss)
+        *(COMMON)
+        . = ALIGN(4);
+        __bss_end = .;
+    } >> code
+}
