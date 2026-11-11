@@ -2969,6 +2969,12 @@
    "mode": "thumb"
   },
   {
+   "glob": "src/ov006/p8_ov006_blx_auth3/**",
+   "module": "ov006",
+   "compilerFlags": "p004",
+   "mode": "thumb"
+  },
+  {
    "glob": "src/overlays/**",
    "module": "ov001",
    "compilerFlags": "p003"
