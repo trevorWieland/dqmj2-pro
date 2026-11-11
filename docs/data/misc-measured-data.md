@@ -6,11 +6,11 @@ are measured; the field meanings are unknown).
 | item | value | source of the fact |
 | --- | --- | --- |
 | module | `main` | `public/accepted-data.json` |
-| address | `0x020d3fe0` | `public/accepted-data.json` record `main/data/020d3fe0` |
+| address | `0x020d3fe0` | `public/accepted-data.json` record `arm9/main/initialized-data/020d3fe0` |
 | size | 16,384 bytes, all stored | same record (`bytes` = `storedBytes` = 16384) |
-| kind | `.data` | same record |
+| kind | `initialized-data` (section `.rodata`) | same record |
 | declared by | `generated/math/20261031_sincos_data.c` | same record, `source` field |
-| stride | 4 (1,024 records) | chosen only so a modder can page through it |
+| stride | 4 (4,096 records) | 16,384 / 4 arithmetic |
 | field meanings | **unknown** | no matched reader decodes these words |
 
 No matched function reads this region: the typed-data snapshot proves it exists, matched

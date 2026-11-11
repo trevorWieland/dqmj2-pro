@@ -15,10 +15,10 @@ typedef struct { u8 threshold[10]; NativeSkillAction actions[10]; u8 features[10
 
 | offset | width | type | name | confidence |
 | --- | --- | --- | --- | --- |
-| 0 | 10 | u8[10] | threshold | proven-by-code |
+| 0 | 10 | u8[10] | threshold | inferred |
 | 10 + 4·i (i<10) | 1 | u8 | actions[i].id | proven-by-code |
 | 11 + 4·i (i<10) | 3 | u8[3] | actions[i].inputs | proven-by-code |
-| 50 | 10 | u8[10] | features | proven-by-code |
+| 50 | 10 | u8[10] | features | inferred |
 
 Stride 60 bytes (10 + 10·4 + 10). The function body proves the indexing, not just the
 typedef:
@@ -29,8 +29,9 @@ if (entry->id != 0) return entry->inputs[member];
 ```
 
 So `actions` is an array of 4-byte entries indexed by a skill slot, `id == 0` means
-"empty slot", and `inputs` holds three per-member values. What a threshold or a feature
-bit *means* is not established: no matched code interprets them.
+"empty slot", and `inputs` holds three per-member values. `threshold` and `features` are
+marked **inferred**, not proven: `native_main_0207adb0` never reads them, they appear only
+in the file's typedef.
 
 ## Base address
 

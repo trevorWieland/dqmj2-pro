@@ -10,11 +10,11 @@ even though the two structs name their bytes differently.
 
 | offset | width | type | name | confidence | evidence |
 | --- | --- | --- | --- | --- | --- |
-| 0 | 1 | u8 | padding | proven-by-code | `src/mechanics_save/20261030_roster_frame_mask.c` |
-| 1 | 1 | u8 | count | proven-by-code | `src/mechanics_save/20261030_roster_frame_mask.c` |
-| 2 | 1 | s8 | first | proven-by-code | `src/mechanics_save/20261030_roster_frame_mask.c` |
+| 0 | 1 | u8 | padding | inferred | declared in `src/mechanics_save/20261030_roster_frame_mask.c`; no matched reader |
+| 1 | 1 | u8 | count | proven-by-code | `src/mechanics_save/20261030_roster_frame_mask.c` (`native_main_0206d114` reads `native_data_021c4bf9[sprite * 24]`) |
+| 2 | 1 | s8 | first | proven-by-code | `src/mechanics_save/20261030_roster_frame_mask.c` (`native_main_0206d114` reads `native_data_021c4bfa[sprite * 24]`) |
 | 3 | 21 | u8[21] | tail | unknown | declared, no matched reader |
-| 10 | 2 | s16 | species | proven-by-code | `src/mechanics_save/20261030_roster_species_predicate.c` |
+| 10 | 2 | s16 | species | proven-by-code | `src/mechanics_save/20261030_roster_species_predicate.c` (`native_main_0206db00`) |
 
 `sprite` indexes the record (`native_main_0206db00`), and the species value is compared
 against 139, 176, 188, 254, 350, 425 and 426 to answer "is this a special sprite". That
@@ -41,6 +41,6 @@ established; inventing one would make the dictionary worse than empty.
 
 `public_tools/data_dump.py --table species_roster` refuses this table today: the address is
 proven by the symbol name in matched source, but **no module image covers it**. The main
-ARM9 image ends at `0x020E33C0` and the overlay images start at `0x021D7240`, so
+ARM9 image ends at `0x020E3300` and the overlay images start at `0x021D7240`, so
 `0x021C4BF8` sits in a gap between captured module images. Dumping it needs an image that
 covers the range; the dictionary reports the address rather than inventing bytes.
