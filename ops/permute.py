@@ -87,8 +87,12 @@ def load_module(module):
     if module == 'main':
         check.OVL = MAIN_IMAGE
         check.BASE = MAIN_BASE
-        flags = check.FLAGS
-        check.FLAGS = (tuple(flags) + ('-thumb',)) if isinstance(flags, tuple) else f'{flags} -thumb'
+        flags = list(check.FLAGS) if not isinstance(check.FLAGS, str) else check.FLAGS.split()
+        # -thumb has to precede -c: mwcc reads the mode flag before the compile
+        # action, and appending it after -c silently fails the compile.
+        position = flags.index('-c') if '-c' in flags else len(flags)
+        flags.insert(position, '-thumb')
+        check.FLAGS = flags
     return check
 
 

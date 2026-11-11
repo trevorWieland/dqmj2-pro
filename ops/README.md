@@ -139,12 +139,40 @@ multi-statement spans, statement reordering inside a block), not a wider beam.
 
 `C:\Users\trevo\Documents\RecProgramming\DQM\dqmj2pro-decomp\work\permuter-candidates\`
 holds seven Thumb near-misses (56-68 B) with their own `README.md` and shared
-`context.h`. Support for that corpus was added here: `load_module('main')` points
-the comparison at `extract/arm9/arm9.bin` with base `0x02000000` and appends
-`-thumb` to the compile line. The first probe row (`0x0208ba68`) does not compile
-through the harness yet — the `-thumb` compile needs its include path and flag
-placement reconciled with the corpus README's invocation — so the corpus is
-**not run** in this revision. That is the next concrete task for the lane.
+`context.h`. `load_module('main')` points the comparison at
+`extract/arm9/arm9.bin` with base `0x02000000` and inserts `-thumb` **before** `-c`
+(appending it after `-c` silently fails the compile — that cost an hour).
+
+The corpus is **not runnable yet**, and the remaining blocker is precise: Thumb
+code relocates calls with `R_ARM_THM_CALL` (ELF type 10), which `check.relocate`
+does not patch — it handles `R_ARM_PC24` (1) and `R_ARM_ABS32` (2) only, so a
+Thumb row now gets past compile and image selection and then raises
+`unsupported relocation type 10`. The encoder needed is the 32-bit Thumb `bl`:
+split `delta = target - (place + 4)` into `S`, `J1`, `J2` and `imm11` across the
+two halfwords (`11110 S imm10` / `11 J1 1 J2 imm11`). That is a ~15-line addition
+to `check.relocate` with the formula above, and it unblocks all seven rows.
+
+### Follow-up that changes the lane: compiler identity is confirmed per module
+
+A separate audit (10 accepted 2.0/base functions per module, recompiled on all 24
+installed mwccarm builds with each row's own flags) shows `2.0/base` is the best
+match in every module:
+
+| module | 1.2 (5 builds) | 2.0 (10 builds) | dsi (9 builds) |
+| --- | --- | --- | --- |
+| main | 4-5 | **8** | 4 |
+| ov000 | 5-6 | **10** | 6 |
+| ov001 | 3 | **10** | 6 |
+| itcm | 0 | **5** | 2 |
+| arm7-main | 1 | **8** | 4 |
+| arm7-wram | 3 | **9** | 5 |
+
+One row is a genuine anomaly: `main 0x02000d0c` (192 B) matches **only** on
+`1.2/sp3` and `1.2/sp4`, never on any 2.0 build. Everything else either matches
+2.0/base or matches no build at all (itcm 5 rows, arm7 3 rows, main 1), which
+points at flags or missing asm units rather than a different compiler generation.
+So the "some modules were built by an older MWCC" hypothesis is **not** supported,
+with that one main-module exception worth a follow-up.
 
 ### Mechanism findings this lane produced
 
