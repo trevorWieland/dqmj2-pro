@@ -86,6 +86,7 @@ FUNCTION = re.compile(
     r'[ \t]*(?:[A-Za-z_][A-Za-z0-9_]*(?:[ \t]+|[ \t]*\*[ \t]*))+'
     r'(?P<name>[A-Za-z_][A-Za-z0-9_]*)[ \t]*\([^;{]*\)[ \t]*\n?[ \t]*\{',
     re.M)
+QUOTED_INCLUDE = re.compile(r'^[ \t]*#[ \t]*include[ \t]*"([^"]+)"', re.M)
 
 
 def sha256(data):
@@ -138,6 +139,20 @@ def flag_profile(root, name):
 
 def default_profile(processor):
     return 'p000' if processor == 'arm7' else 'p001'
+
+
+def resolved_rule(root, source_path):
+    """The source-unit rule the repository build would compile this file under."""
+    try:
+        relative = source_path.relative_to(root).as_posix()
+    except ValueError:
+        raise SystemExit(f'--rule needs a source inside the repository: {source_path}')
+    if not (root / 'public_tools/source_units.py').is_file():
+        raise SystemExit(f'--rule needs a repository checkout with public_tools/: {root}')
+    sys.path.insert(0, str(root / 'public_tools'))
+    import source_units  # noqa: E402  (public tool, imported lazily)
+    config = source_units.load_config(root)
+    return source_units.resolve(config, relative)
 
 
 def detect_function_name(source):
@@ -253,6 +268,34 @@ def toml_path(path):
     return Path(path).as_posix()
 
 
+def copy_include_closure(source_path, workspace):
+    """Copy every quoted include reachable from the source into the workspace.
+
+    Returns ``{basename: origin}``. A header is written under its basename so that a bare
+    ``#include "context.h"`` resolves from base.c's directory -- the permuter hardcodes
+    ``cpp -P -nostdinc`` with no include path, and its candidate sources are temp files
+    elsewhere, so the workdir has to be self-contained.
+    """
+    copied = {}
+    queue = [(source_path, name) for name in QUOTED_INCLUDE.findall(
+        source_path.read_text(encoding='utf-8-sig', errors='replace'))]
+    while queue:
+        origin, name = queue.pop(0)
+        if Path(name).is_absolute():
+            continue
+        candidate = origin.parent / name
+        if not candidate.is_file():
+            continue
+        destination = workspace / Path(name).name
+        text = candidate.read_text(encoding='utf-8-sig', errors='replace')
+        existing = destination.read_text(encoding='utf-8', errors='replace') if destination.exists() else None
+        if existing != text:
+            destination.write_text(text, encoding='utf-8', newline='\n')
+        copied[Path(name).name] = str(candidate)
+        queue.extend((candidate, nested) for nested in QUOTED_INCLUDE.findall(text))
+    return copied
+
+
 def write_workspace(args):
     root = Path(args.root).resolve()
     image, base, image_path = module_info(root, args.module)
@@ -272,14 +315,25 @@ def write_workspace(args):
     source_text = source_path.read_text(encoding='utf-8-sig')
     symbol = args.symbol or detect_function_name(source_text)
 
-    if args.flags:
+    if args.rule:
+        # The build config is authoritative for a tree source: its rule decides the
+        # compiler identity, the flag profile and the mode the project compiles with.
+        # Getting this wrong is not cosmetic -- p001 vs p004 changes this row's code.
+        unit = resolved_rule(root, source_path)
+        mode = unit['mode'] if unit.get('mode') in ('thumb', 'arm') else mode
+        flags = [flag for flag in unit['compilerFlags'] if flag != '-thumb']
+        args.compiler = unit['compilerPath']
+    elif args.flags:
         flags = args.flags.split()
     elif row.get('compilerFlags'):
         flags = row['compilerFlags'].split() if isinstance(row['compilerFlags'], str) else list(row['compilerFlags'])
     else:
         flags = flag_profile(root, args.profile or default_profile(processor))
 
-    thumb = mode == 'thumb'
+    # -thumb belongs before -c, added once by compile_object/compile_script; some flag
+    # profiles already carry it, so strip it here and let the mode decide.
+    thumb = mode == 'thumb' or '-thumb' in flags
+    flags = [flag for flag in flags if flag != '-thumb']
     workspace = Path(args.workspace) if args.workspace else WORKSPACES / f'{args.module}_{address:08x}'
     workspace = workspace.resolve()
     if workspace.exists() and any(workspace.iterdir()) and not args.force:
@@ -290,6 +344,11 @@ def write_workspace(args):
     scratch.mkdir(exist_ok=True)
     base_c = workspace / 'base.c'
     base_c.write_text(source_text, encoding='utf-8')
+    # A workdir must preprocess and compile on its own: decomp-permuter hardcodes
+    # `cpp -P -nostdinc base.c` with no include path, so quoted headers have to sit next
+    # to base.c. Copy the quoted-include closure in (flat, which is how these units spell
+    # their includes), and keep going through the copied headers for nested includes.
+    headers = copy_include_closure(source_path, workspace)
     base_obj = scratch / 'base.o'
     compiled = compile_object(root, base_c, base_obj, flags, thumb, args.compiler)
     if compiled.returncode != 0:
@@ -331,12 +390,14 @@ def write_workspace(args):
         'compiler': toml_path(compiler_path(root, args.compiler)),
         'flags': flags,
         'thumb': thumb,
+        'resolvedFromRule': bool(args.rule),
         'image': str(image_path.relative_to(root)),
         'imageSha256': sha256(image),
         'imageSliceSha256': sha256(image_slice),
         'target': target,
         'permuterPin': PERMUTER_PIN,
         'objdumpCommand': objdump_command,
+        'headers': headers,
         'weights': weights,
         'createdAt': time.strftime('%Y-%m-%dT%H:%M:%S%z'),
     }
@@ -574,6 +635,8 @@ def main(argv=None):
     build.add_argument('--bytes', type=lambda value: int(value, 0))
     build.add_argument('--mode', choices=('thumb', 'arm'))
     build.add_argument('--flags', help='exact compiler flags (default: ledger or flag profile)')
+    build.add_argument('--rule', action='store_true',
+                       help='take compiler, flags and mode from config/source_units.json for --src')
     build.add_argument('--profile', help='flag profile from config/source_units.json')
     build.add_argument('--compiler', help='mwccarm build (default: 2.0/base)')
     build.add_argument('--weight', action='append', metavar='NAME=VALUE',

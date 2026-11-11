@@ -39,12 +39,30 @@ on the live file reports ``rows to change: 0`` — the correction is present and
 idempotent. To audit against the original instead, point ``--ledger`` at the backup
 above; to audit the current state, run ``ops/reconcile_ledger.py`` and expect
 stale 0 / inverse 504.
+
+Second use (2026-11-11), the `0x02203ebc` compiler-selection promotion
+------------------------------------------------------------------------
+One row, produced by the permuter workflow in ``docs/authoring/permuter.md``:
+
+  backup         work/ledger-backup-18219454ecf39081.jsonl
+  backup sha256  18219454ecf39081b4cd155f83c913cdbe3c09071b9746fd1cb3621283840158
+                 (32,739,058 bytes, 16,073 rows)
+  patch          work/ledger-proposed-02203ebc.jsonl (1 row)
+  after sha256   f3330f8eade90521e3ead7ef4e23a36a844b60f7020418c7d520a74826ed91e8
+                 (16,073 rows, unchanged count)
+
+That run also fixed this tool's write step: ``shutil.move`` cannot replace an existing
+file on Windows (rename refuses, and the copy fallback fails with WinError 1224 when the
+ledger is mapped), so it now uses ``os.replace`` with a short retry and leaves the temp
+file plus backup intact if the ledger stays locked.
 """
 import argparse
 import hashlib
 import json
+import os
 import shutil
 import sys
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -102,8 +120,21 @@ def main(argv=None):
         return 0
     text = '\n'.join(output) + '\n'
     temp = ledger.with_suffix('.jsonl.new')
-    temp.write_text(text, encoding='utf-8')
-    shutil.move(str(temp), str(ledger))
+    temp.write_text(text, encoding='utf-8', newline='\n')
+    # os.replace, not shutil.move: on Windows rename() refuses to overwrite an existing
+    # file and shutil then falls back to copying onto the target, which fails with
+    # WinError 1224 when any process has the ledger mapped. os.replace is atomic.
+    for attempt in range(1, 6):
+        try:
+            os.replace(str(temp), str(ledger))
+            break
+        except OSError as error:
+            if attempt == 5:
+                raise SystemExit(
+                    f'could not replace {ledger}: {error}. The ledger is unchanged; the '
+                    f'reviewed patch is still at {temp} and the backup at {backup}. '
+                    'Close whatever has the ledger mapped and re-run --apply.')
+            time.sleep(1.0)
     print(f'written: {hashlib.sha256(text.encode("utf-8")).hexdigest()}'
           f' ({len([l for l in text.splitlines() if l.strip()])} rows)')
     return 0

@@ -18,6 +18,7 @@ reproduces the row through the project's own compile + relocation + byte compari
 | `ops/permuter.py build` | generate `work/permuter/<module>_<addr>/` |
 | `ops/permuter.py probe` | run the permuter's own setup + score once (parse check) |
 | `ops/permuter.py run` | drive the search for N seconds, collect the best candidate |
+| `ops/permuter_candidates.py` | rank permuter-ready rows from the source tree + ledger |
 | `ops/mwcc_objdump.py` | Capstone `objdump -drz` shim the permuter parses |
 | `ops/verify_permuter.py` | the only acceptance gate: byte + reloc + negative controls |
 
@@ -241,11 +242,58 @@ first honest limit of the tool and the reason `--compiler` exists at build time.
 workspace under `2.0/base` with the same weights, 181 s: 94 permutations, no score below
 10, no output — the expected result, not a tool failure.
 
-The project already has precedent for per-row compiler overrides (see the `dsi/1.6sp2`
-note in `ops/README.md`), but the ledger row still carries `compilerSha256 = null`
-because the row is unmatched. Promoting `0x02203ebc` therefore needs a ledger patch that
-sets the row's compiler, flags and source hash — a separate acceptance step from this
-PR, which ships the generator, the gate, the docs and the verified source.
+### The rule this establishes
+
+**When a permuter zero requires a different build than the row's pin, that is a
+compiler-selection finding — record the sweep, promote the row to the lowest exact
+build, and never silently change the global pin.** Concretely, in this order:
+
+1. **Do not touch the global compiler.** `config/source_units.json:compiler` re-measures
+   every accepted row; a per-row change does not.
+2. **Sweep, do not guess.** Compile the candidate source with every installed build (the
+   `ops/compiler_matrix.py` question) and record the matrix in the row's evidence. The
+   proof row's matrix is the table above.
+3. **Promote to the lowest exact build**, not the highest: `2.0/sp1` before `2.0/sp1p2`,
+   before any `dsi` build. The lowest exact build is the smallest deviation from the
+   project's 2.0/base choice that reproduces the row.
+4. **Register the identity.** `source_units.resolve()` rejects a `compilerSha256` that is
+   not in the `compilers` map, so add the build there first.
+5. **Add a row-level rule, not a profile change.** `src/ov006/**` resolves to `p004`; the
+   row rule for `src/ov006/permuter_20261111/native_ov006_02203ebc.c` keeps `p004` and
+   only overrides `compilerSha256`. The rest of the tree keeps the profile.
+6. **Prove it through the real build path, then patch the ledger.** Source-unit
+   resolution, `public_tools/repo_build.py`, and only then the ledger row's
+   `compilerSha256`/`compilerFlags`/`sourceUnit`/`object`/`matchingBytes`. The permuter
+   score is never the evidence here.
+
+For `0x02203ebc` that gave: rule `{glob: src/ov006/permuter_20261111/native_ov006_02203ebc.c,
+module: ov006, compilerFlags: p004, compilerSha256: e76c86fa…, mode: thumb}`,
+`2.0/sp1` registered in `compilers`, `repo_build --source` compiling the row (object
+`.text` byte-identical to a direct `2.0/sp1` compile, relocated bytes equal to the image,
+score `(0, 0)`), and a ledger row carrying `matchingBytes: 48` with the same source hash.
+Note the profile matters as much as the build: `p001` (the tool's fallback) produces a
+60-byte body for this row where the config's `p004` produces 48, which is why
+`ops/permuter.py build --rule` and `ops/verify_permuter.py` read the rule instead of
+guessing.
+
+### Promotion record, `0x02203ebc` (2026-11-11)
+
+| step | value |
+| --- | --- |
+| ledger before | `18219454ecf39081b4cd155f83c913cdbe3c09071b9746fd1cb3621283840158` (16,073 rows) |
+| backup | `work/ledger-backup-18219454ecf39081.jsonl` (32,739,058 bytes) |
+| patch plan | `work/ledger-proposed-02203ebc.jsonl` (1 row, matched by ledger `id`) |
+| ledger after | `f3330f8eade90521e3ead7ef4e23a36a844b60f7020418c7d520a74826ed91e8` (16,073 rows) |
+| row fields | `compilerSha256` = `2.0/sp1`, `compilerFlags` = p004 (32 entries), `sourceUnit`, `sourceSha256`, `object` + `objectSha256`, `matchingBytes` = 48, `functionMatched`/`moduleLinked` = true |
+| config | `compilers` + `2.0/sp1`; row rule `{glob, ov006, p004, e76c86fa…, thumb}` |
+| real build | `repo_build --source` → `source-compilation-passed`; object `.text` byte-identical to a direct `2.0/sp1` compile; relocated bytes `(0, 0)`, 48 B |
+| permuter | base score 10 → score 0 at iteration 1 in 6.1 s with `perm_commutative=200` (172 s with the default weights) |
+| gate | 8/8 checks (`docs/authoring/permuter-02203ebc-receipt.json`) |
+| reconcile after | stale 4 (all `src/ov006/p5_ov006_blx_mode/**`, pre-existing), inverse 504, unmatched 3,279 |
+
+The four remaining stale rows are the `p5_ov006_blx_mode` sources from
+`docs/authoring/2026-11-11-blx-mode-fix.md`; they are a separate reconciliation batch and
+were deliberately not folded into this promotion.
 
 ## 7. Honest limits
 
@@ -290,11 +338,31 @@ A row is permuter-ready when all of these hold:
 
 `ops/permuter_queue.py` ranks candidate families from `ops/harvest_filter.py`; treat that
 list as input, not as a promise — the build sweep and the exact-size check come first.
+`ops/permuter_candidates.py` answers the mechanical half of the question: for every source
+unit in a module it resolves the rule, compiles, measures, and buckets the result.
 
 ```bash
-python ops/permuter_queue.py                     # ranked families -> docs/authoring/permuter-queue.md
-python ops/permuter.py build --module ov006 --address 0x... --src <best-known source>
+python ops/permuter_candidates.py --module ov006            # permuter-ready rows, ranked
+python ops/permuter.py build --module ov006 --address 0x... --src <row source> --rule
 python ops/permuter.py probe work/permuter/ov006_<addr>
 python ops/permuter.py run   work/permuter/ov006_<addr> --timeout 600
 python ops/verify_permuter.py work/permuter/ov006_<addr> --source best.c --emit src/ov006/<packet>/<symbol>.c
 ```
+
+Three buckets come out of the scan, and only the first is permuter work:
+
+* **permuter-ready** — exact compiled size, bytes differ, and the difference survives the
+  shim's normal form (`textDiff > 0`). The last condition matters: a row whose only
+  difference sits inside a relocation slot renders as the same `bl <target>` on both
+  sides, so the permuter sees score 0 and does nothing. Those rows come back as
+  **relocation-only** and need the link/relocation fixed, not the source.
+* **relocation-only** — exact size, byte diff, `textDiff == 0`. See above.
+* **already exact** — the source reproduces the row under its own rule. That is ledger
+  reconciliation (`ops/reconcile_ledger.py`), not a permuter job.
+
+`--rule` is not optional in practice: it takes the compiler, flag profile and mode from
+`config/source_units.json` for the `--src` path. Without it the tool falls back to the
+ledger row or the processor profile, and `p001` vs `p004` alone changes this row class's
+codegen (see the rule above). The build also copies the source's quoted-include closure
+into the workspace, because the permuter's hardcoded `cpp -P -nostdinc` has no include
+path and its candidate files are written to a temp directory.

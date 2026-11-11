@@ -121,6 +121,45 @@ class ObjectFormatTest(unittest.TestCase):
         self.assertEqual(mwcc_objdump.regions(bytes(8), [], 'arm'), [(0, 8, 'arm')])
 
 
+class IncludeClosureTest(unittest.TestCase):
+    def test_quoted_headers_are_copied_flat(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            source = root / 'unit' / 'native_ov006_02000000.c'
+            source.parent.mkdir()
+            source.write_text('#include "context.h"\nint f(void) { return CTX; }\n')
+            (source.parent / 'context.h').write_text('#include "inner.h"\n#define CTX 1\n')
+            (source.parent / 'inner.h').write_text('#define INNER 2\n')
+            workspace = root / 'work'
+            workspace.mkdir()
+            copied = permuter.copy_include_closure(source, workspace)
+            self.assertEqual(copied, {'context.h': str(source.parent / 'context.h'),
+                                      'inner.h': str(source.parent / 'inner.h')})
+            self.assertTrue((workspace / 'context.h').is_file())
+            self.assertTrue((workspace / 'inner.h').is_file())
+
+    def test_system_includes_and_missing_headers_are_ignored(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            source = root / 'unit.c'
+            source.write_text('#include <stdio.h>\n#include "absent.h"\n')
+            workspace = root / 'work'
+            workspace.mkdir()
+            self.assertEqual(permuter.copy_include_closure(source, workspace), {})
+            self.assertEqual(list(workspace.iterdir()), [])
+
+
+class ResolvedRuleTest(unittest.TestCase):
+    def test_outside_repository_is_rejected(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch) / 'repo'
+            root.mkdir()
+            outside = Path(scratch) / 'elsewhere.c'
+            outside.write_text('int f(void) { return 0; }\n')
+            with self.assertRaises(SystemExit):
+                permuter.resolved_rule(root, outside)
+
+
 class PermuterLocationTest(unittest.TestCase):
     def test_error_explains_how_to_acquire(self):
         with tempfile.TemporaryDirectory() as scratch:
