@@ -134,7 +134,7 @@ def load_config(root, data=None):
     if not isinstance(data, dict):
         raise SourceUnitError('The source-unit configuration must be an object')
     extra = set(data) - {'schemaVersion', 'description', 'denominator', 'buildSha256', 'exclusions', 'compiler',
-                         'compilers', 'modules', 'flagProfiles', 'generatedFrom', 'alternates', 'rules'}
+                         'compilers', 'modules', 'flagProfiles', 'generatedFrom', 'alternates', 'rules', 'objects'}
     if extra:
         raise SourceUnitError('Unsupported source-unit configuration fields: ' + ', '.join(sorted(extra)))
     if data.get('schemaVersion') != 1:
@@ -195,13 +195,26 @@ def load_config(root, data=None):
             raise SourceUnitError('Duplicate source-unit rule scope: ' + rule['scope'])
         scopes[rule['scope']] = rule
         parsed.append(rule)
+    objects = data.get('objects') or {}
+    if not isinstance(objects, dict):
+        raise SourceUnitError('objects must be an object keyed by source path')
+    for source, entry in objects.items():
+        canonical(source)
+        if not isinstance(entry, dict) or set(entry) != {'object', 'sha256'}:
+            raise SourceUnitError('An objects entry needs exactly object and sha256: ' + str(source))
+        if not isinstance(entry['object'], str) or not entry['object']:
+            raise SourceUnitError('An objects entry needs a nonempty object path: ' + str(source))
+        if not isinstance(entry['sha256'], str) or not re.fullmatch(r'[0-9a-f]{64}', entry['sha256']):
+            raise SourceUnitError('An objects entry needs a SHA-256 digest: ' + str(source))
+        resolve(dict(rules=parsed, modules=modules, profiles=profiles, compilers=compilers,
+                     default_compiler=default_compiler), source)
     exclusions = list(EXCLUSIONS) + list(data.get('exclusions') or [])
     for value in exclusions:
         scope_of(value)
     parsed.sort(key=lambda item: depth(item['scope']))
     return dict(data=data, rules=parsed, scopes=scopes, modules=modules, profiles=profiles,
                 compilers=compilers, default_compiler=default_compiler, alternates=alternates,
-                exclusions=exclusions)
+                exclusions=exclusions, objects=objects)
 
 
 def matches(scope, name):
@@ -246,24 +259,30 @@ def enumerate_sources(root, config=None, check_all=False):
     config = config or load_config(root)
     files = source_files(root)
     compiled, excluded_files, unresolved, resolved = [], [], [], []
+    assembly, prebuilt = [], []
     for name in files:
         if excluded(config, name):
             excluded_files.append(name)
-            continue
-        if not check_all and not name.endswith('.c'):
             continue
         try:
             rule = resolve(config, name)
         except SourceUnitError as error:
             unresolved.append((name, str(error)))
             continue
+        suffix = PurePosixPath(name).suffix.lower()
         if name.endswith('.c'):
             compiled.append(dict(path=name, alternates=resolve_alternates(config, name), **rule))
+        elif suffix in {'.s', '.cpp'}:
+            assembly.append(dict(path=name, kind=suffix[1:], alternates=resolve_alternates(config, name), **rule))
+        entry = config['objects'].get(name)
+        if entry is not None:
+            prebuilt.append(dict(path=name, object=entry['object'], objectSha256=entry['sha256'], **rule))
         resolved.append((name, rule))
     if unresolved:
         detail = '; '.join(f'{name}: {reason}' for name, reason in unresolved[:20])
         raise SourceUnitError(f'{len(unresolved)} source file(s) match no unit rule: {detail}')
     return dict(config=config, files=files, compiled=compiled, excluded=excluded_files,
+                assembly=assembly, prebuilt=prebuilt,
                 resolved=resolved if check_all else None)
 
 
@@ -278,7 +297,8 @@ def check(root, config=None):
         by_extension[suffix] = by_extension.get(suffix, 0) + 1
     return dict(schemaVersion=1, configRules=len(config['rules']), sourceFiles=len(result['files']),
                 resolvedFiles=len(result['resolved']), excludedFiles=len(result['excluded']),
-                compiledSources=len(result['compiled']), modules=len(by_module),
+                compiledSources=len(result['compiled']), assemblySources=len(result['assembly']),
+                prebuiltObjects=len(result['prebuilt']), modules=len(by_module),
                 byModule=dict(sorted(by_module.items())), byExtension=dict(sorted(by_extension.items())),
                 denominator=config['data'].get('denominator'), unresolved=0)
 

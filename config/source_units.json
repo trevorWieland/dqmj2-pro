@@ -17,7 +17,8 @@
   "875edcddbc579a41625ac2fb7398520f9e4698301f6876e3141cea0ee9f3024d": "tools/mwccarm/mwccarm/1.2/sp4/mwccarm.exe",
   "7150fa4fe4cb6db6867ac530ec1a0754f6ca4df92868d963a7875196f9222880": "tools/mwccarm/mwccarm/2.0/base/mwccarm.exe",
   "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca": "tools/mwccarm/mwccarm/2.0/sp1p5/mwccarm.exe",
-  "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334": "tools/mwccarm/mwccarm/2.0/sp1p6/mwccarm.exe"
+  "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334": "tools/mwccarm/mwccarm/2.0/sp1p6/mwccarm.exe",
+  "e928cbcce71d687fadf25cf426280f23252e2aaae897fc2ce4e5570d8554dc8c": "tools/mwccarm/mwccarm/2.0/base/mwasmarm.exe"
  },
  "modules": {
   "arm7-boot": {
@@ -16372,5 +16373,6 @@
    "module": "ov005",
    "compilerFlags": "p001"
   }
- ]
+ ],
+ "objects": {}
 }
