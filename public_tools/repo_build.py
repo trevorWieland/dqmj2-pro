@@ -162,10 +162,16 @@ def compile_all(root, private_root, out_dir, jobs=4, timeout=180, limit=None, so
         key = hashlib.sha256(identity.encode()).hexdigest()[:24]
         obj = objects / (key + '.o')
         flags = list(task['profileFlags'])
+        # Thumb code is selected by the unit rule's mode, never by the profile, so a
+        # source directory that the ledger records as thumb compiles with -thumb and
+        # every other directory keeps the ARM default.
+        if task.get('mode') == 'thumb' and '-thumb' not in flags:
+            flags.append('-thumb')
         if '-c' not in flags:
             flags.append('-c')
         compiler = compilers[task['compilerSha256']]
         record = dict(source=task['path'], module=task['module'], processor=task['processor'],
+                      mode=task.get('mode', 'arm'),
                       compilerFlags=flags, object=obj.relative_to(root).as_posix(),
                       compilerSha256=task['compilerSha256'], alternate=task.get('alternate', False),
                       alternateIndex=task.get('alternateIndex'), startedTimeNs=time.time_ns())
@@ -1055,7 +1061,8 @@ def build_project(root, private_root, out_dir, compilation):
             target_path = out_dir / 'target' / (key + '.o')
             base_path = out_dir / 'base' / (key + '.o')
             elf_object(target_path, image[begin - base:end - base], symbols, code)
-            metadata = dict(source_path=source, complete=complete, progress_categories=[category])
+            metadata = dict(source_path=source, complete=complete, mode=item.get('mode', 'arm'),
+                            progress_categories=[category])
             if not code and not data_span and known is not False:
                 metadata['progress_categories'].append('unclassified')
             group = str(PurePosixPath(source).with_suffix('')) if selection or data_span else 'unreconstructed'

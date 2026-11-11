@@ -5162,11 +5162,13 @@
   },
   {
    "glob": "src/mechanics_save/20261031_lane_bit_accumulator/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261031_lane_compare_mutex/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261031_lane_creation_level/**",
@@ -5174,7 +5176,8 @@
   },
   {
    "glob": "src/mechanics_save/20261031_lane_handle_lookup/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261031_lane_historical_exact95/**",
@@ -5210,27 +5213,33 @@
   },
   {
    "glob": "src/mechanics_save/20261031_lane_input_state_family/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261031_lane_linked_caller/**",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261031_lane_lookup_node/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261031_lane_packed_pointer_abi/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261031_lane_pointer_producer/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261031_lane_pointer_sequence/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261031_lane_pop_index_abi/**",
@@ -5246,7 +5255,8 @@
   },
   {
    "glob": "src/mechanics_save/20261031_lane_reverse_copy/**",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261031_lane_roster_population/native_main_020c914c.c",
@@ -5266,11 +5276,13 @@
   },
   {
    "glob": "src/mechanics_save/20261031_lane_stride_words/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261031_lane_thread_commands/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261031_lane_width_leaves/**",
@@ -5286,11 +5298,13 @@
   },
   {
    "glob": "src/mechanics_save/20261101_lane_bounded_buffer/**",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261101_lane_callback_gate/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261101_lane_controller_init/**",
@@ -5335,11 +5349,13 @@
   },
   {
    "glob": "src/mechanics_save/20261101_lane_prefix_callback/**",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261101_lane_prefix_setup/**",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261101_lane_roster_initializer/**",
@@ -5351,19 +5367,23 @@
   },
   {
    "glob": "src/mechanics_save/20261102_lane_context_abi/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261102_lane_parent_context/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261102_lane_record_expand/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/mechanics_save/20261102_lane_thumb_context/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/overlays/20261030_text_binding_abi/**",
@@ -5587,7 +5607,8 @@
   {
    "glob": "src/overlays/ov006_20261031_dispatch51/**",
    "module": "ov006",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/overlays/ov006_20261031_forward188/**",
@@ -5600,7 +5621,8 @@
   {
    "glob": "src/overlays/ov006_20261031_loop212/**",
    "module": "ov006",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/overlays/ov006_20261031_menu33/**",
@@ -5609,12 +5631,14 @@
   {
    "glob": "src/overlays/ov006_20261031_ordered218/**",
    "module": "ov006",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/overlays/ov006_20261031_predicate130/**",
    "module": "ov006",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/overlays/ov006_20261031_prepare236/**",
@@ -5623,17 +5647,20 @@
   {
    "glob": "src/overlays/ov006_20261031_protocol148/**",
    "module": "ov006",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/overlays/ov006_20261031_restore117/**",
    "module": "ov006",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/overlays/ov006_20261031_snapshot211/**",
    "module": "ov006",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/overlays/ov006_20261031_status235/**",
@@ -5646,7 +5673,8 @@
   {
    "glob": "src/overlays/ov006_20261031_transition130/**",
    "module": "ov006",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/overlays/ov006_20261101_list535/**",
@@ -6112,7 +6140,8 @@
   },
   {
    "glob": "src/runtime/linked-extended-20261029-main/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/linked-interworking-20261029-main/**",
@@ -6225,7 +6254,8 @@
   {
    "glob": "src/runtime/linked-near-20261029-ov006/**",
    "module": "ov006",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/linked-near-20261029-ov006/native_ov006_021ee668.c",
@@ -6305,7 +6335,8 @@
   },
   {
    "glob": "src/runtime/main-null02-thumb/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/main-null02-thumb/native_main_020aa4f0.c",
@@ -7179,12 +7210,14 @@
   {
    "glob": "src/runtime/ov006-null02-thumb/**",
    "module": "ov006",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/ov006-thumb01/**",
    "module": "ov006",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/ov006-thumb01/native_ov006_021ec9d4.c",
@@ -7744,7 +7777,8 @@
   },
   {
    "glob": "src/runtime/runtime14/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/runtime14/native_main_020a5458.c",
@@ -7756,7 +7790,8 @@
   },
   {
    "glob": "src/runtime/thumb-runtime01/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/thumb-runtime01/native_main_0208bbe8.c",
@@ -7764,7 +7799,8 @@
   },
   {
    "glob": "src/runtime/thumb-runtime02/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/thumb-runtime02/native_main_02094b30.c",
@@ -7852,7 +7888,8 @@
   },
   {
    "glob": "src/runtime/thumb-runtime03/**",
-   "compilerFlags": "p032"
+   "compilerFlags": "p032",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/thumb-runtime03/native_main_0208bc30.c",
@@ -8200,23 +8237,27 @@
   {
    "glob": "src/utility/crossreuse01/**",
    "compilerFlags": "p032",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/crossreuse02/**",
    "compilerFlags": "p032",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/crossreuse03/**",
    "compilerFlags": "p032",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/crossreuse04/**",
    "module": "utility-child-arm7-wram",
    "compilerFlags": "p039",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/crossreuse05/**",
@@ -8228,7 +8269,8 @@
    "glob": "src/utility/dma/**",
    "module": "utility-child-arm9-itcm",
    "compilerFlags": "p032",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/lane_20261031_crc120/**",
@@ -10168,7 +10210,8 @@
   {
    "glob": "src/utility/translated19/**",
    "compilerFlags": "p032",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/translated19/native_utility_child_arm9_main_02008e0c.c",
@@ -10476,68 +10519,84 @@
   {
    "glob": "src/ov006/parallel_wave20261102/021ec8f0/**",
    "compilerFlags": "p045",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/ov006/parallel_wave20261102/021edad8/**",
-   "compilerFlags": "p045"
+   "compilerFlags": "p045",
+   "mode": "thumb"
   },
   {
    "glob": "src/ov006/parallel_wave20261102/021edaf0/**",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/ov006/parallel_wave20261102/021edb7c/**",
-   "compilerFlags": "p045"
+   "compilerFlags": "p045",
+   "mode": "thumb"
   },
   {
    "glob": "src/ov006/parallel_wave20261102/021edb9c/**",
    "compilerFlags": "p033",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/ov006/parallel_wave20261102/021edbac/**",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/ov006/parallel_wave20261102/021edbb8/**",
-   "compilerFlags": "p045"
+   "compilerFlags": "p045",
+   "mode": "thumb"
   },
   {
    "glob": "src/ov006/parallel_wave20261102/021edc20/**",
-   "compilerFlags": "p045"
+   "compilerFlags": "p045",
+   "mode": "thumb"
   },
   {
    "glob": "src/ov006/parallel_wave20261102/021edc50/**",
-   "compilerFlags": "p045"
+   "compilerFlags": "p045",
+   "mode": "thumb"
   },
   {
    "glob": "src/ov006/parallel_wave20261102/021edc78/**",
-   "compilerFlags": "p045"
+   "compilerFlags": "p045",
+   "mode": "thumb"
   },
   {
    "glob": "src/ov006/parallel_wave20261102/021edc90/**",
-   "compilerFlags": "p045"
+   "compilerFlags": "p045",
+   "mode": "thumb"
   },
   {
    "glob": "src/ov006/parallel_wave20261102/021edcb8/**",
-   "compilerFlags": "p045"
+   "compilerFlags": "p045",
+   "mode": "thumb"
   },
   {
    "glob": "src/ov006/parallel_wave20261102/021eddf4/**",
-   "compilerFlags": "p045"
+   "compilerFlags": "p045",
+   "mode": "thumb"
   },
   {
    "glob": "src/ov006/parallel_wave20261102/021ede18/**",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/ov006/parallel_wave20261102/021ee334/**",
-   "compilerFlags": "p033"
+   "compilerFlags": "p033",
+   "mode": "thumb"
   },
   {
    "glob": "src/ov006/parallel_wave20261102/021efa70/**",
-   "compilerFlags": "p045"
+   "compilerFlags": "p045",
+   "mode": "thumb"
   },
   {
    "glob": "src/overlays/ov001_20261101_conditions494/0221d6ec/**",
@@ -10590,7 +10649,8 @@
   {
    "glob": "src/runtime/goal_resume20261107/oam_getter32_source1/**",
    "module": "ov006",
-   "compilerFlags": "p046"
+   "compilerFlags": "p046",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261104/main-arm-later/**",
@@ -10656,7 +10716,8 @@
   },
   {
    "glob": "src/utility/parallel_wave20261102/next/**",
-   "compilerFlags": "p048"
+   "compilerFlags": "p048",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/next/native_utility_child_arm9_main_020092ac.c",
@@ -11354,27 +11415,33 @@
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eighth/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/first/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/third/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/twentieth/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/twentyfirst/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/twentysecond/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/main-control-next/0207b02c/**",
@@ -11544,130 +11611,159 @@
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/eighteenth/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/eighth/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/eleventh/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/fifteenth/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/fifth/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/first/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/fourteenth/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/fourth/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/ninth/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/second/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/seventeenth/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/seventh/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/sixteenth/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/tenth/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/third/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/thirteenth/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socket-thumb-next/twelfth/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socl-continuation-next/eighth/**",
    "compilerFlags": "p004",
-   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334"
+   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socl-continuation-next/eleventh-naming-v2/**",
    "compilerFlags": "p004",
-   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334"
+   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socl-continuation-next/fifth/**",
    "compilerFlags": "p004",
-   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334"
+   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socl-continuation-next/first/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socl-continuation-next/fourth/**",
    "compilerFlags": "p004",
-   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334"
+   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socl-continuation-next/ninth/**",
    "compilerFlags": "p004",
-   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334"
+   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socl-continuation-next/second/**",
    "compilerFlags": "p004",
-   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334"
+   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socl-continuation-next/seventh/**",
    "compilerFlags": "p004",
-   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334"
+   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socl-continuation-next/sixth/**",
    "compilerFlags": "p004",
-   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334"
+   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socl-continuation-next/third/**",
    "compilerFlags": "p004",
-   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334"
+   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socl-continuation-next/thirteenth/**",
    "compilerFlags": "p004",
-   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334"
+   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/socl-continuation-next/twelfth/**",
    "compilerFlags": "p004",
-   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334"
+   "compilerSha256": "2819dea7ae847ff83699d18bbc567238abe2804b6783b3bcc5893c5e546b0334",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/g2d-canvas-next/third/**",
@@ -11695,175 +11791,211 @@
   {
    "glob": "src/utility/parallel_wave20261102/third/0200b8e8/**",
    "compilerFlags": "p032",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200bb20/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200bb7c/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200bbc8/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200be58/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200c058/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200c198/**",
-   "compilerFlags": "p048"
+   "compilerFlags": "p048",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200c1cc/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200c24c/**",
-   "compilerFlags": "p054"
+   "compilerFlags": "p054",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200c294/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200c308/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200c35c/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200c4d4/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200c548/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200c6e0/**",
-   "compilerFlags": "p048"
+   "compilerFlags": "p048",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200c714/**",
-   "compilerFlags": "p054"
+   "compilerFlags": "p054",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200c760/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200c7fc/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200c9dc/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200d034/**",
    "compilerFlags": "p032",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200e08c/**",
    "compilerFlags": "p033",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200eeec/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200f038/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200f09c/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200f100/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200f158/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200f280/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200f540/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200f5ec/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200f630/**",
-   "compilerFlags": "p048"
+   "compilerFlags": "p048",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200f6a4/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200f754/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200f788/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/0200f7c0/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/02010b24/**",
-   "compilerFlags": "p048"
+   "compilerFlags": "p048",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261102/third/02010b5c/**",
-   "compilerFlags": "p048"
+   "compilerFlags": "p048",
+   "mode": "thumb"
   },
   {
    "glob": "src/arm7/parallel_wave20261106/peripheral-next/first/027f5188/**",
@@ -12603,1872 +12735,2338 @@
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/crypto/020a5660/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/crypto/020a56d4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/crypto/020a5710/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/crypto/020a578c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/crypto/020a5820/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/engine/020a5894/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/engine/020a5a74/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/engine/020a5afc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/engine/020a5b74/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/engine/020a5cb0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/engine/020a5d1c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/engine/020a5e14/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/engine/020a5e68/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/engine/020a5e90/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/engine/020a5ec8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/engine/020a5f98/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/query-start-qualified/020a58dc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/record/020a4938/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/record/020a4950/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/record/020a4dcc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/rpc/020a4cb8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/rpc/020a4d10/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/rpc/020a4d88/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/snapshot-getter/020a4660/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/snapshot/020a5488/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/browser-query-next/snapshot/020a5628/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/fifth/02095194/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/fifth/020951e4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/fifth/020952d0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/fifth/02095324/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/fifth/02095494/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/fifth/020954dc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/fifth/0209557c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/first/02097488/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/first/020975b8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/first/02097618/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/first/02097654/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/fourth/02094284/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/fourth/02094530/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/fourth/020945bc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/fourth/02094600/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/fourth/0209463c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/fourth/020947b4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/second/0209770c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/second/02097ab0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/second/02097fac/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/sixth/02094ab0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/sixth/0209545c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/sixth/02095630/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/third/020977cc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-auth-next/third/0209798c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/fifth/02098fbc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/fifth/02099bc8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/first/020983d0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/first/02098a7c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/first/02098ab4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/first/02098adc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/first/02098c38/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/first/02098ed8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/first/02098f14/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/first/02098f48/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/first/02098f74/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/fourteenth/0209ab18/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/fourteenth/0209ab84/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/fourteenth/0209ac5c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/fourteenth/0209ad08/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/fourth/020984d0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/ninth/02099f7c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/ninth/0209a4a0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/second/0209820c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/second/020982e4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/second/0209834c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/second/020987b0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/second/02098954/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/seventh/0209a03c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/sixth/02099d6c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/tenth/0209a944/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/tenth/0209a9d0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/tenth/0209aa44/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/tenth/0209aa64/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/tenth/0209aa88/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/tenth/0209aa98/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/tenth/0209b26c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/tenth/0209b2bc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/third/0209a738/**",
    "compilerFlags": "p004",
-   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/third/0209a83c/**",
    "compilerFlags": "p004",
-   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/thirteenth/0209b040/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/twelfth/02099bf8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/eighth/0209c188/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/eighth/0209d514/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/fifth/0209cfe4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/fifth/0209d294/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/fifth/0209d4c0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/fifth/0209d4e0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/fifth/0209d690/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/first/0209b898/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/first/0209b940/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/first/0209ba08/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/first/0209bb10/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/first/0209bb30/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/first/0209bba0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/first/0209bbe4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/first/0209bc5c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/first/0209bc88/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/first/0209be60/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/first/0209be74/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/first/0209beac/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/first/0209c034/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/fourth/0209cbd4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/fourth/0209cc98/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/fourth/0209ccf4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/fourth/0209cd4c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/second/0209c4f0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/second/0209c538/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/second/0209c55c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/second/0209c610/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/second/0209c690/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/second/0209c6e4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/seventh/0209c05c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/sixth/0209becc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/sixth/0209bf8c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/third/0209c81c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/third/0209c940/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-next/third/0209caa0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/fifth/0209f0c4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/fifth/0209f1e8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/fifth/0209f334/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/fifth/0209f460/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/fifth/0209f47c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/fifth/0209f724/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/fifth/020a249c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/first/020a02b4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/first/020a0330/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/fourth/020a16e4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/fourth/020a1908/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/fourth/020a1edc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/fourth/020a2290/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/fourth/020a22b4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/fourth/020a233c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/fourth/020a2724/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/second/0209fc38/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/second/020a121c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/seventh/020a039c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/sixth/020a13d8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/sixth/020a1608/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/sixth/020a2544/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/sixth/020a277c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/third/0209f110/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/third/0209f1c0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/third/0209f640/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/third/020a00ac/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/third/020a020c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-match-tail-next/third/020a1278/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/eighth/020b8958/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/eighth/020b89b4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/eighth/020b8ab0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/eighth/020b8b0c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/eighth/020b8b5c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/eighth/020b8bc4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/eighth/020b8c2c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/eighth/020b8c7c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fifth/020b8780/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fifth/020b87a8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fifth/020b9128/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fifth/020b91a0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fifth/020b9270/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fifth/020b9d2c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fifth/020b9d40/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/first/020b8010/**",
    "compilerFlags": "p004",
-   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/first/020b8334/**",
    "compilerFlags": "p004",
-   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/first/020b8380/**",
    "compilerFlags": "p004",
-   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fourth/020b8fd8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fourth/020b909c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fourth/020b9a48/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fourth/020b9a98/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fourth/020b9ab4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fourth/020b9b24/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fourth/020b9b90/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fourth/020b9bf4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fourth/020b9c4c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fourth/020b9c74/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/fourth/020b9cd8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/ninth/020b88fc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/second/020b85d8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/second/020b87e4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/second/020b8878/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/second/020b88a8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/second/020b88d0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/second/020b8d14/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/second/020b8d44/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/second/020b8d80/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/second/020b8da0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/second/020b8dd8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/second/020b8dfc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/seventh/020b9068/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/seventh/020b9364/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/seventh/020b9404/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/seventh/020b95d8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/sixth/020b9848/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/sixth/020b9868/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/sixth/020b9898/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/sixth/020b9914/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/sixth/020b9998/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/sixth/020b99ec/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/sixth/020b9c2c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/third/020b86cc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/third/020b8e74/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/third/020b8f64/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/third/020b90bc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/third/020b90ec/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-followup/third/020b92b4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eighteenth/020b70c8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eighteenth/020b718c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eighteenth/020b7334/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eighteenth/020b7360/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eighteenth/020b73c0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eighteenth/020b748c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eighteenth/020b74d4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eighteenth/020b75cc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eighteenth/020b760c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eighteenth/020b78ac/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eleventh/020b6670/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eleventh/020b6b74/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eleventh/020b6c90/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eleventh/020b6cb4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eleventh/020b6f3c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/eleventh/020b6fa8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/fifteenth/020b67e0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/fifth/020b7740/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/fourteenth/020b6aa8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/fourth/020b7cfc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/nineteenth/020b7ea8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/nineteenth/020b7eec/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/ninth/020b7920/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/second/020b5f38/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/second/020b72f8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/second/020b730c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/second/020b7320/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/second/020b753c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/second/020b7588/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/second/020b76bc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/second/020b7848/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/seventeenth/020b69e4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/seventeenth/020b6eac/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/seventh/020b5fac/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/sixteenth/020b6c08/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/sixth/020b7b00/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/tenth/020b6100/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/tenth/020b6128/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/tenth/020b65a4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/tenth/020b66e0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/thirteenth/020b6708/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/twelfth/020b6840/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-qr2-next/twelfth/020b7014/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/availability/020a92b0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/availability/020a932c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/availability/020a93cc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/availability/020a9448/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/browser/020a6564/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/browser/020a66c0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/browser/020a6744/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/browser/020a691c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/browser/020a6978/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/browser/020a69b4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/common/020a8ea0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/common/020a8f1c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/common/020a8f84/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/common/020a8f9c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/common/020a9040/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/common/020a91a0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a601c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a60b4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a60e8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a8594/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a85a8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a866c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a86b8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a86ec/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a87dc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a87fc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a8844/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a8940/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a8970/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a89a4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a89f0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a8a3c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a8a84/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/first/020a8ab0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/heap/020a927c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/heap/020a928c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/lan/020a834c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/lan/020a8480/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/list/020a6d84/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/list/020a6db0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/list/020a6de4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/list/020a6e34/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/list/020a6e5c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/list/020a6ea8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/list/020a6f34/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/list/020a6f78/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/md5/020a8ae0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/md5/020a8b1c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/network/020a710c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/network/020a714c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/network/020a7260/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/network/020a728c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/network/020a72f4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/network/020a75b4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/network/020a762c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/platform/020a8c00/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/platform/020a8c68/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/platform/020a8ca8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/platform/020a8e18/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/platform/020a8e7c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/platform/020a8ef8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/protocol/020a76a0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/protocol/020a7744/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/protocol/020a7794/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/protocol/020a7814/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/protocol/020a7858/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/protocol/020a7b30/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/protocol/020a855c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/push/020a7e0c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/push/020a7e94/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/push/020a7fb0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/push/020a80a4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/push/020a80f8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/server/020a6090/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/server/020a6108/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/server/020a6140/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/server/020a6180/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/server/020a6300/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/server/020a6454/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/server/020a64b8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/server/020a64d4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/server/020a6fa8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/sorting/020a69f8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/sorting/020a6b10/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/sorting/020a6b5c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/sorting/020a6c10/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/sorting/020a6c68/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gamespy-thumb-next/sorting/020a6cc0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/api/020a9f2c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/api/020aa194/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/api/020aa1d0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/api/020aa2f8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/api/020aa334/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/api/020aa5f8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/buffer/020ac63c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/buffer/020ac684/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/buffer/020ac734/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/buffer/020ac880/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/buffer/020ac954/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/buffer/020ac9e8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/buffer/020acb98/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/callback/020acbcc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/callback/020acc28/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/callback/020acc9c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/callback/020ace1c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/compat/020aa068/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/compat/020aa100/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/compat/020aa3e0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/compat/020aa7c0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/message/020acae0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/udp/020a98d4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/udp/020a9904/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/udp/020a99cc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/udp/020a9aa8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/udp/020a9b08/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/udp/020a9c54/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/udp/020a9d78/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/udp/020a9e0c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gp-api-next/udp/020a9ed8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/cache/020af244/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/cache/020af33c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/disconnect/020ade3c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/first/020adfbc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/first/020afad8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/first/020afb40/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/keys/020af494/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/keys/020af4bc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/keys/020af510/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/keys/020af578/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/login/020ad29c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/operation/020ad144/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/operation/020ad63c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/operation/020afa1c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/operation/020afb68/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/peer-dispatch/020affbc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/peer-dispatch/020b01e0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/peer-init/020afbc8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/peer-tail/020aff44/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/peer-tail/020b0600/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/peer-tail/020b06d0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/peers/020b0250/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/peers/020b02cc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/peers/020b03c4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/peers/020b0404/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/peers/020b049c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/peers/020b0534/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/profilecallback/020af7f8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/profilecallback/020b0810/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/profilecallback/020b09e0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/profilecallback/020b0a50/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/responses/020b0910/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/responses/020b0a80/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-connect-next/set-info-int/020ae948/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/bucket/020b2ce8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/bucket/020b2d50/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/bucket/020b2db0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/bucket/020b2e08/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/bucket/020b2e60/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/bucket/020b2ebc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/bucket/020b2f0c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/bucket/020b2fc0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/bucket/020b2fe4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/bucket/020b3048/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/first-qualified/020b0b48/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/first-qualified/020b0b90/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/first-qualified/020b0bbc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/first-qualified/020b0bd0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/first-qualified/020b0c2c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/first-qualified/020b2a4c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/first-qualified/020b2ae0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/first-qualified/020b2b24/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/first-qualified/020b2b90/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/first-qualified/020b2c98/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-auth-buffer/020b395c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-auth-buffer/020b39c4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-auth-buffer/020b3a58/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-auth-buffer/020b3b0c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-auth-buffer/020b3b58/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-auth-buffer/020b3b64/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-callback/020b3be4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-callback/020b3c24/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-callback/020b3ca4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-callback/020b3d04/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-callback/020b3d60/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-callback/020b3db0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-callback/020b3e00/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-callback/020b3e80/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-callback/020b3f00/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-callback/020b3f8c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-handshake/020b402c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-handshake/020b409c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/gt2-handshake/020b40d8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-core/020b3198/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-core/020b326c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-core/020b32c4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-core/020b331c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-core/020b338c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-core/020b348c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-core/020b34f8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-core/020b3588/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-core/020b35dc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-wrapper/020b3700/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-wrapper/020b3720/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-wrapper/020b3740/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-wrapper/020b3780/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-wrapper/020b37c4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-wrapper/020b37fc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-wrapper/020b3834/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-wrapper/020b3874/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-wrapper/020b38ac/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-wrapper/020b38e4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/gpi-profile-next/stats-wrapper/020b3924/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/main-control-next/cycle/0207d2c8/**",
@@ -14537,571 +15135,713 @@
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-first/0208bb08/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-first/0208bb84/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-first/0208bbac/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-first/0208bc58/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-first/0208bcc4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-first/0208c1e0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-first/0208c488/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-fourth/0208ca9c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-fourth/0208cbc4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-fourth/0208cc24/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-fourth/0208ccec/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-fourth/0208cd80/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-fourth/0208cdd0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-fourth/0208ce58/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-fourth/0208cef0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-second/0208bd24/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-second/0208be40/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-second/0208be70/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-second/0208bee4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-second/0208bf10/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-second/0208bf98/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-second/0208c080/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-second/0208c140/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-third/0208c418/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-third/0208c6f8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-third/0208c770/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-third/0208c848/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-third/0208c8d0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/cps-third/0208c998/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/fifth-v2/0208ab60/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/fifth-v2/0208b260/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/fifth-v2/0208b2c0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/fifth-v2/0208b35c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/fifth-v2/0208b3d8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/fifth-v2/0208b498/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/fifth-v2/0208b4ec/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/fifth-v2/0208b524/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/fifth-v2/0208b568/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/first/02089aa4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/first/02089b64/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/first/0208a268/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/first/0208a28c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/first/0208a328/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/first/0208a508/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/first/0208a57c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/first/0208a610/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/first/0208a698/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/first/0208b72c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/first/0208b77c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/first/0208b7f0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/fourth/02089ef8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/fourth/0208a3e0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/fourth/0208a940/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/fourth/0208b154/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/fourth/0208b1cc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/fourth/0208b224/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/second/02089ba0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/second/02089cf4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/second/0208a060/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/second/0208a114/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/second/0208a6d8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/second/0208ab0c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/sixth/0208b580/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/third/02089da4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/third/0208a730/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/third/0208ad04/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/third/0208ad94/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/third/0208ae50/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/wcm-manager-next/third/0208af1c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-core-next/first/02095778/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-core-next/first/02095818/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-core-next/first/02095864/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-core-next/first/02095910/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-core-next/first/02095954/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-core-next/first/020959d0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-core-next/second/02094d9c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-core-next/second/02094e68/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-core-next/second/020950e4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-core-next/third/020948d0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-core-next/third/020956dc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-resume-next/first/02096174/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-resume-next/first/02096258/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-resume-next/first/02096288/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-resume-next/first/0209636c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-resume-next/first/020963b4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-resume-next/second/02095aec/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-resume-next/second/02095bd0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-resume-next/second/02095d50/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-resume-next/second/02095e9c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-resume-next/second/02095f34/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-resume-next/second/02096050/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-resume-next/second/02096094/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-resume-next/second/020960d0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/auth-resume-next/third/02095a10/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-main-friend-next/first-v2/0209d0d4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-main-friend-next/first-v2/0209d168/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-main-friend-next/first-v2/0209d1a8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-main-friend-next/first-v2/0209d238/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-main-friend-next/first-v2/0209d704/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-main-friend-next/first-v2/0209d758/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-main-friend-next/first-v2/0209d8f0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-main-friend-next/first-v2/0209da68/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-main-friend-next/second/0209bc9c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-main-friend-next/second/0209be4c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-main-friend-next/second/0209be5c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-main-friend-next/second/0209c24c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-main-friend-next/second/0209c4c8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-main-friend-next/second/0209dd80/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-main-friend-next/second/0209eca4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-continuation-next/first/020a2afc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-continuation-next/first/020a2b44/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-continuation-next/first/020a2b98/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-continuation-next/first/020a2c38/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-continuation-next/first/020a2c80/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-continuation-next/first/020a2cc8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-continuation-next/first/020a2ff8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-continuation-next/first/020a304c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-continuation-next/first/020a30b4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-continuation-next/first/020a3528/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-continuation-next/first/020a3694/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-continuation-next/first/020a37ac/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-continuation-next/second/020a2d30/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-control-next/first/0209dfd8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-control-next/first/0209e0fc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-control-next/first/0209e258/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-control-next/first/0209e408/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-control-next/first/0209ed44/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-match-control-next/first/0209ef04/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-transport-resume-next/first/020a3f84/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-transport-resume-next/first/020a40a4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-transport-resume-next/first/020a40c0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-transport-resume-next/first/020a40dc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-transport-resume-next/first/020a4114/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-transport-resume-next/first/020a4144/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-transport-resume-next/first/020a4158/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-transport-resume-next/first/020a41dc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-transport-resume-next/first/020a431c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-transport-resume-next/first/020a4404/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-transport-resume-next/first/020a449c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-transport-resume-next/first/020a44f4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-transport-resume-next/first/020a456c/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/dwc-transport-resume-next/first/020a45fc/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/g2d-canvas-next/first/02087fa8/**",
@@ -15114,67 +15854,83 @@
   },
   {
    "glob": "src/runtime/parallel_wave20261106/gp-core-resume-next/repair/020aa9b4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/gp-core-resume-next/repair/020aced4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/gp-core-resume-next/repair/020acf00/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/gp-profile-operation-next/first/020b0cd4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/gp-profile-operation-next/first/020b0e04/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/gp-profile-operation-next/first/020b2908/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/gp-profile-operation-next/first/020b29a0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/gp-profile-operation-next/first/020b30c8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/gp-profile-operation-next/second/020aab70/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/gp-profile-operation-next/second/020b27a0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/gp-profile-operation-next/second/020b28c0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/gp-profile-operation-next/second/020b2a38/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/gpi-buddy-resume-next/first/020abf18/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/gpi-buddy-resume-next/first/020abfe4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/gpi-buddy-resume-next/first/020ac0d8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/gpi-buddy-resume-next/second/020ac130/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261106/main-grid-controls-next/first/020d0844/**",
@@ -16011,32 +16767,38 @@
   {
    "glob": "src/utility/parallel_wave20261104/child-fs/0200d6c4/dcefb639191a/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261104/child-fs/0200f8dc/eef8a761913f/**",
    "compilerFlags": "p060",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261104/child-fs/0200f9b4/51689faee824/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261104/child-fs/0200fa48/486b42daceed/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261104/child-fs/0200fa74/c7394904629b/**",
    "compilerFlags": "p060",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261104/child-fs/0200fac4/1a966c621221/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261104/child-wl/037f8e54/fc79f5f7b7ea/**",
@@ -16157,52 +16919,63 @@
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/fifth/explicit-prototypes-v2/02099058/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/fifth/explicit-prototypes-v2/020990f0/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/fourth/explicit-stdlib-prototype-v2/02098b44/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/seventh/explicit-prototypes-v2/02099df4/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/sixth/explicit-prototypes-v2/02099dc8/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/runtime/parallel_wave20261105/dwc-http-next/sixth/explicit-prototypes-v2/0209a008/**",
-   "compilerFlags": "p004"
+   "compilerFlags": "p004",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261104/child-fs/leaf/0200b1dc/52b64b14f0b0/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261104/child-fs/leaf/0200b204/a23a54708d58/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261104/child-fs/leaf/0200fc04/f2ea5d63dd5b/**",
    "compilerFlags": "p060",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261104/child-fs/math/0200d5ec/375b9196236a/**",
    "compilerFlags": "p060",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261104/child-fs/math/0200d660/b2a32294688e/**",
    "compilerFlags": "p048",
-   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399"
+   "compilerSha256": "87b4f748825ded418355e4ae35e032ce8b27c083cc4c60598ce2a75d346e4399",
+   "mode": "thumb"
   },
   {
    "glob": "src/utility/parallel_wave20261104/child-wl/callback/027f1eb8/2127dece7183/**",
@@ -16372,6 +17145,30 @@
    "glob": "src/ov005/p1d_ov005/**",
    "module": "ov005",
    "compilerFlags": "p001"
+  },
+  {
+   "glob": "src/ov006/parallel_wave20261106/aes-next/**",
+   "module": "ov006",
+   "compilerFlags": "p004",
+   "mode": "thumb"
+  },
+  {
+   "glob": "src/ov006/parallel_wave20261106/crypto-utility-next/first/**",
+   "module": "ov006",
+   "compilerFlags": "p004",
+   "mode": "thumb"
+  },
+  {
+   "glob": "src/ov006/parallel_wave20261106/md5-helper-next/**",
+   "module": "ov006",
+   "compilerFlags": "p004",
+   "mode": "thumb"
+  },
+  {
+   "glob": "src/ov006/parallel_wave20261106/md5-next/**",
+   "module": "ov006",
+   "compilerFlags": "p004",
+   "mode": "thumb"
   }
  ],
  "objects": {}
