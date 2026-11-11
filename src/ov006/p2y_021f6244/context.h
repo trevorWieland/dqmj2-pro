@@ -5,18 +5,6 @@ typedef short s16;
 typedef unsigned int u32;
 typedef int s32;
 
-/* 0x0220dc04: display table handed to the helper. */
-extern u32 native_data_0220dc04;
-/* 0x0220dc90: display table handed to the helper. */
-extern u32 native_data_0220dc90;
-/* 0x0220dca4: display table handed to the helper. */
-extern u32 native_data_0220dca4;
-/* 0x0220dccc: display table handed to the helper. */
-extern u32 native_data_0220dccc;
-/* 0x0220dce0: display table handed to the helper. */
-extern u32 native_data_0220dce0;
-/* 0x0220dcf4: display table handed to the helper. */
-extern u32 native_data_0220dcf4;
 /* 0x0220df3c: display table handed to the helper. */
 extern u32 native_data_0220df3c;
 /* 0x0220df50: display table handed to the helper. */
