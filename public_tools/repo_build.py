@@ -194,7 +194,16 @@ def compile_all(root, private_root, out_dir, jobs=4, timeout=180, limit=None, so
     rows_by_path = {}
     for (unused_module, source_name), source_rows in by_source.items():
         rows_by_path.setdefault(source_name, []).extend(source_rows)
-    unattributed = []
+    ledger_prebuilt, missing_object_sources = ledger_prebuilt_units(by_source)
+    configured = {unit['path'] for unit in prebuilt}
+    for unit in ledger_prebuilt:
+        if unit['path'] not in configured:
+            prebuilt.append(unit)
+    unattributed = list(missing_object_sources)
+    if sources:
+        wanted_paths = {name.replace('\\', '/') for name in sources}
+        prebuilt = [unit for unit in prebuilt if unit['path'] in wanted_paths]
+        unattributed = [path for path in unattributed if path in wanted_paths]
     for unit in assembly:
         rows = list(rows_by_path.get(unit['path'].replace('\\', '/'), []))
         if not rows:
@@ -532,6 +541,39 @@ def ledger_index(private_root):
     for rows in by_source.values():
         rows.sort(key=lambda item: int(item['address'], 0))
     return by_address, by_symbol, by_source, count
+
+
+NON_C_PREBUILT_SUFFIXES = ('.inc', '.h', '.cpp')
+
+
+def ledger_prebuilt_units(by_source):
+    """Attribute .inc/.h/.cpp-owned rows to the object the ledger recorded.
+
+    A source whose rows all name one object and one SHA-256 becomes a prebuilt
+    unit.  A source whose rows name no object at all is explicitly unattributed.
+    Rows that disagree about the object, or name a malformed identity, are a
+    ledger inconsistency and fail the build.
+    """
+    units, unattributed, conflicts = [], [], []
+    for (unused_module, source), rows in by_source.items():
+        if not source.endswith(NON_C_PREBUILT_SUFFIXES):
+            continue
+        identities = {(row.get('object'), row.get('objectSha256')) for row in rows}
+        if any(not obj or not sha for obj, sha in identities):
+            unattributed.append(source)
+            continue
+        if len(identities) != 1:
+            conflicts.append(source)
+            continue
+        obj, sha = identities.pop()
+        units.append(dict(path=source, module=rows[0]['module'], processor=rows[0]['processor'],
+                          object=obj, objectSha256=sha,
+                          compilerFlags=list(rows[0].get('compilerFlags') or []),
+                          compilerSha256=rows[0].get('compilerSha256')))
+    if conflicts:
+        raise RepositoryBuildError('Non-C source has conflicting prebuilt object records: '
+                                   + ', '.join(sorted(conflicts)[:5]))
+    return units, unattributed
 
 
 def dependency_names(private_root, by_symbol):
