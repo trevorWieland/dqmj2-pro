@@ -57,6 +57,7 @@ def main(argv=None):
     work = Path(args.work or root / 'build/compiler_matrix')
     work.mkdir(parents=True, exist_ok=True)
     image, _, base = form_search.module_image(root, args.module)
+    modes = form_search.TargetModes(root, args.module)
 
     print(f'builds: {len(builds)}; rows: {len(rows)}')
     results = {}
@@ -80,7 +81,8 @@ def main(argv=None):
                 continue
             text_bytes, defined, relocations = form_search.read_object(obj)
             try:
-                actual = form_search.relocate(text_bytes, address, relocations, defined)
+                actual = form_search.relocate(text_bytes, address, relocations, defined,
+                                              modes=modes)
             except ValueError:
                 per_build[label] = None
                 continue

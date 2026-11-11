@@ -51,6 +51,24 @@ class ThumbBranchTests(unittest.TestCase):
         self.check(0x021EDB3E, 0x02006B7C, -4, True, 0xF619, 0xE81E)
         self.check(0x021EDCFE, 0x0200F48C, -4, True, 0xF621, 0xEBC6)
 
+    def test_three_blx_rows(self):
+        # The three rows that exposed the pipeline bug. Each call site's image word
+        # is BLX because the callee is ARM (ledger mode 'arm').
+        # 0x021FB384 + 0xA -> 0x02002480; image word 0xE878F607 (07 F6 78 E8).
+        self.check(0x021FB38E, 0x02002480, -4, True, 0xF607, 0xE878)
+        # 0x021FF02C + 0x1A -> 0x0200616C; image word 0xE892F607 (07 F6 92 E8).
+        self.check(0x021FF046, 0x0200616C, -4, True, 0xF607, 0xE892)
+        # 0x02203EBC is a Thumb target and must stay BL (existing accepted row).
+        self.check(0x021F7BA0, 0x02203EBC, -4, False, 0xF00C, 0xF98C)
+
+    def test_row_negative_control(self):
+        # The same 0x021FB384 site encoded from the compiler's BL placeholder
+        # (arm=False) must not reproduce the image's BLX word.
+        first, second = encode_thumb_branch(0x021FB38E, 0x02002480, -4, False)
+        self.assertEqual((first, second), (0xF607, 0xF877))
+        self.assertNotEqual((first, second), (0xF607, 0xE878))
+        self.assertEqual(second & 0xD000, 0xD000)  # BL keeps bit 12 set
+
     def test_ov006_blx_marker_is_arm_only(self):
         # The same site encoded as Thumb (BL) must not produce the image word: the
         # expansion has to follow the measured callee mode, not a default.

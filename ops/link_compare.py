@@ -101,6 +101,7 @@ def main(argv=None):
     work = Path(args.work or root / 'build/link_compare')
     work.mkdir(parents=True, exist_ok=True)
     image, _, base = form_search.module_image(root, args.module)
+    target_modes = form_search.TargetModes(root, args.module)
     cc, ld = linker(root, args.build)
     if not cc.exists() or not ld.exists():
         raise SystemExit(f'compiler/linker not found under {cc.parent}')
@@ -123,7 +124,7 @@ def main(argv=None):
             raise SystemExit(f"{row['name']}: compile failed\n{compiled.stderr}")
         text, defined, relocations = form_search.read_object(obj)
 
-        patched = form_search.relocate(text, address, relocations, defined)
+        patched = form_search.relocate(text, address, relocations, defined, modes=target_modes)
         patch_diff = [i for i, (a, b) in enumerate(zip(patched, want)) if a != b]
 
         branch_targets = []
