@@ -214,6 +214,14 @@ python ops/permuter.py run   work/permuter/ov006_02203ebc --timeout 300
 python ops/verify_permuter.py work/permuter/ov006_02203ebc --source best.c
 ```
 
+`build --rule` takes the compiler, flag profile and mode from `config/source_units.json`
+for `--src`, which is what the repository build uses; without it the tool falls back to
+the ledger row or the processor profile. `ops/permuter_candidates.py` finds the rows
+worth running at all: it resolves and compiles every source unit in a module, keeps the
+exact-size ones whose difference survives the shim's normal form, and separates the
+relocation-only rows (link problem, invisible to the permuter) from ledger-stale rows
+(already exact, `ops/reconcile_ledger.py` work).
+
 The permuter is never vendored: it is a pinned clone under `work/` (ignored) or the
 pinned import under `tools/` (ignored), and every workspace and receipt records the
 commit. `mwcc_objdump.py` is the Capstone `objdump -drz` shim the permuter parses, because

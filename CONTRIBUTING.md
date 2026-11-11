@@ -27,6 +27,14 @@ preserve earlier accepted matches. State which checks could not run. Never mark 
 draft complete, and never hide a mismatch with binary patches, imported original bodies,
 arbitrary register constraints or open-ended flag searches.
 
+**Compiler selection is evidence, not a knob.** When a row reproduces only under a build other
+than the project's pinned compiler, that is a finding to record, not a reason to move the global
+pin: sweep every installed build, promote the row to the *lowest* exact build with a row-level
+`compilerSha256` rule in `config/source_units.json`, prove it through the real build path
+(`public_tools/repo_build.py`), and only then patch the ledger. Never change
+`config/source_units.json:compiler` to fix one row, and never report a permuter score as
+acceptance — see `docs/authoring/permuter.md`.
+
 ## Comments and naming
 
 Authored code may and should carry concise comments that explain mechanism and intent: why a
