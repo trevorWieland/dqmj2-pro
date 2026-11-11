@@ -4,12 +4,13 @@ Verification that each lens is *served*, not merely present: every step below wa
 the current tree (`origin/main` `5669d1c5`) with the private inputs, following the documented path
 literally. Results are PASS / PARTIAL / FAIL with the exact stopping step and the smallest next
 action. RECOMPILATION moved from PARTIAL to PASS the same day once `ports/recompile/` was added;
-MOD (data edits) and ROMHACK (text repack) remain PARTIAL by evidence, not by guesswork.
+MOD (data edits) and ROMHACK (displayed text) remain PARTIAL by evidence, not by guesswork — the
+ROMHACK section records the 2026-11-11 narrowing: container repack now works, text does not.
 
 | lens | verdict | stops at | smallest next action |
 | --- | --- | --- | --- |
 | 1. **MOD** (patch surface) | **PASS** for the documented patch lane; **PARTIAL** for data edits | table byte at file offset `0xD7FE0` is refused (`MISMATCH`) because the ARM9 image is compressed | expose the rebuild lane (`pack_exact.py` + DSProtect serialisation) or document it as the only data path |
-| 2. **ROMHACK** (script text) | **PARTIAL** | an edited listing assembles and lands exactly, but there is no container repack step, and listings carry opcodes, not display text | a member→FPK→ROM repack tool, plus recovering the text payload the opcodes reference |
+| 2. **ROMHACK** (script text) | **PARTIAL** (gap narrowed 2026-11-11) | container repack now exists and verifies byte-identical (`public_tools/fpk_repack.py`), so the remaining gap is text: the two string builders are unmatched and script members are `ASH\0`-compressed | match `0x02047D50` + `0x02047C68`, then an ASH codec; see `docs/modding/romhack-path.md` |
 | 3. **RECOMPILATION** (stub platform) | **PASS** (closed 2026-11-11) | links end to end: `ports/recompile/` compiles `main()` + `0x020C225C` + stubs, assembles `startup.s`, and `mwldarm` produces a flat ARM9 image (entry `0x02000000`, 232-byte flat binary) | none for the link path; the next target is the boot register writer `0x02026B28` |
 | 4. **ENGINE PORT** (next-needs list) | **PASS** as an inventory deliverable | nothing — the list and the blocking target are identified | recover `0x02026B28` (388 B), the boot register writer |
 
@@ -51,26 +52,42 @@ range no captured image covers.
 Followed `docs/scripts/vm.md` + `scr_disasm.py` / `scr_asm.py` on the documented window
 `extract/files/d2_ObjVsTitleData.bin` at `0x50da`, length 99.
 
-| step | command | result |
+| step | result |
+| --- | --- |
+| 1. disassemble | `99 byte(s) read, decoded 99 (100.0%), undecoded 0` |
+| 2. edit one value | `0x97 text_target_2_1_1` → `0x99 text_target_2_1_3`, in **both** the byte column and the mnemonic. A byte-column-only edit is refused: `line 1: listed bytes 99 do not match 97` |
+| 3. assemble | `wrote 99 bytes`, exit 0 |
+| 4. check the edit landed | exactly one differing byte, at window offset 0 |
+| 5. round-trip with the edit | `bytes matched: 98, mismatched: 1`; `first mismatch at 0x000050da: 99 != 97` |
+
+### Update 2026-11-11 — container repack closed, text still open
+
+`public_tools/fpk_repack.py` now parses and repacks FPK archives (layout verified against the
+extract: `FPK\0` + count, then 0x28-byte entries of name/offset/size, then contiguous payloads):
+
+| archive | round-trip | replacement |
 | --- | --- | --- |
-| 1. disassemble | `scr_disasm.py --offset 0x50da --length 99` | `99 byte(s) read, decoded 99 (100.0%), undecoded 0` |
-| 2. edit one value | change opcode `0x97 text_target_2_1_1` → `0x99 text_target_2_1_3` in **both** the byte column and the mnemonic | first attempt changed only the byte column and the assembler **refused**: `line 1: listed bytes 99 do not match 97 for 'text_target_2_1_1'` |
-| 3. assemble | `scr_asm.py --input edited.txt --output edited.bin` | `wrote 99 bytes`, exit 0 |
-| 4. check the edit landed | assembled vs image window | exactly one differing byte: offset `0` is now `0x99` (was `0x97`) |
-| 5. round-trip with the edit | `scr_asm.py --roundtrip --input edited.txt --image … --offset 0x50da` | `bytes matched: 98, mismatched: 1`; `first mismatch at 0x000050da: 99 != 97` |
+| `d145.e` (1 member, `ASH\0` payload) | identical, `6fd025f2…` | different-size rebuild: table size `3383 → 3399`, header/name preserved |
+| `k01e010.m` (21 raw members) | identical, `d8ffe6c4…` | same-size in place: exactly one differing byte at `0xC040`, inside that member |
 
-So the decode→edit→assemble loop works and is exactly localised. It is not yet a text mod:
+So the container half of this lens is **PASS**. The text half is not, and the reason is now pinned:
 
-* the listing decodes **opcodes**, not characters. The window is a `text_target_*` command stream;
-  the display string the commands select is data the handlers reference, and that payload is not
-  located by this lens;
-* there is no step that writes the assembled member back into the FPK archive and then into the
-  ROM's FNT/FAT container — `scr_asm.py` writes a flat `.bin` and stops.
+| address | size | state | role |
+| --- | --- | --- | --- |
+| `0x02047B90`, `0x02047BFC`, `0x02047AC0` | 108/108/208 B | matched | handlers + walker (the layer this lens can decode) |
+| `0x02047D50` | 208 B | **unmatched** | text-family string builder |
+| `0x02047C68` | 216 B | **unmatched** | alt-family string builder |
+| `0x02046E68` | 52 B | **unmatched** | per-command length used by the walker |
 
-Verdict **PARTIAL**: a romhacker can change *which* text-VM command runs inside an already-extracted
-member, but cannot yet change the text the player reads, and cannot put the result back into the
-image. The smallest next action is the container repack path (the project has `pack_exact.py` and
-`rom_layout.py` for the rebuild lane; the lens documents neither).
+The block the handlers write into (`0x020FAE64`, `0x020FB264`) is above the main image end
+(`0x020E3300`) and below the overlay base (`0x021D7240`) — runtime BSS in the same uncovered gap as
+`species_roster`, with no `public/accepted-data.json` record. And script members are stored inside an
+`ASH\0` container with no codec in the public tree, so even a decoded edit cannot be re-inserted.
+
+**Verdict: PARTIAL, narrowed.** A romhacker can now decode, edit an opcode, reassemble, repack a
+stored member and verify all of it. They cannot change displayed text: the two functions that emit
+characters are unmatched, and no ASH compressor exists. Full step list in
+`docs/modding/romhack-path.md`.
 
 ## Lens 3 — RECOMPILATION: a stub platform attempt
 
