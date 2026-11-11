@@ -62,7 +62,7 @@ The supported automation hook is `[Scripting] AutoLoad` in `desmume.ini`:
 `tools/desmume/0.9.13-win64/Lua/game.lua` is therefore a one-line shim:
 
 ```lua
-dofile([[<absolute path to work/emulator/capture.lua>]])
+dofile([[<absolute path to ops/capture.lua>]])
 ```
 
 This **is displayed on the desktop** — the host has an interactive session
@@ -93,7 +93,7 @@ Two runtime behaviours cost real debugging time and are load-bearing:
 | path | role |
 | --- | --- |
 | `ops/emulate_capture.py` | wrapper: install checks, scratch copies, `.dsv` import, shim + ini, launch, wait, screenshot, spec, `ram_capture.py` validation/slice, roster report |
-| `work/emulator/capture.lua` | authoritative Lua script: warm-up, button/touch timeline, 1,929,792-byte dump, optional savestate save/load, pause/exit |
+| `ops/capture.lua` | authoritative Lua script: warm-up, button/touch timeline, 1,929,792-byte (or `DQM_CAPTURE_LENGTH`) dump, optional savestate save/load, pause/exit |
 | `work/emulator/specs/*.json` | capture specs (provenance + ranges) |
 | `work/emulator/dumps/*.bin` | raw dumps (gitignored) |
 | `ops/ram_capture.py` | validates/slices a dump and emits manifest module entries |

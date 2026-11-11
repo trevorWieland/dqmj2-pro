@@ -25,7 +25,7 @@ The chain this wrapper performs:
      and place the save where DeSmuME looks for it: `<exe dir>/Battery/<rom>.dsv`,
      re-wrapped in DeSmuME's `.dsv` footer (a bare raw image is read as empty);
   3. write `[Scripting] AutoLoad=1` into `desmume.ini`;
-  4. write `<exe dir>/Lua/<rom>.lua`, a shim that dofiles `work/emulator/capture.lua`;
+  4. write `<exe dir>/Lua/<rom>.lua`, a shim that dofiles `ops/capture.lua`;
   5. launch DeSmuME on the scratch ROM with `--disable-sound`;
   6. wait for `capture.lua` to write the 1,929,792-byte window, then close the GUI;
   7. build a capture spec and hand the dump to `ops/ram_capture.py --check`, or
@@ -61,7 +61,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_EMULATOR = ROOT / 'tools' / 'desmume' / '0.9.13-win64' / 'DeSmuME_0.9.13_x64.exe'
-CAPTURE_LUA = ROOT / 'work' / 'emulator' / 'capture.lua'
+CAPTURE_LUA = ROOT / 'ops' / 'capture.lua'
 SCRATCH = ROOT / 'work' / 'emulator' / 'scratch'
 DUMPS = ROOT / 'work' / 'emulator' / 'dumps'
 SPECS = ROOT / 'work' / 'emulator' / 'specs'

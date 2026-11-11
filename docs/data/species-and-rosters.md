@@ -62,10 +62,11 @@ Reading, all **runtime-observed** unless noted:
 * `+0x04` is a 32-bit id with a fixed **800-byte (0x320) stride**: 32, 832, 1632, 2432,
   3232, 4032. 800 bytes is the per-monster allocation stride, so this is a monster
   handle, not the list index.
-* `+0x08` = `0xFF`, `+0x09` = 0, `+0x10` and `+0x14` are heap pointers into the live
-  monster objects (`0x023Axxxx`). The 24-byte record is therefore a **reference**
-  entry: level, HP, MP and stats live behind those pointers (the screen showed Nighty
-  at HP 1100, Attack 1200, Rank S+16) and are *not* stored in these 24 bytes.
+* `+0x08` = `0xFF`, `+0x09` = 0, `+0x10` and `+0x14` are heap pointers to **preview
+  graphics resources** (`0x023Axxxx`), not to monster stat objects — see
+  "Runtime-observed monster object" below. The 24-byte record is therefore a
+  **reference/index** entry: it carries species, slot order and preview pointers, and
+  no stats at all.
 * `+0x0C` is 1 for slots 1-2 (both species 403) and 0 for slots 0, 3, 4, 5. No matched
   reader explains it; its meaning is undetermined.
 
@@ -77,64 +78,92 @@ contradict it.
 Capacity caveat: 15 slots is the array capacity (15 x 24 = 360 B). Filling all 15 needs
 a save that owns 15 monsters; this save does not, so the remaining records stay zero.
 
-## Where the monster stats actually live (follow-up, 2026-11-11)
+## Runtime-observed monster object (800 bytes)
 
-A 4 MiB capture (`0x02000000`-`0x02400000`, `work/emulator/dumps/heap-4m.bin`) was
-taken at the same Switch Monsters state to follow `+0x10`/`+0x14`. Result: those two
-pointers are **not** monster stat objects. Every dereferenced target begins with
-graphics-resource magic — `52 47 43 4e` ("RGCN", byte-swapped NCGR) followed by
-`52 41 48 43` ("RAHC") — i.e. tileset/cell data used for the preview, not stats. The
-24-byte record is a *presentation/reference* entry for menu rendering.
+**Status: runtime-observed, not code-proven.** Every offset below was found by matching
+captured bytes against values the game itself printed on the Switch Monsters screen; no
+matched reader for this object has been found yet. Treat the names as strong hypotheses
+and the offsets as measured.
 
-The real monster objects were instead located by value in the same dump, and they sit
-elsewhere in main RAM: Nighty at `0x021bd710`, ConkaI at `0x021be91c`, ConkaII at
-`0x021bea24`, reserves at `0x021bf36c` / `0x021bf3f0` / `0x021bf474`. Each object is
-`0x320` bytes (the same 800-byte stride as the id at record `+0x04`). Candidate layout,
-u16 little-endian from the object base:
+Located by value scan in the 4 MiB capture (`work/emulator/dumps/heap-4m.bin`, sha256
+`06fed5d54996cba293c2b9527b1bd3ffed35f20f61a73fa6b1f2c24785b68adb`). One object per
+owned monster, `0x320` (800) bytes apart — the same stride as the roster record's
+`+0x04` id, which is why that id looks like an allocation handle:
 
-| offset | field | evidence | confidence |
+| object | address | species | source |
 | --- | --- | --- | --- |
-| +0x00 | species | 263, 403, 65, 260, 405; matches record `+0x0A` and the screen | high |
-| +0x08 | HP (unequipped) | 1000 for Nighty vs 1100 shown with equipment | medium |
-| +0x0A | MP | 260 / 450 / 56 / 58 / 84 exactly match the screen | high |
-| +0x0C | HP (max, equipped) | 1100 and 892 exactly match HP max on screen | high |
-| +0x0E | MP (max) | duplicate of +0x0A in all six | high |
-| +0x10 | Attack (unequipped) | 1000 for Nighty; screen shows 1200 with "Gae Bolg" | medium |
-| +0x12 | Defence (unequipped) | 986; screen shows 991 (+5) | medium |
-| +0x14 | Agility | 261 exactly matches the screen | high |
-| +0x16 | Wisdom | 320 exactly matches the screen | high |
-| +0x1C | Exp (u32) | 6,684,744 exactly matches Nighty's Exp | high |
+| Nighty | `0x021bd710` | 263 | party slot 0 |
+| ConkaI | `0x021be91c` | 403 | party slot 1 |
+| ConkaII | `0x021bea24` | 403 | party slot 2 |
+| reserve | `0x021bf36c` | 65 | storage |
+| reserve | `0x021bf3f0` | 260 | storage |
+| reserve | `0x021bf474` | 405 | storage |
 
-Nighty's displayed **1200 Attack and 991 Defence are not stored anywhere in the
-object** — the object holds 1000 and 986, and the displayed values include equipment
-bonuses (Gae Bolg: +200 Attack, +5 Defence). A raw search of the whole 4 MiB finds no
-`0x04B0` (1200) in Nighty's object.
+### Fields
 
-**Level was not found as an explicit field.** No byte `97`/`99` (or u16) appears in
-Nighty's or ConkaI's object; ConkaI and ConkaII share identical stats yet display Lv★
-and Lv97, and differ only at `+0x02`, `+0x04`, `+0x06` and Exp. The most likely model is
-that level is derived from Exp at `+0x1C`, not stored. Treat the level question as open.
+u16 little-endian except Exp (u32). Sample values are from the six captured objects;
+"screen" means the game's own display at capture time.
 
-Raw slices and the annotated report are under `work/emulator/objects/`
-(`struct_*.bin`, `struct-report.json`, `objects.json`).
+| offset | name | type | Nighty | ConkaI | ConkaII | res 65 | res 260 | res 405 | confidence |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| +0x00 | species | u16 | 263 | 403 | 403 | 65 | 260 | 405 | high — matches record +0x0A and screen |
+| +0x08 | HP base | u16 | 1000 | 832 | 832 | 274 | 179 | 183 | medium — max minus equipment |
+| +0x0A | MP | u16 | 260 | 450 | 450 | 56 | 58 | 84 | high — exact screen match |
+| +0x0C | HP max | u16 | 1100 | 892 | 892 | 274 | 179 | 183 | high — exact screen match |
+| +0x0E | MP max | u16 | 260 | 450 | 450 | 56 | 58 | 84 | high — duplicate of +0x0A in all six |
+| +0x10 | Attack base | u16 | 1000 | 787 | 787 | 211 | 226 | 190 | medium — screen adds equipment |
+| +0x12 | Defence base | u16 | 986 | 900 | 900 | 224 | 157 | 172 | medium — screen adds equipment |
+| +0x14 | Agility | u16 | 261 | 1012 | 1012 | 124 | 142 | 139 | high — exact screen match |
+| +0x16 | Wisdom | u16 | 320 | 765 | 765 | 161 | 152 | 91 | high — exact screen match |
+| +0x1C | Exp | u32 | 6684744 | 3553483 | 3434250 | 4181 | 4181 | 4181 | high for Nighty (exact); other rows unverified |
+
+The three reserves have base == max on every pair, which is the strongest evidence that
+`+0x08` is unequipped HP and `+0x0C` is equipped max HP: storage monsters carry no gear.
+
+### Unresolved
+
+* **Level has no byte field.** No `97`/`99` byte or u16 appears anywhere in Nighty's or
+  ConkaI's 800-byte object. ConkaI and ConkaII have identical stats, yet display Lv★ and
+  Lv97, and differ only at `+0x02`, `+0x04`, `+0x06` and Exp. Most likely level is
+  derived from Exp at `+0x1C`; do not add a level field without new evidence.
+* **Displayed stats are sometimes derived.** Nighty's screen shows Attack 1200 and
+  Defence 991, but the object stores 1000 and 986. The gap is equipment (Gae Bolg:
+  +200 Attack, +5 Defence). A search for 1200 (`0x04B0`) finds no candidate in the
+  object or in the whole 4 MiB — compare base fields, never screen values.
+* `+0x02`, `+0x04`, `+0x06` and everything after `+0x1C` are not interpreted.
+
+### Negative result: the 24-byte record is a reference entry only
+
+The roster record's `+0x10`/`+0x14` pointers do **not** point at these objects. Every
+dereferenced target starts with graphics-resource magic — `52 47 43 4e` ("RGCN",
+byte-swapped NCGR) then `52 41 48 43` ("RAHC") — i.e. tileset/cell data for the menu
+preview. The 24-byte array is an index/presentation entry: species, slot order and
+preview resource pointers, and no stats. Do not re-derive this by assuming the pointers
+are monster handles; the stat objects are found by value (or by the id stride), not by
+following the record.
+
+Raw evidence: `work/emulator/objects/` (six 800-byte object dumps, twelve pointer
+slices, `objects.json`, `struct-report.json`).
 
 ## What is deliberately absent
 
-* **Species stats** (HP/attack/defence/agility per species): no matched reader exists.
+* **Per-species base-stat tables** (HP/attack/defence/agility for each species id):
+  the six captured objects give per-monster values; no species table is proven.
 * **Growth curves**: no matched reader exists.
 * **Encounter tables**: no matched reader exists.
 
-See `index.json` → `unknown_families`. Nothing is listed for them because no address is
+See `index.json` -> `unknown_families`. Nothing is listed for them because no address is
 established; inventing one would make the dictionary worse than empty.
 
 ## Dump status
 
-`public_tools/data_dump.py --table species_roster` refuses this table today: the address is
-proven by the symbol name in matched source, but **no module image covers it**. The main
-ARM9 image ends at `0x020E3300` and the overlay images start at `0x021D7240`, so
-`0x021C4BF8` sits in a gap between captured module images. Dumping it needs an image that
-covers the range; the dictionary reports the address rather than inventing bytes.
+`public_tools/data_dump.py --table species_roster` refuses this table today: the address
+is proven by the symbol name in matched source, but no *static* module image covers it.
+The main ARM9 image ends at `0x020E3300` and the overlay images start at `0x021D7240`, so
+`0x021C4BF8` sits in a gap between captured module images.
 
-`ops/ram_capture.py` now produces exactly such an image: `extract/ram/ram-roster_021c4bf8.bin`
-(360 B, `kind: runtime-capture`) with a manifest entry pointing at `0x021c4bf8`. See
-`docs/data/runtime-capture.md`.
+`ops/ram_capture.py` now produces exactly such an image:
+`extract/ram/ram-roster_021c4bf8.bin` (360 B, `kind: runtime-capture`) with a manifest
+entry pointing at `0x021c4bf8`. The monster objects are not part of that image either -
+they live in heap at `0x021Bxxxx`-`0x021Cxxxx`, inside the full 4 MiB main-RAM window
+that `ops/emulate_capture.py --dump-length 4194304` captures.
