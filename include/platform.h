@@ -27,13 +27,16 @@ typedef int32_t s32;
 /* ------------------------------------------------------------------------- */
 /* Interrupt control                                                          */
 /* ------------------------------------------------------------------------- */
-/* Evidence: src/itcm/restart.c (native_itcm_01ff81b4) writes IME = 0 before
- * restoring context; src/runtime/20261101_fifo_send136/native_main_0200a440.c
- * brackets the FIFO write with native_fn_02007ff4/native_fn_02008008. The
- * register pair 0x04000208 (IME) + 0x04000210/0x04000214 is the DS interrupt
- * master/enable/ack block; a port must model a maskable IRQ source. */
-u32 j2p_irq_save(void);      /* native_fn_02007ff4: returns prior IME state */
-void j2p_irq_restore(u32 state); /* native_fn_02008008 */
+/* Evidence: src/hardware/main/native_main_hw_02007ff4.s and
+ * native_main_hw_02008008.s (matched asm) are a CPSR I-bit save/disable and
+ * restore: 007ff4 does `mrs cpsr`, ORs 0x80 into CPSR_c and returns the old
+ * I bit masked to 0x80; 008008 ORs the saved bit back. This is a CPU critical
+ * section, NOT an IME (0x04000208) write. The matched callers are e.g.
+ * src/runtime/20261101_fifo_send136/native_main_0200a440.c and
+ * src/itcm/dma.c. A port must supply the equivalent of an interrupt-disable
+ * critical section. */
+u32 j2p_irq_save(void);          /* native_main_hw_02007ff4: old CPSR I bit & 0x80 */
+void j2p_irq_restore(u32 state); /* native_main_hw_02008008: restore I bit */
 
 /* Evidence: src/hardware/bootstrap_bios/native_main_bios_020002ae.s is the
  * matched-symbol `IntrWait`, 0x020003e6 is `VBlankIntrWait`. Ports must be able
@@ -44,17 +47,20 @@ void j2p_vblank_intr_wait(u32 discard, u32 state);
 /* ------------------------------------------------------------------------- */
 /* Boot / clocks / display                                                   */
 /* ------------------------------------------------------------------------- */
-/* Evidence: src/main/p1e_main_02026b28/native_main_02026b28.c is the matched
- * early-boot routine. It calls the clock/IRQ bring-up, then writes:
+/* Evidence: the register sequence is DRAFT-DERIVED, not matched. The only
+ * source-like file carrying it is nonmatching/main/20261029-broad01/
+ * native_main_02026b28.c (nonmatching lane, zero credit); the ledger row
+ * 0x2026b28 is functionMatched:false. The sequence itself is also visible in
+ * the disassembly. It writes:
  *   0x04000208 (IME) = 1
- *   0x04000304 (POWCNT1) with mask 0xfffffdf1 | 0xe | 0x200
+ *   0x04000304 (POWCNT1) = (old & 0xfffffdf1) | 0x20e
  *   0x04000050 (DISPCNT) = 0
  *   0x04000060 (DISPSTAT) read-modify-write x4
  *   0x04000580 (u32) = 0xbfff0000
  * then calls the graphics, sound and runtime init subsystems in a fixed order.
  * A port must provide these registers as memory or traps; the exact W1C vs RW
  * semantics of DISPSTAT are a hardware assumption (INFERRED from the DS map). */
-void j2p_boot_sequence(void); /* mirrors native_main_02026b28 */
+void j2p_boot_sequence(void); /* draft of 0x02026b28, nonmatching */
 
 /* Evidence: src/runtime/runtime03/native_main_02041774.c calls
  * native_fn_020042e0(0x04000050, mode_word, flag) and the same for
@@ -125,12 +131,14 @@ void j2p_card_wait_busy(void);
 /* ------------------------------------------------------------------------- */
 /* Sound                                                                     */
 /* ------------------------------------------------------------------------- */
-/* Evidence: sound registers 0x04000400-0x040005ff appear only in ARM7/utility
- * sources under src/arm7/ and src/utility/ in this checkout, not in matched
- * main-module code. The main game's sound API is UNKNOWN: it presumably crosses
- * the FIFO (j2p_fifo_send) to the ARM7 sound driver, but no matched main-side
- * caller has been identified. Do not implement a guess. */
-void j2p_sound_init(void); /* UNKNOWN */
+/* Evidence: PARTIALLY PROVEN. src/runtime/20261101_word_channels/
+ * native_main_0200434c.c writes the channel word 0x04000400 = 0x17 and calls
+ * native_fn_02005994(arg0, 0x04000400); that is the only matched main-module
+ * sound touchpoint. The rest of the sound register block (0x04000400-0x040005ff)
+ * is used only by src/arm7/ and src/utility/ sources in this checkout. The full
+ * ARM9 sound service and its ARM7 coupling remain UNKNOWN — do not implement a
+ * guess. */
+void j2p_sound_init(void); /* UNKNOWN beyond the 0x04000400 channel write */
 
 /* ------------------------------------------------------------------------- */
 /* Input                                                                     */
