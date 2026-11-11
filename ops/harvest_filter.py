@@ -87,17 +87,45 @@ def is_mask_like(value):
     return value < 0x02000000 and value not in (0, 1)
 
 
+def _dest_reg(insn):
+    """Destination register of a data-processing/load instruction, else None."""
+    if insn.mnemonic in ("str", "strh", "strb", "cmp", "tst", "cmn", "teq", "push", "pop",
+                         "b", "bx", "bl", "blx", "beq", "bne", "bgt", "bge", "blt", "ble",
+                         "bhi", "bls", "bcs", "bcc", "bmi", "bpl", "bvs", "bvc", "cbz", "cbnz",
+                         "nop", "svc", "bkpt"):
+        return None
+    m = re.match(r"r(\d+)\b", insn.op_str.strip())
+    return "r" + m.group(1) if m else None
+
+
+def _source_regs(insn):
+    return ["r" + r for r in re.findall(r"\br(\d+)\b", insn.op_str)]
+
+
 def analyse(insns, image, base):
     calls = [i for i, x in enumerate(insns) if x.mnemonic in ("bl", "blx")]
-    last_call = calls[-1] if calls else -1
     reload_after = False
     branch_on_result = False
-    if last_call >= 0:
-        for insn in insns[last_call + 1:]:
-            if insn.mnemonic in LOADS and ("[pc" in insn.op_str or "[sp" in insn.op_str):
+    for call in calls:
+        aliases = {"r0"}
+        for insn in insns[call + 1:]:
+            if insn.mnemonic in LOADS and "[sp" in insn.op_str:
                 reload_after = True
-            if insn.mnemonic in ("cmp", "tst") and re.search(r"\br0\b", insn.op_str):
-                branch_on_result = True
+            if insn.mnemonic in ("cmp", "tst"):
+                if any(reg in aliases for reg in _source_regs(insn)):
+                    branch_on_result = True
+                    break
+                continue
+            if insn.mnemonic in ("bx", "bl", "blx") or (insn.mnemonic == "pop" and "pc" in insn.op_str):
+                break
+            dest = _dest_reg(insn)
+            if dest is None:
+                continue
+            sources = set(_source_regs(insn)) - {dest}
+            if dest == "r0":
+                aliases = {"r0"}
+            elif sources & aliases:
+                aliases.add(dest)
     push = next((x for x in insns if x.mnemonic == "push"), None)
     saved = 0
     if push:
@@ -259,9 +287,13 @@ def main():
             break
         shown += 1
         image, base = image_for(args.module)
-        addr, size = sorted(members)[0]
-        insns = list(md.disasm(image[addr - base:addr - base + size], addr))
-        result = analyse(insns, image, base)
+        reasons = []
+        for member_addr, member_size in sorted(members):
+            member_insns = list(md.disasm(image[member_addr - base:member_addr - base + member_size], member_addr))
+            for reason in analyse(member_insns, image, base)["reasons"]:
+                if reason not in reasons:
+                    reasons.append(reason)
+        result = {"reasons": reasons}
         ok = not result["reasons"]
         passing += int(ok)
         failed += int(not ok)
