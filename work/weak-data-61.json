@@ -1,0 +1,980 @@
+{
+ "generatedFrom": "work/inverse-weak.json (DATA-OR-STUB bucket)",
+ "rows": [
+  {
+   "address": "0x27f284c",
+   "module": "arm7-main",
+   "bytes": 1612,
+   "unit": "src/arm7/20261102_wl_beacon_probe_key3016/ordinary_wireless.c",
+   "topBytes": 262,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc",
+    "ordinary_part5.inc",
+    "ordinary_part6.inc",
+    "ordinary_part7.inc"
+   ],
+   "includeBytes": 87774,
+   "dataArrays": 0,
+   "functions": 36
+  },
+  {
+   "address": "0x27f31fc",
+   "module": "arm7-main",
+   "bytes": 976,
+   "unit": "src/arm7/20261102_wl_beacon_probe_key3016/ordinary_wireless.c",
+   "topBytes": 262,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc",
+    "ordinary_part5.inc",
+    "ordinary_part6.inc",
+    "ordinary_part7.inc"
+   ],
+   "includeBytes": 87774,
+   "dataArrays": 0,
+   "functions": 36
+  },
+  {
+   "address": "0x27f3c1c",
+   "module": "arm7-main",
+   "bytes": 804,
+   "unit": "src/arm7/20261101_wl_element804/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 25458,
+   "dataArrays": 0,
+   "functions": 4
+  },
+  {
+   "address": "0x37faec0",
+   "module": "arm7-wram",
+   "bytes": 800,
+   "unit": "src/arm7/20261102_wl_transmit_family1600/TxCtrl-base/ordinary_wireless.c",
+   "topBytes": 150,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc",
+    "ordinary_part5.inc"
+   ],
+   "includeBytes": 52203,
+   "dataArrays": 0,
+   "functions": 21
+  },
+  {
+   "address": "0x27f2180",
+   "module": "arm7-main",
+   "bytes": 720,
+   "unit": "src/arm7/20261102_wl_receive_data_task720/ordinary_wireless.c",
+   "topBytes": 232,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc",
+    "ordinary_part5.inc",
+    "ordinary_part6.inc"
+   ],
+   "includeBytes": 71846,
+   "dataArrays": 0,
+   "functions": 28
+  },
+  {
+   "address": "0x37f8a88",
+   "module": "arm7-wram",
+   "bytes": 720,
+   "unit": "src/arm7/20261102_wl_tasks_command1224/CmdDispatch/ordinary_wireless.c",
+   "topBytes": 180,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc",
+    "ordinary_part5.inc",
+    "ordinary_part6.inc"
+   ],
+   "includeBytes": 38860,
+   "dataArrays": 0,
+   "functions": 5
+  },
+  {
+   "address": "0x2015c70",
+   "module": "main",
+   "bytes": 656,
+   "unit": "src/runtime/parallel_wave20261106/mb-local-context-next/register/register.c",
+   "topBytes": 50,
+   "includes": [
+    "context_000.h",
+    "context_001.h"
+   ],
+   "includeBytes": 12208,
+   "dataArrays": 0,
+   "functions": 1
+  },
+  {
+   "address": "0x27ed864",
+   "module": "arm7-main",
+   "bytes": 624,
+   "unit": "src/arm7/20261102_wl_measure_task624/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 24441,
+   "dataArrays": 0,
+   "functions": 7
+  },
+  {
+   "address": "0x27eff00",
+   "module": "arm7-main",
+   "bytes": 544,
+   "unit": "src/arm7/20261101_wl_tx544/native_host_arm7_main_027eff00.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 28599,
+   "dataArrays": 0,
+   "functions": 16
+  },
+  {
+   "address": "0x27ed220",
+   "module": "arm7-main",
+   "bytes": 496,
+   "unit": "src/arm7/20261102_wl_mlme_tasks_timeouts860/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 24441,
+   "dataArrays": 0,
+   "functions": 7
+  },
+  {
+   "address": "0x27f2f78",
+   "module": "arm7-main",
+   "bytes": 464,
+   "unit": "src/arm7/20261102_wl_receive_helpers1092/receive/ordinary_wireless.c",
+   "topBytes": 180,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc",
+    "ordinary_part5.inc",
+    "ordinary_part6.inc"
+   ],
+   "includeBytes": 71996,
+   "dataArrays": 0,
+   "functions": 28
+  },
+  {
+   "address": "0x27f25cc",
+   "module": "arm7-main",
+   "bytes": 428,
+   "unit": "src/arm7/20261102_wl_beacon_probe_key3016/ordinary_wireless.c",
+   "topBytes": 262,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc",
+    "ordinary_part5.inc",
+    "ordinary_part6.inc",
+    "ordinary_part7.inc"
+   ],
+   "includeBytes": 87774,
+   "dataArrays": 0,
+   "functions": 36
+  },
+  {
+   "address": "0x27f0308",
+   "module": "arm7-main",
+   "bytes": 380,
+   "unit": "src/arm7/20261102_wl_interrupt_transmit1236/TxCtrl/ordinary_wireless.c",
+   "topBytes": 232,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc",
+    "ordinary_part5.inc",
+    "ordinary_part6.inc"
+   ],
+   "includeBytes": 75210,
+   "dataArrays": 0,
+   "functions": 48
+  },
+  {
+   "address": "0x27f2450",
+   "module": "arm7-main",
+   "bytes": 380,
+   "unit": "src/arm7/20261101_wl_rxmp380_unsigned_aid/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 19832,
+   "dataArrays": 0,
+   "functions": 2
+  },
+  {
+   "address": "0x27f0120",
+   "module": "arm7-main",
+   "bytes": 360,
+   "unit": "src/arm7/20261101_wl_tx544/native_host_arm7_main_027eff00.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 28599,
+   "dataArrays": 0,
+   "functions": 16
+  },
+  {
+   "address": "0x27f19fc",
+   "module": "arm7-main",
+   "bytes": 352,
+   "unit": "src/arm7/20261101_wl_frame_builders1304/ordinary_wireless.c",
+   "topBytes": 172,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 34822,
+   "dataArrays": 0,
+   "functions": 23
+  },
+  {
+   "address": "0x27eb9b4",
+   "module": "arm7-main",
+   "bytes": 320,
+   "unit": "src/arm7/20261102_wl_cam_registration716/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 22831,
+   "dataArrays": 0,
+   "functions": 15
+  },
+  {
+   "address": "0x27edc6c",
+   "module": "arm7-main",
+   "bytes": 248,
+   "unit": "src/arm7/20261101_wl_mlme_indications484/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 18834,
+   "dataArrays": 0,
+   "functions": 3
+  },
+  {
+   "address": "0x27f0d6c",
+   "module": "arm7-main",
+   "bytes": 248,
+   "unit": "src/arm7/20261102_wl_interrupt_transmit1236/TxCtrl/ordinary_wireless.c",
+   "topBytes": 232,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc",
+    "ordinary_part5.inc",
+    "ordinary_part6.inc"
+   ],
+   "includeBytes": 75210,
+   "dataArrays": 0,
+   "functions": 48
+  },
+  {
+   "address": "0x27edd64",
+   "module": "arm7-main",
+   "bytes": 236,
+   "unit": "src/arm7/20261101_wl_mlme_indications484/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 18834,
+   "dataArrays": 0,
+   "functions": 3
+  },
+  {
+   "address": "0x27ee0e4",
+   "module": "arm7-main",
+   "bytes": 236,
+   "unit": "src/arm7/20261102_wl_control_setters_key484/Parameters/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 19092,
+   "dataArrays": 0,
+   "functions": 2
+  },
+  {
+   "address": "0x27f0f14",
+   "module": "arm7-main",
+   "bytes": 232,
+   "unit": "src/arm7/20261102_wl_transmit_family1600/TxCtrl-sp1p5/ordinary_wireless.c",
+   "topBytes": 120,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 34973,
+   "dataArrays": 0,
+   "functions": 23
+  },
+  {
+   "address": "0x27ec5a4",
+   "module": "arm7-main",
+   "bytes": 228,
+   "unit": "src/arm7/20261102_wl_cam_registration716/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 22831,
+   "dataArrays": 0,
+   "functions": 15
+  },
+  {
+   "address": "0x27f2e98",
+   "module": "arm7-main",
+   "bytes": 224,
+   "unit": "src/arm7/20261102_wl_receive_helpers1092/receive/ordinary_wireless.c",
+   "topBytes": 180,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc",
+    "ordinary_part5.inc",
+    "ordinary_part6.inc"
+   ],
+   "includeBytes": 71996,
+   "dataArrays": 0,
+   "functions": 28
+  },
+  {
+   "address": "0x27f1e08",
+   "module": "arm7-main",
+   "bytes": 192,
+   "unit": "src/arm7/20261101_wl_frame_builders1304/ordinary_wireless.c",
+   "topBytes": 172,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 34822,
+   "dataArrays": 0,
+   "functions": 23
+  },
+  {
+   "address": "0x37f8598",
+   "module": "arm7-wram",
+   "bytes": 184,
+   "unit": "src/arm7/20261102_wl_tasks_command1224/TaskOps/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 21013,
+   "dataArrays": 0,
+   "functions": 6
+  },
+  {
+   "address": "0x27f17d4",
+   "module": "arm7-main",
+   "bytes": 180,
+   "unit": "src/arm7/20261101_wl_frame_builders1304/ordinary_wireless.c",
+   "topBytes": 172,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 34822,
+   "dataArrays": 0,
+   "functions": 23
+  },
+  {
+   "address": "0x27ef548",
+   "module": "arm7-main",
+   "bytes": 176,
+   "unit": "src/arm7/20261102_wl_control_setters_key484/Device/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 17065,
+   "dataArrays": 0,
+   "functions": 1
+  },
+  {
+   "address": "0x27f3b6c",
+   "module": "arm7-main",
+   "bytes": 176,
+   "unit": "src/arm7/20261102_wl_receive_helpers1092/receive/ordinary_wireless.c",
+   "topBytes": 180,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc",
+    "ordinary_part5.inc",
+    "ordinary_part6.inc"
+   ],
+   "includeBytes": 71996,
+   "dataArrays": 0,
+   "functions": 28
+  },
+  {
+   "address": "0x27eb90c",
+   "module": "arm7-main",
+   "bytes": 168,
+   "unit": "src/arm7/20261102_wl_cam_registration716/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 22831,
+   "dataArrays": 0,
+   "functions": 15
+  },
+  {
+   "address": "0x27f172c",
+   "module": "arm7-main",
+   "bytes": 168,
+   "unit": "src/arm7/20261101_wl_frame_builders1304/ordinary_wireless.c",
+   "topBytes": 172,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 34822,
+   "dataArrays": 0,
+   "functions": 23
+  },
+  {
+   "address": "0x27f20dc",
+   "module": "arm7-main",
+   "bytes": 164,
+   "unit": "src/arm7/20261102_wl_interrupt_transmit1236/TxCtrl/ordinary_wireless.c",
+   "topBytes": 232,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc",
+    "ordinary_part5.inc",
+    "ordinary_part6.inc"
+   ],
+   "includeBytes": 75210,
+   "dataArrays": 0,
+   "functions": 48
+  },
+  {
+   "address": "0x27ed474",
+   "module": "arm7-main",
+   "bytes": 160,
+   "unit": "src/arm7/20261102_wl_mlme_tasks_timeouts860/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 24441,
+   "dataArrays": 0,
+   "functions": 7
+  },
+  {
+   "address": "0x27ec480",
+   "module": "arm7-main",
+   "bytes": 156,
+   "unit": "src/arm7/20261102_wl_cam_bootstrap292/ordinary_wireless.c",
+   "topBytes": 172,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 32356,
+   "dataArrays": 0,
+   "functions": 36
+  },
+  {
+   "address": "0x27f1114",
+   "module": "arm7-main",
+   "bytes": 148,
+   "unit": "src/arm7/20261102_wl_transmit_family1600/TxCtrl-sp1p5/ordinary_wireless.c",
+   "topBytes": 120,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 34973,
+   "dataArrays": 0,
+   "functions": 23
+  },
+  {
+   "address": "0x27f1ec8",
+   "module": "arm7-main",
+   "bytes": 148,
+   "unit": "src/arm7/20261101_wl_frame_builders1304/ordinary_wireless.c",
+   "topBytes": 172,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 34822,
+   "dataArrays": 0,
+   "functions": 23
+  },
+  {
+   "address": "0x27ea9c8",
+   "module": "arm7-main",
+   "bytes": 144,
+   "unit": "src/arm7/20261102_wl_receive_helpers1092/periodic/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 24846,
+   "dataArrays": 1,
+   "functions": 18
+  },
+  {
+   "address": "0x27e8bd0",
+   "module": "arm7-main",
+   "bytes": 140,
+   "unit": "src/arm7/20261102_wl_tasks_command1224/TaskInit/ordinary_wireless.c",
+   "topBytes": 90,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 20883,
+   "dataArrays": 0,
+   "functions": 6
+  },
+  {
+   "address": "0x27f0ce0",
+   "module": "arm7-main",
+   "bytes": 140,
+   "unit": "src/arm7/20261102_wl_transmit_family1600/TxCtrl-sp1p5/ordinary_wireless.c",
+   "topBytes": 120,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 34973,
+   "dataArrays": 0,
+   "functions": 23
+  },
+  {
+   "address": "0x27f1b5c",
+   "module": "arm7-main",
+   "bytes": 140,
+   "unit": "src/arm7/20261101_wl_frame_builders1304/ordinary_wireless.c",
+   "topBytes": 172,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 34822,
+   "dataArrays": 0,
+   "functions": 23
+  },
+  {
+   "address": "0x27ec51c",
+   "module": "arm7-main",
+   "bytes": 136,
+   "unit": "src/arm7/20261102_wl_cam_bootstrap292/ordinary_wireless.c",
+   "topBytes": 172,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 32356,
+   "dataArrays": 0,
+   "functions": 36
+  },
+  {
+   "address": "0x27f0288",
+   "module": "arm7-main",
+   "bytes": 128,
+   "unit": "src/arm7/20261101_wl_tx544/native_host_arm7_main_027eff00.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 28599,
+   "dataArrays": 0,
+   "functions": 16
+  },
+  {
+   "address": "0x27f16b0",
+   "module": "arm7-main",
+   "bytes": 124,
+   "unit": "src/arm7/20261101_wl_frame_builders1304/ordinary_wireless.c",
+   "topBytes": 172,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 34822,
+   "dataArrays": 0,
+   "functions": 23
+  },
+  {
+   "address": "0x27eb850",
+   "module": "arm7-main",
+   "bytes": 120,
+   "unit": "src/arm7/20261102_wl_interrupt_transmit1236/WlIntr/ordinary_wireless.c",
+   "topBytes": 172,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 45410,
+   "dataArrays": 0,
+   "functions": 26
+  },
+  {
+   "address": "0x37f8650",
+   "module": "arm7-wram",
+   "bytes": 120,
+   "unit": "src/arm7/20261102_wl_tasks_command1224/TaskOps/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 21013,
+   "dataArrays": 0,
+   "functions": 6
+  },
+  {
+   "address": "0x27f0b0c",
+   "module": "arm7-main",
+   "bytes": 116,
+   "unit": "src/arm7/20261102_wl_transmit_family1600/TxCtrl-sp1p5/ordinary_wireless.c",
+   "topBytes": 120,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 34973,
+   "dataArrays": 0,
+   "functions": 23
+  },
+  {
+   "address": "0x27f2068",
+   "module": "arm7-main",
+   "bytes": 116,
+   "unit": "src/arm7/20261102_wl_interrupt_transmit1236/TxCtrl/ordinary_wireless.c",
+   "topBytes": 232,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc",
+    "ordinary_part5.inc",
+    "ordinary_part6.inc"
+   ],
+   "includeBytes": 75210,
+   "dataArrays": 0,
+   "functions": 48
+  },
+  {
+   "address": "0x27f2000",
+   "module": "arm7-main",
+   "bytes": 104,
+   "unit": "src/arm7/20261102_wl_interrupt_transmit1236/TxCtrl/ordinary_wireless.c",
+   "topBytes": 232,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc",
+    "ordinary_part5.inc",
+    "ordinary_part6.inc"
+   ],
+   "includeBytes": 75210,
+   "dataArrays": 0,
+   "functions": 48
+  },
+  {
+   "address": "0x37fa660",
+   "module": "arm7-wram",
+   "bytes": 104,
+   "unit": "src/arm7/20261102_wl_interrupt_transmit1236/WlIntr/ordinary_wireless.c",
+   "topBytes": 172,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 45410,
+   "dataArrays": 0,
+   "functions": 26
+  },
+  {
+   "address": "0x27e9578",
+   "module": "arm7-main",
+   "bytes": 100,
+   "unit": "src/arm7/20261101_wl_parameters220/ordinary_wireless.c",
+   "topBytes": 172,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 35208,
+   "dataArrays": 1,
+   "functions": 37
+  },
+  {
+   "address": "0x27f0c7c",
+   "module": "arm7-main",
+   "bytes": 100,
+   "unit": "src/arm7/20261102_wl_transmit_family1600/TxCtrl-sp1p5/ordinary_wireless.c",
+   "topBytes": 120,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 34973,
+   "dataArrays": 0,
+   "functions": 23
+  },
+  {
+   "address": "0x27ed410",
+   "module": "arm7-main",
+   "bytes": 100,
+   "unit": "src/arm7/20261102_wl_mlme_tasks_timeouts860/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 24441,
+   "dataArrays": 0,
+   "functions": 7
+  },
+  {
+   "address": "0x27edb20",
+   "module": "arm7-main",
+   "bytes": 84,
+   "unit": "src/arm7/20261102_wl_receive_helpers1092/confirm/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 24361,
+   "dataArrays": 0,
+   "functions": 7
+  },
+  {
+   "address": "0x27f0ac4",
+   "module": "arm7-main",
+   "bytes": 72,
+   "unit": "src/arm7/20261102_wl_control_setters_key484/Key/ordinary_wireless.c",
+   "topBytes": 120,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 36429,
+   "dataArrays": 0,
+   "functions": 15
+  },
+  {
+   "address": "0x27e9744",
+   "module": "arm7-main",
+   "bytes": 68,
+   "unit": "src/arm7/20261101_wl_parameters220/ordinary_wireless.c",
+   "topBytes": 172,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 35208,
+   "dataArrays": 1,
+   "functions": 37
+  },
+  {
+   "address": "0x27f11a8",
+   "module": "arm7-main",
+   "bytes": 64,
+   "unit": "src/arm7/20261102_wl_transmit_family1600/TxCtrl-sp1p5/ordinary_wireless.c",
+   "topBytes": 120,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 34973,
+   "dataArrays": 0,
+   "functions": 23
+  },
+  {
+   "address": "0x37f86c8",
+   "module": "arm7-wram",
+   "bytes": 60,
+   "unit": "src/arm7/20261102_wl_tasks_command1224/TaskInit/ordinary_wireless.c",
+   "topBytes": 90,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 20883,
+   "dataArrays": 0,
+   "functions": 6
+  },
+  {
+   "address": "0x27ed514",
+   "module": "arm7-main",
+   "bytes": 60,
+   "unit": "src/arm7/20261102_wl_mlme_tasks_timeouts860/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 24441,
+   "dataArrays": 0,
+   "functions": 7
+  },
+  {
+   "address": "0x27ead78",
+   "module": "arm7-main",
+   "bytes": 52,
+   "unit": "src/arm7/20261101_wl_parameters220/ordinary_wireless.c",
+   "topBytes": 172,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc",
+    "ordinary_part4.inc"
+   ],
+   "includeBytes": 35208,
+   "dataArrays": 1,
+   "functions": 37
+  },
+  {
+   "address": "0x27edad4",
+   "module": "arm7-main",
+   "bytes": 44,
+   "unit": "src/arm7/20261102_wl_mlme_tasks_timeouts860/ordinary_wireless.c",
+   "topBytes": 142,
+   "includes": [
+    "ordinary_part1.inc",
+    "ordinary_part2.inc",
+    "ordinary_part3.inc"
+   ],
+   "includeBytes": 24441,
+   "dataArrays": 0,
+   "functions": 7
+  },
+  {
+   "address": "0x20685b0",
+   "module": "main",
+   "bytes": 12,
+   "unit": "src/mechanics_save/identity_profile_pointer.c",
+   "topBytes": 119,
+   "includes": [],
+   "includeBytes": 0,
+   "dataArrays": 0,
+   "functions": 0
+  }
+ ]
+}
