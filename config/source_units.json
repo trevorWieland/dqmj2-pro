@@ -2943,6 +2943,12 @@
    "compilerFlags": "p004"
   },
   {
+   "glob": "src/ov006/p5_ov006_blx_mode/**",
+   "module": "ov006",
+   "compilerFlags": "p004",
+   "mode": "thumb"
+  },
+  {
    "glob": "src/overlays/**",
    "module": "ov001",
    "compilerFlags": "p003"
