@@ -48,6 +48,9 @@ FLAGS = ['-O2', '-enum', 'int', '-char', 'signed', '-str', 'noreuse', '-proc', '
          '-nolink', '-msgstyle', 'gcc']
 ADDRESS = __import__('re').compile(r'([0-9a-fA-F]{8})$')
 SOURCE_ADDRESS = __import__('re').compile(r'native_(?:fn_|data_)?[A-Za-z0-9_]+?_([0-9a-fA-F]{8})$')
+# Project naming for measured code symbols (native_fn_<addr>, func_<addr>), used to tell a
+# function pointer from a data pointer when setting the ARM ELF Thumb bit on ABS32.
+FUNCTION_SYMBOL = __import__('re').compile(r'(?:^|_)(?:fn|func)_')
 
 
 class TargetModes:
@@ -289,6 +292,12 @@ def relocate(text, base, relocations, defined, modes=None, arm=None):
     the resolved target mode. The object's placeholder halfword is deliberately
     *not* used as evidence: mwccarm always emits the BL form, including for a
     Thumb caller of an ARM callee.
+
+    An ``R_ARM_ABS32`` to a Thumb function carries bit 0, because the ARM ELF symbol
+    value does; mwccarm cannot encode the callee's instruction set in a relocatable
+    object, so the patcher has to set it the way the linker would. Without it every
+    literal pointer to a Thumb function reads back one byte low (nine accepted ov006
+    rows compile to exactly that shape, see docs/authoring/permuter.md).
     """
     out = bytearray(text)
     for offset, kind, symbol, addend in relocations:
@@ -303,7 +312,11 @@ def relocate(text, base, relocations, defined, modes=None, arm=None):
             struct.pack_into('<H', out, offset, first)
             struct.pack_into('<H', out, offset + 2, second)
         elif kind == 2:
-            struct.pack_into('<I', out, offset, (target + addend) & 0xFFFFFFFF)
+            value = target + addend
+            if (modes is not None and FUNCTION_SYMBOL.search(symbol)
+                    and modes.resolve(target, symbol)[0] == 'thumb'):
+                value |= 1
+            struct.pack_into('<I', out, offset, value & 0xFFFFFFFF)
         else:
             raise ValueError(f'unsupported relocation {kind} at {offset:#x}')
     return bytes(out)
