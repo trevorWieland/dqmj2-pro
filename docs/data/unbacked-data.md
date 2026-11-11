@@ -3,10 +3,11 @@
 Status: evidence report. Confidence: **proven-by-code** where marked; everything else is marked
 unknown on purpose. No bytes are invented in this document.
 
-Question: the data dictionary proves a 24-byte `species_roster` record at `0x021c4bf8` (species
-`s16` at `+10`) from matched reader `native_main_0206d114`, but no captured module image covers that
-address. This document maps the gaps, lists the readers found in matched source and in the image
-literal scan, and states what would have to be captured to back the address.
+Question: the data dictionary proves a 24-byte `species_roster` record at `0x021c4bf8` from matched
+readers — `native_main_0206d114` (stride-24 indexing of the slot record) and `native_main_0206db00`
+(species `s16` at `+10`) — but no captured module image covers that address. This document maps the
+gaps, lists the readers found in matched source and in the image literal scan, and states what would
+have to be captured to back the address.
 
 ## 1. Address-space map
 
@@ -31,29 +32,40 @@ not part of the main program's backing.
 
 ### Identified BSS (zero-filled at load, never file-backed)
 
+BSS ranges are recorded two ways: `manifest.json` `expectedBssBytes` per module, and the exact
+`.bss` spans in `config/arm9/<module>/delinks.txt` (and `config/arm9/overlays/<ov>/delinks.txt`).
+`bssStart`/`bssEnd` are only filled in for the ARM7/utility modules, so the delinks files are the
+authority for the ARM9 images.
+
 | module | range | bytes | evidence |
 | --- | --- | --- | --- |
 | `main` | `0x020e3300-0x021d7240` | **999,232** | `manifest.json` `expectedBssBytes: 999232`; the size equals the whole main-to-overlay distance exactly |
+| `itcm` | `0x01fff8a0-0x01fffbc0` | 800 | `expectedBssBytes: 800`; `config/arm9/itcm/delinks.txt` `.bss start:0x01fff8a0 end:0x01fffbc0` |
+| `ov000` | `0x022300c0-0x02247860` | 96,160 | `expectedBssBytes: 96160`; `config/arm9/overlays/ov000/delinks.txt` `.bss start:0x022300c0 end:0x02247860` |
+| `ov001` | `0x0222fd20-0x02249aa0` | 105,856 | `expectedBssBytes: 105856`; `config/arm9/overlays/ov001/delinks.txt` `.bss start:0x0222fd20 end:0x02249aa0` |
+| `ov002`-`ov007` | inside the `ov000`/`ov001` union | 3,552 / 2,816 / 32 / 35,360 / 56,768 / 2,400 | `expectedBssBytes` only (no delinks `.bss` line quoted here) |
 
 This is the important correction to the earlier "gap" wording: **`0x020e3300-0x021d7240` is main's
 BSS, not missing data.** Its size is recorded in the manifest and matches the address distance to
 the byte (`0x021d7240 - 0x020e3300 = 0xf3f40 = 999,232`). `0x021c4bf8` therefore sits at offset
 `0xe18f8` into main BSS, `0x12648` bytes before the overlay base.
 
-Overlay BSS is not recorded (`bssStart` is `null` for every overlay), so whether an overlay extends
-past its image end is **unknown**; it is not claimed either way.
+The overlays are loaded one at a time. Their image ranges end at `0x022300c0` (largest image,
+`ov000`) but their BSS does not: the combined image+BSS union ends at `0x02249aa0` (the `ov001`
+BSS end, which is larger than `ov000`'s `0x02247860`).
 
 ### Not backed by any captured image
 
 | range | bytes | note |
 | --- | --- | --- |
-| `0x01fff8a0-0x02000000` | 1,888 | between ITCM end and main base |
-| `0x022300c0-0x02380000` | 1,376,064 | between the overlay union end and `arm7-boot` |
+| `0x01fffbc0-0x02000000` | 1,088 | between ITCM BSS end and main base |
+| `0x02249aa0-0x02380000` | 1,271,136 | between the overlay image+BSS union end and `arm7-boot` |
 | `0x0238021c-0x02400000` | 523,748 | after `arm7-boot` to the end of main RAM |
 
-These three ranges have no module at all: no image, no recorded BSS owner. They are ordinary RAM
-from the hardware's point of view, but nothing in the manifest claims them, so no dump tool can
-attribute bytes there yet.
+These three ranges have no module at all: no image and no recorded BSS owner. They are ordinary RAM
+from the hardware's point of view, but nothing in the manifest or the delinks files claims them, so
+no dump tool can attribute bytes there yet. The first two are narrow remainders of the earlier,
+uncorrected gap list; the third was the only range already correct.
 
 ### Why this matters for `species_roster`
 
@@ -63,11 +75,13 @@ main image end, and it belongs to main BSS, whose contents are not file-backed a
 additional image covering the range is therefore **necessary but not sufficient** — a *static* image
 of main BSS cannot exist; the bytes only exist after the program has run and populated them.
 
-## 2. The reader — found, and it is in the gap
+## 2. The reader — found, and it is in main BSS
 
-The data dictionary's reader is matched in `src/mechanics_save/20261030_roster_frame_mask.c` as
-`native_main_0206d114`. It indexes a 24-byte stride array at `0x021c4bf8`, which is inside main BSS
-(the gap above). Per the hunt rule, that base falling in an unbacked gap **is the find**.
+The data dictionary's stride reader is matched in
+`src/mechanics_save/20261030_roster_frame_mask.c` as `native_main_0206d114`. It indexes a 24-byte
+stride array at `0x021c4bf8`, which is inside main BSS. Per the hunt rule, that base being
+file-unbacked **is the find**; the BSS discovery does not weaken it, it explains why no image was
+ever going to cover the address.
 
 Matched sources that reference the roster base:
 
@@ -155,9 +169,10 @@ each reference must be established before it is called a loader.
 
 ## 4. Open unknowns
 
-* Overlay BSS size/location (manifest records none) — whether overlays extend past their images is
-  unknown.
 * The six candidate writers' direction and data source.
 * Whether the roster is populated from save data, from a NitroFS file, or built procedurally.
-* The three genuinely unowned ranges (`0x01fff8a0-0x02000000`, `0x022300c0-0x02380000`,
+* The three genuinely unowned ranges (`0x01fffbc0-0x02000000`, `0x02249aa0-0x02380000`,
   `0x0238021c-0x02400000`): no evidence yet that they hold static data rather than heap/stack.
+* `ov002`-`ov007` BSS spans were taken from `expectedBssBytes` only; exact delinks `.bss` ranges
+  were not quoted for them here (they fall inside the `ov000`/`ov001` union, so they do not change
+  the gap map).
