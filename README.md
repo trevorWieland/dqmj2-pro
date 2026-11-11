@@ -2,43 +2,99 @@
 
 [![Progress](https://bytematch.dev/trevorWieland/dqmj2-pro.svg?label=Function%20code)](https://bytematch.dev/trevorWieland/dqmj2-pro) [![Initialized source](public/native-progress.svg)](docs/bytematch.md)
 
-The two badges measure different scopes: ByteMatch shows measured function-code matching; initialized source preserves the closed local code/data/alignment ledger. [See the reconciliation](docs/bytematch.md).
+An in-progress reconstruction of DQM: Joker 2 Professional into readable C and reviewed assembly.
+The goal is a ROM that reproduces the measured input byte for byte, built from source by the pinned
+compiler rather than patched from the original.
 
-An in-progress reconstruction into readable C/C++, with justified assembly for measured low-level routines. The target is a reproducible ROM matching the measured input exactly.
+The two badges measure different scopes: ByteMatch shows measured function-code matching, the
+second badge shows initialized native module bytes. [See the reconciliation](docs/bytematch.md).
 
-This repository contains the actual reconstruction sources, headers, DS configuration, compiler profiles and CLI tooling. Supply your own original inputs and pinned compiler; original ROMs, saves, extracted executable/data payloads and binary build products are not distributed.
+## Where it stands
 
-Closed cohort 176 covers **11,660 accepted functions and 1,267,058 initialized module bytes: 50.427440% of 2,512,636 bytes**. This is native initialized-source coverage, not overall game completion. The measured input is a modified `B2JJ` build with SHA-256 `674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`; equivalence to a clean retail ROM has not been established.
+| measure | value | source |
+| --- | --- | --- |
+| Matched function code | **54.55911%** (1,161,558 of 2,128,990 bytes) | ByteMatch `B2JJ-modified`, commit `597d1c46` |
+| Functions matched | **11,717 of 15,308** (76.54%) | same ByteMatch report |
+| Current wave | **236 functions / 17,520 B** newly accepted | maintainer progress summary |
+| True backlog | **3,284 rows / 912,134 B** still unmatched | private `ledger/functions.jsonl`, unmatched rows with measured bytes |
+| Ledger rows | 16,073 (4,049 unmatched; 765 have no measured size) | same ledger |
 
-See the [checkpoint 176 qualification and limits](docs/closed-checkpoint-176.md) for the committed proof scope and remaining checks.
+This is native initialized-source coverage, not overall game completion. The measured input is a
+modified `B2JJ` build with SHA-256
+`674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`; equivalence to a clean retail
+ROM has not been established. BSS does not increase the percentage.
 
-An exact 175,959,612-byte ROM has been reconstructed locally using accepted source together with remaining original executable scaffolding. **A complete source-only ROM, full clean replay and complete native Windows/Android execution remain unproven.**
+**Proven:** an exact 175,959,612-byte container has been reconstructed locally from accepted source
+plus remaining original scaffolding, and the ARM7 container and embedded utility images recompose
+exactly. **Unproven:** a complete source-only ROM, a clean replay, and native Windows/Android
+execution of the full game.
 
-The [native storage subsystem](ports/native-storage/README.md) builds on Windows x64 and Android ARM64. Its Windows host tests and Android link checks pass CI; complete game and Android device execution remain unproven.
+## The five lens artifacts
 
-The [native resource subsystem](ports/native-resources/README.md) adds NitroFS loading, G3D dictionary lookup and the accepted texture/palette setters. It has standalone synthetic host tests and an Android ARM64 build, with no private inputs required. This subsystem adds no decompilation progress credit.
+Each one is a self-contained tool plus docs. Commands run from the repository root; steps marked
+*private* need original inputs that are not distributed.
 
-The [native scene matrix library](ports/native-scene-matrices/README.md) adds checked matrix commands, node poses, static scene events, per-shape snapshots, homogeneous POSITION records and an isolated warm billboard API. Its synthetic Windows tests and Android ARM64 build need no private inputs. These portable components add no decompilation progress credit.
+| lens | what it gives you | try it |
+| --- | --- | --- |
+| **Symbol map** | every measured address → name, size, module, mode | `python ops/symbol_map.py --root <private> --check` (add `--allow-unresolved` to gate on new rows only) |
+| **Data dictionary** | proven table layouts with field offsets and confidence | `python public_tools/data_dump.py --root <private> --list` then `--table math_table_0x20d3fe0 --count 8` |
+| **Patch tool** | safe ROM edits with header-CRC fix-up | `python ops/mod_patch.py --root . --spec docs/modding/example-title.json --check` |
+| **Script VM** | text-VM model, disassembler and assembler | `python public_tools/scr_disasm.py --opcodes`, `python public_tools/scr_asm.py --roundtrip --input listing.txt --image <private image> --offset <n>` |
+| **Platform contract** | what a headless port needs, and what blocks it | read [docs/platform/contract.md](docs/platform/contract.md) |
 
-## Sources and checks
+Depth: [docs/data/](docs/data/index.json) · [docs/scripts/vm.md](docs/scripts/vm.md) ·
+[docs/platform/contract.md](docs/platform/contract.md) · [docs/modding/](docs/modding/example-title.md).
+The full acceptance run over all five is [docs/acceptance/2026-11-11-phase1.md](docs/acceptance/2026-11-11-phase1.md).
 
-- `src/`: reconstruction sources and authored headers, including selected implementations and prepared work. Inclusion here alone does not grant acceptance.
-- `config/source_units.json`: the compilation rule for each source directory (module, processor, flags, load base and original image). Merging a source file into an existing directory is the only step needed for it to be compiled and measured; see [source units](docs/source-units.md).
-- `public/accepted-functions.json`: historical closed-checkpoint evidence retained for comparison. It is not read by the current build, which enumerates `src/` directly.
-- `public/accepted-data.json`: separately measured data and storage records. BSS does not increase the initialized-byte percentage.
-- `config/`: ARM9 sections, symbols, relocations and overlay configuration. ARM7 and embedded-program mappings are handled by the reconstruction scripts.
-- `public_tools/`: standalone source-integrity and compilation checks; see [public build instructions](docs/public-build.md).
-- Root Python scripts: extraction, reconstruction, compiler interfaces, genuine linking, bounded original/source comparisons and regression machinery. Binary tools are pinned in `tools.lock.json`.
-- `docs/`: research and historical execution records, including explicit failures and unsupported cases. Historical references to private-only operation are superseded by the [publication policy](docs/public-reconstruction-policy.md).
+## How progress is measured
 
-The public repository began with a clean Git history at closed cohort 172 (source revision `efe36ed2e7d16be9f2aae411f0dc0cb3eb89e6d5`, closure revision `14ac8dcd6f8ab0009e5dd54d73cf31c928540776`). Historical manifests bind the closed checkpoints listed in the docs; they are not the build input. Progress now comes from compiling the current `src/` tree in CI.
+Default-branch CI resolves every file under `src/` to a compilation rule, compiles it with the
+pinned `mwccarm` from `tools.lock.json`, patches each function's relocations against the measured
+symbol addresses, and compares the result to the original module images byte for byte. The public
+repository contains sources, headers, configuration and tools — **not** ROMs, saves, extracted
+payloads, compiler binaries or generated evidence. ByteMatch builds from the same sources against a
+private input and publishes the aggregate numbers; no evidence artifacts are committed.
 
-Pull-request CI verifies declared source integrity without original inputs. Default-branch CI resolves every `src/` file to a compilation rule, compiles every resolved C source with the pinned compiler, patches each function's ELF relocations against the measured symbol addresses, and reports byte-exact matches against the original module images. A full historical behavioral replay and fresh complete ROM/container build remain separate checks. See [data source visibility](docs/bytematch.md#data-source-visibility) for the public numerical tables and private generated asset declarations.
+A source that is merged but does not compile to the measured bytes earns nothing. `src/` is a work
+area, not a credit ledger.
+
+## Three open decisions
+
+1. **Runtime capture.** Whether to build a RAM-capture harness (`ops/ram_capture.py`) so runtime
+   state can be compared, or keep the project purely static.
+2. **Compiler generation.** Whether the pinned 2.0/base compiler is the whole answer, or whether a
+   per-function compiler matrix should be part of the accepted workflow. `ops/compiler_matrix.py`
+   probes this; five representative rows showed 0 of 120 reproductions across installed builds.
+3. **Script corpus scope.** The interpreted SCR corpus is 297 images / 14,237,108 bytes with
+   measured CFG coverage but no reconstructed source. Whether that is in scope for phase 2 is
+   undecided; see [docs/2026-10-29-interpreted-script-inventory.md](docs/2026-10-29-interpreted-script-inventory.md).
+
+## Repository map
+
+- `src/` — reconstruction sources and authored headers.
+- `config/source_units.json` — the compilation rule for each source directory (module, processor,
+  flags, load base, original image). A new file merged into a directory that already has a rule is
+  compiled and measured automatically; a new directory needs a rule.
+- `public_tools/` — standalone checks and the data/script tools; `ops/` — private-input tooling
+  (symbol map, patch tool, disassembly helper).
+- `ports/` — native storage, resource and scene-matrix subsystems with synthetic host tests and
+  Android ARM64 builds. They add no decompilation credit.
+- `docs/` — research records, lens documentation and acceptance reports; start at
+  [docs/INDEX.md](docs/INDEX.md).
+- Root Python scripts — extraction, reconstruction, compiler interfaces and regression machinery.
+  Binary tools are pinned in `tools.lock.json`.
 
 ## Contributing
 
-Claim a disjoint program/CPU/module/mode/address family before starting. Preserve accepted source and include hashes. Submit readable code, measured interfaces, compiler context, complete function boundaries, genuine byte/relocation checks and bounded behavior evidence. A matching local object becomes accepted only after shared module, regression and committed-input checks pass. Prepared and partially matching regions receive no accepted-byte credit.
+Claim a disjoint program/CPU/module/mode/address family before starting, and grep the whole `src/`
+tree for the address first — a duplicate definition costs a review round. Submit readable code,
+measured interfaces, compiler context, complete function boundaries, genuine byte/relocation checks
+and bounded behavior evidence. See [CONTRIBUTING.md](CONTRIBUTING.md) and
+[docs/2026-11-10-code-and-progress-policy.md](docs/2026-11-10-code-and-progress-policy.md).
 
-Names and game-level understanding are separate work. Investigate callers, callees, tables, strings and consumed layouts; record uncertainty instead of inventing meanings. See [semantic investigation](docs/semantic-understanding.md) and [contribution guidance](CONTRIBUTING.md).
+Names and game-level understanding are separate work: investigate callers, callees, tables and
+strings, and record uncertainty instead of inventing meanings
+([docs/semantic-understanding.md](docs/semantic-understanding.md)).
 
-The public collaboration model draws on [pokebw2](https://github.com/fuddlesworth/pokebw2): real source and configuration, owned ROM inputs, measured reconstruction, and later naming/documentation work. See the [ByteMatch build and report setup](docs/bytematch.md) for the private-input CI, full native-image report scope and registration steps. No pilot percentage or scaffold match is presented as full project completion.
+The collaboration model draws on [pokebw2](https://github.com/fuddlesworth/pokebw2): real source and
+configuration, owned ROM inputs, measured reconstruction, later naming.
