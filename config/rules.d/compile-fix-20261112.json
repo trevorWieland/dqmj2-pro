@@ -1,0 +1,14 @@
+[
+ {"glob": "src/arm7/lane_20261031_alarm_registration156/**", "compilerFlags": "p014"},
+ {"glob": "src/arm7/lane_20261031_card_abi16/**", "compilerFlags": "p014"},
+ {"glob": "src/runtime/parallel_wave20261105/game-main-arm-next/third/**", "compilerFlags": "p049"},
+ {"glob": "src/scripts/20261029/batch02/**", "compilerFlags": "p049"},
+ {"glob": "src/scripts/20261029/s07e04_reset_flags.c", "compilerFlags": "p049"},
+ {"glob": "src/scripts/20261030/batch08/**", "compilerFlags": "p049"},
+ {"glob": "src/scripts/20261030/batch09/**", "compilerFlags": "p049"},
+ {"glob": "src/scripts/20261030/batch11/**", "compilerFlags": "p049"},
+ {"glob": "src/scripts/20261030/batch12/**", "compilerFlags": "p049"},
+ {"glob": "src/scripts/20261030/batch13/**", "compilerFlags": "p049"},
+ {"glob": "src/utility/parallel_wave20261102/host-arm7-sixth/reference-research-v5/libraries-wm-src-ARM7-wmsp_system-2.0_sp1p5_o4s_inline/WMSP_SetChildMaxSize/**", "compilerFlags": "p074"},
+ {"glob": "src/utility/parallel_wave20261102/host-arm7-sixth/reference-research-v5/libraries-wm-src-ARM7-wmsp_system-2.0_sp1p5_o4s_inline/WMSP_SetParentMaxSize/**", "compilerFlags": "p074"}
+]

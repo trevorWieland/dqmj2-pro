@@ -1,4 +1,4 @@
-#include "allocation_detail_text.h"
+#include "../allocation_detail_text_cursor/allocation_detail_text.h"
 
 u32 native_main_02077e98(const SkillSlot *slot, const SkillTable *table, s32 points, s32 preview)
 {
