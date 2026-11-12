@@ -70,13 +70,17 @@ def ledger_row(module, address):
 def sources(lane):
     found = {}
     for module in IMAGE:
-        directory = ROOT / lane / module
-        if not directory.is_dir():
-            continue
-        for path in sorted(directory.glob(f'native_{module}_*.c')):
-            match = re.search(r'native_%s_([0-9a-f]{8})\.c$' % module, path.name)
-            if match:
-                found[(module, int(match.group(1), 16))] = path
+        # A lane that mixes instruction sets keeps its Thumb files in a
+        # ``<module>_thumb`` sibling directory; the rule for that directory is
+        # what carries ``-thumb``, so the path alone selects the mode.
+        for name, directory in ((module, ROOT / lane / module),
+                                (module, ROOT / lane / (module + '_thumb'))):
+            if not directory.is_dir():
+                continue
+            for path in sorted(directory.glob(f'native_{module}_*.c')):
+                match = re.search(r'native_%s_([0-9a-f]{8})\.c$' % module, path.name)
+                if match:
+                    found[(module, int(match.group(1), 16))] = path
     return found
 
 
