@@ -1,0 +1,276 @@
+{
+ "0x02000ce8": {
+  "relocations": [],
+  "controlDiff": [
+   1
+  ],
+  "poolWords": []
+ },
+ "0x020010b8": {
+  "relocations": [],
+  "controlDiff": [
+   1
+  ],
+  "poolWords": []
+ },
+ "0x020010e0": {
+  "relocations": [],
+  "controlDiff": [
+   0
+  ],
+  "poolWords": []
+ },
+ "0x02006018": {
+  "relocations": [
+   [
+    8,
+    2,
+    "native_fn_02005ff8",
+    0
+   ]
+  ],
+  "controlDiff": [
+   1
+  ],
+  "poolWords": [
+   33579000
+  ]
+ },
+ "0x02007850": {
+  "relocations": [
+   [
+    4,
+    1,
+    "native_fn_02007864",
+    -8
+   ],
+   [
+    8,
+    1,
+    "native_fn_020078f4",
+    -8
+   ]
+  ],
+  "controlDiff": [
+   0
+  ],
+  "poolWords": []
+ },
+ "0x02007e98": {
+  "relocations": [
+   [
+    4,
+    1,
+    "native_fn_02007ea8",
+    -8
+   ]
+  ],
+  "controlDiff": [
+   0
+  ],
+  "poolWords": []
+ },
+ "0x02008064": {
+  "relocations": [],
+  "controlDiff": [
+   2
+  ],
+  "poolWords": []
+ },
+ "0x0200829c": {
+  "relocations": [],
+  "controlDiff": [
+   0
+  ],
+  "poolWords": []
+ },
+ "0x02008c14": {
+  "relocations": [],
+  "controlDiff": [
+   2
+  ],
+  "poolWords": []
+ },
+ "0x02008c28": {
+  "relocations": [],
+  "controlDiff": [
+   2
+  ],
+  "poolWords": []
+ },
+ "0x02008c40": {
+  "relocations": [],
+  "controlDiff": [
+   2
+  ],
+  "poolWords": []
+ },
+ "0x02008ca4": {
+  "relocations": [],
+  "controlDiff": [
+   0
+  ],
+  "poolWords": []
+ },
+ "0x02008cdc": {
+  "relocations": [],
+  "controlDiff": [
+   2
+  ],
+  "poolWords": []
+ },
+ "0x02008cf0": {
+  "relocations": [],
+  "controlDiff": [
+   2
+  ],
+  "poolWords": []
+ },
+ "0x02008d0c": {
+  "relocations": [],
+  "controlDiff": [
+   2
+  ],
+  "poolWords": []
+ },
+ "0x02008d28": {
+  "relocations": [],
+  "controlDiff": [
+   2
+  ],
+  "poolWords": []
+ },
+ "0x02008d4c": {
+  "relocations": [],
+  "controlDiff": [
+   2
+  ],
+  "poolWords": []
+ },
+ "0x0200fb48": {
+  "relocations": [
+   [
+    20,
+    2,
+    "native_data_020e5444",
+    0
+   ]
+  ],
+  "controlDiff": [
+   1
+  ],
+  "poolWords": [
+   34493508
+  ]
+ },
+ "0x02029cc4": {
+  "relocations": [
+   [
+    44,
+    2,
+    "native_data_020edd0c",
+    0
+   ],
+   [
+    48,
+    2,
+    "native_data_04000350",
+    0
+   ]
+  ],
+  "controlDiff": [
+   1
+  ],
+  "poolWords": [
+   34528524,
+   67109712
+  ]
+ },
+ "0x02083da8": {
+  "relocations": [
+   [
+    28,
+    2,
+    "native_data_021c72a0",
+    0
+   ]
+  ],
+  "controlDiff": [
+   0
+  ],
+  "poolWords": [
+   35418784
+  ]
+ },
+ "0x02083dc8": {
+  "relocations": [
+   [
+    28,
+    2,
+    "native_data_021c72a0",
+    0
+   ]
+  ],
+  "controlDiff": [
+   0
+  ],
+  "poolWords": [
+   35418784
+  ]
+ },
+ "0x02083de8": {
+  "relocations": [
+   [
+    28,
+    2,
+    "native_data_021c72a0",
+    0
+   ]
+  ],
+  "controlDiff": [
+   0
+  ],
+  "poolWords": [
+   35418784
+  ]
+ },
+ "0x02084028": {
+  "relocations": [
+   [
+    28,
+    2,
+    "native_data_021c9600",
+    0
+   ]
+  ],
+  "controlDiff": [
+   0
+  ],
+  "poolWords": [
+   35427840
+  ]
+ },
+ "0x02084080": {
+  "relocations": [
+   [
+    28,
+    2,
+    "native_data_021c9600",
+    0
+   ]
+  ],
+  "controlDiff": [
+   0
+  ],
+  "poolWords": [
+   35427840
+  ]
+ },
+ "0x0208a690": {
+  "relocations": [],
+  "controlDiff": [
+   0
+  ],
+  "poolWords": []
+ }
+}
