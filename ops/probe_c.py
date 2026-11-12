@@ -9,8 +9,9 @@ row whose C form matches is shipped as C; the rest are transcribed.
     python ops/probe_c.py --batch work/asm-chunk-scan/probes
 
 A batch file is named ``probe_<module>_<address:08x>.c``; the ledger supplies the
-size. The comparison patches relocations the way ``whole_image_link`` does, so an
-object that names its pool words ``native_data_<addr>`` is compared fairly.
+size. A trailing ``_<n>`` is allowed so several plausible bodies can be probed per
+row. The row's ledger mode adds ``-thumb`` and the relocation patcher decodes the
+Thumb ``BL``/``BLX`` pair, so a Thumb probe is compared on the same terms as ARM.
 """
 import argparse
 import json
@@ -53,7 +54,21 @@ def ledger_rows(root):
     return rows
 
 
-def decode_target(data, offset, address):
+def decode_target(data, offset, address, mode='arm'):
+    """Decode a call's measured target, ARM or Thumb, from the image bytes."""
+    if mode == 'thumb':
+        first = int.from_bytes(data[offset:offset + 2], 'little')
+        second = int.from_bytes(data[offset + 2:offset + 4], 'little')
+        base = ((address + offset + 4) & ~3) if (second & 0xD000) == 0xC000 \
+            else (address + offset + 4)
+        sign = (first >> 10) & 1
+        i1 = (((second >> 13) & 1) ^ sign) ^ 1
+        i2 = (((second >> 11) & 1) ^ sign) ^ 1
+        delta = (sign << 24) | (i1 << 23) | (i2 << 22) | ((first & 0x3FF) << 12) \
+            | ((second & 0x7FF) << 1)
+        if delta & (1 << 24):
+            delta -= 1 << 25
+        return base + delta
     word = int.from_bytes(data[offset:offset + 4], 'little')
     immediate = word & 0xFFFFFF
     if immediate & 0x800000:
@@ -61,21 +76,22 @@ def decode_target(data, offset, address):
     return address + offset + 8 + (immediate << 2)
 
 
-def pin_relocations(relocations, defined, image, address):
+def pin_relocations(relocations, defined, image, address, mode='arm'):
     pinned = []
     for offset, kind, symbol, addend in relocations:
         if symbol in defined or re.search(r'[0-9a-f]{8}$', symbol):
             pinned.append([offset, kind, symbol, addend])
             continue
-        if kind not in (1, 28, 29, 30, 31):
+        if kind not in (1, 10, 16, 28, 29, 30, 31):
             raise SystemExit(f'unpinnable relocation {kind} {symbol} at {offset:#x}')
-        pinned.append([offset, kind, f'native_fn_{decode_target(image, offset, address):08x}', addend])
+        pinned.append([offset, kind,
+                       f'native_fn_{decode_target(image, offset, address, mode):08x}', addend])
     return pinned
 
 
 def compile_unit(config, flags, source, obj):
     compiler = ROOT / config['compilers'][flags['compilerSha256']]
-    arguments = [flag for flag in flags['compilerFlags'] if flag not in ('-thumb', '-c')]
+    arguments = [flag for flag in flags['compilerFlags'] if flag != '-c']
     arguments.append('-c')
     env = dict(os.environ, LM_LICENSE_FILE=str(ROOT / 'tools/mwccarm/mwccarm/license.dat'))
     result = subprocess.run([str(compiler), *arguments, str(source.resolve()), '-o', str(obj.resolve())],
@@ -93,6 +109,9 @@ def probe(config, module, address, source, extra_flags=None):
     row = rows.get((module, address))
     if row is None:
         raise SystemExit(f'{module}:{address:#x}: not in the ledger')
+    mode = row.get('mode', 'arm')
+    if mode == 'thumb' and '-thumb' not in flags['compilerFlags']:
+        flags['compilerFlags'] = list(flags['compilerFlags']) + ['-thumb']
     image = (ROOT / IMAGE[module]).read_bytes()
     offset = int(row['binaryOffset'])
     want = image[offset:offset + int(row['bytes'])]
@@ -103,7 +122,7 @@ def probe(config, module, address, source, extra_flags=None):
             print(result.stdout[-1200:])
             raise SystemExit(f'{source.name}: compile failed')
         text, defined, relocations = form_search.read_object(obj)
-    pinned = pin_relocations(relocations, defined, want, address)
+    pinned = pin_relocations(relocations, defined, want, address, mode)
     patched = form_search.relocate(text, address, pinned, defined,
                                    modes=form_search.TargetModes(ROOT, module))
     diff = [index for index in range(min(len(patched), len(want)))
@@ -147,7 +166,7 @@ def main(argv=None):
         found = sorted(args.batch.glob('probe_*.c'))
         exact = 0
         for path in found:
-            match = re.match(r'probe_([a-z0-9]+)_([0-9a-f]{8})\.c$', path.name)
+            match = re.match(r'probe_([a-z0-9]+)_([0-9a-f]{8})(?:_([0-9]+))?\.c$', path.name)
             if not match:
                 continue
             module, address = match.group(1), int(match.group(2), 16)

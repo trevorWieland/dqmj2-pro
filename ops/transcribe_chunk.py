@@ -16,6 +16,22 @@ mwccarm's assembler is not gas and not capstone; the spellings that matter here 
 * two pool slots holding the same value need distinct symbols (``native_data2_``),
   because the assembler deduplicates one expression used twice.
 
+Thumb adds a different dialect (``--mode`` comes from the ledger row, never from
+the caller):
+
+* mwcc's Thumb assembler rejects the flag-setting ``s`` suffix: ``movs``, ``adds``,
+  ``lsls``, ``ands`` are written ``mov``, ``add``, ``lsl``, ``and``; the encoding
+  still sets the flags where the 16-bit form does;
+* a Thumb block transfer is ``ldmia rN!`` / ``stmia rN!`` with an r0-r7 list —
+  ``ldm``/``stm`` without the addressing mode are rejected;
+* ``push``/``pop`` are the 16-bit forms; ``stmdb sp!``/``ldmia sp!`` do not exist
+  in Thumb, so the ARM rewrite is not applied;
+* ``movs rX, rX`` is LLVM's rendering of the zero-shift ``lsl rX, rX, #0`` and
+  must be written that way, because ``mov rX, rX`` assembles to ``adds rX, rX, #0``;
+* ``muls rD, rM, rD`` is the two-operand Thumb ``mul rD, rM`` and
+  ``rsbs rD, rM, #0`` is ``neg rD, rM``;
+* ``mov r8, r8`` is the Thumb ``nop`` encoding ``0x46c0``.
+
     python ops/transcribe_chunk.py --module main --address 0x2008ca4 \
         --purpose "Copies in 32-byte blocks then words." --unknowns "none"
 """
@@ -72,6 +88,59 @@ def mwcc_mnemonic(mnemonic):
     return mnemonic
 
 
+# Thumb's flag-setting forms are the plain mnemonic in mwcc's assembler. The set
+# is explicit because ``bls`` is a branch, not a ``bl`` that sets flags.
+THUMB_FLAGGED = ('mov', 'add', 'sub', 'lsl', 'lsr', 'asr', 'and', 'orr', 'eor',
+                 'mul', 'rsb', 'mvn', 'neg', 'adc', 'sbc', 'ror', 'bic', 'tst',
+                 'cmp', 'cmn')
+THUMB_BRANCH = ('b', 'beq', 'bne', 'bcs', 'bcc', 'bmi', 'bpl', 'bvs', 'bvc',
+                'bhi', 'bls', 'bge', 'blt', 'bgt', 'ble', 'bl', 'blx', 'bx')
+
+
+def thumb_mnemonic(mnemonic, operands):
+    """Rewrite one LLVM Thumb mnemonic into the spelling mwccarm accepts.
+
+    Returns ``(mnemonic, operands)`` because a few forms change both, e.g.
+    ``muls r0, r1, r0`` becomes the two-operand ``mul r0, r1``.
+    """
+    if mnemonic in THUMB_BRANCH or mnemonic in ('push', 'pop', 'nop'):
+        return mnemonic, operands
+    if mnemonic in ('ldm', 'stm', 'ldmia', 'stmia'):
+        # LLVM prints the 16-bit block transfer as ``ldm``/``stm`` and omits the
+        # writeback mark when the base is also in the list; Thumb-1 has only the
+        # writeback form, so the spelling needs both the addressing mode and ``!``.
+        spelled = mnemonic if mnemonic.endswith('ia') else mnemonic + 'ia'
+        if '!' not in operands:
+            base, rest = operands.split(',', 1)
+            operands = base.strip() + '!,' + rest
+        return spelled, operands
+    # ``movs rX, rX`` is the zero shift (0x00xx), not ``mov`` (0x1cxx).
+    if mnemonic == 'movs':
+        parts = [part.strip() for part in operands.split(',')]
+        if len(parts) == 2 and parts[0] == parts[1] and parts[0].startswith('r'):
+            return 'lsl', '%s, %s, #0' % (parts[0], parts[1])
+    if mnemonic == 'muls':
+        parts = [part.strip() for part in operands.split(',')]
+        if len(parts) == 3 and parts[0] == parts[2]:
+            return 'mul', '%s, %s' % (parts[0], parts[1])
+    if mnemonic in ('rsbs', 'negs'):
+        parts = [part.strip() for part in operands.split(',')]
+        if len(parts) == 3 and parts[2] == '#0':
+            return 'neg', '%s, %s' % (parts[0], parts[1])
+        if len(parts) == 2:
+            return 'neg', operands
+    if mnemonic.endswith('s') and mnemonic[:-1] in THUMB_FLAGGED:
+        return mnemonic[:-1], operands
+    # mwcc mis-assembles a bare ``ldr rX, [rY]`` when it directly follows the
+    # ``ldr rX, =symbol`` pseudo-op (the base register is consumed as an
+    # expression). The explicit zero offset is the same encoding and is stable.
+    zero = re.fullmatch(r'(r\d+),\s*\[(r\d+)\]', operands.strip())
+    if zero and mnemonic in ('ldr', 'str', 'ldrb', 'strb', 'ldrh', 'strh',
+                             'ldrsb', 'ldrsh'):
+        return mnemonic, '%s, [%s, #0]' % (zero.group(1), zero.group(2))
+    return mnemonic, operands
+
+
 def arm_literal_slots(code, address):
     """Map instruction offset -> literal slot address for ARM pc-relative loads."""
     slots = {}
@@ -92,7 +161,8 @@ def thumb_literal_slots(code, address):
         if (halfword & 0xF800) == 0x4800:
             slots[offset] = ((address + offset + 4) & ~3) + (halfword & 0xFF) * 4
             offset += 2
-        elif (halfword & 0xE000) == 0xE000:
+        elif (halfword & 0xF800) == 0xF000:
+            # The first half of a 32-bit BL/BLX; the second half is not an op.
             offset += 4
         else:
             offset += 2
@@ -265,6 +335,9 @@ def emit(module, row, purpose, unknowns):
     slots = arm_literal_slots(code, address) if mode == 'arm' else thumb_literal_slots(code, address)
     inside = {address + at: slot for at, slot in slots.items()
               if address <= slot < address + size}
+    outside = [slot for slot in slots.values() if not (address <= slot < address + size)]
+    if outside:
+        raise SystemExit('literal slot %08x lies outside the measured extent' % outside[0])
     code_end = min(inside.values()) if inside else address + size
     code_size = code_end - address
     instructions = parse(disasm.disassemble(ROOT, module, address, code_size, mode))
@@ -279,7 +352,10 @@ def emit(module, row, purpose, unknowns):
             labels.setdefault(target, '%s_%08x_L%x' % (module.replace('-', '_'), address,
                                                        target - address))
     # Two pool slots holding the same value need distinct symbols: the assembler
-    # would otherwise deduplicate one expression into a single slot.
+    # would otherwise deduplicate one expression into a single slot. A duplicated
+    # *constant* is not nameable, so a duplicated address-like word is named as
+    # the data pointer it is; anything else is refused rather than silently
+    # emitting one slot for two.
     occurrences = {}
     for at in sorted(inside):
         value = int.from_bytes(image[inside[at] - base:inside[at] - base + 4], 'little')
@@ -288,6 +364,25 @@ def emit(module, row, purpose, unknowns):
     for value, slots_for_value in occurrences.items():
         for index, slot in enumerate(slots_for_value):
             slot_alias[slot] = index
+    slot_expression = {}
+    for at in sorted(inside):
+        slot = inside[at]
+        value = int.from_bytes(image[slot - base:slot - base + 4], 'little')
+        name, addend = symbol_for(value, functions, (base, base + len(image)))
+        if name is None:
+            if len(occurrences[value]) > 1:
+                if value % 2 == 0 and 0x01000000 <= value < 0x04000000:
+                    name, addend = 'native_data_%08x' % value, 0
+                else:
+                    raise SystemExit('duplicate non-address pool value %08x' % value)
+            else:
+                slot_expression[slot] = '0x%08x' % value
+                continue
+        index = slot_alias[slot]
+        if index:
+            prefix = 'native_data' if name.startswith('native_data') else 'native_fn'
+            name = name.replace(prefix + '_', '%s%d_' % (prefix, index + 1), 1)
+        slot_expression[slot] = '%s+%d' % (name, addend) if addend else name
     body = []
     symbols = []
     for at, mnemonic, operands in instructions:
@@ -297,29 +392,24 @@ def emit(module, row, purpose, unknowns):
             body.append('%s:' % labels[at])
         if at in inside:
             slot = inside[at]
-            value = int.from_bytes(image[slot - base:slot - base + 4], 'little')
-            name, addend = symbol_for(value, functions, (base, base + len(image)))
-            if name is None:
-                expression = '0x%08x' % value
-            else:
-                index = slot_alias[slot]
-                if index:
-                    name = name.replace('native_data_', 'native_data%d_' % (index + 1), 1) \
-                        if name.startswith('native_data') else \
-                        name.replace('native_fn_', 'native_fn%d_' % (index + 1), 1)
-                expression = '%s+%d' % (name, addend) if addend else name
+            expression = slot_expression[slot]
             if expression not in symbols:
                 symbols.append(expression)
             destination = operands.split(',')[0].strip()
-            body.append('    %s %s, =%s' % (mwcc_mnemonic(mnemonic), destination, expression))
+            load = thumb_mnemonic(mnemonic, operands)[0] if mode == 'thumb' \
+                else mwcc_mnemonic(mnemonic)
+            body.append('    %s %s, =%s' % (load, destination, expression))
             continue
         if mnemonic == '<unknown>':
             word = int.from_bytes(image[offset + (at - address):][:4], 'little')
-            decoded = decode_dataproc(word, address)
+            decoded = decode_dataproc(word, address) if mode == 'arm' else None
             if decoded is None:
-                raise SystemExit('undecodable word %08x at %08x' % (word, at))
+                raise SystemExit('undecodable %s word %08x at %08x' % (mode, word, at))
             mnemonic, operands = decoded
         if mnemonic.startswith(('push', 'pop')):
+            if mode == 'thumb':
+                body.append('    %s %s' % (mnemonic, operands))
+                continue
             root, condition = split_condition(mnemonic)
             registers = operands.strip('{} ')
             if root == 'push':
@@ -329,6 +419,12 @@ def emit(module, row, purpose, unknowns):
             continue
         if mnemonic in ('lsl', 'lsr', 'asr', 'ror',
                         'lsls', 'lsrs', 'asrs', 'rors'):
+            if mode == 'thumb':
+                # Thumb has a real shift-immediate form; the ARM ``mov`` rewrite
+                # would encode a register-shifted operand that Thumb cannot carry.
+                spelled, spelled_operands = thumb_mnemonic(mnemonic, operands)
+                body.append('    %s %s' % (spelled, spelled_operands))
+                continue
             shift = mnemonic[:-1] if mnemonic.endswith('s') else mnemonic
             set_s = 's' if mnemonic.endswith('s') else ''
             left, rest = operands.split(',', 1)
@@ -336,7 +432,10 @@ def emit(module, row, purpose, unknowns):
             body.append('    mov%s %s, %s, %s %s' % (set_s, left, source, shift,
                                                      rest.split(',', 1)[1].strip()))
             continue
-        spelled = mwcc_mnemonic(mnemonic)
+        if mode == 'thumb':
+            spelled, operands = thumb_mnemonic(mnemonic, operands)
+        else:
+            spelled = mwcc_mnemonic(mnemonic)
         target = branch_target(mnemonic, operands)
         if target is not None:
             destination = labels.get(target, 'native_fn_%08x' % target)
@@ -348,6 +447,8 @@ def emit(module, row, purpose, unknowns):
         body.append('    %s %s' % (spelled, operands))
     stores = sum(1 for at, mnemonic, _operands in instructions
                  if mnemonic.startswith('str') and at < code_end)
+    block_transfers = sum(1 for at, mnemonic, _operands in instructions
+                          if mnemonic.startswith(('ldm', 'stm')) and at < code_end)
     shape, described = describe(parse(disasm.disassemble(ROOT, module, address, size, mode)),
                                 address, address + size)
     if purpose is None:
@@ -362,9 +463,8 @@ def emit(module, row, purpose, unknowns):
             continue
         seen_slots.add(slot)
         value = int.from_bytes(image[slot - base:slot - base + 4], 'little')
-        name, addend = symbol_for(value, functions, (base, base + len(image)))
-        labelled = 'constant 0x%08x' % value if name is None else \
-            name + ('+%d' % addend if addend else '')
+        expression = slot_expression[slot]
+        labelled = 'constant ' + expression if expression.startswith('0x') else expression
         header.append(' *   pool +0x%02x -> %s (image word 0x%08x)' % (
             slot - address, labelled, value))
     for at, mnemonic, operands in instructions:
@@ -377,7 +477,8 @@ def emit(module, row, purpose, unknowns):
             continue
         if mnemonic.startswith(('cmp', 'tst')):
             header.append(' *   test +0x%02x %s %s' % (at - address, mnemonic, operands))
-    header.append(' *   %d store instruction(s)' % stores)
+    header.append(' *   %d block transfer(s), %d word store instruction(s)' % (
+        block_transfers, stores))
     header.append(' *')
     header.append(' * Body: the measured instruction stream transcribed from')
     header.append(' * %s at 0x%08x; the literal pool and' % (image_path.name, address))
@@ -404,7 +505,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('--module', required=True)
     parser.add_argument('--address', required=True)
-    parser.add_argument('--purpose', default='Copies a measured block.')
+    parser.add_argument('--purpose', default=None,
+                        help='one-line body description; default: derived from the decoded shape')
     parser.add_argument('--unknowns', default='the meaning of the fields, blocks and callee '
                                               'contracts the body touches is not established '
                                               'by byte identity.')

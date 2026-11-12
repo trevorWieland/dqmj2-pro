@@ -17,8 +17,17 @@ For each row the check proves:
   compiles, differs from the image at the pinned offsets, and is therefore not a
   vacuous match.
 
-    python ops/verify_asm_chunk_scan.py            # check
+The tool verifies either half of the class. The default lane is the round-7 ARM
+lane; ``--lane src/verified_assembly/20261113_asm_chunk_thumb --fixture
+ops/asm_chunk_thumb_expectations.json`` verifies the Thumb lane. A Thumb row's rule
+keeps ``-thumb``, its ``BL``/``BLX`` relocations (including
+``R_ARM_THM_XPC22``/16) are patched from the measured site's mode, and a
+function-pointer literal carries its ``+1`` addend.
+
+    python ops/verify_asm_chunk_scan.py            # check the round-7 ARM lane
     python ops/verify_asm_chunk_scan.py --record   # refresh the pinned fixture
+    python ops/verify_asm_chunk_scan.py --lane src/verified_assembly/20261113_asm_chunk_thumb \
+        --fixture ops/asm_chunk_thumb_expectations.json
 """
 import argparse
 import json
@@ -58,10 +67,10 @@ def ledger_row(module, address):
     return None
 
 
-def sources():
+def sources(lane):
     found = {}
     for module in IMAGE:
-        directory = ROOT / LANE / module
+        directory = ROOT / lane / module
         if not directory.is_dir():
             continue
         for path in sorted(directory.glob(f'native_{module}_*.c')):
@@ -73,7 +82,7 @@ def sources():
 
 def compile_unit(config, rule, source, obj):
     compiler = ROOT / config['compilers'][rule['compilerSha256']]
-    flags = [flag for flag in rule['compilerFlags'] if flag not in ('-thumb', '-c')]
+    flags = [flag for flag in rule['compilerFlags'] if flag != '-c']
     flags.append('-c')
     env = dict(os.environ, LM_LICENSE_FILE=str(ROOT / 'tools/mwccarm/mwccarm/license.dat'))
     result = subprocess.run([str(compiler), *flags, str(source.resolve()), '-o', str(obj.resolve())],
@@ -83,7 +92,21 @@ def compile_unit(config, rule, source, obj):
     return form_search.read_object(obj)
 
 
-def decode_target(data, offset, address):
+def decode_target(data, offset, address, mode='arm'):
+    """Decode a call's measured target, ARM or Thumb, from the image bytes."""
+    if mode == 'thumb':
+        first = int.from_bytes(data[offset:offset + 2], 'little')
+        second = int.from_bytes(data[offset + 2:offset + 4], 'little')
+        base = ((address + offset + 4) & ~3) if (second & 0xD000) == 0xC000 \
+            else (address + offset + 4)
+        sign = (first >> 10) & 1
+        i1 = (((second >> 13) & 1) ^ sign) ^ 1
+        i2 = (((second >> 11) & 1) ^ sign) ^ 1
+        delta = (sign << 24) | (i1 << 23) | (i2 << 22) | ((first & 0x3FF) << 12) \
+            | ((second & 0x7FF) << 1)
+        if delta & (1 << 24):
+            delta -= 1 << 25
+        return base + delta
     word = int.from_bytes(data[offset:offset + 4], 'little')
     immediate = word & 0xFFFFFF
     if immediate & 0x800000:
@@ -91,15 +114,16 @@ def decode_target(data, offset, address):
     return address + offset + 8 + (immediate << 2)
 
 
-def pin_relocations(relocations, defined, image, address):
+def pin_relocations(relocations, defined, image, address, mode='arm'):
     pinned = []
     for offset, kind, symbol, addend in relocations:
         if symbol in defined or re.search(r'[0-9a-f]{8}$', symbol):
             pinned.append([offset, kind, symbol, addend])
             continue
-        if kind not in (1, 28, 29, 30, 31):
+        if kind not in (1, 10, 16, 28, 29, 30, 31):
             raise SystemExit(f'unpinnable relocation {kind} {symbol} at {offset:#x}')
-        pinned.append([offset, kind, f'native_fn_{decode_target(image, offset, address):08x}', addend])
+        pinned.append([offset, kind,
+                       f'native_fn_{decode_target(image, offset, address, mode):08x}', addend])
     return pinned
 
 
@@ -137,7 +161,8 @@ def check_row(config, work, module, address, source, expected, failures):
     relative = source.relative_to(ROOT).as_posix()
     rule = source_units.resolve(config, relative)
     text, defined, relocations = compile_unit(config, rule, source, work / f'{module}-{address:08x}.o')
-    pinned = pin_relocations(relocations, defined, want, address)
+    mode = row.get('mode', 'arm')
+    pinned = pin_relocations(relocations, defined, want, address, mode)
     if 'relocations' in expected and pinned != [list(item) for item in expected['relocations']]:
         failures.append(f'{source.name}: relocations {pinned} != pinned {expected["relocations"]}')
     patched = form_search.relocate(text, address, pinned, defined,
@@ -160,7 +185,7 @@ def check_row(config, work, module, address, source, expected, failures):
     control.write_text(control_source(source.read_text(encoding='ascii')), encoding='ascii')
     ctext, cdefined, crelocations = compile_unit(config, rule, control,
                                                  work / f'{module}-{address:08x}-control.o')
-    cpinned = pin_relocations(crelocations, cdefined, want, address)
+    cpinned = pin_relocations(crelocations, cdefined, want, address, mode)
     cpatched = form_search.relocate(ctext, address, cpinned, cdefined,
                                     modes=form_search.TargetModes(ROOT, module))
     cdiff = [i for i in range(min(len(cpatched), len(want))) if cpatched[i] != want[i]]
@@ -176,19 +201,29 @@ def check_row(config, work, module, address, source, expected, failures):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--record', action='store_true')
+    parser.add_argument('--lane', default=str(LANE),
+                        help='verified-assembly lane root (default: the round-7 ARM lane)')
+    parser.add_argument('--fixture', default=str(FIXTURE),
+                        help='pinned expectation JSON (default: the round-7 ARM fixture)')
     args = parser.parse_args()
+    lane = Path(args.lane)
+    if not lane.is_absolute():
+        lane = ROOT / lane
+    fixture_path = Path(args.fixture)
+    if not fixture_path.is_absolute():
+        fixture_path = ROOT / fixture_path
     config = source_units.load_config(ROOT)
     fixture = {}
-    if FIXTURE.is_file() and not args.record:
+    if fixture_path.is_file() and not args.record:
         fixture = {(module, int(key, 0)): value
                    for (module, key), value in
                    (((m, k), v) for m, rows in
-                    json.loads(FIXTURE.read_text(encoding='utf-8')).items()
+                    json.loads(fixture_path.read_text(encoding='utf-8')).items()
                     for k, v in rows.items())}
     work = Path(tempfile.mkdtemp(prefix='asm-chunk-scan-'))
     failures = []
     observed = {}
-    found = sources()
+    found = sources(lane)
     for (module, address), source in sorted(found.items()):
         result = check_row(config, work, module, address, source,
                            fixture.get((module, address), {}), failures)
@@ -206,8 +241,8 @@ def main():
     for failure in failures:
         print('  FAIL', failure)
     if args.record:
-        FIXTURE.write_text(json.dumps(observed, indent=1) + '\n', encoding='utf-8')
-        print(f'fixture written: {FIXTURE}')
+        fixture_path.write_text(json.dumps(observed, indent=1) + '\n', encoding='utf-8')
+        print(f'fixture written: {fixture_path}')
     return 1 if failures else 0
 
 
