@@ -40,6 +40,10 @@ CATEGORIES = [{'id': name, 'name': label} for name, label in (
 DATA_KINDS = {'data', 'rodata', 'initialized-data'}
 ADDRESS = re.compile(r'([0-9a-fA-F]{8})$')
 COMPILE_SUFFIXES = ('.c',)
+# -thumb is a compiler option.  The assembler (mwasmarm) selects the instruction
+# set from the source's own .thumb/.arm directive and rejects -thumb outright
+# ("Unknown option 'thumb'"), so it must only be added for compiler sources.
+COMPILER_SOURCE_SUFFIXES = ('.c', '.cpp')
 
 
 class RepositoryBuildError(ValueError):
@@ -48,6 +52,22 @@ class RepositoryBuildError(ValueError):
 
 def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def compile_flags(task):
+    """The command-line flags for one compilation task.
+
+    The unit rule owns Thumb selection.  A C/C++ source, which selects Thumb via
+    the compiler's -thumb option, gets it here; an assembly source already names
+    its mode in the file and is passed to mwasmarm unchanged.
+    """
+    flags = list(task['profileFlags'])
+    if (task.get('mode') == 'thumb' and '-thumb' not in flags
+            and Path(task['path']).suffix.lower() in COMPILER_SOURCE_SUFFIXES):
+        flags.append('-thumb')
+    if '-c' not in flags:
+        flags.append('-c')
+    return flags
 
 
 def module_inventory(root, config):
@@ -161,14 +181,7 @@ def compile_all(root, private_root, out_dir, jobs=4, timeout=180, limit=None, so
                                task.get('alternateIndex')], sort_keys=True)
         key = hashlib.sha256(identity.encode()).hexdigest()[:24]
         obj = objects / (key + '.o')
-        flags = list(task['profileFlags'])
-        # Thumb code is selected by the unit rule's mode, never by the profile, so a
-        # source directory that the ledger records as thumb compiles with -thumb and
-        # every other directory keeps the ARM default.
-        if task.get('mode') == 'thumb' and '-thumb' not in flags:
-            flags.append('-thumb')
-        if '-c' not in flags:
-            flags.append('-c')
+        flags = compile_flags(task)
         compiler = compilers[task['compilerSha256']]
         record = dict(source=task['path'], module=task['module'], processor=task['processor'],
                       mode=task.get('mode', 'arm'),
