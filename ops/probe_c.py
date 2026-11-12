@@ -161,7 +161,7 @@ def main(argv=None):
     extra = None
     if args.flags:
         profile = config['profiles'][args.flags]
-        extra = [flag for flag in profile if flag not in ('-thumb', '-c')]
+        extra = [flag for flag in profile if flag != '-c']
     if args.batch:
         found = sorted(args.batch.glob('probe_*.c'))
         exact = 0

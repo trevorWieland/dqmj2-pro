@@ -240,3 +240,7 @@ destination blocks the copy loops fill. The numeric constants now kept as litera
 (0x88888889, 0x66666667, 0x2aaaaaab, 0x38e38e39, 0x51eb851f, 0x0b60b60b) are the
 usual reciprocal-multiply magic for division by 3, 5, 7, 10, 100 and friends; that
 identifies the arithmetic, not the field it scales.
+
+## Round 8
+
+The residual stated above was taken in [2026-11-12-asm-chunk2.md](2026-11-12-asm-chunk2.md): after #189 opened the Thumb half in its own lane, this branch keeps the 24 rows #189 did not take (6 ARM, 18 Thumb, including the two remaining single-block rows) and documents the two jump-table rows. The lane is now 87 rows / 40,392 B; #189's Thumb lane adds 60 rows / 6,278 B.
