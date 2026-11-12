@@ -333,12 +333,20 @@ def emit(module, row, purpose, unknowns):
     code = image[offset:offset + size]
     mode = row['mode']
     slots = arm_literal_slots(code, address) if mode == 'arm' else thumb_literal_slots(code, address)
-    inside = {address + at: slot for at, slot in slots.items()
-              if address <= slot < address + size}
-    outside = [slot for slot in slots.values() if not (address <= slot < address + size)]
+    # The first literal slot that lands inside the extent begins the trailing pool,
+    # so it also marks the end of the code.  Slots decoded from bytes at or after
+    # that point are pool data read as instructions, not loads: drop them before
+    # deciding whether a *code* load points outside the row.  A genuine load that
+    # precedes the pool and still points outside is refused, never guessed.
+    inside_all = {at: slot for at, slot in slots.items()
+                  if address <= slot < address + size}
+    code_end = min(inside_all.values()) if inside_all else address + size
+    inside = {address + at: slot for at, slot in inside_all.items()
+              if at < code_end - address}
+    outside = [slot for at, slot in slots.items()
+               if at < code_end - address and not (address <= slot < address + size)]
     if outside:
         raise SystemExit('literal slot %08x lies outside the measured extent' % outside[0])
-    code_end = min(inside.values()) if inside else address + size
     code_size = code_end - address
     instructions = parse(disasm.disassemble(ROOT, module, address, code_size, mode))
     if not instructions:
@@ -431,6 +439,20 @@ def emit(module, row, purpose, unknowns):
             source = rest.split(',', 1)[0].strip()
             body.append('    mov%s %s, %s, %s %s' % (set_s, left, source, shift,
                                                      rest.split(',', 1)[1].strip()))
+            continue
+        shift_root, shift_condition = split_condition(mnemonic)
+        if shift_condition and shift_root in ('lsl', 'lsr', 'asr', 'ror',
+                                              'lsls', 'lsrs', 'asrs', 'rors'):
+            # LLVM prints a conditionally executed MOV with a shift as ``lsleq``;
+            # mwcc wants ``moveq rD, rM, lsl #n`` (condition after mov, S bit only
+            # when the disassembly carried the flag-setting mnemonic).
+            shift = shift_root[:-1] if shift_root.endswith('s') else shift_root
+            set_s = 's' if shift_root.endswith('s') else ''
+            left, rest = operands.split(',', 1)
+            source = rest.split(',', 1)[0].strip()
+            body.append('    mov%s%s %s, %s, %s %s' % (
+                shift_condition, set_s, left, source, shift,
+                rest.split(',', 1)[1].strip()))
             continue
         if mode == 'thumb':
             spelled, operands = thumb_mnemonic(mnemonic, operands)

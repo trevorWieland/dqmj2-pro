@@ -133,7 +133,10 @@ def control_source(text):
     A register is mutated rather than an immediate: mwcc's assembler rejects many
     mutated constants as unencodable, while a register substitution is always
     encodable and always changes the encoded word. Instructions that name no
-    numbered register (``bx lr``) are skipped.
+    numbered register (``bx lr``) are skipped. A generated *C* row has no asm
+    line to mutate, so the fallback changes a source constant instead: the
+    compiled bytes must still differ, which proves the match depends on the
+    measured constants and is not vacuous.
     """
     lines = text.splitlines()
     for index, line in enumerate(lines):
@@ -146,6 +149,13 @@ def control_source(text):
             continue
         lines[index] = '    ' + mutated
         return '\n'.join(lines) + '\n'
+    for pattern, replacement in ((r'\b3u\b', '5u'),
+                                 (r'0x([0-9a-f]{7})([0-9a-f])\b',
+                                  lambda match: '0x%s%x' % (match.group(1),
+                                                            (int(match.group(2), 16) + 1) & 0xF))):
+        mutated, count = re.subn(pattern, replacement, text, count=1)
+        if count:
+            return mutated
     raise SystemExit('no instruction to mutate for the control')
 
 

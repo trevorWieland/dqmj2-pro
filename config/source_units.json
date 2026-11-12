@@ -17321,6 +17321,19 @@
    "compilerFlags": "p033",
    "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca",
    "mode": "thumb"
+  },
+  {
+   "glob": "src/ov006/g1_ov006_sweep1/thumb/**",
+   "module": "ov006",
+   "compilerFlags": "p033",
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca",
+   "mode": "thumb"
+  },
+  {
+   "glob": "src/ov006/g1_ov006_sweep1/arm/**",
+   "module": "ov006",
+   "compilerFlags": "p003",
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
   }
  ],
  "objects": {}
