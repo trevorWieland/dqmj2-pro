@@ -2968,6 +2968,11 @@
    "compilerFlags": "p003"
   },
   {
+   "glob": "src/ov001/p11_ov001_pass4/**",
+   "module": "ov001",
+   "compilerFlags": "p003"
+  },
+  {
    "glob": "src/ov006/**",
    "module": "ov006",
    "compilerFlags": "p004"
