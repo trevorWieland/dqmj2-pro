@@ -40,6 +40,21 @@ CATEGORIES = [{'id': name, 'name': label} for name, label in (
 DATA_KINDS = {'data', 'rodata', 'initialized-data'}
 ADDRESS = re.compile(r'([0-9a-fA-F]{8})$')
 COMPILE_SUFFIXES = ('.c',)
+# Relocation kinds this patcher can encode.  Anything else must fail loudly: a
+# relocation silently left as the compiler's placeholder would turn a
+# measurement hole into a source mismatch (or, worse, an accidental match).
+SUPPORTED_RELOCATION_KINDS = frozenset((1, 2, 10, 11, 16, 43, 44))
+THUMB_BRANCH_KINDS = (10, 11)
+# R_ARM_THM_XPC22 (16) is the interworking-call form mwasmarm emits for `blx`.
+# The measured call site, not the compiler's BL placeholder, says whether the
+# original linker wrote BL or BLX; bit 12 of the second halfword discriminates
+# (BL sets it, BLX clears it).  This is the rule in ops/thumb_branch.py:is_blx,
+# used by ops/form_search.py:TargetModes.site_mode.  That authoring module
+# resolves through its own ledger/manifest and lives outside this public tool,
+# so the minimal marker test is kept inline and cited here.
+THM_XPC22 = 16
+BLX_MASK = 0xD000
+BLX_VALUE = 0xC000
 # -thumb is a compiler option.  The assembler (mwasmarm) selects the instruction
 # set from the source's own .thumb/.arm directive and rejects -thumb outright
 # ("Unknown option 'thumb'"), so it must only be added for compiler sources.
@@ -478,6 +493,23 @@ def target_mode(module, address, name=None):
     return None
 
 
+def measured_branch_mode(image, absolute, base):
+    """Return the measured call site's callee mode: ``'arm'`` for BLX, ``'thumb'`` for BL.
+
+    ``None`` means the site is outside the image or does not carry a Thumb-2
+    branch prefix, so the caller must fall back to ledger evidence.  Copied
+    from ``ops/form_search.py:TargetModes.site_mode`` (the predicate itself is
+    ``ops/thumb_branch.py:is_blx``); see the citation at ``THM_XPC22``.
+    """
+    offset = absolute - base
+    if offset < 0 or offset + 4 > len(image):
+        return None
+    first, second = struct.unpack_from('<HH', image, offset)
+    if (first & 0xF800) != 0xF000:
+        return None
+    return 'arm' if (second & BLX_MASK) == BLX_VALUE else 'thumb'
+
+
 def encode_thumb_branch(absolute, target, addend, arm):
     """Encode a Thumb-2 BL (arm=False) or BLX (arm=True) immediate.
 
@@ -514,9 +546,10 @@ def patch_function(function, module, base, sections, relocations, image):
     recorded dependency targets and the recovered runtime table can both be stale (a
     captured object may predate the linked image).  Name resolution remains the
     fallback when the site lies outside the mapped image.  Every other kind keeps the
-    existing order.  Returns the patched bytes, the unresolved names, the per-site
-    resolution counts and the sites left on the fallback because the image does not
-    cover them.
+    existing order.  A kind outside ``SUPPORTED_RELOCATION_KINDS`` raises: leaving an
+    unknown relocation at the compiler's placeholder would report a false mismatch.
+    Returns the patched bytes, the unresolved names, the per-site resolution counts and
+    the sites left on the fallback because the image does not cover them.
     """
     body = bytearray(function['bytes'])
     unresolved = []
@@ -530,6 +563,10 @@ def patch_function(function, module, base, sections, relocations, image):
         addend = relocation['addend']
         kind = relocation['type']
         absolute = function['address'] + offset
+        if kind not in SUPPORTED_RELOCATION_KINDS:
+            raise RepositoryBuildError(
+                'Unsupported relocation kind %d at 0x%08x for %s'
+                % (kind, absolute, relocation['symbol']['name']))
         mode = target_mode(module, target, relocation['symbol']['name']) if target is not None else None
         resolution = 'name' if target is not None else None
         if kind in (1, 10) and relocation['symbol']['shndx'] == 0:
@@ -576,8 +613,21 @@ def patch_function(function, module, base, sections, relocations, image):
             if mode == 'thumb':
                 value |= 1
             struct.pack_into('<I', body, offset, value & 0xFFFFFFFF)
-        elif kind in (10, 11):  # R_ARM_THM_CALL / R_ARM_THM_JUMP24
+        elif kind in THUMB_BRANCH_KINDS:  # R_ARM_THM_CALL / R_ARM_THM_JUMP24
             first, second = encode_thumb_branch(absolute, target, addend or 0, mode == 'arm')
+            struct.pack_into('<H', body, offset, first)
+            struct.pack_into('<H', body, offset + 2, second)
+        elif kind == THM_XPC22:  # R_ARM_THM_XPC22 (BL/BLX immediate, XPC22 carrier)
+            # The measured site is the authority on BL vs BLX; the ledger row's
+            # mode is the fallback.  BLX uses Align(PC+4,4), BL uses PC+4; the
+            # encoder owns that distinction and the relocation addend's -4 bias.
+            branch_mode = measured_branch_mode(image, absolute, base) or mode
+            if branch_mode is None:
+                raise RepositoryBuildError(
+                    'R_ARM_THM_XPC22 site 0x%08x has no measured or ledger ARM/Thumb mode'
+                    % absolute)
+            first, second = encode_thumb_branch(absolute, target, addend or 0,
+                                                branch_mode == 'arm')
             struct.pack_into('<H', body, offset, first)
             struct.pack_into('<H', body, offset + 2, second)
         elif kind in (43, 44):  # R_ARM_MOVW_ABS_NC / R_ARM_MOVT_ABS
@@ -591,7 +641,9 @@ def patch_function(function, module, base, sections, relocations, image):
             word = (word & ~0x000F0FFF) | ((immediate & 0xF000) << 4) | (immediate & 0x0FFF)
             struct.pack_into('<I', body, offset, word)
         else:
-            unresolved.append(relocation['symbol']['name'])
+            raise RepositoryBuildError(
+                'Unsupported relocation kind %d at 0x%08x for %s'
+                % (kind, absolute, relocation['symbol']['name']))
     return bytes(body), unresolved, sources, outside
 
 
