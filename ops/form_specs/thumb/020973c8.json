@@ -1,0 +1,12 @@
+{
+ "address": "0x020973C8",
+ "bytes": 16,
+ "module": "main",
+ "template": "020973c8.c",
+ "dimensions": {
+  "HOIST": [
+   "    native_fn_02096ffc(b, record->f24);",
+   "    native_fn_02096ffc(b, record->f24, c);"
+  ]
+ }
+}

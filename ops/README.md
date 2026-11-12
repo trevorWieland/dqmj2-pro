@@ -219,6 +219,34 @@ These are recorded here because they are the reusable part of the work:
    loop (92 B against the original's unrolled 120 B), so 2.0/base is correct
    there even though the field-load idiom differs.
 
+## `form_search_thumb.py` — the three Thumb layout dimensions
+
+`form_search.py` enumerates a literal text grid. The remaining main-module
+Thumb rows fail because of three layout dimensions that grid cannot express,
+so `form_search_thumb.py` drives one spec file per row through `WRITEBACK`,
+`HOIST` and `LOOP`:
+
+```bash
+python ops/form_search_thumb.py --spec ops/form_specs/thumb/020b5890.json --time-budget 300
+python ops/form_search_thumb.py --rank --json build/thumb-form2/ranked.json
+python ops/form_search_thumb.py --spec ... --keep src/main/t1_main_thumb/native_main_020b5890.c
+```
+
+The spec is `{address, bytes, module, template, dimensions}`; each dimension
+is a list of alternatives or a `{"library": ..., "params": ...}` call into
+`writeback_forms`, `hoist_forms` or `loop_forms`. A missing dimension is one
+empty alternative — the control that must leave the template byte-identical.
+The tool compiles through the resolved `src/main/t1_main_thumb/**` lane rule
+(module main, mode thumb, p032, mwccarm 2.0/base), patches relocations with
+`form_search.relocate`, scores against the module image and stops at the
+per-row time budget.
+
+The batch-4 note (`docs/authoring/2026-11-11-main-thumb-2.md`) records the
+measured result: seven rows, 236 bytes, and the finding that the pool-load
+difference is argument liveness (a live third argument delays the load past
+the store). `ops/test_form_search_thumb.py` pins one observable difference per
+dimension and the two controls (absent dimension, equivalent spellings).
+
 ## `permuter.py` — real decomp-permuter workspaces, runs and acceptance
 
 The deterministic catalogue above cannot reach "the same instructions with a different
