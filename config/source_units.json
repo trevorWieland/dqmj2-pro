@@ -2963,6 +2963,17 @@
    "compilerFlags": "p001"
   },
   {
+   "glob": "src/ov000/g1_ov000_gen1/**",
+   "module": "ov000",
+   "compilerFlags": "p001"
+  },
+  {
+   "glob": "src/ov000/g1_ov000_gen1/asm/**",
+   "module": "ov000",
+   "compilerFlags": "p001",
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
+  },
+  {
    "glob": "src/ov001/**",
    "module": "ov001",
    "compilerFlags": "p003"
