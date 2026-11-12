@@ -132,3 +132,9 @@ python -m unittest ops.test_form_search ops.test_thumb_branch \
 Historical context: [Thumb BLX-immediate blocker](../platform/thumb-blx.md)
 recorded the relocation-rule hypothesis on 179 rows. This note replaces its
 "recommended next step" with the implemented rule and the 274-row measurement.
+
+Follow-up: the ledger evidence in this note was not module-scoped. A
+base-colliding host row could win over the child image (ten
+`utility-child-arm7-wram` rows). The resolver now reads the measured call site
+first and scopes the ledger fallback to the containing module; see
+`docs/authoring/2026-11-11-scanner-module-mode.md`.

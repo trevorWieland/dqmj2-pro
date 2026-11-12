@@ -20,6 +20,11 @@ module image through ``ops/form_search`` + ``TargetModes``, and bucket the resul
 The measurement is cached under ``work/permuter/.scan-cache.json`` keyed by source hash,
 compiler and flags, so a rerun after an interruption only pays for new or changed units.
 
+A relocation kind the patcher cannot encode is **not** folded into "no variant
+compiled". The scan records ``relocationSkips`` (kind -> units) and names the kind
+in the skipped unit's reason, so a measurement hole stays visible. ``R_ARM_PC24``
+and the ARM/Thumb MOVW/MOVT kinds are encoded by ``ops/form_search.py``.
+
     python ops/permuter_candidates.py --module ov006
     python ops/permuter_candidates.py --modules all --json build/scan-all.json
     python ops/permuter_candidates.py --summarize build/scan-*.json \
@@ -29,6 +34,7 @@ compiler and flags, so a rerun after an interruption only pays for new or change
 Nothing is written into ``src/``; the JSON/MD report is explicit.
 """
 import argparse
+import collections
 import glob
 import hashlib
 import json
@@ -96,7 +102,7 @@ def source_sha(path):
 def measure_variant(root, path, unit, flags, compiler, thumb, address, image, base, size,
                     modes, scratch, variant, timeout):
     """Compile and measure one (source, compiler, flags) variant."""
-    obj = scratch / f'{Path(path).stem}-{variant}.o'
+    obj = scratch / f'{Path(path).stem}-{hashlib.sha1(str(path).encode()).hexdigest()[:8]}-{variant}.o'
     try:
         built = permuter.compile_object(root, root / path, obj, flags, thumb,
                                         compiler=root / compiler, timeout=timeout)
@@ -108,6 +114,9 @@ def measure_variant(root, path, unit, flags, compiler, thumb, address, image, ba
     wanted = image[address - base:address - base + size]
     try:
         actual = form_search.relocate(text, address, relocations, defined, modes=modes)
+    except form_search.UnsupportedRelocation as error:
+        return dict(status='relocation-failed', detail=str(error), variant=variant,
+                    relocationKind=error.kind)
     except (ValueError, AssertionError, struct.error) as error:
         return dict(status='relocation-failed', detail=str(error), variant=variant)
     score, length_delta = form_search.score(actual, wanted)
@@ -121,22 +130,27 @@ def measure_variant(root, path, unit, flags, compiler, thumb, address, image, ba
     return record
 
 
-def scan(root, modules, max_score, timeout, max_text_diff, under=None, cache_path=None):
+def scan(root, modules, max_score, timeout, max_text_diff, under=None, cache_path=None,
+         shard=None, work=None):
     config = source_units.load_config(root)
     enumerated = source_units.enumerate_sources(root, config)
     rows_by_module = {module: ledger_rows(root, module) for module in modules}
     images = {module: module_image(root, config, module) for module in modules}
     modes = {}
-    scratch = root / 'work/permuter/.scan'
+    scratch = Path(work) if work else root / 'work/permuter/.scan'
     scratch.mkdir(parents=True, exist_ok=True)
     cache_file = Path(cache_path) if cache_path else CACHE
     if not cache_file.is_absolute():
         cache_file = root / cache_file
     cache = json.loads(cache_file.read_text(encoding='utf-8')) if cache_file.is_file() else {}
     buckets = dict(ready=[], relocationOnly=[], far=[], exact=[], skipped=[])
+    relocation_skips = collections.Counter()
 
     units = [unit for unit in enumerated['compiled']
              if unit['module'] in modules and (not under or unit['path'].startswith(under))]
+    if shard is not None:
+        index, count = shard
+        units = [unit for position, unit in enumerate(units) if position % count == index]
     print(f'{len(units)} compiled unit(s) in {len(modules)} module(s)', file=sys.stderr)
     for index, unit in enumerate(units, 1):
         if index % 200 == 0:
@@ -166,6 +180,7 @@ def scan(root, modules, max_score, timeout, max_text_diff, under=None, cache_pat
             variants.append((alternate['compilerFlags'], alternate['compilerPath']))
         key_base = f'{path}|{source_sha(root / path)}|{address:#x}'
         best = None
+        skip_kinds = set()
         for variant_index, (flags, compiler) in enumerate(variants):
             if not (root / compiler).is_file():
                 continue
@@ -179,6 +194,8 @@ def scan(root, modules, max_score, timeout, max_text_diff, under=None, cache_pat
                                          f'v{variant_index}', timeout)
                 cache[key] = cached
             if cached['status'] != 'ok':
+                if cached.get('relocationKind') is not None:
+                    skip_kinds.add(cached['relocationKind'])
                 continue
             candidate = dict(cached, compiler=compiler, flags=list(flags))
             if best is None or candidate['score'] < best['score']:
@@ -186,7 +203,14 @@ def scan(root, modules, max_score, timeout, max_text_diff, under=None, cache_pat
             if candidate['score'] == 0:
                 break
         if best is None:
-            buckets['skipped'].append(dict(path=path, reason='no variant compiled'))
+            if skip_kinds:
+                for kind in skip_kinds:
+                    relocation_skips[kind] += 1
+                reason = ('unsupported relocation kind '
+                          + ', '.join(str(kind) for kind in sorted(skip_kinds)))
+            else:
+                reason = 'no variant compiled'
+            buckets['skipped'].append(dict(path=path, reason=reason))
             continue
         record = dict(address=f'{address:#010x}', bytes=size, mode=row['mode'], path=path,
                       module=unit['module'], compiler=best['compiler'],
@@ -210,12 +234,13 @@ def scan(root, modules, max_score, timeout, max_text_diff, under=None, cache_pat
                                       item.get('bytes') or 0, item.get('address') or ''))
     cache_file.parent.mkdir(parents=True, exist_ok=True)
     cache_file.write_text(json.dumps(cache), encoding='utf-8')
-    return dict(modules=modules, buckets=buckets, units=len(units))
+    return dict(modules=modules, buckets=buckets, units=len(units),
+                relocationSkips=dict(sorted(relocation_skips.items())))
 
 
 def summarize(paths):
     merged = dict(modules=[], buckets=dict(ready=[], relocationOnly=[], far=[], exact=[], skipped=[]),
-                  units=0)
+                  units=0, relocationSkips={})
     for name in paths:
         data = json.loads(Path(name).read_text(encoding='utf-8'))
         merged['units'] += data.get('units', 0)
@@ -224,6 +249,8 @@ def summarize(paths):
                 merged['modules'].append(module)
         for bucket, entries in data['buckets'].items():
             merged['buckets'].setdefault(bucket, []).extend(entries)
+        for kind, count in (data.get('relocationSkips') or {}).items():
+            merged['relocationSkips'][kind] = merged['relocationSkips'].get(kind, 0) + count
     return merged
 
 
@@ -247,6 +274,7 @@ def report(merged, json_path, md_path):
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_text(json.dumps(dict(generatedAt=time.strftime('%Y-%m-%dT%H:%M:%S%z'),
                                                units=merged['units'], modules=merged['modules'],
+                                               relocationSkips=merged.get('relocationSkips') or {},
                                                totals=totals, byModule=by_module,
                                                **buckets), indent=1) + '\n', encoding='utf-8')
         print(f'json: {destination}')
@@ -294,6 +322,12 @@ def report(merged, json_path, md_path):
             for entry in buckets['relocationOnly']:
                 lines.append(f"| `{entry['address']}` | {entry['bytes']} | {entry['module']} | "
                              f"`{entry['path']}` |")
+        skips = merged.get('relocationSkips') or {}
+        if skips:
+            lines += ['', '## Unsupported relocation kinds (skipped, not measured)', '',
+                      '| ELF relocation kind | units skipped |', '| ---: | ---: |']
+            for kind, count in sorted(skips.items(), key=lambda item: int(item[0])):
+                lines.append(f'| {kind} | {count} |')
         lines += ['',
                   '## Snapshot note',
                   '',
@@ -318,6 +352,10 @@ def report(merged, json_path, md_path):
     print(f"ready {totals['ready']['rows']} rows / {totals['ready']['bytes']} B; "
           f"relocation-only {totals['relocationOnly']['rows']}; far {totals['far']['rows']}; "
           f"exact {totals['exact']['rows']}; skipped {totals['skipped']['rows']}")
+    if merged.get('relocationSkips'):
+        print('relocation skips (kind: units): ' + ', '.join(
+            f'{kind}: {count}' for kind, count in sorted(merged['relocationSkips'].items(),
+                                                         key=lambda item: int(item[0]))))
 
 
 def main(argv=None):
@@ -333,6 +371,8 @@ def main(argv=None):
     parser.add_argument('--limit', type=int, default=40)
     parser.add_argument('--summarize', nargs='+', help='merge scan JSONs into the v2 report')
     parser.add_argument('--cache', help='per-process measurement cache path')
+    parser.add_argument('--work', help='scratch directory for compiled objects')
+    parser.add_argument('--shard', help='scan only shard INDEX/COUNT, e.g. 0/8')
     parser.add_argument('--out-json')
     parser.add_argument('--out-md')
     args = parser.parse_args(argv)
@@ -357,9 +397,16 @@ def main(argv=None):
     if unknown:
         parser.error('unknown module(s): ' + ', '.join(unknown))
 
+    shard = None
+    if args.shard:
+        index, count = (int(part) for part in args.shard.split('/'))
+        if count <= 0 or not (0 <= index < count):
+            parser.error('--shard must be INDEX/COUNT with 0 <= INDEX < COUNT')
+        shard = (index, count)
     result = scan(root, modules, args.max_score, args.timeout, args.max_text_diff,
-                  under=args.under, cache_path=args.cache)
-    payload = dict(modules=modules, units=result['units'], buckets=result['buckets'])
+                  under=args.under, cache_path=args.cache, shard=shard, work=args.work)
+    payload = dict(modules=modules, units=result['units'], buckets=result['buckets'],
+                   relocationSkips=result.get('relocationSkips') or {})
     if args.json:
         destination = Path(args.json)
         if not destination.is_absolute():
@@ -371,6 +418,10 @@ def main(argv=None):
         entries = result['buckets'][name]
         print(f'{name:15s} {len(entries):5d} row(s) '
               f'{sum(entry.get("bytes") or 0 for entry in entries):6d} B')
+    if payload['relocationSkips']:
+        print('relocation skips (kind: units): ' + ', '.join(
+            f'{kind}: {count}' for kind, count in sorted(payload['relocationSkips'].items(),
+                                                         key=lambda item: int(item[0]))))
     for entry in result['buckets']['ready'][:args.limit]:
         print(f'  READY {entry["address"]} {entry["bytes"]:4d} B score={entry["score"]} '
               f'textdiff={entry.get("textDiff")} {entry["path"]}')
