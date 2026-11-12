@@ -60,6 +60,10 @@ PERMUTER_REPOSITORY = 'https://github.com/simonlindholm/decomp-permuter.git'
 PERMUTER_PIN = '8556c81d80d1c1af98a858c8f4dc951357f29139'
 PERMUTER_ACQUIRE = 'acquire_decomp_permuter_20261101.py'
 WORKSPACES = ROOT / 'work/permuter'
+# ELF relocation kinds whose offset is an instruction word (ELF for ARM numbers
+# them 1 PC24, 10 THM_CALL, 28 CALL, 29 JUMP24, 30 THM_JUMP24).  See
+# build_target_object for why these cannot be zeroed.
+BRANCH_RELOCATIONS = frozenset((1, 10, 28, 29, 30))
 
 # The pinned build is what the ledger's accepted rows reproduce under (see
 # ops/compiler_matrix.py: every other installed build loses on more rows).
@@ -211,12 +215,22 @@ def relocation_slots(path):
 
 
 def build_target_object(base_obj, image_slice, out_path):
-    """Rewrite base.o's .text with the measured bytes, zeroing every relocation slot.
+    """Rewrite base.o's .text with the measured bytes.
 
     The relocation table is kept: it is what makes the compiled candidate and the
-    target diff on equal footing (same symbol names at the same offsets). Slots are
-    zeroed because mwccarm leaves an unresolved slot at its addend (0 for a data
-    pointer), so a zero there is what a fresh candidate will contain too.
+    target diff on equal footing (same symbol names at the same offsets).
+
+    Data slots (``R_ARM_ABS32``/``R_ARM_REL32``) are zeroed because mwccarm leaves
+    an unresolved slot at its addend (0 for a data pointer), so a zero there is
+    what a fresh candidate will contain too.
+
+    Branch slots are different: the relocation offset *is* the instruction word,
+    so zeroing a BL replaces it with ``andeq`` in the target while every candidate
+    renders ``bl <symbol>``.  That makes score 0 unreachable for any row with a
+    call (base score ~210 on a one-register row).  Those slots keep the base
+    object's unresolved instruction instead, which renders identically to a fresh
+    candidate.  The project's own byte gate still measures the real image at the
+    slot, so nothing is hidden.
     """
     text, offset = object_text(base_obj)
     if len(text) != len(image_slice):
@@ -226,12 +240,18 @@ def build_target_object(base_obj, image_slice, out_path):
             'get the size right (ops/form_search.py) before permuting.')
     target = bytearray(image_slice)
     slots = [slot for slot in relocation_slots(base_obj) if slot[0] + 4 <= len(target)]
-    for slot_offset, _, _ in slots:
-        target[slot_offset:slot_offset + 4] = b'\0\0\0\0'
+    branch_slots = []
+    for slot_offset, kind, _ in slots:
+        if kind in BRANCH_RELOCATIONS:
+            target[slot_offset:slot_offset + 4] = text[slot_offset:slot_offset + 4]
+            branch_slots.append(slot_offset)
+        else:
+            target[slot_offset:slot_offset + 4] = b'\0\0\0\0'
     data = bytearray(Path(base_obj).read_bytes())
     data[offset:offset + len(target)] = target
     Path(out_path).write_bytes(bytes(data))
     return {'bytes': len(target), 'slots': [list(slot) for slot in slots],
+            'branchSlots': branch_slots,
             'textSha256': sha256(bytes(target)), 'objectSha256': digest_file(out_path)}
 
 
