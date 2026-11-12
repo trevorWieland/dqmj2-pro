@@ -359,3 +359,38 @@ python ops/test_gen_ov000_gen1.py          # spelling and decoding unit tests
 
 See `docs/authoring/2026-11-12-ov000-gen1.md` for the cluster table, the
 first-try rates and the parked F3 cluster.
+
+## `gen_main_sweep3.py` / `capstone_disasm.py` — the main sweep-3 transcription lane
+
+`main` sweep 3 ships 102 rows / 5,080 B from the small end of the unmatched
+remainder (81 ARM, 21 Thumb). The remainder is a singleton tail — 456 of 471
+coarse-skeleton clusters over the 490 unclaimed rows of 192 B or less are
+singletons — so the lane is transcription-led, with eight multi-row clusters
+(20 rows) read once from a representative.
+
+```bash
+python ops/gen_main_sweep3.py --plan ops/main_sweep3_plan.json      # emit the lane
+python ops/gen_main_sweep3.py --plan ops/main_sweep3_plan.json --check
+python ops/verify_asm_chunk_scan.py \
+    --lane src/verified_assembly/20261112_main_sweep3 \
+    --fixture ops/main_sweep3_expectations.json
+```
+
+The plan carries the two judgement fields per row (`purpose`, `unknowns`);
+everything else is read from `extract/arm9/arm9.bin`. `ops/capstone_disasm.py` is
+a **tooling substitution**: `ops/transcribe_chunk.py` normally reads the pinned
+LLVM objdump through `ops/disasm.py`, and that NDK is not installed in every
+checkout (there is no `tools/android-ndk`). The shim renders the same
+`--no-show-raw-insn` text from Capstone 5.0.7 and normalises the dialect
+differences the transcriber keys on (bare branch targets, `r9`-`r12` aliases,
+`ldm`/`stm` with the `ia` suffix). Its output reproduces two rows the earlier
+lanes transcribed with the LLVM toolchain instruction-for-instruction
+(`main:0x02008c14`, `main:0x02007850`), so a restored NDK regenerates the same
+lane.
+
+Six of the most C-looking rows were probed with plausible C bodies first
+(`ops/probe_c.py`): **0 of 6 matched**, each differing in a source-form-independent
+codegen choice. One row (`main:0x0201919c`, 56 B) is documented rather than
+shipped: it is an ARM `blx`-immediate to a Thumb callee, whose `H` bit the shared
+`R_ARM_PC24` patcher preserves from the assembler's `H = 0` encoding.
+See `docs/authoring/2026-11-12-main-sweep3.md`.

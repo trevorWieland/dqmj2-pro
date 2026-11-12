@@ -1,0 +1,8 @@
+[
+ {"glob": "src/verified_assembly/20261112_main_sweep3/main/**", "module": "main",
+  "compilerFlags": "p003",
+  "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"},
+ {"glob": "src/verified_assembly/20261112_main_sweep3/main_thumb/**", "module": "main",
+  "compilerFlags": "p033", "mode": "thumb",
+  "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"}
+]
