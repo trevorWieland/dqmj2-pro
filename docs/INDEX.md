@@ -41,6 +41,7 @@ in order.
 | [public-build.md](public-build.md) | building and checking the public tree without private inputs |
 | [semantic-understanding.md](semantic-understanding.md) | how to do naming and meaning work without inventing |
 | [authoring/2026-11-11-unclaimed-tool.md](authoring/2026-11-11-unclaimed-tool.md) | source-first "is this row claimed?" screening, the four ledger buckets, and the 2026-11-11 stale-row correction |
+| [authoring/2026-11-11-main-thumb-2.md](authoring/2026-11-11-main-thumb-2.md) | the three Thumb layout dimensions (`WRITEBACK`/`HOIST`/`LOOP`), the argument-liveness pool-load finding, and the seven batch-4 rows |
 | [2026-11-10-code-and-progress-policy.md](2026-11-10-code-and-progress-policy.md) | what counts as a contribution and what earns credit |
 | [modding/example-title.md](modding/example-title.md) | the worked one-byte title patch with CRC fix-up |
 | [closed-checkpoint-176.md](closed-checkpoint-176.md) | the historical closed-checkpoint proof scope (superseded as a status page) |
