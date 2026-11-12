@@ -9,6 +9,8 @@ result is pinned in ``ops/ov006_sweep1_cattempts.json``.
 
     python ops/probe_ov006_sweep1.py            # probe every transcribed row
     python ops/probe_ov006_sweep1.py --record   # refresh the pinned result
+    python ops/probe_ov006_sweep1.py --plan ops/ov006_sweep2_plan.json \\
+        --result ops/ov006_sweep2_cattempts.json --work work/ov006-sweep2/cprobes --record
 """
 import argparse
 import json
@@ -65,16 +67,23 @@ void probe(Block *dst, Block *src)
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('--record', action='store_true')
+    parser.add_argument('--plan', type=Path, default=PLAN,
+                        help='plan JSON (default: ops/ov006_sweep1_plan.json)')
+    parser.add_argument('--result', type=Path, default=RESULT,
+                        help='pinned result JSON (default: ops/ov006_sweep1_cattempts.json)')
+    parser.add_argument('--work', type=Path, default=ROOT / 'work/ov006-sweep1/cprobes',
+                        help='scratch directory for the probe translation units')
     args = parser.parse_args(argv)
     config = source_units.load_config(ROOT)
-    plan = json.loads(PLAN.read_text())
-    probes = ROOT / 'work/ov006-sweep1/cprobes'
+    plan = json.loads(args.plan.read_text())
+    probes = args.work
     probes.mkdir(parents=True, exist_ok=True)
     ledger = probe_c.ledger_rows(ROOT)
     rows = {}
     exact = 0
     total = 0
-    for key in plan['asm']:
+    keys = plan.get('asm') or (plan.get('asmSingleton', []) + plan.get('asmDuplicatePool', []))
+    for key in keys:
         address = int(key, 16)
         row = ledger[('ov006', address)]
         profile = 'p033' if row.get('mode') == 'thumb' else 'p003'
@@ -98,8 +107,8 @@ def main(argv=None):
     print('%d rows, %d compilations, %d exact; closest body %d bytes off'
           % (len(rows), total, exact, closest))
     if args.record:
-        RESULT.write_text(json.dumps({'summary': summary, 'rows': rows}, indent=1) + '\n')
-        print('written', RESULT)
+        args.result.write_text(json.dumps({'summary': summary, 'rows': rows}, indent=1) + '\n')
+        print('written', args.result)
     return 0 if exact == 0 else 1
 
 

@@ -20,6 +20,5 @@ State `glob`, `module` and `compilerFlags`; add `compilerSha256` or `mode` only 
 from the most specific parent rule. See `docs/source-units.md` and
 `docs/authoring/2026-11-12-rules-fragments.md`.
 
-No fragment is shipped in this round: the three demonstration lane rules were already present in
-`config/source_units.json` when this change rebased onto main, so their fragments were dropped
-rather than duplicated. The next lane that adds a source directory creates the first fragment here.
+`config/rules.d/ov006-sweep2.json` is the first shipped fragment (the ov006
+sweep-2 lane's thumb and arm directories, 2026-11-12).

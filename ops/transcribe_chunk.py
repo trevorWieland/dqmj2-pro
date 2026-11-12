@@ -14,7 +14,18 @@ mwccarm's assembler is not gas and not capstone; the spellings that matter here 
 * ``push``/``pop`` are ``stmdb sp!``/``ldmia sp!``;
 * a conditional width suffix follows the condition (``ldreqsb``, not ``ldrsbeq``);
 * two pool slots holding the same value need distinct symbols (``native_data2_``),
-  because the assembler deduplicates one expression used twice.
+  because the assembler deduplicates one expression used twice;
+* a duplicated *non-address constant* is the same problem with no data pointer to
+  name. ``constant_aliases=True`` gives each slot its own alias symbol
+  (``native_const_<value>``, ``native_const2_<value>``, ...). The assembler keeps
+  two slots because two distinct undefined symbols cannot be folded, and the
+  verifier resolves the alias name to the value and pins the image word, so the
+  constant is checked rather than assumed;
+* whether a value is "duplicated" is a property of the *pool slots*, not of the
+  loads: one slot loaded twice is one entry. ``unique_pool_slots=True`` counts
+  distinct slots (the pre-2026-11-12 lanes counted loads, which misread a shared
+  slot as a duplicate); the default keeps the old counting so the sweep-1
+  generator still recreates its lane byte-for-byte.
 
 Thumb adds a different dialect (``--mode`` comes from the ledger row, never from
 the caller):
@@ -324,7 +335,7 @@ def row_for(module, address):
     return None
 
 
-def emit(module, row, purpose, unknowns):
+def emit(module, row, purpose, unknowns, constant_aliases=False, unique_pool_slots=False):
     image_path, base = disasm.module_image(ROOT, module)
     image = image_path.read_bytes()
     offset = int(row['binaryOffset'])
@@ -361,18 +372,30 @@ def emit(module, row, purpose, unknowns):
                                                        target - address))
     # Two pool slots holding the same value need distinct symbols: the assembler
     # would otherwise deduplicate one expression into a single slot. A duplicated
-    # *constant* is not nameable, so a duplicated address-like word is named as
-    # the data pointer it is; anything else is refused rather than silently
+    # address-like word is named as the data pointer it is. A duplicated *constant*
+    # has no pointer to name; with constant_aliases each slot gets its own alias
+    # symbol whose name carries the measured value, because two distinct undefined
+    # symbols cannot be folded. Anything else is refused rather than silently
     # emitting one slot for two.
     occurrences = {}
-    for at in sorted(inside):
-        value = int.from_bytes(image[inside[at] - base:inside[at] - base + 4], 'little')
-        occurrences.setdefault(value, []).append(inside[at])
+    if unique_pool_slots:
+        # Count distinct pool slots, not loads: a slot loaded twice is one entry.
+        slot_value = {}
+        for at in sorted(inside):
+            slot = inside[at]
+            slot_value[slot] = int.from_bytes(image[slot - base:slot - base + 4], 'little')
+        for slot in sorted(slot_value):
+            occurrences.setdefault(slot_value[slot], []).append(slot)
+    else:
+        for at in sorted(inside):
+            value = int.from_bytes(image[inside[at] - base:inside[at] - base + 4], 'little')
+            occurrences.setdefault(value, []).append(inside[at])
     slot_alias = {}
     for value, slots_for_value in occurrences.items():
         for index, slot in enumerate(slots_for_value):
             slot_alias[slot] = index
     slot_expression = {}
+    constant_alias_counts = {}
     for at in sorted(inside):
         slot = inside[at]
         value = int.from_bytes(image[slot - base:slot - base + 4], 'little')
@@ -381,6 +404,9 @@ def emit(module, row, purpose, unknowns):
             if len(occurrences[value]) > 1:
                 if value % 2 == 0 and 0x01000000 <= value < 0x04000000:
                     name, addend = 'native_data_%08x' % value, 0
+                elif constant_aliases:
+                    name, addend = 'native_const_%08x' % value, 0
+                    constant_alias_counts[value] = len(occurrences[value])
                 else:
                     raise SystemExit('duplicate non-address pool value %08x' % value)
             else:
@@ -388,7 +414,12 @@ def emit(module, row, purpose, unknowns):
                 continue
         index = slot_alias[slot]
         if index:
-            prefix = 'native_data' if name.startswith('native_data') else 'native_fn'
+            if name.startswith('native_data'):
+                prefix = 'native_data'
+            elif name.startswith('native_const'):
+                prefix = 'native_const'
+            else:
+                prefix = 'native_fn'
             name = name.replace(prefix + '_', '%s%d_' % (prefix, index + 1), 1)
         slot_expression[slot] = '%s+%d' % (name, addend) if addend else name
     body = []
@@ -502,6 +533,16 @@ def emit(module, row, purpose, unknowns):
     header.append(' *   %d block transfer(s), %d word store instruction(s)' % (
         block_transfers, stores))
     header.append(' *')
+    if constant_alias_counts:
+        for value in sorted(constant_alias_counts):
+            count = constant_alias_counts[value]
+            header.append(' * %d pool slots hold the same non-address constant 0x%08x.' % (
+                count, value))
+            header.append(' * mwcc folds an equal numeric literal into one slot, so each slot is')
+            header.append(' * given its own alias symbol native_const_%08x, native_const2_%08x,'
+                          ' ...' % (value, value))
+            header.append(' * The alias is an assembler label carrying the measured constant, not')
+            header.append(' * an address claim; the fixture pins every image word.')
     header.append(' * Body: the measured instruction stream transcribed from')
     header.append(' * %s at 0x%08x; the literal pool and' % (image_path.name, address))
     header.append(' * every branch target are read from the image, not guessed.')

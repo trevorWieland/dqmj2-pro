@@ -1,0 +1,751 @@
+{
+ "asmSingleton": [
+  "022031a0",
+  "021e5870",
+  "021fe60c",
+  "021fe7ec",
+  "02206080",
+  "021dc08c",
+  "021ec914",
+  "021ed768",
+  "021fb86c",
+  "021ed9d4",
+  "021ea35c",
+  "02204bc8",
+  "021e92f4",
+  "021e9e04",
+  "02206374",
+  "021e90c0",
+  "021edce4",
+  "022018bc",
+  "02204cb4",
+  "021ef858",
+  "021e80c4",
+  "021e8130",
+  "021ed55c",
+  "021e4138",
+  "021e4250",
+  "021ed700",
+  "021fb958",
+  "021e3e40",
+  "021dd3c0",
+  "021de228",
+  "021de288",
+  "021df17c",
+  "021e6b6c",
+  "021e9484",
+  "021f2404",
+  "021efa10",
+  "021def28",
+  "021e7210",
+  "021ef1b8",
+  "021ed6a8",
+  "021e7ca0",
+  "021eb890",
+  "021ed654",
+  "021edbcc",
+  "021e6954",
+  "021e9218",
+  "021f2604",
+  "021fdcd0",
+  "021ff5c4",
+  "021ef8c8",
+  "02204dfc",
+  "021db660",
+  "021dff30",
+  "021e4b70",
+  "021e8fc0",
+  "021e94e4",
+  "021ea314",
+  "02200888",
+  "021e4bd8",
+  "021ec990",
+  "021fe8ec",
+  "021e442c",
+  "021f2464",
+  "022040cc",
+  "021e9dc8",
+  "021ef810",
+  "021f25c8",
+  "021ed99c",
+  "021edfac",
+  "021ef0a0",
+  "021f0554",
+  "021f2124",
+  "021eda50",
+  "021f1f40",
+  "021f1f74",
+  "02203114",
+  "02204f24",
+  "021e57d0",
+  "021ed198",
+  "021f24a4",
+  "021dfe48",
+  "021ef078",
+  "021f221c",
+  "021f27d4",
+  "021fe690",
+  "02202a48",
+  "022045e0",
+  "021eda84",
+  "021ecf68",
+  "021dbb68",
+  "021f2370",
+  "02204218",
+  "022038e8",
+  "021f5428",
+  "0220490c",
+  "0220383c"
+ ],
+ "asmDuplicatePool": [
+  "021e81e8",
+  "021ea7d8",
+  "021e8814",
+  "021f32b8",
+  "021f50b0",
+  "021ddc38",
+  "021fb080",
+  "021f34e4",
+  "021f317c",
+  "021fee28",
+  "022026d8",
+  "02200098",
+  "021ebb3c",
+  "021f80c4",
+  "021ff4d8",
+  "02200194",
+  "0220026c",
+  "021faf60",
+  "021faeb8",
+  "022027dc",
+  "021ff0d0",
+  "02202eb0",
+  "021f5010",
+  "021f39e8",
+  "021f4ac4",
+  "02200b88",
+  "02202dcc",
+  "021f8998",
+  "021f2c0c",
+  "021fd8d8",
+  "021f3030",
+  "021f309c",
+  "021f2f60",
+  "021f2fc8",
+  "021f3108",
+  "02202e50",
+  "02203954",
+  "02203908",
+  "02202f54"
+ ],
+ "deferredJumpTable": [
+  "021e0454",
+  "021d8874",
+  "021dc3b8",
+  "021dfa24",
+  "021f3b10",
+  "021ef564",
+  "02202018",
+  "021f3660",
+  "021f5568",
+  "02203a80",
+  "021ede50",
+  "021f3a78",
+  "022022f0"
+ ],
+ "droppedAlreadyDefined": {
+  "021f2c84": "chunk lane: src/verified_assembly/20261112_asm_chunk_scan/ov006_thumb",
+  "021f37f0": "chunk lane: src/verified_assembly/20261112_asm_chunk_scan/ov006_thumb",
+  "021f4014": "chunk lane: src/verified_assembly/20261112_asm_chunk_scan/ov006_thumb",
+  "021f4944": "chunk lane: src/verified_assembly/20261112_asm_chunk_scan/ov006_thumb",
+  "021feaa0": "chunk lane: src/verified_assembly/20261112_asm_chunk_scan/ov006_thumb",
+  "021ffe5c": "chunk lane: src/verified_assembly/20261112_asm_chunk_scan/ov006_thumb",
+  "021fff94": "chunk lane: src/verified_assembly/20261112_asm_chunk_scan/ov006_thumb"
+ },
+ "parkedMidPool": {
+  "021ebc2c": "interleaved literal pool at +0x354, code resumes after it"
+ },
+ "sizes": {
+  "022031a0": {
+   "bytes": 136,
+   "mode": "thumb"
+  },
+  "021e5870": {
+   "bytes": 132,
+   "mode": "arm"
+  },
+  "021fe60c": {
+   "bytes": 132,
+   "mode": "thumb"
+  },
+  "021fe7ec": {
+   "bytes": 128,
+   "mode": "thumb"
+  },
+  "02206080": {
+   "bytes": 128,
+   "mode": "arm"
+  },
+  "021dc08c": {
+   "bytes": 124,
+   "mode": "arm"
+  },
+  "021ec914": {
+   "bytes": 124,
+   "mode": "thumb"
+  },
+  "021ed768": {
+   "bytes": 124,
+   "mode": "thumb"
+  },
+  "021fb86c": {
+   "bytes": 124,
+   "mode": "thumb"
+  },
+  "021ed9d4": {
+   "bytes": 122,
+   "mode": "thumb"
+  },
+  "021ea35c": {
+   "bytes": 120,
+   "mode": "arm"
+  },
+  "02204bc8": {
+   "bytes": 120,
+   "mode": "arm"
+  },
+  "021e92f4": {
+   "bytes": 116,
+   "mode": "arm"
+  },
+  "021e9e04": {
+   "bytes": 116,
+   "mode": "arm"
+  },
+  "02206374": {
+   "bytes": 116,
+   "mode": "arm"
+  },
+  "021e90c0": {
+   "bytes": 112,
+   "mode": "arm"
+  },
+  "021edce4": {
+   "bytes": 112,
+   "mode": "thumb"
+  },
+  "022018bc": {
+   "bytes": 112,
+   "mode": "thumb"
+  },
+  "02204cb4": {
+   "bytes": 112,
+   "mode": "arm"
+  },
+  "021ef858": {
+   "bytes": 110,
+   "mode": "thumb"
+  },
+  "021e80c4": {
+   "bytes": 108,
+   "mode": "arm"
+  },
+  "021e8130": {
+   "bytes": 108,
+   "mode": "arm"
+  },
+  "021ed55c": {
+   "bytes": 108,
+   "mode": "thumb"
+  },
+  "021e4138": {
+   "bytes": 104,
+   "mode": "arm"
+  },
+  "021e4250": {
+   "bytes": 104,
+   "mode": "arm"
+  },
+  "021ed700": {
+   "bytes": 104,
+   "mode": "thumb"
+  },
+  "021fb958": {
+   "bytes": 104,
+   "mode": "thumb"
+  },
+  "021e3e40": {
+   "bytes": 100,
+   "mode": "arm"
+  },
+  "021dd3c0": {
+   "bytes": 96,
+   "mode": "arm"
+  },
+  "021de228": {
+   "bytes": 96,
+   "mode": "arm"
+  },
+  "021de288": {
+   "bytes": 96,
+   "mode": "arm"
+  },
+  "021df17c": {
+   "bytes": 96,
+   "mode": "arm"
+  },
+  "021e6b6c": {
+   "bytes": 96,
+   "mode": "arm"
+  },
+  "021e9484": {
+   "bytes": 96,
+   "mode": "arm"
+  },
+  "021f2404": {
+   "bytes": 96,
+   "mode": "thumb"
+  },
+  "021efa10": {
+   "bytes": 94,
+   "mode": "thumb"
+  },
+  "021def28": {
+   "bytes": 92,
+   "mode": "arm"
+  },
+  "021e7210": {
+   "bytes": 88,
+   "mode": "arm"
+  },
+  "021ef1b8": {
+   "bytes": 88,
+   "mode": "thumb"
+  },
+  "021ed6a8": {
+   "bytes": 86,
+   "mode": "thumb"
+  },
+  "021e7ca0": {
+   "bytes": 84,
+   "mode": "arm"
+  },
+  "021eb890": {
+   "bytes": 84,
+   "mode": "arm"
+  },
+  "021ed654": {
+   "bytes": 84,
+   "mode": "thumb"
+  },
+  "021edbcc": {
+   "bytes": 84,
+   "mode": "thumb"
+  },
+  "021e6954": {
+   "bytes": 80,
+   "mode": "arm"
+  },
+  "021e9218": {
+   "bytes": 80,
+   "mode": "arm"
+  },
+  "021f2604": {
+   "bytes": 80,
+   "mode": "thumb"
+  },
+  "021fdcd0": {
+   "bytes": 80,
+   "mode": "thumb"
+  },
+  "021ff5c4": {
+   "bytes": 80,
+   "mode": "thumb"
+  },
+  "021ef8c8": {
+   "bytes": 78,
+   "mode": "thumb"
+  },
+  "02204dfc": {
+   "bytes": 76,
+   "mode": "arm"
+  },
+  "021db660": {
+   "bytes": 72,
+   "mode": "arm"
+  },
+  "021dff30": {
+   "bytes": 72,
+   "mode": "arm"
+  },
+  "021e4b70": {
+   "bytes": 72,
+   "mode": "arm"
+  },
+  "021e8fc0": {
+   "bytes": 72,
+   "mode": "arm"
+  },
+  "021e94e4": {
+   "bytes": 72,
+   "mode": "arm"
+  },
+  "021ea314": {
+   "bytes": 72,
+   "mode": "arm"
+  },
+  "02200888": {
+   "bytes": 70,
+   "mode": "thumb"
+  },
+  "021e4bd8": {
+   "bytes": 68,
+   "mode": "arm"
+  },
+  "021ec990": {
+   "bytes": 68,
+   "mode": "thumb"
+  },
+  "021fe8ec": {
+   "bytes": 68,
+   "mode": "thumb"
+  },
+  "021e442c": {
+   "bytes": 64,
+   "mode": "arm"
+  },
+  "021f2464": {
+   "bytes": 64,
+   "mode": "thumb"
+  },
+  "022040cc": {
+   "bytes": 64,
+   "mode": "thumb"
+  },
+  "021e9dc8": {
+   "bytes": 60,
+   "mode": "arm"
+  },
+  "021ef810": {
+   "bytes": 60,
+   "mode": "thumb"
+  },
+  "021f25c8": {
+   "bytes": 60,
+   "mode": "thumb"
+  },
+  "021ed99c": {
+   "bytes": 56,
+   "mode": "thumb"
+  },
+  "021edfac": {
+   "bytes": 56,
+   "mode": "thumb"
+  },
+  "021ef0a0": {
+   "bytes": 56,
+   "mode": "thumb"
+  },
+  "021f0554": {
+   "bytes": 56,
+   "mode": "thumb"
+  },
+  "021f2124": {
+   "bytes": 56,
+   "mode": "thumb"
+  },
+  "021eda50": {
+   "bytes": 52,
+   "mode": "thumb"
+  },
+  "021f1f40": {
+   "bytes": 52,
+   "mode": "thumb"
+  },
+  "021f1f74": {
+   "bytes": 52,
+   "mode": "thumb"
+  },
+  "02203114": {
+   "bytes": 52,
+   "mode": "thumb"
+  },
+  "02204f24": {
+   "bytes": 52,
+   "mode": "arm"
+  },
+  "021e57d0": {
+   "bytes": 48,
+   "mode": "arm"
+  },
+  "021ed198": {
+   "bytes": 48,
+   "mode": "thumb"
+  },
+  "021f24a4": {
+   "bytes": 48,
+   "mode": "thumb"
+  },
+  "021dfe48": {
+   "bytes": 44,
+   "mode": "arm"
+  },
+  "021ef078": {
+   "bytes": 40,
+   "mode": "thumb"
+  },
+  "021f221c": {
+   "bytes": 40,
+   "mode": "thumb"
+  },
+  "021f27d4": {
+   "bytes": 40,
+   "mode": "thumb"
+  },
+  "021fe690": {
+   "bytes": 40,
+   "mode": "thumb"
+  },
+  "02202a48": {
+   "bytes": 40,
+   "mode": "thumb"
+  },
+  "022045e0": {
+   "bytes": 40,
+   "mode": "thumb"
+  },
+  "021eda84": {
+   "bytes": 36,
+   "mode": "thumb"
+  },
+  "021ecf68": {
+   "bytes": 34,
+   "mode": "thumb"
+  },
+  "021dbb68": {
+   "bytes": 32,
+   "mode": "arm"
+  },
+  "021f2370": {
+   "bytes": 32,
+   "mode": "thumb"
+  },
+  "02204218": {
+   "bytes": 32,
+   "mode": "thumb"
+  },
+  "022038e8": {
+   "bytes": 30,
+   "mode": "thumb"
+  },
+  "021f5428": {
+   "bytes": 28,
+   "mode": "thumb"
+  },
+  "0220490c": {
+   "bytes": 16,
+   "mode": "thumb"
+  },
+  "0220383c": {
+   "bytes": 10,
+   "mode": "thumb"
+  },
+  "021e81e8": {
+   "bytes": 1580,
+   "mode": "arm"
+  },
+  "021ea7d8": {
+   "bytes": 1004,
+   "mode": "arm"
+  },
+  "021e8814": {
+   "bytes": 476,
+   "mode": "arm"
+  },
+  "021f32b8": {
+   "bytes": 476,
+   "mode": "thumb"
+  },
+  "021f50b0": {
+   "bytes": 460,
+   "mode": "thumb"
+  },
+  "021ddc38": {
+   "bytes": 348,
+   "mode": "arm"
+  },
+  "021fb080": {
+   "bytes": 348,
+   "mode": "thumb"
+  },
+  "021f34e4": {
+   "bytes": 324,
+   "mode": "thumb"
+  },
+  "021f317c": {
+   "bytes": 316,
+   "mode": "thumb"
+  },
+  "021fee28": {
+   "bytes": 280,
+   "mode": "thumb"
+  },
+  "022026d8": {
+   "bytes": 260,
+   "mode": "thumb"
+  },
+  "02200098": {
+   "bytes": 252,
+   "mode": "thumb"
+  },
+  "021ebb3c": {
+   "bytes": 240,
+   "mode": "thumb"
+  },
+  "021f80c4": {
+   "bytes": 240,
+   "mode": "thumb"
+  },
+  "021ff4d8": {
+   "bytes": 236,
+   "mode": "thumb"
+  },
+  "02200194": {
+   "bytes": 216,
+   "mode": "thumb"
+  },
+  "0220026c": {
+   "bytes": 216,
+   "mode": "thumb"
+  },
+  "021faf60": {
+   "bytes": 200,
+   "mode": "thumb"
+  },
+  "021faeb8": {
+   "bytes": 168,
+   "mode": "thumb"
+  },
+  "022027dc": {
+   "bytes": 168,
+   "mode": "thumb"
+  },
+  "021ff0d0": {
+   "bytes": 164,
+   "mode": "thumb"
+  },
+  "02202eb0": {
+   "bytes": 164,
+   "mode": "thumb"
+  },
+  "021f5010": {
+   "bytes": 160,
+   "mode": "thumb"
+  },
+  "021f39e8": {
+   "bytes": 144,
+   "mode": "thumb"
+  },
+  "021f4ac4": {
+   "bytes": 140,
+   "mode": "thumb"
+  },
+  "02200b88": {
+   "bytes": 132,
+   "mode": "thumb"
+  },
+  "02202dcc": {
+   "bytes": 132,
+   "mode": "thumb"
+  },
+  "021f8998": {
+   "bytes": 128,
+   "mode": "thumb"
+  },
+  "021f2c0c": {
+   "bytes": 120,
+   "mode": "thumb"
+  },
+  "021fd8d8": {
+   "bytes": 112,
+   "mode": "thumb"
+  },
+  "021f3030": {
+   "bytes": 108,
+   "mode": "thumb"
+  },
+  "021f309c": {
+   "bytes": 108,
+   "mode": "thumb"
+  },
+  "021f2f60": {
+   "bytes": 104,
+   "mode": "thumb"
+  },
+  "021f2fc8": {
+   "bytes": 104,
+   "mode": "thumb"
+  },
+  "021f3108": {
+   "bytes": 96,
+   "mode": "thumb"
+  },
+  "02202e50": {
+   "bytes": 96,
+   "mode": "thumb"
+  },
+  "02203954": {
+   "bytes": 80,
+   "mode": "thumb"
+  },
+  "02203908": {
+   "bytes": 76,
+   "mode": "thumb"
+  },
+  "02202f54": {
+   "bytes": 68,
+   "mode": "thumb"
+  }
+ },
+ "duplicateValues": {
+  "021e81e8": "2aaaaaab",
+  "021ea7d8": "000f423f",
+  "021e8814": "2aaaaaab",
+  "021f32b8": "0000011e",
+  "021f50b0": "ffffe0ff",
+  "021ddc38": "04001000",
+  "021fb080": "fe00ff00",
+  "021f34e4": "0000011e",
+  "021f317c": "0000011e",
+  "021fee28": "000004e6",
+  "022026d8": "00000a93",
+  "02200098": "00001306",
+  "021ebb3c": "00000116",
+  "021f80c4": "000003ff",
+  "021ff4d8": "000001ef",
+  "02200194": "00001b95",
+  "0220026c": "00001370",
+  "021faf60": "0000e01d",
+  "021faeb8": "fe00ff00",
+  "022027dc": "00000a93",
+  "021ff0d0": "000004f6",
+  "02202eb0": "fe00ff00",
+  "021f5010": "04001000",
+  "021f39e8": "fffff3ff",
+  "021f4ac4": "fffff3ff",
+  "02200b88": "0001b144",
+  "02202dcc": "c1fffcff",
+  "021f8998": "fe00ff00",
+  "021f2c0c": "04000208",
+  "021fd8d8": "ffff3be9",
+  "021f3030": "0000011d",
+  "021f309c": "0000011d",
+  "021f2f60": "0000011d",
+  "021f2fc8": "0000011d",
+  "021f3108": "0000011d",
+  "02202e50": "fffff3ff",
+  "02203954": "ffffe0ff",
+  "02203908": "ffffe0ff",
+  "02202f54": "fffff3ff"
+ }
+}
