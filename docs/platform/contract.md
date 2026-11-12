@@ -41,6 +41,38 @@ the file and function. Items without a matched reader are marked **UNKNOWN** and
 | Threads/locks | `src/main_sdk_aux/20261101_lock_pair/native_main_02005f08.c`, `20261101_thread_remove124` | lock word acquire/release on a pointer-sized word | Single-threaded ports may no-op only if they never run concurrent guest threads | proven-by-code |
 | ARM7 boot handshake | none matched on the ARM9 side; ARM7 images are reconstructed under `src/arm7/` | UNKNOWN | A port must either run the ARM7 image or stub its FIFO status so the ARM9 boot does not spin | UNKNOWN |
 
+## 1a. Whole-image link verification (the gate that keeps this contract honest)
+
+Every claim in this file rests on matched source.  Since this change the tree can *prove* the
+matched part of the ARM9 module end to end: `public_tools/whole_image_link.py` compiles every
+accepted main-module source, places each function at the address the address ledger measured
+for it, links the whole module with the pinned `mwldarm`, and diffs the flat product against
+`extract/arm9/arm9.bin`.
+
+* **The linker command file is derived, not written.**  `ports/recompile/arm9.lcf` takes its
+  region origins and the five section boundaries from `config/arm9/delinks.txt`, cross-checks
+  them against the private module header `extract/arm9/arm9.yaml` (`base_address`,
+  `bss_start`, `bss_end`) and the extracted image's size, and follows the Metrowerks LCF
+  dialect that `dsd lcf` (dsd 0.12.1) generates for this project.  Each span is
+  `. = <measured address>; <object> (.text)`.
+* **The diff is byte for byte, and it attributes every difference.**  A difference inside a
+  placed function is a gate failure; a difference inside a stubbed function, an alignment hole
+  or the `.rodata`/`.data` window is reported as such and cannot pass itself off as a match.
+  Placement is proved separately: each placed symbol must sit at its measured address in the
+  link product.
+* **What it currently proves.**  The linked image is exactly the module's declared 930 560
+  bytes, 4 671 functions (440 968 text bytes) are placed, and **4 255 functions / 386 372
+  bytes reproduce the extracted bytes exactly** — 44.5 % of `.text`.  That set is committed as
+  `ports/recompile/arm9-baseline.json` and CI fails when any member of it stops reproducing.
+* **What it does not prove.**  1 791 of 6 463 functions are stubs (424 212 bytes), `.rodata`
+  and `.data` are not reconstructed (46 333 bytes), and 417 placed functions declared matched
+  by the ledger still differ from the image by 1 691 bytes in total.  The gate reports all
+  three rather than papering over them, so no number in this contract should be read as
+  "the module is reconstructed".
+* **The ROM identity is part of the gate.**  When `inputs/game.nds` is present the tool hashes
+  it and fails unless it is the build the ledger and the image came from
+  (`674c5cbf3e03e1f8777d39c7bb9bb195e4a625ae278ee307176a0f60d9d38ba6`).  The ROM is never
+  committed and the gate skips cleanly when the pinned private-input bundle is unavailable.
 ## 2. Porting order
 
 1. **Linkable boot floor** — memory (`CpuSet`/`CpuFastSet`), IRQ save/restore, VBlank/`IntrWait`

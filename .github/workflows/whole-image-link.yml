@@ -1,0 +1,137 @@
+name: Whole-image ARM9 link
+
+# The verification gate: link every accepted main-module source file into the ARM9 module's
+# declared section layout and diff the result against the extracted module image.  The
+# private inputs (the extracted image, the address ledger, the pinned toolchain) are never
+# committed; they arrive through the same pinned input bundle the authored-code build uses,
+# and the gate skips rather than fails when that bundle is unavailable.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ports/recompile/**
+      - public_tools/whole_image_link.py
+      - public_tools/test_whole_image_link.py
+      - config/arm9/delinks.txt
+      - .github/workflows/whole-image-link.yml
+  pull_request:
+    paths:
+      - ports/recompile/**
+      - public_tools/whole_image_link.py
+      - public_tools/test_whole_image_link.py
+      - config/arm9/delinks.txt
+      - .github/workflows/whole-image-link.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  GIT_CONFIG_COUNT: "2"
+  GIT_CONFIG_KEY_0: core.autocrlf
+  GIT_CONFIG_VALUE_0: "false"
+  GIT_CONFIG_KEY_1: core.longpaths
+  GIT_CONFIG_VALUE_1: "true"
+
+concurrency:
+  group: whole-image-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Runs on every checkout, including forks with no private inputs.
+  layout:
+    name: Section table and linker command file
+    runs-on: windows-2025
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: "3.13.5"
+      - name: Derive the module geometry from the committed section table
+        shell: pwsh
+        run: python public_tools/whole_image_link.py --root . --check-layout
+      - name: Check the linker command file renderer and the diff attribution
+        shell: pwsh
+        run: |
+          Push-Location public_tools
+          python -m unittest test_whole_image_link -v
+          if ($LASTEXITCODE) { Pop-Location; exit $LASTEXITCODE }
+          Pop-Location
+
+  # The gate itself.  Needs the pinned private-input bundle; skips cleanly without it.
+  whole-image:
+    name: Link and diff the whole ARM9 image
+    runs-on: windows-2025
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      # Same mechanism as .github/workflows/bytematch.yml: a pinned private repository,
+      # read with a deploy key, unpacked into the checkout by the tool itself.  Nothing
+      # private is ever committed, and a fork without the key simply has no bundle.
+      - name: Read private immutable inputs
+        continue-on-error: true
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: trevorWieland/dqmj2-pro-inputs
+          ref: c27be6cad6bc4a54277874597bee9f2f38ef373d
+          ssh-key: ${{ secrets.BUILD_INPUTS_DEPLOY_KEY }}
+          persist-credentials: false
+          path: private-inputs
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: "3.13.5"
+      - name: Restore compiled objects
+        uses: actions/cache@v4
+        with:
+          path: build/whole-image
+          key: whole-image-objects-${{ hashFiles('config/source_units.json') }}-${{ hashFiles('ports/recompile/arm9.lcf') }}-${{ github.sha }}
+          restore-keys: |
+            whole-image-objects-${{ hashFiles('config/source_units.json') }}-${{ hashFiles('ports/recompile/arm9.lcf') }}-
+            whole-image-objects-
+      - name: Link every accepted main-module source into the declared layout and diff it
+        shell: pwsh
+        run: |
+          python public_tools/whole_image_link.py --root . --input-bundle private-inputs --out build/whole-image --jobs 12
+          $code = $LASTEXITCODE
+          if (Test-Path build/whole-image/summary.json) {
+            $summary = Get-Content build/whole-image/summary.json -Raw | ConvertFrom-Json
+            @(
+              '# Whole-image ARM9 link'
+              ''
+              ('- Status: {0}' -f $summary.status)
+              ('- Linked image: {0} bytes (expected {1})' -f $summary.link.regionFileBytes, $summary.link.expectedBytes)
+              ('- Objects placed: {0}' -f $summary.link.objects)
+              ('- Reconstructed text: {0} bytes in {1} spans' -f $summary.text.reconstructedBytes, $summary.sources.placedSpans)
+              ('- Differing bytes: {0} total; reconstructed {1}, stubbed {2}, text holes {3}, data window {4}' -f `
+                  $summary.diff.differingBytes, $summary.diff.reconstructedDifferingBytes, `
+                  $summary.diff.stubDifferingBytes, $summary.diff.gapDifferingBytes, `
+                  $summary.diff.dataWindowDifferingBytes)
+              ('- Matched functions that differ: {0}' -f $summary.diff.mismatchedFunctions)
+            ) | Set-Content build/whole-image/progress-summary.md -Encoding utf8
+          }
+          exit $code
+      - name: Prove the committed linker command file is current
+        shell: pwsh
+        run: |
+          if (-not (Test-Path build/whole-image/summary.json)) { Write-Host 'no summary; nothing to check'; exit 0 }
+          python public_tools/whole_image_link.py --root . --emit-lcf
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          git diff --exit-code -- ports/recompile/arm9.lcf
+          if ($LASTEXITCODE) { throw 'ports/recompile/arm9.lcf is stale; regenerate it with --emit-lcf' }
+      - name: Upload the evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: whole-image-evidence
+          if-no-files-found: warn
+          path: |
+            build/whole-image/summary.json
+            build/whole-image/link.json
+            build/whole-image/progress-summary.md
+            build/whole-image/plan.json
