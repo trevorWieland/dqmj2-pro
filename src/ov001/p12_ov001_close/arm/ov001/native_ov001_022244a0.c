@@ -33,7 +33,7 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_021dbd24(void);
-extern void native_fn_021dbd30(void);
+extern void ov001_record_field_1f2_021dbd30(void);
 extern void native_fn_021dbcbc(void);
 extern void native_fn_021dbcf0(void);
 extern void native_fn_021dbd3c(void);
@@ -64,7 +64,7 @@ ov001_022244a0_L3c:
     bl native_fn_021dbd24
     ldmia sp!, {r4, r5, r6, pc}
 ov001_022244a0_L44:
-    bl native_fn_021dbd30
+    bl ov001_record_field_1f2_021dbd30
     ldmia sp!, {r4, r5, r6, pc}
 ov001_022244a0_L4c:
     bl native_fn_021dbcbc

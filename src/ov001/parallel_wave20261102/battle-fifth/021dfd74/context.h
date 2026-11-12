@@ -16,7 +16,7 @@ extern u32 native_fn_0207afec();
 extern u32 native_fn_0207b02c();
 extern u32 native_fn_ov001_021db0d8();
 extern u32 native_fn_ov001_021db2ec();
-extern u32 native_fn_ov001_021db438();
+extern u32 ov001_side_slot_record_021db438();
 extern u32 native_fn_ov001_021e8178();
 extern u32 native_fn_ov001_021e81d0();
 typedef struct {

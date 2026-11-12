@@ -35,9 +35,9 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_0205d790(void);
-extern void native_fn_021db438(void);
-extern void native_fn_021db8d0(void);
-extern void native_fn_021eec7c(void);
+extern void ov001_side_slot_record_021db438(void);
+extern void ov001_record_is_active_021db8d0(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_021d8b4c(void);
 extern void native_fn_021eedbc(void);
 
@@ -57,7 +57,7 @@ asm u32 native_ov001_021f2120 (register u32 a0)
     ldr r0, =0x0223989c
     mov r1, #0
     ldrb r0, [r0, #0x11]
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r9, r0
     mov r5, #3
 ov001_021f2120_L40:
@@ -68,7 +68,7 @@ ov001_021f2120_L40:
     mov r7, r9
 ov001_021f2120_L54:
     mov r0, r7
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021f2120_Lf0
     add r0, r7, #768
@@ -80,7 +80,7 @@ ov001_021f2120_L54:
     mov r0, r8
     mov r1, r7
     mov r2, r4
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     b ov001_021f2120_Lf0
 ov001_021f2120_L90:
     add r0, r9, #30

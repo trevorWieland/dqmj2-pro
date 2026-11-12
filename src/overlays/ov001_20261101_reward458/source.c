@@ -12,7 +12,7 @@ u32 native_ov001_021e3f68(void) {
     flags = native_data_ov001_02238d18;
     index = 0;
     do {
-        actor = native_fn_ov001_021db438(1, index);
+        actor = ov001_side_slot_record_021db438(1, index);
         ready = actor[0x31C];
         if (ready != 0 && actor[0x1FF] != 0) {
             item = native_fn_ov001_021e3eec(actor, 0);

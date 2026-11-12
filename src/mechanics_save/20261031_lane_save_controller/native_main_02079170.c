@@ -44,14 +44,14 @@ extern int native_fn_0207e4ac(void);
 extern void native_fn_020c225c(u32);
 extern void native_fn_ov000_021e7b9c(u32);
 extern void native_fn_ov000_02214fc8(u32);
-extern u8 * native_fn_ov000_02215698(void);
+extern u8 * ov000_display_context_02215698(void);
 extern void native_fn_ov000_022156a4(u32);
 extern u32 native_fn_ov000_022156c4(void);
 extern void native_fn_ov000_022156d4(void);
 extern void native_fn_ov000_0221570c(u32);
 extern void native_fn_ov000_0221573c(u32);
 extern void native_fn_ov000_02217440(void);
-extern u32 native_fn_ov000_0221794c(void *);
+extern u32 ov000_poll_change_notify_0221794c(void *);
 extern void native_fn_ov000_02217bdc(u32,u32,u32,u32,u32,s32);
 extern void native_fn_ov000_02217c9c(u32);
 extern u32 native_data_020de468;
@@ -76,7 +76,7 @@ u32 native_main_02079170(void) {
 
     native_fn_ov000_02217440();
     temp_r4 = native_fn_ov000_022156c4();
-    temp_r5 = native_fn_ov000_02215698();
+    temp_r5 = ov000_display_context_02215698();
     var_r6 = 0;
     temp_r7 = native_fn_0202a634();
     var_r8 = 0;
@@ -109,7 +109,7 @@ u32 native_main_02079170(void) {
             } else if (temp_r0 & 2) {
                 native_fn_ov000_022156d4();
             } else {
-                var_r8 = native_fn_ov000_0221794c(var_r6);
+                var_r8 = ov000_poll_change_notify_0221794c(var_r6);
             }
         }
         break;
@@ -161,7 +161,7 @@ u32 native_main_02079170(void) {
         break;
     case 8:
         var_r6 = native_data_021c6638;
-        var_r8 = native_fn_ov000_0221794c(var_r6);
+        var_r8 = ov000_poll_change_notify_0221794c(var_r6);
         temp_r1 = M2C_FIELD(temp_r7, u16 *, 2);
         if (temp_r1 & 1) {
             switch (*var_r6) {

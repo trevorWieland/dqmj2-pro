@@ -15,7 +15,7 @@ typedef double f64;
 extern u32 native_fn_ov006_021f218c();
 extern u32 native_fn_ov006_021f2848();
 extern u32 native_fn_ov006_021f2b14();
-extern u32 native_fn_ov006_021f52cc();
+extern u32 ov006_main_loop_set_callback_021f52cc();
 extern u32 native_fn_ov006_021fbb04();
 extern u32 native_fn_ov006_021fbb54();
 extern u8 native_data_ov006_0221c0f8[];
@@ -25,5 +25,5 @@ u32 native_ov006_021fbad8(void) {
     native_fn_ov006_021f2b14();
     native_fn_ov006_021f2848(0x25);
     native_fn_ov006_021f218c(1);
-    return native_fn_ov006_021f52cc(native_fn_ov006_021fbb54);
+    return ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021fbb54);
 }

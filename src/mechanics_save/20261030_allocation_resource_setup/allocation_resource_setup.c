@@ -3,7 +3,7 @@ u32 native_main_020787a0(void) {
     u32 temp_r4;
     s16 coordinates[2];
 
-    temp_r4 = native_fn_ov000_02215698();
+    temp_r4 = ov000_display_context_02215698();
     native_fn_ov000_022159b8(native_data_020de414, 4);
     coordinates[0] = 0;
     coordinates[1] = 0;

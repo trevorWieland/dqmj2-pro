@@ -79,7 +79,7 @@ extern void native_fn_021d9534(void);
 extern void native_fn_021e1468(void);
 extern void native_fn_021f949c(void);
 extern void native_fn_021e9b84(void);
-extern void native_fn_021eec7c(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_021d9494(void);
 extern void native_fn_021f07dc(void);
 extern void native_fn_02041510(void);
@@ -183,17 +183,17 @@ ov001_021fa430_L128:
     ldr r1, [r1, #0x40]
     mov r0, #60
     mov r2, #1
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     ldr r1, =0x02239a14
     mov r0, #61
     ldr r1, [r1, #0x40]
     mov r2, #1
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     mov r0, #62
     ldr r1, =0x02239a14
     mov r2, #1
     ldr r1, [r1, #0x40]
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     ldr r0, =0x02239a14
     mov r1, #4
     ldr r0, [r0, #0x40]
@@ -237,7 +237,7 @@ ov001_021fa430_L1e0:
     ldr r1, [r1, #0x40]
     add r0, r1, #768
     ldrh r0, [r0, #76]
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     ldr r0, =0x02239a14
     mov r1, #0
     ldr r0, [r0, #0x40]
@@ -282,7 +282,7 @@ ov001_021fa430_L2a0:
     ldr r1, [r0, #0x40]
     mov r0, #63
     mov r2, #1
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     ldr r2, =0x02239a14
     ldr r3, =native_data_0222ed28
     ldr r1, [r2, #0x40]

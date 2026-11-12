@@ -18,7 +18,7 @@ extern u32 native_fn_0200dccc();
 extern u32 native_fn_0200ded8();
 extern u32 native_fn_0200e390();
 extern u32 native_fn_0200e3a8();
-extern u32 native_fn_ov006_02203c08();
+extern u32 ov006_clear_buffer_02203c08();
 extern u32 native_fn_ov006_02203cf0();
 typedef struct {
     u8 unknown_0[0x4];
@@ -28,7 +28,7 @@ extern Record_native_data_ov006_0221c18c native_data_ov006_0221c18c;
 u32 native_ov006_02203c74(void) {
     u8 sp0[8];
 
-    native_data_ov006_0221c18c.field_4 = native_fn_ov006_02203c08(0x3A, 4);
+    native_data_ov006_0221c18c.field_4 = ov006_clear_buffer_02203c08(0x3A, 4);
     if (native_fn_0200dc38(&sp0) == 0) {
         native_fn_02008430();
     }

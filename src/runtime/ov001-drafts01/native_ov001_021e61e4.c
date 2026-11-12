@@ -24,10 +24,10 @@ extern u32 native_fn_ov001_021d75d4();
 extern u32 native_fn_ov001_021d774c();
 extern u32 native_fn_ov001_021d94cc();
 extern u32 native_fn_ov001_021e3564();
-extern u32 native_fn_ov001_021f1354();
+extern u32 ov001_begin_state_transition_021f1354();
 extern u32 native_fn_ov001_021f1414();
-extern u32 native_fn_ov001_021f1438();
-extern u32 native_fn_ov001_021f14a4();
+extern u32 ov001_select_mode_id_021f1438();
+extern u32 ov001_clear_state_flag4_021f14a4();
 extern u32 native_fn_ov001_022139e8();
 typedef struct {
     u8 unknown_0[0xb];
@@ -39,9 +39,9 @@ typedef struct {
 extern Record_native_data_ov001_02238cd4 native_data_ov001_02238cd4;
 u32 native_ov001_021e61e4(void) {
     if (native_data_ov001_02238cd4.field_b == 0) {
-        native_fn_ov001_021f1354(1, 0, 0xB, 1);
+        ov001_begin_state_transition_021f1354(1, 0, 0xB, 1);
         native_fn_ov001_021f1414(0);
-        native_fn_ov001_021f1438();
+        ov001_select_mode_id_021f1438();
         native_fn_ov001_021d75d4(0x2A);
         native_fn_ov001_021d94cc(1, 0);
         native_fn_ov001_021e3564(0x14, 1);
@@ -59,7 +59,7 @@ u32 native_ov001_021e61e4(void) {
     if (native_data_ov001_02238cd4.field_b == 0x14) {
         native_fn_02041510(1, 2, 0x1E);
         native_fn_0205f210(native_data_ov001_02238cd4.field_17, 0x1E);
-        native_fn_ov001_021f14a4();
+        ov001_clear_state_flag4_021f14a4();
         native_fn_ov001_022139e8(2);
         native_data_ov001_02238cd4.field_b = 0x1EU;
     }

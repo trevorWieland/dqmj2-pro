@@ -15,7 +15,7 @@ typedef double f64;
 #define NULL ((void *)0)
 extern u32 native_fn_020496b0(void *);
 extern u32 native_fn_0204b138(void *,u32,u32);
-extern u8 *native_fn_ov000_02215698(void);
+extern u8 *ov000_display_context_02215698(void);
 extern u32 native_data_021c5a24;
 extern u8 native_data_021c5a30[];
 extern u8 native_data_021c5b20[];
@@ -26,7 +26,7 @@ u32 native_main_02074764(void) {
     u8 *var_r4;
     u8 temp_r0_2;
 
-    temp_r0 = native_fn_ov000_02215698();
+    temp_r0 = ov000_display_context_02215698();
     var_r4 = NULL;
     switch (native_data_021c5a24) {
     case 3:

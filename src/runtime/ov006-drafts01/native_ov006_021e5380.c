@@ -14,13 +14,13 @@ typedef double f64;
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 extern u32 native_fn_020b9f74();
 extern u32 native_fn_020bae44();
-extern u32 native_fn_ov006_021e3cd4();
+extern u32 ov006_noop_021e3cd4();
 extern u32 native_fn_ov006_021e3f28();
 extern u32 native_fn_ov006_021e4b24();
 extern u32 native_fn_ov006_021e537c();
 extern u32 native_fn_ov006_021e7d98();
 extern u32 native_fn_ov006_021e7fe0();
-extern u32 native_fn_ov006_021e9148();
+extern u32 ov006_commit_mode_transition_021e9148();
 extern u8 native_data_ov006_02207d24[];
 extern u8 native_data_ov006_02218d54[];
 u32 native_ov006_021e5380(void) {
@@ -29,9 +29,9 @@ u32 native_ov006_021e5380(void) {
     if (native_fn_020b9f74(native_data_ov006_02218d54, native_fn_ov006_021e537c, 0) != 0) {
         native_fn_ov006_021e7fe0();
         native_fn_ov006_021e7d98(0);
-        native_fn_ov006_021e9148(native_data_ov006_02207d24, 0);
+        ov006_commit_mode_transition_021e9148(native_data_ov006_02207d24, 0);
     } else {
         native_fn_ov006_021e3f28(2);
     }
-    return native_fn_ov006_021e3cd4();
+    return ov006_noop_021e3cd4();
 }

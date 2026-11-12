@@ -31,9 +31,9 @@ typedef signed char s8;
 
 extern void native_fn_021e6954(void);
 extern u8 native_data_0220d108[];
-extern void native_fn_021e3f28(void);
+extern void native_fn_ov006_021e3f28(void);
 extern void native_fn_021e57d0(void);
-extern void native_fn_021e3cd8(void);
+extern void ov006_forward_four_args_021e3cd8(void);
 
 
 asm u32 native_ov006_021e6114 (register u32 a0)
@@ -47,7 +47,7 @@ asm u32 native_ov006_021e6114 (register u32 a0)
     cmp r0, #0
     bge ov006_021e6114_L2c
     mov r0, #102
-    bl native_fn_021e3f28
+    bl native_fn_ov006_021e3f28
     b ov006_021e6114_L54
 ov006_021e6114_L2c:
     bl native_fn_021e57d0
@@ -56,12 +56,12 @@ ov006_021e6114_L2c:
     cmp r1, r0
     bne ov006_021e6114_L4c
     mov r0, #100
-    bl native_fn_021e3f28
+    bl native_fn_ov006_021e3f28
     b ov006_021e6114_L54
 ov006_021e6114_L4c:
     mov r0, #103
-    bl native_fn_021e3f28
+    bl native_fn_ov006_021e3f28
 ov006_021e6114_L54:
-    bl native_fn_021e3cd8
+    bl ov006_forward_four_args_021e3cd8
     ldmia sp!, {r3, pc}
 }

@@ -15,10 +15,10 @@ typedef double f64;
 extern u32 native_fn_0202ac08();
 extern u32 native_fn_0205d790();
 extern u32 native_fn_ov001_021eea10();
-extern u32 native_fn_ov001_021eec7c();
+extern u32 ov001_effect_resource_create_021eec7c();
 extern u8 native_data_ov001_0223e0e8[];
 u32 native_ov001_0220d7e0(u32 arg0, u32 arg1) {
     native_fn_0202ac08(native_data_ov001_0223e0e8);
     native_fn_ov001_021eea10(arg1, 0);
-    return native_fn_ov001_021eec7c(arg1, arg0, native_fn_0205d790(arg1));
+    return ov001_effect_resource_create_021eec7c(arg1, arg0, native_fn_0205d790(arg1));
 }

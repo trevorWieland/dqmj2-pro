@@ -33,7 +33,7 @@ typedef signed char s8;
 extern void native_fn_021f530c(void);
 extern void native_fn_021f5334(void);
 extern void native_fn_021f57f4(void);
-extern void native_fn_021f52cc(void);
+extern void ov006_main_loop_set_callback_021f52cc(void);
 extern void native_fn_021fda18(void);
 
 
@@ -59,11 +59,11 @@ asm u32 native_ov006_021fdac0 (register u32 a0)
     cmp r0, #0x0
     beq ov006_021fdac0_L32
     ldr r0, =native_fn_021f57f4+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     pop {r3, pc}
 ov006_021fdac0_L32:
     ldr r0, =native_fn_021fda18+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
 ov006_021fdac0_L38:
     pop {r3, pc}
     mov r8, r8

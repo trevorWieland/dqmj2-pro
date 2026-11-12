@@ -8,7 +8,7 @@ u32 native_ov000_0220cd28(ActorView *actor)
         if(!native_fn_ov000_0220cbe0(actor))native_fn_ov000_02209c68(actor,6);
     }
     if(actor->phase==10){
-        s32 target=native_fn_02028158(native_fn_0202818c(&actor->position,native_fn_ov000_021e07b8(0)));
+        s32 target=native_fn_02028158(native_fn_0202818c(&actor->position,ov000_saved_world_position_get_021e07b8(0)));
         s32 difference=native_fn_02028158((s32)((u32)target-native_fn_02042c2c(actor)));
         if(difference < -8192||difference>8192){
             if(difference>0)native_fn_02042104(actor,8192,0);

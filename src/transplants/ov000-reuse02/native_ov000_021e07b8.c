@@ -27,7 +27,19 @@ s8 saved_world_marker_exchange(int value) {
 }
 s8 saved_world_marker_get(void) { return native_data_ov000_02232320.marker; }
 void saved_world_position_set(const RawPosition *position) { native_data_ov000_02232320.position = *position; }
-RawPosition *native_ov000_021e07b8(RawPosition *output) {
+/* ov000 row 0x021E07B8: 28 bytes.
+ *
+ * ov000_saved_world_position_get_021e07b8: Copies the saved-world position to an optional output and returns its address.
+ *
+ * Evidence: Surrounding typed file defines SavedWorld/WorldContext; body copies native_data_ov000_02232320.position to *output and returns &position.
+ * Touches: ov000 saved-world context 0x02232320, position field.
+ * Remaining unknowns: None for the mechanism; the saved-world schema is documented in the file.
+ *
+ * The address stays in the symbol and file name because the measurement pairs a
+ * compiled symbol to the private ledger row by its eight-hex address; removing
+ * it would silently unmatch the row under the pinned private ledger.
+ */
+RawPosition *ov000_saved_world_position_get_021e07b8(RawPosition *output) {
     if (output) *output = native_data_ov000_02232320.position;
     return &native_data_ov000_02232320.position;
 }

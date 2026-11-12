@@ -14,7 +14,7 @@ typedef double f64;
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 extern u32 native_fn_ov006_021f23c4();
 extern u32 native_fn_ov006_021f2774();
-extern u32 native_fn_ov006_021f52cc();
+extern u32 ov006_main_loop_set_callback_021f52cc();
 extern u32 native_fn_ov006_021f52d8();
 extern u32 native_fn_ov006_021f5300();
 extern u32 native_fn_ov006_021f530c();
@@ -41,12 +41,12 @@ u32 native_ov006_021fa0dc(void) {
                 native_fn_ov006_021f530c(0, &sp0);
                 if (sp0 != 0) {
                     native_fn_ov006_021f52d8(2, 1);
-                    return native_fn_ov006_021f52cc(native_fn_ov006_021fc870);
+                    return ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021fc870);
                 }
                 native_fn_ov006_021f52d8(2, 0);
                 native_fn_ov006_021f5300(0, 0);
                 native_fn_ov006_021fb930(0);
-                var_r0 = native_fn_ov006_021f52cc(native_fn_ov006_021fa164);
+                var_r0 = ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021fa164);
                 
                 return var_r0;
             }

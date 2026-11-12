@@ -140,7 +140,7 @@ extern void native_fn_021e29e8(void);
 extern void native_fn_021e76b4(void);
 extern void native_fn_0207afec(void);
 extern void native_fn_0203d294(void);
-extern void native_fn_021db438(void);
+extern void ov001_side_slot_record_021db438(void);
 extern void native_fn_021e865c(void);
 extern void native_fn_02008e0c(void);
 
@@ -479,7 +479,7 @@ ov001_021e7740_L4a0:
     add r1, r0, r10, lsl #2
     ldrsb r0, [r0, r2]
     ldrsb r1, [r1, #1]
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r4, r0
     mov r0, r10
     bl native_fn_021e76b4

@@ -15,6 +15,6 @@ typedef double f64;
 #define NULL ((void *)0)
 extern u32 native_fn_0204b4f4();
 extern u32 native_fn_0204b61c();
-extern u32 native_fn_ov000_02215698();
+extern u32 ov000_display_context_02215698();
 extern u32 native_fn_ov000_022159b8();
 __declspec(align(4)) extern u8 native_data_020de414[];

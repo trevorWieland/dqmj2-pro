@@ -2,7 +2,7 @@
 
 void native_main_020771d4(u32 confirmed)
 {
-    void *display = native_fn_ov000_02215698();
+    void *display = ov000_display_context_02215698();
     SelectionList *selection = &native_data_021c6234.skill_selection;
     if (native_data_021c6234.close_mode == 0) {
         native_data_021c6234.state = 0;

@@ -12,12 +12,12 @@ typedef double f64;
 #define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
-extern u32 native_fn_ov001_021db8d0();
+extern u32 ov001_record_is_active_021db8d0();
 extern u32 native_fn_ov001_021e2c2c();
 extern u32 native_fn_ov001_021e81d0();
 extern u32 native_fn_ov001_021e86cc();
 u32 native_ov001_021dcdec(void *arg0) {
-    if ((native_fn_ov001_021db8d0() != 0) && ((M2C_FIELD(arg0, s8 *, 0x24D) != 0) || ((*(u16 *) native_fn_ov001_021e81d0(M2C_FIELD(arg0, u8 *, 0x31E), M2C_FIELD(arg0, u8 *, 0x31F)) == 0x94) && (native_fn_ov001_021e86cc(native_fn_ov001_021e2c2c(), M2C_FIELD(arg0, u8 *, 0x31E), M2C_FIELD(arg0, u8 *, 0x31F)) != 0)))) {
+    if ((ov001_record_is_active_021db8d0() != 0) && ((M2C_FIELD(arg0, s8 *, 0x24D) != 0) || ((*(u16 *) native_fn_ov001_021e81d0(M2C_FIELD(arg0, u8 *, 0x31E), M2C_FIELD(arg0, u8 *, 0x31F)) == 0x94) && (native_fn_ov001_021e86cc(native_fn_ov001_021e2c2c(), M2C_FIELD(arg0, u8 *, 0x31E), M2C_FIELD(arg0, u8 *, 0x31F)) != 0)))) {
         return 1U;
     }
     return 0U;

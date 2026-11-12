@@ -43,7 +43,7 @@ extern void native_fn_022047d4(void);
 extern void native_fn_02202894(void);
 extern void native_fn_02203c74(void);
 extern void native_fn_02203148(void);
-extern void native_fn_02203c08(void);
+extern void ov006_clear_buffer_02203c08(void);
 extern void native_fn_020a4e70(void);
 extern void native_fn_02203c20(void);
 
@@ -97,7 +97,7 @@ ov006_021f5010_L30:
     mov r0, #0x7
     lsl r0, r0, #0x8
     mov r1, #0x20
-    bl native_fn_02203c08
+    bl ov006_clear_buffer_02203c08
     str r0, [sp]
     bl native_fn_020a4e70
     add r0, sp, #0x0

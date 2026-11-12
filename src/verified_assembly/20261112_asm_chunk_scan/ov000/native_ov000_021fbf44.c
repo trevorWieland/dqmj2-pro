@@ -88,7 +88,7 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_022156c4(void);
-extern void native_fn_02215698(void);
+extern void ov000_display_context_02215698(void);
 extern void native_fn_0202a634(void);
 extern u8 native_data8_022372a8[];
 extern void native_fn_021fca9c(void);
@@ -96,7 +96,7 @@ extern void native_fn_0204b61c(void);
 extern void native_fn_0204b138(void);
 extern void native_fn_021fc458(void);
 extern void native_fn_021fc73c(void);
-extern void native_fn_0221794c(void);
+extern void ov000_poll_change_notify_0221794c(void);
 extern void native_fn_021fdf44(void);
 extern void native_fn_02062520(void);
 extern void native_fn_021fdd60(void);
@@ -121,7 +121,7 @@ asm u32 native_ov000_021fbf44 (register u32 a0)
     sub sp, sp, #12
     bl native_fn_022156c4
     str r0, [sp, #0x8]
-    bl native_fn_02215698
+    bl ov000_display_context_02215698
     mov r10, r0
     mov r9, #0
     bl native_fn_0202a634
@@ -195,7 +195,7 @@ ov000_021fbf44_L10c:
     b ov000_021fbf44_L130
 ov000_021fbf44_L11c:
     mov r0, r9
-    bl native_fn_0221794c
+    bl ov000_poll_change_notify_0221794c
     ldr r1, [r4, #0x4]
     orr r0, r1, r0
     str r0, [r4, #0x4]
@@ -268,7 +268,7 @@ ov000_021fbf44_L224:
     add r9, r6, #252
     mov r0, r9
     ldr r6, [r9, #0x4]
-    bl native_fn_0221794c
+    bl ov000_poll_change_notify_0221794c
     ldr r1, [r4, #0x4]
     orr r0, r1, r0
     str r0, [r4, #0x4]

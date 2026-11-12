@@ -30,7 +30,7 @@ extern void native_fn_020273f0(void);
 extern void native_fn_0202a32c(void);
 extern void native_fn_0202a164(void);
 extern void native_fn_020c1898(void);
-extern void native_fn_021e3cd8(void);
+extern void ov006_forward_four_args_021e3cd8(void);
 
 
 asm u32 native_ov006_021e3e40 (register u32 a0)
@@ -59,6 +59,6 @@ ov006_021e3e40_L48:
     ldr r1, [r0]
     add r1, r1, #1
     str r1, [r0]
-    bl native_fn_021e3cd8
+    bl ov006_forward_four_args_021e3cd8
     ldmia sp!, {r3, pc}
 }

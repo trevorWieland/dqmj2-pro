@@ -12,9 +12,9 @@ typedef double f64;
 #define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
-extern u32 native_fn_ov001_021dbd30();
+extern u32 ov001_record_field_1f2_021dbd30();
 u32 native_ov001_0221dcb8(s32 *arg0) {
-    if ((s32) native_fn_ov001_021dbd30(*arg0) <= 5) {
+    if ((s32) ov001_record_field_1f2_021dbd30(*arg0) <= 5) {
         return 1U;
     }
     return 0U;

@@ -5,8 +5,8 @@ typedef signed int s32;
 extern u32 native_fn_020443ec(void);
 extern u32 native_fn_02044424(u32);
 extern void native_fn_02044ff4(u8 *, s32, u32);
-extern u8 *native_fn_ov001_021db438(u32, u32);
-extern u32 native_fn_ov001_021db8d0(u8 *);
+extern u8 *ov001_side_slot_record_021db438(u32, u32);
+extern u32 ov001_record_is_active_021db8d0(u8 *);
 extern u32 native_fn_ov001_021e2c10(void);
 extern void native_fn_ov001_021f1508(void);
 extern void native_fn_ov001_021f153c(u8 *, s32, s32);
@@ -31,7 +31,7 @@ u32 native_ov001_02210e18(void) {
 
     layout_count = 0;
     native_fn_ov001_021f1508();
-    scan_actor = native_fn_ov001_021db438(1U, 0U);
+    scan_actor = ov001_side_slot_record_021db438(1U, 0U);
     scan_index = 0;
     do {
         enabled = scan_actor[0x31C];
@@ -42,12 +42,12 @@ u32 native_ov001_02210e18(void) {
         }
     } while (scan_index < 3);
     created = 0;
-    actor = native_fn_ov001_021db438(1U, 0U);
+    actor = ov001_side_slot_record_021db438(1U, 0U);
     positions = native_data_ov001_0222e0f4 + (layout_count * 3);
     layout_count &= 1;
     slot = 0;
     do {
-        if (native_fn_ov001_021db8d0(actor) != 0) {
+        if (ov001_record_is_active_021db8d0(actor) != 0) {
             if ((native_fn_020443ec() == 0) || (native_fn_020443ec() == 6)) {
                 record = *(u8 **)(actor + 0x1E8);
                 native_fn_02044ff4(record + 0xB2, *(s16 *)(record + 0x2A), record[0x2C]);

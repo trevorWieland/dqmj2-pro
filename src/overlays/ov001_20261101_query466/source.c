@@ -11,11 +11,11 @@ u32 native_ov001_0221b33c(void *arg0) {
     if (M2C_FIELD(arg0, s32 *, 0x14) != 0) {
         var_r6 = 0;
 loop_2:
-        if ((native_fn_ov001_021db8d0(var_r8) != 0) && (native_fn_ov001_021e2b1c(M2C_FIELD(var_r8, u8 *, 0x31E), M2C_FIELD(var_r8, u8 *, 0x31F)) == 0) && (*(u16 *) native_fn_ov001_021e81d0(M2C_FIELD(var_r8, u8 *, 0x31E), M2C_FIELD(var_r8, u8 *, 0x31F)) == 0x77)) {
+        if ((ov001_record_is_active_021db8d0(var_r8) != 0) && (native_fn_ov001_021e2b1c(M2C_FIELD(var_r8, u8 *, 0x31E), M2C_FIELD(var_r8, u8 *, 0x31F)) == 0) && (*(u16 *) native_fn_ov001_021e81d0(M2C_FIELD(var_r8, u8 *, 0x31E), M2C_FIELD(var_r8, u8 *, 0x31F)) == 0x77)) {
             var_r7 = 0;
             var_r9 = temp_r5;
 loop_6:
-            if ((native_fn_ov001_021db8d0(var_r9) != 0) && ((u32) M2C_FIELD(M2C_FIELD(var_r9, void **, 0x1E8), u8 *, 0x97) <= 3U)) {
+            if ((ov001_record_is_active_021db8d0(var_r9) != 0) && ((u32) M2C_FIELD(M2C_FIELD(var_r9, void **, 0x1E8), u8 *, 0x97) <= 3U)) {
                 return 1U;
             }
             var_r7 += 1;

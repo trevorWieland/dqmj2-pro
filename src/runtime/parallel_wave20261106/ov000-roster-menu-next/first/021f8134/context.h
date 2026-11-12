@@ -17,7 +17,7 @@ typedef struct ThemeView {u8 opaque0[16];s8 style;} ThemeView;
 typedef struct ChoiceView {u8 opaque0[488];SavedRecord *selected;u8 count;} ChoiceView;
 typedef struct PositionWords {s32 x;s32 y;} PositionWords;
 typedef struct SelectionView {u32 word0;u32 word4;s32 index;} SelectionView;
-extern u8 *native_fn_ov000_02215698(void);
+extern u8 *ov000_display_context_02215698(void);
 extern u32 native_fn_ov000_02215a7c(void);
 extern u32 native_fn_ov000_021f7f9c(void);
 extern u32 native_fn_ov000_021f8044(void);

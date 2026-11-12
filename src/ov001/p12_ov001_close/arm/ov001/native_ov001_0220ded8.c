@@ -45,8 +45,8 @@ extern void native_fn_021ee9fc(void);
 extern void native_fn_021dbcf0(void);
 extern void native_fn_0220f91c(void);
 extern void native_fn_021dcda8(void);
-extern void native_fn_021f1354(void);
-extern void native_fn_021f1438(void);
+extern void ov001_begin_state_transition_021f1354(void);
+extern void ov001_select_mode_id_021f1438(void);
 extern void native_fn_021e29e8(void);
 extern void native_fn_021db7cc(void);
 extern void native_fn_021ee7d4(void);
@@ -55,7 +55,7 @@ extern void native_fn_021f94d8(void);
 extern void native_fn_021db834(void);
 extern void native_fn_021ee78c(void);
 extern void native_fn_021d9494(void);
-extern void native_fn_021f14a4(void);
+extern void ov001_clear_state_flag4_021f14a4(void);
 extern void native_fn_021f14e4(void);
 
 
@@ -97,9 +97,9 @@ ov001_0220ded8_L3c:
     mov r2, #15
     mov r3, #1
     movne r4, #0
-    bl native_fn_021f1354
+    bl ov001_begin_state_transition_021f1354
     mov r0, #2
-    bl native_fn_021f1438
+    bl ov001_select_mode_id_021f1438
     cmp r4, #50
     movgt r4, #50
     bl native_fn_021e29e8
@@ -169,7 +169,7 @@ ov001_0220ded8_L184:
     strb r2, [r0, #0x6]
     cmp r1, #30
     bls ov001_0220ded8_L1e0
-    bl native_fn_021f14a4
+    bl ov001_clear_state_flag4_021f14a4
     ldr r0, =0x0223e0d8
     mov r1, #100
     strb r1, [r0, #0x7]

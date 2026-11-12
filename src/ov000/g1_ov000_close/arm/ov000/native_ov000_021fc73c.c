@@ -30,7 +30,7 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_02215698(void);
+extern void ov000_display_context_02215698(void);
 extern void native_fn_020642dc(void);
 extern void native_fn_02061260(void);
 extern void native_fn_022156d4(void);
@@ -46,7 +46,7 @@ extern void native_fn_0206dcd0(void);
 asm u32 native_ov000_021fc73c (register u32 a0)
 {
     stmdb sp!, {r3, r4, r5, lr}
-    bl native_fn_02215698
+    bl ov000_display_context_02215698
     ldr r1, =0x022372a8
     mov r5, r0
     ldr r4, [r1, #0xc]

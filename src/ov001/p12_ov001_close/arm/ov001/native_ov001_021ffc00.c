@@ -52,9 +52,9 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_02202360(void);
+extern void ov001_table_f0_entry_02202360(void);
 extern void native_fn_022042c4(void);
-extern void native_fn_021db530(void);
+extern void ov001_mode_byte_021db530(void);
 extern void native_fn_022029a8(void);
 extern void native_fn_02049748(void);
 extern void native_fn_022023f8(void);
@@ -74,7 +74,7 @@ asm u32 native_ov001_021ffc00 (register u32 a0)
     sub sp, sp, #8
     ldr r0, =0x02239c10
     ldrsb r0, [r0, #12]
-    bl native_fn_02202360
+    bl ov001_table_f0_entry_02202360
     ldr r1, =0x02239c10
     mov r2, #0
     strb r2, [r1, #0x7]
@@ -103,7 +103,7 @@ ov001_021ffc00_L54:
     strneb r1, [r0, #0x7]
     bne ov001_021ffc00_Lb0
     mov r0, #1
-    bl native_fn_021db530
+    bl ov001_mode_byte_021db530
     strb r0, [r4, #0xb]
     mov r1, #1
     str r1, [sp]
@@ -138,7 +138,7 @@ ov001_021ffc00_Ld8:
     strb r2, [r4, #0x10]
     strb r0, [r4, #0x14]
     strb r1, [r4, #0x13]
-    bl native_fn_021db530
+    bl ov001_mode_byte_021db530
     mov r3, #0
     sub r1, r3, #1
     ldr r2, =0x02239c10
@@ -183,7 +183,7 @@ ov001_021ffc00_L164:
     cmp r0, r5
     bgt ov001_021ffc00_L1f0
     mov r0, #0
-    bl native_fn_02202360
+    bl ov001_table_f0_entry_02202360
     mov r5, r0
     bl native_fn_022011c0
     mov r2, #0
@@ -216,7 +216,7 @@ ov001_021ffc00_L200:
     cmp r0, #0
     bne ov001_021ffc00_L254
     mov r0, #0
-    bl native_fn_021db530
+    bl ov001_mode_byte_021db530
     strb r0, [r4, #0x9]
     mov r0, #1
     str r0, [sp]
@@ -231,7 +231,7 @@ ov001_021ffc00_L200:
     b ov001_021ffc00_L288
 ov001_021ffc00_L254:
     mov r0, #1
-    bl native_fn_021db530
+    bl ov001_mode_byte_021db530
     strb r0, [r4, #0xb]
     mov r1, #1
     str r1, [sp]
@@ -256,7 +256,7 @@ ov001_021ffc00_L2a0:
     mov r0, #1
     ldrsb r1, [r1, #12]
     strb r1, [r4, #0x10]
-    bl native_fn_021db530
+    bl ov001_mode_byte_021db530
     strb r0, [r4, #0xb]
     mov r1, #1
     str r1, [sp]

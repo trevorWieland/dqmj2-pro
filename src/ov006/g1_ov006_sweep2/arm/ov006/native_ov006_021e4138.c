@@ -28,16 +28,16 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021e65a4(void);
+extern void ov006_active_state_value_021e65a4(void);
 extern void native_fn_021e802c(void);
-extern void native_fn_021e3f28(void);
-extern void native_fn_021e3cd8(void);
+extern void native_fn_ov006_021e3f28(void);
+extern void ov006_forward_four_args_021e3cd8(void);
 
 
 asm u32 native_ov006_021e4138 (register u32 a0)
 {
     stmdb sp!, {r3, lr}
-    bl native_fn_021e65a4
+    bl ov006_active_state_value_021e65a4
     mvn r1, #0
     cmp r0, r1
     beq ov006_021e4138_L50
@@ -50,20 +50,20 @@ ov006_021e4138_L28:
     mov r0, #0
     bl native_fn_021e802c
     mov r0, #7
-    bl native_fn_021e3f28
+    bl native_fn_ov006_021e3f28
     b ov006_021e4138_L60
 ov006_021e4138_L3c:
     mov r0, #0
     bl native_fn_021e802c
     mov r0, #10
-    bl native_fn_021e3f28
+    bl native_fn_ov006_021e3f28
     b ov006_021e4138_L60
 ov006_021e4138_L50:
     mov r0, #0
     bl native_fn_021e802c
     mov r0, #3
-    bl native_fn_021e3f28
+    bl native_fn_ov006_021e3f28
 ov006_021e4138_L60:
-    bl native_fn_021e3cd8
+    bl ov006_forward_four_args_021e3cd8
     ldmia sp!, {r3, pc}
 }

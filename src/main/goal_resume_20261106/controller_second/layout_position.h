@@ -14,7 +14,7 @@ typedef struct {
     u8 party_actions : 4;
 } MenuFields;
 extern MenuFields native_data_021c5a24;
-extern u32 native_fn_ov000_02215698(void);
+extern u32 ov000_display_context_02215698(void);
 extern void native_fn_0204b53c(LayoutState *, const Point *);
 
 void native_main_02076440(const Selection *);

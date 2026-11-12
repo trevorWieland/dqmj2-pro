@@ -1,9 +1,21 @@
+/* ov000 row 0x02215698: 12 bytes.
+ *
+ * ov000_display_context_02215698: Returns the ov000 display/layout context at 0x022459B4.
+ *
+ * Evidence: Every sampled caller stores the result in a variable named display and immediately uses its +0x10 layout fields (src/main/goal_resume_20261106/controller_second/*: native_main_020771d4, native_main_02078818, native_main_020763cc).
+ * Touches: ov000 global 0x022459B4.
+ * Remaining unknowns: The full display-context layout is not documented here; only the layout-field use is proven.
+ *
+ * The address stays in the symbol and file name because the measurement pairs a
+ * compiled symbol to the private ledger row by its eight-hex address; removing
+ * it would silently unmatch the row under the pinned private ledger.
+ */
 typedef unsigned char u8;
 typedef signed char s8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 extern u8 native_data_021cebe0[];
-extern u8 native_data_ov000_02246600[];
+extern u8 native_data_ov000_022459b4[];
 extern u8 native_data_021cec60[];
 extern u8 native_data_021ceca0[];
 extern u8 native_data_021cecf4[];
@@ -26,8 +38,8 @@ u32 native_itcm_01ff9fa0(void) {
 void native_itcm_01ff9ffc(void) {
     *(u32 *)(native_data_021cebe0 + 0x30) = 0;
 }
-u8 *native_ov000_02223c54(void) {
-    return native_data_ov000_02246600;
+u8 *ov000_display_context_02215698(void) {
+    return native_data_ov000_022459b4;
 }
 void native_itcm_01ffa01c(u32 value) {
     native_data_021cebe0[5] = value;

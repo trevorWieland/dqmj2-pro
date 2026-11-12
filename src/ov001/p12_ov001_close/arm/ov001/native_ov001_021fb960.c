@@ -86,19 +86,19 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_021fb8d4(void);
-extern void native_fn_021f1354(void);
+extern void ov001_begin_state_transition_021f1354(void);
 extern void native_fn_021f1414(void);
-extern void native_fn_021f1438(void);
+extern void ov001_select_mode_id_021f1438(void);
 extern void native_fn_021f949c(void);
-extern void native_fn_021f14a4(void);
+extern void ov001_clear_state_flag4_021f14a4(void);
 extern void native_fn_021f14e4(void);
 extern void native_fn_0203d294(void);
-extern void native_fn_021db438(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_side_slot_record_021db438(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_021dbf98(void);
 extern u8 native_data_0222ed28[];
 extern void native_fn_0205d790(void);
-extern void native_fn_021eec7c(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_021ee91c(void);
 extern void native_fn_021fb214(void);
 
@@ -116,10 +116,10 @@ asm u32 native_ov001_021fb960 (register u32 a0)
     mov r3, r0
     mov r1, #2
     mov r2, #4
-    bl native_fn_021f1354
+    bl ov001_begin_state_transition_021f1354
     mov r0, #0
     bl native_fn_021f1414
-    bl native_fn_021f1438
+    bl ov001_select_mode_id_021f1438
     mov r0, #228
     mov r1, #1
     bl native_fn_021f949c
@@ -143,7 +143,7 @@ ov001_021fb960_L60:
 ov001_021fb960_L88:
     cmp r1, #20
     bne ov001_021fb960_La4
-    bl native_fn_021f14a4
+    bl ov001_clear_state_flag4_021f14a4
     ldr r0, =0x02239a14
     mov r1, #25
     strb r1, [r0, #0x1a]
@@ -181,10 +181,10 @@ ov001_021fb960_L100:
     mov r3, r0
     mov r1, #2
     mov r2, #7
-    bl native_fn_021f1354
+    bl ov001_begin_state_transition_021f1354
     mov r0, #1
     bl native_fn_021f1414
-    bl native_fn_021f1438
+    bl ov001_select_mode_id_021f1438
     mov r9, #0
     mov r4, #1
     mov r6, r9
@@ -193,9 +193,9 @@ ov001_021fb960_L100:
 ov001_021fb960_L13c:
     mov r0, r8
     mov r1, r9
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r7, r0
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021fb960_L170
     mov r0, r7
@@ -228,9 +228,9 @@ ov001_021fb960_L19c:
 ov001_021fb960_L1bc:
     mov r0, r9
     mov r1, r10
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r8, r0
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021fb960_L208
     mov r0, r8
@@ -244,7 +244,7 @@ ov001_021fb960_L1bc:
     mov r2, r0
     mov r1, r8
     mov r0, r4
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
 ov001_021fb960_L208:
     add r10, r10, #1
     cmp r10, #3
@@ -272,9 +272,9 @@ ov001_021fb960_L24c:
 ov001_021fb960_L25c:
     mov r0, r5
     mov r1, r6
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r4, r0
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021fb960_L288
     add r0, r4, #512
@@ -296,10 +296,10 @@ ov001_021fb960_L2a4:
     mov r3, r0
     mov r1, #2
     mov r2, #6
-    bl native_fn_021f1354
+    bl ov001_begin_state_transition_021f1354
     mov r0, #1
     bl native_fn_021f1414
-    bl native_fn_021f1438
+    bl ov001_select_mode_id_021f1438
     ldr r0, =0x02239a14
     mov r1, #0
     strb r1, [r0, #0x18]
@@ -320,7 +320,7 @@ ov001_021fb960_L2e4:
 ov001_021fb960_L30c:
     cmp r1, #70
     bne ov001_021fb960_L328
-    bl native_fn_021f14a4
+    bl ov001_clear_state_flag4_021f14a4
     ldr r0, =0x02239a14
     mov r1, #75
     strb r1, [r0, #0x1a]

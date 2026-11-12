@@ -1,9 +1,21 @@
+/* ov000 row 0x02223C60: 12 bytes.
+ *
+ * ov000_context_02246600_02223c60: Returns the ov000 work context at 0x02246600.
+ *
+ * Evidence: Body returns 0x02246600; callers use it as a record/context (src/itcm/control02.c, src/itcm/large53).
+ * Touches: ov000 global 0x02246600.
+ * Remaining unknowns: The context's schema and game role are not established; the name is address-derived.
+ *
+ * The address stays in the symbol and file name because the measurement pairs a
+ * compiled symbol to the private ledger row by its eight-hex address; removing
+ * it would silently unmatch the row under the pinned private ledger.
+ */
 typedef unsigned char u8;
 typedef signed char s8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 extern u8 native_data_021cebe0[];
-extern u8 native_data_ov000_022459b4[];
+extern u8 native_data_ov000_02246600[];
 extern u8 native_data_021cec60[];
 extern u8 native_data_021ceca0[];
 extern u8 native_data_021cecf4[];
@@ -26,8 +38,8 @@ u32 native_itcm_01ff9fa0(void) {
 void native_itcm_01ff9ffc(void) {
     *(u32 *)(native_data_021cebe0 + 0x30) = 0;
 }
-u8 *native_ov000_02215698(void) {
-    return native_data_ov000_022459b4;
+u8 *ov000_context_02246600_02223c60(void) {
+    return native_data_ov000_02246600;
 }
 void native_itcm_01ffa01c(u32 value) {
     native_data_021cebe0[5] = value;

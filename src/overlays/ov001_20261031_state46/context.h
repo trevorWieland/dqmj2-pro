@@ -19,7 +19,7 @@ extern u32 native_fn_ov001_021db618();
 extern u32 native_fn_ov001_021e97c0();
 extern u32 native_fn_ov001_021e9884();
 extern u32 native_fn_ov001_021eaa3c();
-extern u32 native_fn_ov001_021f1438();
+extern u32 ov001_select_mode_id_021f1438();
 extern u32 native_fn_ov001_021f14e4();
 extern u32 native_fn_ov001_021f949c();
 extern u32 native_fn_ov001_02202528();

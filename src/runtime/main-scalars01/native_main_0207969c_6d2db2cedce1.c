@@ -16,7 +16,7 @@ extern u32 native_fn_02049ad0();
 extern u32 native_fn_02049f14();
 extern u32 native_fn_02049f24();
 extern u32 native_fn_02049f30();
-extern u32 native_fn_ov000_02215698();
+extern u32 ov000_display_context_02215698();
 extern u32 native_fn_ov000_02217bdc();
 extern u32 native_fn_ov000_02217cf0();
 extern u8 native_data_021c6638[];
@@ -26,7 +26,7 @@ u32 native_main_0207969c(void) {
     u32 temp_r5;
     void *temp_r2;
 
-    temp_r5 = native_fn_ov000_02215698();
+    temp_r5 = ov000_display_context_02215698();
     temp_r4 = native_fn_02049f24();
     native_fn_02049f30();
     temp_r2 = M2C_FIELD(*(void **) native_fn_02049ad0((s8) (*(u32 *)native_data_021c6638 + 5)), void **, 4);

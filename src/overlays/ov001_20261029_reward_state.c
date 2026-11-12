@@ -35,10 +35,10 @@ extern u32 native_fn_ov001_021e3f68();
 extern u32 native_fn_ov001_021e49d0();
 extern u32 native_fn_ov001_021e4b34();
 extern u32 native_fn_ov001_021e4c34();
-extern u32 native_fn_ov001_021f1354();
+extern u32 ov001_begin_state_transition_021f1354();
 extern u32 native_fn_ov001_021f1414();
-extern u32 native_fn_ov001_021f1438();
-extern u32 native_fn_ov001_021f14a4();
+extern u32 ov001_select_mode_id_021f1438();
+extern u32 ov001_clear_state_flag4_021f14a4();
 extern u32 native_fn_ov001_021f14c0();
 extern u32 native_fn_ov001_021f14e4();
 extern u32 native_fn_ov001_021f1a44();
@@ -115,9 +115,9 @@ u32 native_ov001_021e4eb0(void) {
             native_data_ov001_02238cd4.field_4 = 5U;
         }
     } else if (native_data_ov001_02238cd4.field_4 == 5) {
-        native_fn_ov001_021f1354(1, 3, 2, 1);
+        ov001_begin_state_transition_021f1354(1, 3, 2, 1);
         native_fn_ov001_021f1414(0);
-        native_fn_ov001_021f1438();
+        ov001_select_mode_id_021f1438();
         native_fn_02047d40(*(native_data_ov001_02238d10 + (native_data_ov001_02238cd4.field_26)));
         native_fn_020630e4(*(native_data_ov001_02238d10 + (native_data_ov001_02238cd4.field_26)), 1);
         if (native_fn_0205f2d8(native_data_ov001_02238cd4.field_24) == 0) {
@@ -142,7 +142,7 @@ u32 native_ov001_021e4eb0(void) {
             native_data_ov001_02238cd4.field_4 = 9U;
             native_data_ov001_02238cd4.field_1 = 0;
         }
-        native_fn_ov001_021f14a4();
+        ov001_clear_state_flag4_021f14a4();
     } else if (native_data_ov001_02238cd4.field_4 == 9) {
         if (native_fn_ov001_021f14e4() == 0) {
             native_data_ov001_02238cd4.field_4 = 5U;
@@ -231,7 +231,7 @@ u32 native_ov001_021e4eb0(void) {
     if (native_data_ov001_02238cd4.field_4 == 0x13) {
         native_fn_ov001_021e3bd0();
         if (native_data_ov001_02238cd4.field_26 != 0) {
-            native_fn_ov001_021f14a4();
+            ov001_clear_state_flag4_021f14a4();
         }
         native_data_ov001_02238cd4.field_16 = 0x11;
         native_data_ov001_02238cd4.field_4 = 0U;

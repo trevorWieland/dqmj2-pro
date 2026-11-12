@@ -37,7 +37,7 @@ extern void native_fn_02216898(void);
 extern void native_fn_02044424(void);
 extern void native_fn_021e66f8(void);
 extern void native_fn_021dda80(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_record_is_active_021db8d0(void);
 
 
 asm u32 native_ov001_021df4b4 (register u32 a0)
@@ -73,7 +73,7 @@ ov001_021df4b4_L50:
 ov001_021df4b4_L6c:
     ldr r0, =0x022388ec
     ldr r0, [r0, #0x48]
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     ldreq r0, =0x022388ec
     moveq r1, #24

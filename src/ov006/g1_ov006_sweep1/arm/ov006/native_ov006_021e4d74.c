@@ -33,11 +33,11 @@ typedef signed char s8;
 
 extern void native_fn_020bb1f8(void);
 extern void native_fn_021e9268(void);
-extern void native_fn_021e3f28(void);
+extern void native_fn_ov006_021e3f28(void);
 extern void native_fn_0205e7a8(void);
 extern void native_fn_020642dc(void);
 extern void native_fn_021e7e78(void);
-extern void native_fn_021e3cd8(void);
+extern void ov006_forward_four_args_021e3cd8(void);
 
 
 asm u32 native_ov006_021e4d74 (register u32 a0)
@@ -52,7 +52,7 @@ asm u32 native_ov006_021e4d74 (register u32 a0)
     beq ov006_021e4d74_L30
     bl native_fn_021e9268
     mov r0, #51
-    bl native_fn_021e3f28
+    bl native_fn_ov006_021e3f28
     b ov006_021e4d74_L80
 ov006_021e4d74_L30:
     bl native_fn_021e9268
@@ -63,7 +63,7 @@ ov006_021e4d74_L30:
     cmp r0, #35
     bne ov006_021e4d74_L58
     mov r0, #76
-    bl native_fn_021e3f28
+    bl native_fn_ov006_021e3f28
     b ov006_021e4d74_L80
 ov006_021e4d74_L58:
     ldr r0, =0x02218d30
@@ -75,8 +75,8 @@ ov006_021e4d74_L58:
     moveq r0, #0
     bl native_fn_021e7e78
     mov r0, #13
-    bl native_fn_021e3f28
+    bl native_fn_ov006_021e3f28
 ov006_021e4d74_L80:
-    bl native_fn_021e3cd8
+    bl ov006_forward_four_args_021e3cd8
     ldmia sp!, {r3, pc}
 }

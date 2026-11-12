@@ -15,10 +15,10 @@ typedef double f64;
 extern u32 native_fn_02028158();
 extern u32 native_fn_0202818c();
 extern u32 native_fn_02042c2c();
-extern u32 native_fn_ov000_021e07b8();
+extern u32 ov000_saved_world_position_get_021e07b8();
 u32 native_ov000_0220c598(s32 arg0) {
     u32 temp_r4;
 
-    temp_r4 = native_fn_0202818c(arg0 + 0x70, native_fn_ov000_021e07b8(0));
+    temp_r4 = native_fn_0202818c(arg0 + 0x70, ov000_saved_world_position_get_021e07b8(0));
     return native_fn_02028158(temp_r4 - native_fn_02042c2c(arg0));
 }

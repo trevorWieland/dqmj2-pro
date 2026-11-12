@@ -28,7 +28,7 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_02203c08(void);
+extern void ov006_clear_buffer_02203c08(void);
 extern u8 native_data3_0221c090[];
 extern u8 native_data_0220d9d8[];
 extern u8 native_data2_0221c098[];
@@ -48,7 +48,7 @@ asm u32 native_ov006_021f5444 (register u32 a0)
     add r4, r0, #0x0
     ldr r0, =0x0001e2a4
     mov r1, #0x20
-    bl native_fn_02203c08
+    bl ov006_clear_buffer_02203c08
     ldr r3, =native_data3_0221c090
     ldr r1, =0x0001e298
     str r0, [r3, #0]

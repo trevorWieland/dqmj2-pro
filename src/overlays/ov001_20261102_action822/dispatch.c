@@ -20,11 +20,11 @@ u32 native_ov001_021f2878(void) {
     temp_r5 = (void *) native_fn_0207afec((u32) M2C_FIELD(native_data_ov001_0223989c, u16 *, 0x50));
     temp_r4 = M2C_FIELD(temp_r5, s16 *, 0xA);
     if (M2C_FIELD(native_data_ov001_0223989c, u8 *, 0xF) == 0) {
-        native_fn_ov001_021f1354(M2C_FIELD(native_data_ov001_0223989c, u8 *, 0xE), M2C_FIELD(native_data_ov001_0223989c, u8 *, 0x23), M2C_FIELD(native_data_ov001_0223989c, u16 *, 0x4E), 1);
+        ov001_begin_state_transition_021f1354(M2C_FIELD(native_data_ov001_0223989c, u8 *, 0xE), M2C_FIELD(native_data_ov001_0223989c, u8 *, 0x23), M2C_FIELD(native_data_ov001_0223989c, u16 *, 0x4E), 1);
         if (M2C_FIELD(native_data_ov001_0223989c, s8 *, 0x15) == -1) {
-            native_fn_ov001_021f1438(native_fn_ov001_021f1414((u32) M2C_FIELD(M2C_FIELD(native_data_ov001_0223989c, void **, 0x84), u8 *, 0x31E)));
+            ov001_select_mode_id_021f1438(native_fn_ov001_021f1414((u32) M2C_FIELD(M2C_FIELD(native_data_ov001_0223989c, void **, 0x84), u8 *, 0x31E)));
         } else {
-            native_fn_ov001_021f1438((u32) (u8) M2C_FIELD(native_data_ov001_0223989c, s8 *, 0x15));
+            ov001_select_mode_id_021f1438((u32) (u8) M2C_FIELD(native_data_ov001_0223989c, s8 *, 0x15));
         }
         native_fn_ov001_021f1d54((u32) (M2C_FIELD(temp_r5, u16 *, 8) << 0x1C) >> 0x1C);
         if (((u32) (M2C_FIELD(temp_r5, u16 *, 8) << 0x1C) >> 0x1C) == 5) {
@@ -47,7 +47,7 @@ u32 native_ov001_021f2878(void) {
         M2C_FIELD(native_data_ov001_0223989c, u8 *, 0xF) = 0xFU;
     } else if (M2C_FIELD(native_data_ov001_0223989c, u8 *, 0xF) == 0xF) {
         native_fn_0205c904((u32) temp_r4);
-        M2C_FIELD(native_data_ov001_0223989c, u8 *, 6) = (u8) native_fn_ov001_021eec7c((u32) temp_r4, (u32) M2C_FIELD(native_data_ov001_0223989c, void **, 0x84), native_fn_0205d790((u32) temp_r4));
+        M2C_FIELD(native_data_ov001_0223989c, u8 *, 6) = (u8) ov001_effect_resource_create_021eec7c((u32) temp_r4, (u32) M2C_FIELD(native_data_ov001_0223989c, void **, 0x84), native_fn_0205d790((u32) temp_r4));
         native_fn_ov001_021f94d8(0x99U, 1U);
         M2C_FIELD(native_data_ov001_0223989c, u8 *, 0xF) = 0x14U;
     }
@@ -69,13 +69,13 @@ u32 native_ov001_021f2878(void) {
             native_fn_ov001_021eeb70((u32) temp_r4);
             native_fn_0202ac4c(native_data_ov001_0223992c);
         }
-        native_fn_ov001_021f14a4();
+        ov001_clear_state_flag4_021f14a4();
         if (M2C_FIELD(native_data_ov001_0223989c, u8 *, 0xF) == 0x64) {
             var_r6 = 0;
             do {
-                sp0[var_r6] = native_fn_ov001_021db438((u32) M2C_FIELD(M2C_FIELD(native_data_ov001_0223989c, void **, 0x84), u8 *, 0x31E), var_r6);
-                if (native_fn_ov001_021db8d0(sp0[var_r6]) != 0) {
-                    native_fn_ov001_021dbd30(sp0[var_r6]);
+                sp0[var_r6] = ov001_side_slot_record_021db438((u32) M2C_FIELD(M2C_FIELD(native_data_ov001_0223989c, void **, 0x84), u8 *, 0x31E), var_r6);
+                if (ov001_record_is_active_021db8d0(sp0[var_r6]) != 0) {
+                    ov001_record_field_1f2_021dbd30(sp0[var_r6]);
                 }
                 var_r6 += 1;
             } while ((s32) var_r6 < 3);
@@ -88,7 +88,7 @@ u32 native_ov001_021f2878(void) {
             if ((temp_r0_4 != 0) && (*native_data_ov001_0222ed14 != 0)) {
                 if (temp_r0_3 == 0) {
                     temp_r4_2 = M2C_FIELD(native_data_ov001_0223989c, void **, 0x84);
-                    temp_r0_5 = native_fn_0207b244(M2C_FIELD(native_data_ov001_0223989c, u16 *, 0x50), native_fn_ov001_021dbd30((u32) temp_r4_2), M2C_FIELD(temp_r4_2, s32 *, 0x1E8) + 0x46);
+                    temp_r0_5 = native_fn_0207b244(M2C_FIELD(native_data_ov001_0223989c, u16 *, 0x50), ov001_record_field_1f2_021dbd30((u32) temp_r4_2), M2C_FIELD(temp_r4_2, s32 *, 0x1E8) + 0x46);
                     native_fn_ov001_021db834(M2C_FIELD(native_data_ov001_0223989c, void **, 0x84), temp_r0_5);
                     M2C_FIELD(native_data_ov001_0223989c, u32 *, 0x5C) = temp_r0_5;
                     native_fn_ov001_022024d4((u32) M2C_FIELD(M2C_FIELD(native_data_ov001_0223989c, void **, 0x84), u8 *, 0x31E), (u32) M2C_FIELD(M2C_FIELD(native_data_ov001_0223989c, void **, 0x84), u8 *, 0x31F), 0U);
@@ -97,8 +97,8 @@ u32 native_ov001_021f2878(void) {
                     M2C_FIELD(native_data_ov001_0223989c, u32 *, 0x5C) = 0U;
                     do {
                         temp_r7 = (&sp0[0])[var_r8];
-                        if (native_fn_ov001_021db8d0(temp_r7) != 0) {
-                            temp_r0_6 = native_fn_0207b244(M2C_FIELD(native_data_ov001_0223989c, u16 *, 0x50), native_fn_ov001_021dbd30(temp_r7), M2C_FIELD(temp_r7, s32 *, 0x1E8) + 0x46);
+                        if (ov001_record_is_active_021db8d0(temp_r7) != 0) {
+                            temp_r0_6 = native_fn_0207b244(M2C_FIELD(native_data_ov001_0223989c, u16 *, 0x50), ov001_record_field_1f2_021dbd30(temp_r7), M2C_FIELD(temp_r7, s32 *, 0x1E8) + 0x46);
                             native_fn_ov001_021db834((void *) temp_r7, temp_r0_6);
                             M2C_FIELD(native_data_ov001_0223989c, u32 *, 0x5C) = (u32) (M2C_FIELD(native_data_ov001_0223989c, u32 *, 0x5C) + temp_r0_6);
                             native_fn_ov001_022024d4((u32) M2C_FIELD(temp_r7, u8 *, 0x31E), (u32) M2C_FIELD(temp_r7, u8 *, 0x31F), 0U);

@@ -3,7 +3,7 @@
 /* 0x0221C148 holds the handle allocated here. */
 extern u32 native_data_ov006_0221c148;
 
-extern u32 native_ov006_02203c08(s32 id, s32 size);
+extern u32 ov006_clear_buffer_02203c08(s32 id, s32 size);
 extern void native_fn_02019a58(u32 address, u32 value);
 extern void native_fn_020a47cc(u32 handle);
 
@@ -16,7 +16,7 @@ extern void native_fn_020a47cc(u32 handle);
    callees' semantics, which are inferred only from the call shape. */
 void native_ov006_021fed84(void)
 {
-    u32 handle = native_ov006_02203c08(0x6F8, 0x20);
+    u32 handle = ov006_clear_buffer_02203c08(0x6F8, 0x20);
 
     native_data_ov006_0221c148 = handle;
     native_fn_02019a58(handle + 0x4F8, 0xA001);

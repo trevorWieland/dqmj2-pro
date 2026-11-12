@@ -5,9 +5,9 @@ typedef signed int s32;
 typedef unsigned int u32;
 __declspec(align(4)) typedef struct { s8 side; s8 slot; s16 key; } Position;
 extern Position native_data_ov001_02238d40[6];
-extern u8 *native_fn_ov001_021db438(s32, s32);
-extern u32 native_fn_ov001_021db530(s32);
-extern u32 native_fn_ov001_021db8d0(void *);
+extern u8 *ov001_side_slot_record_021db438(s32, s32);
+extern u32 ov001_mode_byte_021db530(s32);
+extern u32 ov001_record_is_active_021db8d0(void *);
 extern void native_fn_ov001_021dccd0(s32);
 extern void native_fn_ov001_021e7538(s32, u8 *, u8 *, u32);
 extern s32 native_fn_ov001_021e7740(u8 *, u32, u8 *, u32);
@@ -24,10 +24,10 @@ u32 native_ov001_021e7fa8(void) {
     u32 opposing_count;
     native_fn_ov001_021e7d88();
     native_fn_ov001_021dccd0(0);
-    own = native_fn_ov001_021db438(0, 0);
-    opposing = native_fn_ov001_021db438(1, 0);
-    own_count = native_fn_ov001_021db530(0);
-    opposing_count = native_fn_ov001_021db530(1);
+    own = ov001_side_slot_record_021db438(0, 0);
+    opposing = ov001_side_slot_record_021db438(1, 0);
+    own_count = ov001_mode_byte_021db530(0);
+    opposing_count = ov001_mode_byte_021db530(1);
     count = native_fn_ov001_021e7740(own, own_count, opposing, opposing_count);
     index = 0;
     selected = 0;
@@ -35,7 +35,7 @@ u32 native_ov001_021e7fa8(void) {
         do {
             slot = native_data_ov001_02238d40[index].slot;
             if (native_data_ov001_02238d40[index].side == 1 &&
-                native_fn_ov001_021db8d0(opposing + slot * 1088) != 0) {
+                ov001_record_is_active_021db8d0(opposing + slot * 1088) != 0) {
                 if (selected == 0) {
                     native_fn_ov001_021e7538(slot, opposing, own, 0);
                     selected++;

@@ -41,6 +41,6 @@ extern u8 native_data_ov001_02238d7c[];
 extern u8 native_data_ov001_02242b50[];
 
 /* Overlay services. */
-extern s32 native_fn_ov001_021db8d0(u8 *entry);
-extern void native_fn_ov001_021f14a4(void);
+extern s32 ov001_record_is_active_021db8d0(u8 *entry);
+extern void ov001_clear_state_flag4_021f14a4(void);
 extern s32 native_fn_ov001_02216ac4(u32 value, u8 arg1, s32 arg2);

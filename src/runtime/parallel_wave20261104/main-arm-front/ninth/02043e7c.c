@@ -14,18 +14,18 @@ u32 native_main_02043e7c(void) {
         i=0;
         do {
             side=order[i];
-            slot=native_fn_ov001_021db438(side,0);
+            slot=ov001_side_slot_record_021db438(side,0);
             j=0;
             do {
-                if(native_fn_ov001_021db8d0(slot))result|=native_fn_ov001_0220ed5c(slot);
+                if(ov001_record_is_active_021db8d0(slot))result|=native_fn_ov001_0220ed5c(slot);
                 j++;
                 slot+=0x440;
             }while(j<3);
             {
-                u8 *secondSlot=native_fn_ov001_021db438(side+2,0);
+                u8 *secondSlot=ov001_side_slot_record_021db438(side+2,0);
                 s32 k=0;
                 do {
-                    if(native_fn_ov001_021db8d0(secondSlot))result|=native_fn_ov001_0220ed5c(secondSlot);
+                    if(ov001_record_is_active_021db8d0(secondSlot))result|=native_fn_ov001_0220ed5c(secondSlot);
                     k++;
                     secondSlot+=0x440;
                 }while(k<3);

@@ -18,7 +18,7 @@ void native_ov001_02226d2c(Record *record)
 {
     Block local = *(Block *)native_data_ov001_0222e914;
 
-    native_ov001_02223fe8((u32 *)&local, record->entry);
-    native_fn_ov001_02224050(&local);
-    native_fn_ov001_02226cb0(&local);
+    ov001_clear_free_candidate_slots_02223fe8((u32 *)&local, record->entry);
+    ov001_pick_random_candidate_02224050(&local);
+    ov001_first_candidate_02226cb0(&local);
 }

@@ -15,7 +15,7 @@ typedef double f64;
 extern u32 native_fn_02026ac0();
 extern u32 native_fn_020bae88();
 extern u32 native_fn_020baeb8();
-extern u32 native_fn_ov006_021e3cd8();
+extern u32 ov006_forward_four_args_021e3cd8();
 extern u32 native_fn_ov006_021e3f28();
 u32 native_ov006_021e4cc0(void) {
     if (native_fn_02026ac0() == 3) {
@@ -27,5 +27,5 @@ u32 native_ov006_021e4cc0(void) {
     } else {
         native_fn_ov006_021e3f28(0x35);
     }
-    return native_fn_ov006_021e3cd8();
+    return ov006_forward_four_args_021e3cd8();
 }

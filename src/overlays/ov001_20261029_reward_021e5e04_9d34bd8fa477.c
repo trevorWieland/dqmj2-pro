@@ -19,9 +19,9 @@ extern u32 native_fn_ov001_021d7d58();
 extern u32 native_fn_ov001_021d7dc4();
 extern u32 native_fn_ov001_021db578();
 extern u32 native_fn_ov001_021db8b8();
-extern u32 native_fn_ov001_021f1354(u32, u32, u32, u32);
-extern u32 native_fn_ov001_021f1438();
-extern u32 native_fn_ov001_021f14a4();
+extern u32 ov001_begin_state_transition_021f1354(u32, u32, u32, u32);
+extern u32 ov001_select_mode_id_021f1438();
+extern u32 ov001_clear_state_flag4_021f14a4();
 extern u32 native_fn_ov001_022139e8(u32);
 typedef struct {
     u8 unknown_0[0x2];
@@ -41,11 +41,11 @@ u32 native_ov001_021e5e04(s32 arg0) {
         native_fn_ov001_021d7d58(0x2E, 0);
         native_fn_ov001_021d7dc4(0x2E, 0);
         if (arg0 != 0) {
-            native_fn_ov001_021f1354(1U, 0U, 0x11U, 0U);
+            ov001_begin_state_transition_021f1354(1U, 0U, 0x11U, 0U);
             if ((native_fn_ov001_021db8b8(0) != 0) && ((s32) native_fn_ov001_021db578(2) > 0)) {
-                native_fn_ov001_021f1438(0);
+                ov001_select_mode_id_021f1438(0);
             } else {
-                native_fn_ov001_021f1438(1);
+                ov001_select_mode_id_021f1438(1);
             }
             native_data_ov001_02238cd4.field_f = 0U;
             native_data_ov001_02238cd4.field_10 = 5U;
@@ -55,7 +55,7 @@ u32 native_ov001_021e5e04(s32 arg0) {
     }
     if (native_data_ov001_02238cd4.field_10 == 5) {
         if ((u32) ++native_data_ov001_02238cd4.field_f > 0x3CU) {
-            native_fn_ov001_021f14a4();
+            ov001_clear_state_flag4_021f14a4();
             native_data_ov001_02238cd4.field_10 = 0xAU;
         }
     }

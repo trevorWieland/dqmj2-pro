@@ -1,7 +1,7 @@
 #include "layout_position.h"
 void native_main_02076440(const Selection *selection) {
     Point point;
-    u32 context = native_fn_ov000_02215698();
+    u32 context = ov000_display_context_02215698();
     point.x = 16;
     switch (native_data_021c5a24.state) {
     case 0:

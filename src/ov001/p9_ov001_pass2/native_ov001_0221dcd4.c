@@ -13,7 +13,7 @@ typedef struct {
     u8 *slot;
 } Record4;
 
-extern s32 native_fn_ov001_021db8d0(u8 *entry);
+extern s32 ov001_record_is_active_021db8d0(u8 *entry);
 
 s32 native_ov001_0221dcd4(Record4 *record)
 {
@@ -21,7 +21,7 @@ s32 native_ov001_0221dcd4(Record4 *record)
     u8 *entry = record->slot;
 
     do {
-        if (native_fn_ov001_021db8d0(entry) != 0) {
+        if (ov001_record_is_active_021db8d0(entry) != 0) {
             if (((s8 *)(entry + 0x200))[0x35] != 0
                 || ((s8 *)(entry + 0x200))[0x36] != 0)
                 break;

@@ -26,11 +26,11 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern u8 native_data2_0221c130[];
-extern void native_fn_021f2390(void);
+extern void ov006_context_byte_16_021f2390(void);
 extern void native_fn_021ff718(void);
 extern void native_fn_021ff6d4(void);
 extern void native_fn_021fe234(void);
-extern void native_fn_021f52cc(void);
+extern void ov006_main_loop_set_callback_021f52cc(void);
 
 
 asm u32 native_ov006_021fe200 (register u32 a0)
@@ -40,7 +40,7 @@ asm u32 native_ov006_021fe200 (register u32 a0)
     ldrb r0, [r0, #0]
     cmp r0, #0x0
     bne ov006_021fe200_L28
-    bl native_fn_021f2390
+    bl ov006_context_byte_16_021f2390
     cmp r0, #0x0
     bne ov006_021fe200_L28
     ldr r0, =native_data2_0221c130
@@ -50,7 +50,7 @@ asm u32 native_ov006_021fe200 (register u32 a0)
     mov r0, #0x7
     bl native_fn_021ff6d4
     ldr r0, =native_fn_021fe234+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
 ov006_021fe200_L28:
     pop {r3, pc}
     mov r8, r8

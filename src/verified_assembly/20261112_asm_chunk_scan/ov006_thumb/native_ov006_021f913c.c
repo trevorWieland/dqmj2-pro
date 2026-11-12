@@ -43,7 +43,7 @@ extern void native_fn_021f530c(void);
 extern void native_fn_021f52d8(void);
 extern void native_fn_021f5300(void);
 extern void native_fn_021fa164(void);
-extern void native_fn_021f52cc(void);
+extern void ov006_main_loop_set_callback_021f52cc(void);
 extern void native_fn_021f7ef8(void);
 extern void native_fn_021fdb08(void);
 extern u8 native_data3_0221c0e0[];
@@ -83,7 +83,7 @@ asm u32 native_ov006_021f913c (register u32 a0)
     mov r0, #0x0
     bl native_fn_021f5300
     ldr r0, =native_fn_021fa164+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     b ov006_021f913c_L90
 ov006_021f913c_L56:
     ldr r0, =native_data2_0221c0e0
@@ -99,7 +99,7 @@ ov006_021f913c_L56:
     mov r1, #0x0
     bl native_fn_021f5300
     ldr r0, =native_fn_021f7ef8+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     b ov006_021f913c_L90
 ov006_021f913c_L7a:
     mov r0, #0x0
@@ -109,7 +109,7 @@ ov006_021f913c_L7a:
     mov r1, #0x1
     bl native_fn_021f5300
     ldr r0, =native_fn_021fdb08+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
 ov006_021f913c_L90:
     ldr r0, =native_data3_0221c0e0
     bl native_fn_02203c20

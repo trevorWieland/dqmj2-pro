@@ -14,7 +14,7 @@ u32 native_ov001_021da9d8(u8 *obj) {
     case 1:
         *(u16 *)(obj + 0x320) = 0;
         obj[0x325] = 2;
-        native_fn_ov001_021eec7c(0x100, obj, 0);
+        ov001_effect_resource_create_021eec7c(0x100, obj, 0);
         native_fn_ov001_021f949c(0xDE, 1);
         break;
     case 2:

@@ -6,9 +6,9 @@ typedef unsigned int u32;
 typedef int s32;
 
 extern u8 native_data_ov006_0221c0b8;
-extern s32 native_fn_ov006_021f2390(void);
+extern s32 ov006_context_byte_16_021f2390(void);
 extern void native_fn_ov006_021ff6d4(s32 mode);
-extern void native_fn_ov006_021f52cc(void (*callback)(void));
+extern void ov006_main_loop_set_callback_021f52cc(void (*callback)(void));
 
 /* Dispatch on the helper's result, then hand the follow-up callback over. */
 void native_ov006_021f6fcc(void)

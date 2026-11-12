@@ -24,8 +24,8 @@ extern u32 native_fn_ov001_021d7d58();
 extern u32 native_fn_ov001_021d7dc4();
 extern u32 native_fn_ov001_021d94cc(u32, u32);
 extern u32 native_fn_ov001_021e3564(u32, u32);
-extern u32 native_fn_ov001_021f1354(u32, u32, u32, u32);
-extern u32 native_fn_ov001_021f14a4();
+extern u32 ov001_begin_state_transition_021f1354(u32, u32, u32, u32);
+extern u32 ov001_clear_state_flag4_021f14a4();
 extern u32 native_fn_ov001_021f14e4();
 extern u32 native_fn_ov001_022139e8(u32);
 typedef struct {
@@ -57,12 +57,12 @@ u32 native_ov001_021e5638(s32 arg0) {
         native_fn_ov001_021d75d4(0x30U);
         native_fn_ov001_021d77b0(-1, 0xB4000);
         native_fn_ov001_021d94cc(1U, 0U);
-        native_fn_ov001_021f1354(1U, 0U, 0xAU, 1U);
+        ov001_begin_state_transition_021f1354(1U, 0U, 0xAU, 1U);
         native_data_ov001_02238cd4.field_3 = 0U;
         native_data_ov001_02238cd4.field_18 = 0x1EU;
     } else if (native_data_ov001_02238cd4.field_18 == 0x1E) {
         if ((u32) ++native_data_ov001_02238cd4.field_3 > 0x3CU) {
-            native_fn_ov001_021f14a4();
+            ov001_clear_state_flag4_021f14a4();
             native_data_ov001_02238cd4.field_18 = 0x23U;
         }
     } else if (native_data_ov001_02238cd4.field_18 == 0x23) {
@@ -73,15 +73,15 @@ u32 native_ov001_021e5638(s32 arg0) {
         native_fn_ov001_021d75d4(0x2AU);
         if (arg0 == 8) {
             native_fn_ov001_021e3564(0x14, 1);
-            native_fn_ov001_021f1354(1U, 0U, 0xBU, 1U);
+            ov001_begin_state_transition_021f1354(1U, 0U, 0xBU, 1U);
             native_data_ov001_02238cd4.field_0 = (u8) native_fn_0205e7a8(-1, 0x3A);
         } else if (arg0 == 9) {
             native_fn_ov001_021e3564(0x15, 1);
-            native_fn_ov001_021f1354(1U, 0U, 0xCU, 1U);
+            ov001_begin_state_transition_021f1354(1U, 0U, 0xCU, 1U);
             native_data_ov001_02238cd4.field_0 = (u8) native_fn_0205e7a8(-1, 0x3B);
         } else {
             native_fn_ov001_021e3564(0x14, 1);
-            native_fn_ov001_021f1354(1U, 0U, 0xDU, 1U);
+            ov001_begin_state_transition_021f1354(1U, 0U, 0xDU, 1U);
             native_data_ov001_02238cd4.field_0 = (u8) native_fn_0205e7a8(-1, 0x3A);
         }
         native_data_ov001_02238cd4.field_18 = 0x32U;
@@ -96,7 +96,7 @@ u32 native_ov001_021e5638(s32 arg0) {
         if (native_fn_0205f2d8((s8) native_data_ov001_02238cd4.field_0) == 0) {
             native_fn_0205f210((s8) native_data_ov001_02238cd4.field_0, 0x1E);
             native_fn_02041510(1U, 2U, 0x1EU);
-            native_fn_ov001_021f14a4();
+            ov001_clear_state_flag4_021f14a4();
             native_fn_ov001_022139e8(2U);
             native_data_ov001_02238cd4.field_18 = 0x46U;
         }

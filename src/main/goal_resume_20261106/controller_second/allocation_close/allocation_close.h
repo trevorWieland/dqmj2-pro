@@ -10,7 +10,7 @@ typedef struct { u32 state; u8 gap04[0xf8]; SelectionList skill_selection; u8 ga
 typedef struct LayoutState LayoutState;
 typedef struct TextOwner TextOwner;
 extern AllocationMenu native_data_021c6234;
-extern void *native_fn_ov000_02215698(void);
+extern void *ov000_display_context_02215698(void);
 extern void native_fn_0204b61c(LayoutState *, int);
 extern u32 native_fn_020620e8(s8, u32);
 extern TextOwner *native_fn_02049ad0(s32);

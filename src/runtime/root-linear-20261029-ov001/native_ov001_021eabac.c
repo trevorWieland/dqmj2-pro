@@ -23,7 +23,7 @@ extern u32 native_fn_ov001_021eaa3c();
 extern u32 native_fn_ov001_021eaa88();
 extern u32 native_fn_ov001_021eea10();
 extern u32 native_fn_ov001_021eeb70();
-extern u32 native_fn_ov001_021eec7c();
+extern u32 ov001_effect_resource_create_021eec7c();
 typedef struct {
     u8 unknown_0[0x1];
     s8 field_1;
@@ -52,7 +52,7 @@ u32 native_ov001_021eabac(void) {
         temp_r4 = M2C_FIELD((void *) native_fn_0207afec(native_data_ov001_02238d7c.field_36), s16 *, 0xA);
         native_fn_0202ac08(native_data_ov001_02238e14);
         native_fn_ov001_021eea10(temp_r4, 0);
-        native_data_ov001_02238d7c.field_58 = native_fn_ov001_021eec7c(temp_r4, native_data_ov001_02238d7c.field_60, native_fn_0205d790(temp_r4));
+        native_data_ov001_02238d7c.field_58 = ov001_effect_resource_create_021eec7c(temp_r4, native_data_ov001_02238d7c.field_60, native_fn_0205d790(temp_r4));
         native_data_ov001_02238d7c.field_22 = 0xAU;
     }
     else if (native_data_ov001_02238d7c.field_22 == 0xA) {

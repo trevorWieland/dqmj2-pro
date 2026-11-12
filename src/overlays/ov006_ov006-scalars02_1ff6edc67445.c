@@ -15,7 +15,7 @@ typedef double f64;
 extern u32 native_fn_ov006_021f2c84();
 extern u32 native_fn_ov006_021f2f28();
 extern u32 native_fn_ov006_021f2f3c();
-extern u32 native_fn_ov006_021f52cc();
+extern u32 ov006_main_loop_set_callback_021f52cc();
 extern u32 native_fn_ov006_021f8f28();
 extern u32 native_fn_ov006_021ff6d4();
 extern u32 native_fn_ov006_02203188();
@@ -35,7 +35,7 @@ u32 native_ov006_021f8ed4(void) {
             if (M2C_FIELD(*(u32 *)native_data_ov006_0221c0e0, u8 *, 0x29) == 0x20) {
                 native_fn_ov006_021f2f3c(0);
             }
-            var_r0 = native_fn_ov006_021f52cc(native_fn_ov006_021f8f28);
+            var_r0 = ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021f8f28);
         }
     }
     return var_r0;

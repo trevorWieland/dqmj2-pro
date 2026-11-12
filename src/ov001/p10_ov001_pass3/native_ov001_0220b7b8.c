@@ -14,7 +14,7 @@ s32 native_ov001_0220b7b8(void)
     if (mode == 4) {
         native_fn_ov001_021e1358(value);
     } else {
-        native_fn_ov001_021db438(value, mode);
+        ov001_side_slot_record_021db438(value, mode);
         native_fn_ov001_021ee9fc();
     }
     native_data_ov001_0223e088[3] = 1;

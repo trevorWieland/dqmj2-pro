@@ -13,7 +13,7 @@ typedef double f64;
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 extern u32 native_fn_0205e7a8();
-extern u32 native_fn_ov006_021e3cd8();
+extern u32 ov006_forward_four_args_021e3cd8();
 extern u32 native_fn_ov006_021e3f28();
 extern u32 native_fn_ov006_021e6954();
 extern u32 native_fn_ov006_021e802c();
@@ -23,5 +23,5 @@ u32 native_ov006_021e6454(void) {
         native_fn_0205e7a8(-1, 0x57);
         native_fn_ov006_021e3f28(0x1E);
     }
-    return native_fn_ov006_021e3cd8();
+    return ov006_forward_four_args_021e3cd8();
 }

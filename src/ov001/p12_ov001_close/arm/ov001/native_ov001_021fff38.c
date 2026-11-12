@@ -52,7 +52,7 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_0202a634(void);
-extern void native_fn_02202360(void);
+extern void ov001_table_f0_entry_02202360(void);
 extern void native_fn_02049618(void);
 extern void native_fn_02203418(void);
 extern void native_fn_022011c0(void);
@@ -78,7 +78,7 @@ asm u32 native_ov001_021fff38 (register u32 a0)
     mov r8, r0
     ldrsb r0, [r1, #12]
     mov r6, #0
-    bl native_fn_02202360
+    bl ov001_table_f0_entry_02202360
     mov r4, r0
     ldrb r5, [r4, #0x14]
     bl native_fn_02049618

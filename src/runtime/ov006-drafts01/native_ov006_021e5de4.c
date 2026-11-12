@@ -12,7 +12,7 @@ typedef double f64;
 #define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
-extern u32 native_fn_ov006_021e3cd4();
+extern u32 ov006_noop_021e3cd4();
 extern u32 native_fn_ov006_021e6560();
 typedef struct {
     u8 unknown_0[0x8];
@@ -20,6 +20,6 @@ typedef struct {
 } Record_native_data_ov006_0220d108;
 extern Record_native_data_ov006_0220d108 native_data_ov006_0220d108;
 u32 native_ov006_021e5de4(void) {
-    native_fn_ov006_021e3cd4();
+    ov006_noop_021e3cd4();
     return native_fn_ov006_021e6560(native_data_ov006_0220d108.field_8 + 0x13, 0);
 }

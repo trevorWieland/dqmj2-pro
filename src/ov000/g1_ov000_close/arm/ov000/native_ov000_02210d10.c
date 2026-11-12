@@ -22,7 +22,7 @@ extern void native_fn_02025a28(void);
 extern void native_fn_02025578(void);
 extern void native_fn_02025a70(void);
 extern void native_fn_02025504(void);
-extern void native_fn_021e07b8(void);
+extern void ov000_saved_world_position_get_021e07b8(void);
 extern void native_fn_0200236c(void);
 extern void native_fn_021e7bbc(void);
 extern void native_fn_02214b04(void);
@@ -91,22 +91,22 @@ L_02210da4:
     cmp r1, r0
     beq L_02210ef4
     mov r0, #0
-    bl native_fn_021e07b8
+    bl ov000_saved_world_position_get_021e07b8
     mov r8, r0
     mov r0, #0
-    bl native_fn_021e07b8
+    bl ov000_saved_world_position_get_021e07b8
     mov r7, r0
     mov r0, #0
-    bl native_fn_021e07b8
+    bl ov000_saved_world_position_get_021e07b8
     mov r5, r0
     mov r0, #0
-    bl native_fn_021e07b8
+    bl ov000_saved_world_position_get_021e07b8
     mov r4, r0
     mov r0, #0
-    bl native_fn_021e07b8
+    bl ov000_saved_world_position_get_021e07b8
     mov r6, r0
     mov r0, #0
-    bl native_fn_021e07b8
+    bl ov000_saved_world_position_get_021e07b8
     ldr r1, [r7, #0x8]
     ldr r3, [r6, #0x4]
     ldr r7, [r9, #0x78]

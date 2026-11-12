@@ -48,7 +48,7 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern u8 native_data_0222dfe4[];
-extern void native_fn_021db8d0(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_0220e3a8(void);
 extern void native_fn_021d8dec(void);
 extern void native_fn_0203d294(void);
@@ -78,7 +78,7 @@ ov001_021f5078_L24:
     subs r2, r2, #1
     bne ov001_021f5078_L24
     mov r0, r9
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021f5078_L194
     mvn r5, #0

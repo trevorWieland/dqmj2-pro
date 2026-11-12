@@ -29,20 +29,20 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021f2390(void);
+extern void ov006_context_byte_16_021f2390(void);
 extern void native_fn_021ff6d4(void);
 extern void native_fn_020a4660(void);
 extern void native_fn_021f23b8(void);
 extern void native_fn_021f69e0(void);
 extern void native_fn_021f6878(void);
-extern void native_fn_021f52cc(void);
+extern void ov006_main_loop_set_callback_021f52cc(void);
 
 
 asm u32 native_ov006_021f6808 (register u32 a0)
 {
     push {lr}
     sub sp, #0x14
-    bl native_fn_021f2390
+    bl ov006_context_byte_16_021f2390
     cmp r0, #0x0
     beq ov006_021f6808_L14
     cmp r0, #0x1
@@ -84,7 +84,7 @@ ov006_021f6808_L4c:
     strb r1, [r0, #0x1]
 ov006_021f6808_L5c:
     ldr r0, =native_fn_021f6878+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     add sp, #0x14
     pop {pc}
     mov r8, r8

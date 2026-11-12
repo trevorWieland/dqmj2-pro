@@ -50,7 +50,7 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021eec7c(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_022025a4(void);
 extern void native_fn_021f949c(void);
 extern void native_fn_021d8dec(void);
@@ -86,7 +86,7 @@ ov001_021da814_L30:
     strb r0, [r4, #0x326]
     mov r1, r4
     mov r0, #4
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     ldrb r0, [r4, #0x31e]
     ldrb r1, [r4, #0x31f]
     mov r2, #1

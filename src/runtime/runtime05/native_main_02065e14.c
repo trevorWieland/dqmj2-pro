@@ -11,7 +11,7 @@ typedef double f64;
 #define M2C_FIELD(value, type, offset) (*(type)((s8 *)(value) + (offset)))
 #define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
-extern u32 native_fn_ov001_021db8d0();
+extern u32 ov001_record_is_active_021db8d0();
 u32 native_main_02065e14(s32 arg0, s32 arg1) {
     if (arg0 == 0) {
         return 0U;
@@ -19,7 +19,7 @@ u32 native_main_02065e14(s32 arg0, s32 arg1) {
     if (arg1 == 0) {
         return 0U;
     }
-    if (native_fn_ov001_021db8d0() != 0) {
+    if (ov001_record_is_active_021db8d0() != 0) {
         return 1U;
     }
     return 0U;

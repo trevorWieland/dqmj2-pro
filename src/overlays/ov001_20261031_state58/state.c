@@ -5,7 +5,7 @@ u32 native_ov001_021f98e4(void) {
     u8 temp_r2_2;
 
     if (native_data_ov001_02239a14.field_19 == 0) {
-        native_fn_ov001_021f1354(1, 2, 0, 1);
+        ov001_begin_state_transition_021f1354(1, 2, 0, 1);
         native_fn_ov001_021f989c();
         native_data_ov001_02239a14.field_19 = 0x64U;
     }

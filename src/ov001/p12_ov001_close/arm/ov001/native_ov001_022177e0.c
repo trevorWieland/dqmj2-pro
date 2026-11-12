@@ -37,16 +37,16 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021f1354(void);
-extern void native_fn_021f1438(void);
+extern void ov001_begin_state_transition_021f1354(void);
+extern void ov001_select_mode_id_021f1438(void);
 extern void native_fn_022168ac(void);
 extern void native_fn_0205d790(void);
-extern void native_fn_021eec7c(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_021f5c38(void);
 extern void native_fn_021f5cc0(void);
 extern void native_fn_0205d6f4(void);
 extern void native_fn_021dc940(void);
-extern void native_fn_021f14a4(void);
+extern void ov001_clear_state_flag4_021f14a4(void);
 extern void native_fn_022168d0(void);
 
 
@@ -69,9 +69,9 @@ asm u32 native_ov001_022177e0 (register u32 a0)
     mov r0, #11
     mov r2, #37
     mov r3, #1
-    bl native_fn_021f1354
+    bl ov001_begin_state_transition_021f1354
     mov r0, #2
-    bl native_fn_021f1438
+    bl ov001_select_mode_id_021f1438
     mov r0, #141
     bl native_fn_022168ac
 ov001_022177e0_L58:
@@ -80,7 +80,7 @@ ov001_022177e0_L58:
     mov r2, r0
     mov r1, r6
     mov r0, #141
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     str r0, [r6, #0x338]
     mov r3, #1
     mov r0, r6
@@ -122,7 +122,7 @@ ov001_022177e0_Lec:
     strb r1, [r0, #0x2]
     tst r1, #255
     bne ov001_022177e0_L118
-    bl native_fn_021f14a4
+    bl ov001_clear_state_flag4_021f14a4
     mov r0, #141
     bl native_fn_022168d0
 ov001_022177e0_L118:

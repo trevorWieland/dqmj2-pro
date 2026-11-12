@@ -13,8 +13,8 @@ s32 native_ov001_0221c11c(Record *record)
     u8 *entry = record->entries;
 
     do {
-        if (native_fn_ov001_021db8d0(entry) != 0) {
-            if (native_fn_ov001_021dbd30(entry) != 0)
+        if (ov001_record_is_active_021db8d0(entry) != 0) {
+            if (ov001_record_field_1f2_021dbd30(entry) != 0)
                 break;
         }
         if (i == 2)

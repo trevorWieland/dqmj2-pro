@@ -35,8 +35,8 @@ extern void native_fn_0202a498(s32 target);
 extern void native_fn_0206c718(s32 handle, s32 bank, s32 arg0, s32 arg1,
                                s32 pad, s32 entry);
 extern u8 *native_fn_02065d88(s32 handle);
-extern s32 native_fn_ov001_021db438();
-extern s32 native_fn_ov001_021db8d0();
+extern s32 ov001_side_slot_record_021db438();
+extern s32 ov001_record_is_active_021db8d0();
 extern void native_fn_ov001_0220468c();
 extern void native_fn_ov001_022046bc();
 extern void native_fn_ov001_0220b738(u8 value);

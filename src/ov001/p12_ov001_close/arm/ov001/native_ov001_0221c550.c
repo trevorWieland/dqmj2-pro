@@ -37,7 +37,7 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021db8d0(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_0207afec(void);
 
 
@@ -50,7 +50,7 @@ ov001_0221c550_Lc:
     add r0, r5, r5, lsl #4
     add r7, r4, r0, lsl #6
     mov r0, r7
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_0221c550_La4
     ldrb r0, [r7, #0x322]

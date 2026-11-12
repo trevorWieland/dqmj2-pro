@@ -65,8 +65,8 @@ typedef signed char s8;
 extern void native_fn_021d8dec(void);
 extern void native_fn_022094bc(void);
 extern void native_fn_0205d790(void);
-extern void native_fn_021eec7c(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_effect_resource_create_021eec7c(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_022047ec(void);
 extern void native_fn_0205d7cc(void);
 extern void native_fn_021dab28(void);
@@ -124,7 +124,7 @@ ov001_021dacd0_La4:
     mov r2, r0
     mov r0, r9
     mov r1, r10
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     add r0, r0, #1
     str r0, [sp, #0x8]
     cmp r0, #0
@@ -132,7 +132,7 @@ ov001_021dacd0_La4:
     cmp r7, #0
     blt ov001_021dacd0_L128
     mov r0, r10
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021dacd0_Lf4
     ldrb r0, [r10, #0x31e]
@@ -158,7 +158,7 @@ ov001_021dacd0_L128:
     cmp r7, #0
     blt ov001_021dacd0_L150
     mov r0, r10
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021dacd0_L150
     mov r2, r7

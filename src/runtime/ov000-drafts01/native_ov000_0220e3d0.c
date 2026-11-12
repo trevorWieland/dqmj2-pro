@@ -16,7 +16,7 @@ extern u32 native_fn_0203d294();
 extern u32 native_fn_020420c4();
 extern u32 native_fn_02042bfc();
 extern u32 native_fn_020c56b4();
-extern u32 native_fn_ov000_021e07b8();
+extern u32 ov000_saved_world_position_get_021e07b8();
 extern u32 native_fn_ov000_02209c68();
 extern u32 native_fn_ov000_0220a2a4();
 u32 native_ov000_0220e3d0(void *arg0) {
@@ -25,7 +25,7 @@ u32 native_ov000_0220e3d0(void *arg0) {
     var_r4 = 0;
     if (M2C_FIELD(arg0, u8 *, 0x279) == 0) {
         native_fn_ov000_0220a2a4(arg0, 2, 0);
-        native_fn_020420c4(arg0, native_fn_ov000_021e07b8(0));
+        native_fn_020420c4(arg0, ov000_saved_world_position_get_021e07b8(0));
         native_fn_02042bfc(arg0, M2C_FIELD((void *) native_fn_020c56b4(M2C_FIELD(arg0, s16 *, 0x276)), s32 *, 0x18));
         M2C_FIELD(arg0, s16 *, 0x27A) = (s16) ((native_fn_0203d294(0x7FFFFFFF) & 0x3F) + 0x3C);
         M2C_FIELD(arg0, u8 *, 0x279) = 0xAU;
@@ -38,7 +38,7 @@ u32 native_ov000_0220e3d0(void *arg0) {
     }
     if (M2C_FIELD(arg0, u8 *, 0x279) == 0x14) {
         native_fn_ov000_0220a2a4(arg0, 0, 0);
-        native_fn_020420c4(arg0, native_fn_ov000_021e07b8(0));
+        native_fn_020420c4(arg0, ov000_saved_world_position_get_021e07b8(0));
         if (M2C_FIELD((void *) native_fn_020c56b4(M2C_FIELD(arg0, s16 *, 0x276)), u8 *, 7) == 6) {
             native_fn_ov000_02209c68(arg0, 7);
         } else {

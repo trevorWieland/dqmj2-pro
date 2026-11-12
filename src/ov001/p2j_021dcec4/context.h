@@ -14,6 +14,6 @@ typedef signed int s32;
 /* 0x02239c10: sound context block; 0x24 is the handle the mixer is set from. */
 extern u8 native_data_ov001_02239c10[];
 
-extern s32 native_fn_ov001_021db8d0();
+extern s32 ov001_record_is_active_021db8d0();
 extern void native_fn_0206c718(s32 handle, s32 bank, s32 arg0, s32 arg1,
                                s32 pad, s32 entry);

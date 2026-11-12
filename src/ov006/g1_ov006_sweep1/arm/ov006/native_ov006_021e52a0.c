@@ -31,8 +31,8 @@ extern void native_fn_02068a88(void);
 extern void native_fn_021e802c(void);
 extern u8 native_data2_02218d30[];
 extern void native_fn_021e7e78(void);
-extern void native_fn_021e3f28(void);
-extern void native_fn_021e3cd8(void);
+extern void native_fn_ov006_021e3f28(void);
+extern void ov006_forward_four_args_021e3cd8(void);
 
 
 asm u32 native_ov006_021e52a0 (register u32 a0)
@@ -66,8 +66,8 @@ asm u32 native_ov006_021e52a0 (register u32 a0)
     cmp r1, #0
     movne r0, #64
     ldreq r0, [r0, #0x1c]
-    bl native_fn_021e3f28
-    bl native_fn_021e3cd8
+    bl native_fn_ov006_021e3f28
+    bl ov006_forward_four_args_021e3cd8
     add sp, sp, #76
     ldmia sp!, {pc}
 }

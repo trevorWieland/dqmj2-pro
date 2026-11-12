@@ -86,7 +86,7 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern u8 native_data_0222defc[];
-extern void native_fn_021db438(void);
+extern void ov001_side_slot_record_021db438(void);
 extern void native_fn_020444ec(void);
 extern void native_fn_01ffa824(void);
 extern void native_fn_01ffa84c(void);
@@ -120,11 +120,11 @@ ov001_021ddf34_L18:
     strb r3, [r4]
     strb r6, [r2, #0x18]
     strb r6, [r2, #0x19]
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r10, r0
     mov r0, #1
     mov r1, r6
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r4, r0
     bl native_fn_020444ec
     cmp r0, #0

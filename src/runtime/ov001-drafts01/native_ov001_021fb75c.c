@@ -12,8 +12,8 @@ typedef double f64;
 #define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
-extern u32 native_fn_ov001_021db438();
-extern u32 native_fn_ov001_021db8d0();
+extern u32 ov001_side_slot_record_021db438();
+extern u32 ov001_record_is_active_021db8d0();
 typedef struct {
     u8 unknown_0[0x40];
     s32 field_40;
@@ -26,10 +26,10 @@ u32 native_ov001_021fb75c(void) {
 
     var_r8 = 0;
     do {
-        var_r0 = native_fn_ov001_021db438(1, var_r8);
+        var_r0 = ov001_side_slot_record_021db438(1, var_r8);
         temp_r6 = var_r0;
         if ((temp_r6 != 0) && (temp_r6 != native_data_ov001_02239a14.field_40)) {
-            var_r0 = native_fn_ov001_021db8d0();
+            var_r0 = ov001_record_is_active_021db8d0();
             if (var_r0 != 0) {
                 M2C_FIELD(temp_r6, s8 *, 0x325) = 1;
             }

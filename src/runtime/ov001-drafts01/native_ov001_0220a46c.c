@@ -22,7 +22,7 @@ extern u32 native_fn_0205fd70();
 extern u32 native_fn_02062378();
 extern u32 native_fn_02071b9c();
 extern u32 native_fn_0207f254();
-extern u32 native_fn_ov001_02202360();
+extern u32 ov001_table_f0_entry_02202360();
 extern u32 native_fn_ov001_0220a97c();
 typedef struct {
     u8 unknown_0[0x2];
@@ -57,7 +57,7 @@ block_6:
         }
     }
     if (native_data_ov001_0223def8.field_6 != 0) {
-        native_fn_ov001_02202360(6);
+        ov001_table_f0_entry_02202360(6);
         native_fn_ov001_0220a97c();
     } else {
         native_fn_0207f254();

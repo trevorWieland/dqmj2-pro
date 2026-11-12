@@ -12,7 +12,7 @@ typedef double f64;
 #define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
-extern u32 native_fn_ov001_021db438();
+extern u32 ov001_side_slot_record_021db438();
 extern u32 native_fn_ov001_021dc200();
 extern u32 native_fn_ov001_021f0bec();
 extern u32 native_fn_ov001_021f0c40();
@@ -29,7 +29,7 @@ typedef struct {
 } Record_native_data_ov001_02239a14;
 extern Record_native_data_ov001_02239a14 native_data_ov001_02239a14;
 u32 native_ov001_021f9e10(void) {
-    native_data_ov001_02239a14.field_34 = native_fn_ov001_021db438(0, native_data_ov001_02239a14.field_e);
+    native_data_ov001_02239a14.field_34 = ov001_side_slot_record_021db438(0, native_data_ov001_02239a14.field_e);
     if (native_fn_ov001_021dc200() == 0) {
         native_data_ov001_02239a14.field_a = 0xA;
     } else {

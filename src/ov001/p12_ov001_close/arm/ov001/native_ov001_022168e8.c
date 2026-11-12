@@ -55,16 +55,16 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021db438(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_side_slot_record_021db438(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_022168ac(void);
 extern void native_fn_0205d790(void);
-extern void native_fn_021eec7c(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_022024d4(void);
 extern void native_fn_021f14e4(void);
-extern void native_fn_021f1354(void);
-extern void native_fn_021f1438(void);
-extern void native_fn_021f14a4(void);
+extern void ov001_begin_state_transition_021f1354(void);
+extern void ov001_select_mode_id_021f1438(void);
+extern void ov001_clear_state_flag4_021f14a4(void);
 extern void native_fn_022168d0(void);
 
 
@@ -81,7 +81,7 @@ asm u32 native_ov001_022168e8 (register u32 a0)
     bne ov001_022168e8_L38
     mov r0, r1
     mov r1, #0
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r8, r0
     mov r6, #3
 ov001_022168e8_L38:
@@ -93,7 +93,7 @@ ov001_022168e8_L38:
     mov r4, #1
 ov001_022168e8_L50:
     mov r0, r9
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_022168e8_L6c
     ldr r0, [r9, #0x33c]
@@ -120,7 +120,7 @@ ov001_022168e8_L7c:
     mov r9, r7
 ov001_022168e8_Lb0:
     mov r0, r8
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_022168e8_Lf8
     ldr r0, [r8, #0x33c]
@@ -129,7 +129,7 @@ ov001_022168e8_Lb0:
     mov r0, r4
     mov r1, r8
     mov r2, r5
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     ldr r0, [r8, #0x33c]
     mov r2, r9
     bic r0, r0, #2
@@ -167,9 +167,9 @@ ov001_022168e8_L150:
     mov r1, #0
     mov r2, #47
     mov r3, #1
-    bl native_fn_021f1354
+    bl ov001_begin_state_transition_021f1354
     mov r0, #2
-    bl native_fn_021f1438
+    bl ov001_select_mode_id_021f1438
     ldr r0, =0x02242bf4
     mov r1, #10
     strb r1, [r0, #0x1]
@@ -185,7 +185,7 @@ ov001_022168e8_L17c:
     blt ov001_022168e8_L1d0
     mov r0, #20
     strb r0, [r2, #0x1]
-    bl native_fn_021f14a4
+    bl ov001_clear_state_flag4_021f14a4
     b ov001_022168e8_L1d0
 ov001_022168e8_L1ac:
     cmp r0, #20

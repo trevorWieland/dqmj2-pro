@@ -8,7 +8,7 @@ s32 native_ov001_021db7cc(u8 *obj, s32 delta) {
     s32 old;
     s32 value;
 
-    if (native_fn_ov001_021dbd30() >= 10000) {
+    if (ov001_record_field_1f2_021dbd30() >= 10000) {
         return delta;
     }
     old = *(s16 *)(obj + 0x1F2);

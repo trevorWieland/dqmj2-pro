@@ -30,7 +30,7 @@ typedef signed char s8;
 
 extern u8 native_data_0220b6a0[];
 extern u8 native_data_0220b688[];
-extern void native_fn_02203c08(void);
+extern void ov006_clear_buffer_02203c08(void);
 extern u8 native_data6_0221c0e4[];
 extern void native_fn_021f530c(void);
 extern u8 native_data_0220dde8[];
@@ -45,7 +45,7 @@ extern void native_fn_0220303c(void);
 extern void native_fn_021f9ac4(void);
 extern void native_fn_021f9a44(void);
 extern void native_fn_021f9624(void);
-extern void native_fn_021f52cc(void);
+extern void ov006_main_loop_set_callback_021f52cc(void);
 
 
 asm u32 native_ov006_021f94ac (register u32 a0)
@@ -74,7 +74,7 @@ asm u32 native_ov006_021f94ac (register u32 a0)
     strb r1, [r0, #0x8]
     mov r0, #0x18
     mov r1, #0x4
-    bl native_fn_02203c08
+    bl ov006_clear_buffer_02203c08
     ldr r1, =native_data6_0221c0e4
     str r0, [r1, #0]
     add r0, sp, #0x0
@@ -148,7 +148,7 @@ ov006_021f94ac_L7e:
     bl native_fn_021f9ac4
     bl native_fn_021f9a44
     ldr r0, =native_fn_021f9624+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     add sp, #0x20
     pop {r4, pc}
 }

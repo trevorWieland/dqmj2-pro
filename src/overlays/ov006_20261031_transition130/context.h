@@ -17,7 +17,7 @@ extern u32 native_fn_ov006_021f221c();
 extern u32 native_fn_ov006_021f23c4();
 extern u32 native_fn_ov006_021f2774();
 extern u32 native_fn_ov006_021f4eb8();
-extern u32 native_fn_ov006_021f52cc();
+extern u32 ov006_main_loop_set_callback_021f52cc();
 extern u32 native_fn_ov006_021f52d8();
 extern u32 native_fn_ov006_021f7da4();
 extern u32 native_fn_ov006_021fd11c();

@@ -11,11 +11,11 @@ typedef double f64;
 #define M2C_FIELD(value, type, offset) (*(type)((s8 *)(value) + (offset)))
 #define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
-extern u32 native_fn_ov000_02215698();
+extern u32 ov000_display_context_02215698();
 extern u32 native_fn_ov000_022156d4();
 extern u32 native_fn_ov000_0221570c();
 u32 native_main_020766b0(void) {
-    native_fn_ov000_02215698();
+    ov000_display_context_02215698();
     native_fn_ov000_022156d4();
     return native_fn_ov000_0221570c(0);
 }

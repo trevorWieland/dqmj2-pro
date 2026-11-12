@@ -4,10 +4,10 @@
  * table. */
 void native_ov001_021dfd30(void)
 {
-    s32 value = native_fn_ov001_021db438();
+    s32 value = ov001_side_slot_record_021db438();
     s32 index;
 
-    if (native_fn_ov001_021db8d0() == 0)
+    if (ov001_record_is_active_021db8d0() == 0)
         return;
     index = 0;
     do {

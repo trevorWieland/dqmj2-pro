@@ -14,10 +14,10 @@ typedef double f64;
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 extern u32 native_fn_ov001_021d9494();
 extern u32 native_fn_ov001_021d9534();
-extern u32 native_fn_ov001_021f1354();
+extern u32 ov001_begin_state_transition_021f1354();
 extern u32 native_fn_ov001_021f1414();
-extern u32 native_fn_ov001_021f1438();
-extern u32 native_fn_ov001_021f14a4();
+extern u32 ov001_select_mode_id_021f1438();
+extern u32 ov001_clear_state_flag4_021f14a4();
 extern u32 native_fn_ov001_021f1d54();
 extern u8 native_data_ov001_02242b94[];
 u32 native_ov001_0221501c(void) {
@@ -25,9 +25,9 @@ u32 native_ov001_0221501c(void) {
 
     if ((s8) M2C_FIELD(native_data_ov001_02242b94, u8 *, 0) == 0) {
         native_fn_ov001_021f1d54(5);
-        native_fn_ov001_021f1354(7, 0, M2C_FIELD(native_data_ov001_02242b94, u16 *, 4), 1);
+        ov001_begin_state_transition_021f1354(7, 0, M2C_FIELD(native_data_ov001_02242b94, u16 *, 4), 1);
         native_fn_ov001_021f1414(M2C_FIELD(M2C_FIELD(native_data_ov001_02242b94, void **, 8), u8 *, 0x31E));
-        native_fn_ov001_021f1438();
+        ov001_select_mode_id_021f1438();
         native_fn_ov001_021d9494(M2C_FIELD(native_data_ov001_02242b94, void **, 8), 2, 1);
         M2C_FIELD(native_data_ov001_02242b94, u8 *, 0) = 0xA;
     } else if ((s8) M2C_FIELD(native_data_ov001_02242b94, u8 *, 0) == 0xA) {
@@ -36,7 +36,7 @@ u32 native_ov001_0221501c(void) {
             M2C_FIELD(native_data_ov001_02242b94, u8 *, 0) = 0x64;
         }
     } else {
-        native_fn_ov001_021f14a4();
+        ov001_clear_state_flag4_021f14a4();
         M2C_FIELD(native_data_ov001_02242b94, u8 *, 0) = 0;
         M2C_FIELD(native_data_ov001_02242b94, s8 *, 3) = 4;
     }

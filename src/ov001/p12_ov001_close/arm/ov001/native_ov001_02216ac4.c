@@ -45,13 +45,13 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021f1354(void);
-extern void native_fn_021f1438(void);
+extern void ov001_begin_state_transition_021f1354(void);
+extern void ov001_select_mode_id_021f1438(void);
 extern void native_fn_022168ac(void);
 extern void native_fn_0205d790(void);
-extern void native_fn_021eec7c(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_021d7e80(void);
-extern void native_fn_021f14a4(void);
+extern void ov001_clear_state_flag4_021f14a4(void);
 extern void native_fn_021f14e4(void);
 extern void native_fn_022168d0(void);
 
@@ -72,9 +72,9 @@ asm u32 native_ov001_02216ac4 (register u32 a0)
     mov r0, #11
     mov r1, #0
     mov r3, #1
-    bl native_fn_021f1354
+    bl ov001_begin_state_transition_021f1354
     mov r0, #2
-    bl native_fn_021f1438
+    bl ov001_select_mode_id_021f1438
 ov001_02216ac4_L44:
     ldr r0, =0x00000117
     bl native_fn_022168ac
@@ -83,7 +83,7 @@ ov001_02216ac4_L44:
     mov r2, r0
     ldr r0, =0x00000117
     mov r1, r6
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     mov r0, r6
     bl native_fn_021d7e80
     ldr r0, =0x02242bf4
@@ -103,7 +103,7 @@ ov001_02216ac4_L84:
     blt ov001_02216ac4_L164
     mov r0, #20
     strb r0, [r3, #0x1]
-    bl native_fn_021f14a4
+    bl ov001_clear_state_flag4_021f14a4
     b ov001_02216ac4_L164
 ov001_02216ac4_Lb4:
     cmp r0, #20
@@ -124,9 +124,9 @@ ov001_02216ac4_Lec:
     mov r2, r5
     mov r0, #11
     mov r3, #1
-    bl native_fn_021f1354
+    bl ov001_begin_state_transition_021f1354
     mov r0, #2
-    bl native_fn_021f1438
+    bl ov001_select_mode_id_021f1438
     ldr r0, =0x02242bf4
     mov r1, #30
     strb r1, [r0, #0x1]
@@ -144,7 +144,7 @@ ov001_02216ac4_L11c:
     blt ov001_02216ac4_L164
     mov r0, #40
     strb r0, [r3, #0x1]
-    bl native_fn_021f14a4
+    bl ov001_clear_state_flag4_021f14a4
     b ov001_02216ac4_L164
 ov001_02216ac4_L14c:
     cmp r0, #40

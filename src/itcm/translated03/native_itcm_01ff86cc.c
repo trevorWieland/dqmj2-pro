@@ -23,14 +23,14 @@ extern u32 native_fn_020620e8();
 extern u32 native_fn_02062378();
 extern u32 native_fn_020642cc();
 extern u32 native_fn_02088a2c();
-extern u32 native_fn_ov000_02223c54();
+extern u32 ov000_context_02246600_02223c54();
 extern u8 native_data_021ceb54[];
 u32 native_itcm_01ff86cc(void) {
     s32 var_r1;
     u16 temp_r0;
     u32 temp_r0_2;
 
-    M2C_FIELD((void *) native_fn_ov000_02223c54(), s8 *, 0x58) = 0;
+    M2C_FIELD((void *) ov000_context_02246600_02223c54(), s8 *, 0x58) = 0;
     if (native_fn_02062378() != 0) {
         return native_fn_020620e8(0, 1);
     }

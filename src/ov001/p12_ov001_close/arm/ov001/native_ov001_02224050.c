@@ -1,24 +1,14 @@
 /* ov001 row 0x02224050: 84 bytes.
  *
- * What it does: 21 instructions; 4 call(s) to 0x02223f20, 0x02224080, 0x0203d294, +1 more; loops (back edge at +0x08); returns through pop {r3, r4, r5, pc}
+ * ov001_pick_random_candidate_02224050: Picks a random occupied slot from a three-word candidate set and clears the rest.
  *
- * Decoded shape: loop with 4 calls (21 instructions, 4 calls, 2 branches, 4 back edges, 0 literal slots).
+ * Evidence: Calls 0203D294(3) (the shared RNG accessor) until candidates[index] != 0, then clears every other word; callers pass the 12-byte block filled by 02223FE8/02226BDC/02224570.
+ * Touches: three-word candidate block; random service 0x0203D294.
+ * Remaining unknowns: Whether the selected word is an ability id, item id or skill id is not established.
  *
- *   branch +0x10 -> +0x30
- *   back edge +0x28 -> +0x18
- *   branch +0x2c -> +0x34
- *   back edge +0x4c -> +0x3c
- *   test +0x0c cmp r0, #0
- *   test +0x24 cmp r1, #0
- *   test +0x3c cmp r0, r2
- *   test +0x48 cmp r2, #3
- *   0 block transfer(s), 1 word store instruction(s)
- *
- * Body: the measured instruction stream transcribed from
- * ov001.bin at 0x02224050; the literal pool and
- * every branch target are read from the image, not guessed.
- *
- * Unknowns: byte identity fixes the instruction stream, not the field, block and callee semantics behind the addresses and strides it touches.
+ * The address stays in the symbol and file name because the measurement pairs a
+ * compiled symbol to the private ledger row by its eight-hex address; removing
+ * it would silently unmatch the row under the pinned private ledger.
  */
 typedef unsigned int u32;
 typedef signed int s32;
@@ -27,15 +17,15 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_02223f20(void);
+extern void ov001_count_candidates_02223f20(void);
 extern void native_fn_0203d294(void);
 
 
-asm u32 native_ov001_02224050 (register u32 a0)
+asm u32 ov001_pick_random_candidate_02224050 (register u32 *candidates)
 {
     stmdb sp!, {r3, r4, r5, lr}
     mov r5, r0
-    bl native_fn_02223f20
+    bl ov001_count_candidates_02223f20
     cmp r0, #0
     ble ov001_02224050_L30
     mov r4, #3

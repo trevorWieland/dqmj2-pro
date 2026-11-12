@@ -12,7 +12,7 @@ typedef double f64;
 #define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
-extern u32 native_fn_ov001_0221873c();
+extern u32 ov001_all_active_slots_compare_0221873c();
 extern u32 native_fn_ov001_02218a54();
 u32 native_ov001_0221d2c0(void *arg0) {
     s32 temp_r4;
@@ -21,7 +21,7 @@ u32 native_ov001_0221d2c0(void *arg0) {
     if ((s32) native_fn_ov001_02218a54(M2C_FIELD(arg0, s32 *, 0), temp_r4, 0xAA, 1, 0) >= 5) {
         return 1U;
     }
-    if ((native_fn_ov001_0221873c(temp_r4, 1, -2, 2) != 0) && (native_fn_ov001_0221873c(temp_r4, 2, -2, 2) != 0) && (native_fn_ov001_0221873c(temp_r4, 3, -2, 2) != 0) && (native_fn_ov001_0221873c(temp_r4, 4, -2, 2) != 0)) {
+    if ((ov001_all_active_slots_compare_0221873c(temp_r4, 1, -2, 2) != 0) && (ov001_all_active_slots_compare_0221873c(temp_r4, 2, -2, 2) != 0) && (ov001_all_active_slots_compare_0221873c(temp_r4, 3, -2, 2) != 0) && (ov001_all_active_slots_compare_0221873c(temp_r4, 4, -2, 2) != 0)) {
         return 1U;
     }
     return 0U;

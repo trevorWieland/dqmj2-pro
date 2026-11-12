@@ -91,4 +91,4 @@ extern s32 native_fn_ov001_02218b54(u32 value, u32 command, s32 mode);
 extern s32 native_fn_ov001_0222be7c(void);
 extern s32 native_fn_ov001_021dbd8c(u8 *record);
 extern s32 native_fn_ov001_021dbe5c(u8 *record);
-extern void native_fn_ov001_021f14a4(void);
+extern void ov001_clear_state_flag4_021f14a4(void);

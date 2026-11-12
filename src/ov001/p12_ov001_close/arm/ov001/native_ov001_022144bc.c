@@ -55,12 +55,12 @@ extern void native_fn_021eea10(void);
 extern void native_fn_021eeff0(void);
 extern void native_fn_021dbf98(void);
 extern void native_fn_0205d790(void);
-extern void native_fn_021eec7c(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_021ee91c(void);
 extern void native_fn_0205d718(void);
 extern void native_fn_021eeb70(void);
 extern void native_fn_0202ac4c(void);
-extern void native_fn_021f14a4(void);
+extern void ov001_clear_state_flag4_021f14a4(void);
 extern void native_fn_02202568(void);
 
 
@@ -115,7 +115,7 @@ ov001_022144bc_L54:
     mov r2, r0
     ldr r1, [r1, #0x10]
     mov r0, r4
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     ldr r1, =0x02242b50
     mov r2, #0
     strb r0, [r1, #0xa]
@@ -180,7 +180,7 @@ ov001_022144bc_L19c:
     ldr r0, =0x02242b50
     mov r1, #5
     strb r1, [r0, #0x2]
-    bl native_fn_021f14a4
+    bl ov001_clear_state_flag4_021f14a4
     ldr r0, =0x02242b50
     ldr r1, [r0, #0x10]
     ldrb r0, [r1, #0x31e]

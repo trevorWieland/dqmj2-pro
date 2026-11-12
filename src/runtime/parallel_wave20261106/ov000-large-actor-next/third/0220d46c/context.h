@@ -46,7 +46,7 @@ typedef char ActorTurn[((u32)&((ActorView *)0)->turn==636)?1:-1];
 typedef char ActorVelocity[((u32)&((ActorView *)0)->velocity==644)?1:-1];
 typedef char ActorSavedPosition[((u32)&((ActorView *)0)->scratch==656)?1:-1];
 typedef char MetadataWord18[((u32)&((FieldRecord *)0)->word18==24)?1:-1];
-extern const Vec3 *native_fn_ov000_021e07b8(s32);
+extern const Vec3 *ov000_saved_world_position_get_021e07b8(s32);
 extern s32 native_fn_0202818c(const Vec3 *,const Vec3 *);
 extern u32 native_fn_ov000_0220cbe0(void *);
 extern u32 native_fn_ov000_0220aac4(void *,s32);

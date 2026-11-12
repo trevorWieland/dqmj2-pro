@@ -17,8 +17,8 @@ extern u32 native_fn_01ffa824();
 extern u32 native_fn_01ffa84c();
 extern u32 native_fn_02044414();
 extern u32 native_fn_02044564();
-extern u32 native_fn_ov001_021db438();
-extern u32 native_fn_ov001_021db530();
+extern u32 ov001_side_slot_record_021db438();
+extern u32 ov001_mode_byte_021db530();
 extern u32 native_fn_ov001_021e824c();
 extern u32 native_fn_ov001_02203308();
 extern u32 native_fn_ov001_02203320();
@@ -41,7 +41,7 @@ u32 native_ov001_022030b8(void) {
     void *temp_r3;
     void *var_r10;
 
-    temp_r7 = native_fn_ov001_021db530(1);
+    temp_r7 = ov001_mode_byte_021db530(1);
     temp_r11 = (u8) native_fn_01ffa824();
     temp_r0 = native_fn_01ffa84c();
     sp4 = temp_r0;
@@ -61,7 +61,7 @@ u32 native_ov001_022030b8(void) {
         if ((s32) temp_r7 > 0) {
             var_r10 = temp_r9 + 4;
             do {
-                temp_r0_4 = (void *) native_fn_ov001_021db438(1, var_r8);
+                temp_r0_4 = (void *) ov001_side_slot_record_021db438(1, var_r8);
                 temp_r2 = M2C_FIELD((temp_r9 + var_r8), u8 *, 1);
                 if (M2C_FIELD(temp_r0_4, u8 *, 0x1FE) != temp_r2) {
                     M2C_FIELD(temp_r0_4, u8 *, 0x1FE) = temp_r2;

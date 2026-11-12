@@ -47,7 +47,7 @@ block_9:
         if (temp_r0_2 > 0) {
             temp_r2 = M2C_FIELD((void *) native_fn_ov001_021d8dec((u32) temp_r0_2), u16 *, 0xC);
             if (temp_r2 != 0) {
-                native_fn_ov001_021f1354(1, 0, temp_r2, 1);
+                ov001_begin_state_transition_021f1354(1, 0, temp_r2, 1);
             }
         }
         M2C_FIELD(native_data_ov001_0223989c, u8 *, 9) = 0x14U;
@@ -69,7 +69,7 @@ block_9:
     }
     if (M2C_FIELD(native_data_ov001_0223989c, u8 *, 9) == 0x1E) {
         if (native_fn_ov001_021f14e4() != 0) {
-            native_fn_ov001_021f14a4();
+            ov001_clear_state_flag4_021f14a4();
         }
         M2C_FIELD(native_data_ov001_0223989c, u8 *, 9) = 0x64U;
     }

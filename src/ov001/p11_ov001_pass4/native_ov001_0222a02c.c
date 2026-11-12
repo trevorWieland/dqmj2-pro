@@ -22,11 +22,11 @@ void native_ov001_0222a02c(Record *record)
     u8 *entry = record->entry;
     u8 *other = record->other;
 
-    native_fn_ov001_02223fe8((u32 *)&local, entry);
+    ov001_clear_free_candidate_slots_02223fe8((u32 *)&local, entry);
     native_fn_ov001_02226bdc(&local, record, 0x64);
     native_fn_ov001_0225534(&local, entry,
                             M2C_FIELD(native_fn_0207afec((s32)other), u8 *, 0x1f));
-    native_fn_ov001_02224570(&local, entry, 7);
-    native_fn_ov001_02224050(&local);
-    native_fn_ov001_02226cb0(&local);
+    ov001_filter_highest_priority_candidates_02224570(&local, entry, 7);
+    ov001_pick_random_candidate_02224050(&local);
+    ov001_first_candidate_02226cb0(&local);
 }

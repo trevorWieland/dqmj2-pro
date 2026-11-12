@@ -7,7 +7,7 @@ u32 native_ov001_0221ebe0(void *arg0) {
     void *var_r8;
 
     temp_r6 = ((Field491_s32_0004 *)(arg0))->value;
-    if (native_fn_ov001_022187dc(temp_r6, 9, 1, 0) != 0) {
+    if (ov001_any_active_slot_compare_022187dc(temp_r6, 9, 1, 0) != 0) {
         var_r7 = 0;
 loop_2:
         var_r8 = temp_r6 + (var_r7 * 0x440);

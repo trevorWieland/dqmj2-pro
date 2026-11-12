@@ -2,7 +2,7 @@
  *
  * Decoded shape: 1 call, no loop.
  *
- *   call +0x0c -> native_fn_021e07b8
+ *   call +0x0c -> ov000_saved_world_position_get_021e07b8
  *   memory +0x10 ldr r2, [r4, #0x74]
  *   memory +0x14 ldr r1, [r0, #4]
  *   memory +0x18 ldr ip, [r4, #0x70]
@@ -27,7 +27,7 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021e07b8(void);
+extern void ov000_saved_world_position_get_021e07b8(void);
 
 
 asm u32 native_ov000_0220a0d0 (register u32 a0)
@@ -35,7 +35,7 @@ asm u32 native_ov000_0220a0d0 (register u32 a0)
     stmdb sp!, {r4, lr}
     mov r4, r0
     mov r0, #0
-    bl native_fn_021e07b8
+    bl ov000_saved_world_position_get_021e07b8
     ldr r2, [r4, #0x74]
     ldr r1, [r0, #4]
     ldr ip, [r4, #0x70]

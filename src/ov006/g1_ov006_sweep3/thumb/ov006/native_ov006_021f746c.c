@@ -33,7 +33,7 @@ extern void native_fn_021f76e8(void);
 extern void native_fn_021f5538(void);
 extern void native_fn_02200344(void);
 extern void native_fn_021f7540(void);
-extern void native_fn_021f52cc(void);
+extern void ov006_main_loop_set_callback_021f52cc(void);
 
 
 asm u32 native_ov006_021f746c (register u32 a0)
@@ -85,7 +85,7 @@ asm u32 native_ov006_021f746c (register u32 a0)
     str r2, [sp]
     bl native_fn_02200344
     ldr r0, =native_fn_021f7540+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     add sp, #0x28
     pop {r3, r4, r5, pc}
 }

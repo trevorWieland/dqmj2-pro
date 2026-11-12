@@ -4,7 +4,7 @@
 extern u32 native_data_ov006_0221c094;
 
 /* Resource allocator and the six-argument registration entry point. */
-extern u32 native_ov006_02203c08(s32 id, s32 size);
+extern u32 ov006_clear_buffer_02203c08(s32 id, s32 size);
 extern s32 native_ov006_021f1fa8(s32 first, s32 second, u32 callback_a, u32 callback_b,
                                  u32 callback_c, s32 flags);
 extern void native_fn_02008430(void);
@@ -22,7 +22,7 @@ extern u8 native_ov006_021f57ec[];
    delay waits for. */
 void native_ov006_021f56d8(void)
 {
-    native_data_ov006_0221c094 = native_ov006_02203c08(0x0C, -4);
+    native_data_ov006_0221c094 = ov006_clear_buffer_02203c08(0x0C, -4);
     if (native_ov006_021f1fa8(0x0F, 0x40, (u32)(native_ov006_021f57cc + 1),
                               (u32)(native_ov006_021f57e0 + 1),
                               (u32)(native_ov006_021f57ec + 1), 0x800) != 1)

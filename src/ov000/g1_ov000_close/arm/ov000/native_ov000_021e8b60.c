@@ -27,7 +27,7 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern u8 native_data_0222edb8[];
-extern void native_fn_021e07b8(void);
+extern void ov000_saved_world_position_get_021e07b8(void);
 extern void native_fn_021e8b20(void);
 extern void native_fn_021e7d18(void);
 extern void native_fn_021e7d5c(void);
@@ -43,7 +43,7 @@ asm u32 native_ov000_021e8b60 (register u32 a0)
     ldrsb r1, [r1]
     cmp r1, #0
     ldmltia sp!, {r3, r4, r5, pc}
-    bl native_fn_021e07b8
+    bl ov000_saved_world_position_get_021e07b8
     ldr r1, =native_data_0222edb8
     ldr r3, =0x0223526c
     ldrsb r2, [r1]

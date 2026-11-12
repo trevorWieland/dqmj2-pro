@@ -8,7 +8,7 @@ void native_ov001_02209b4c(void) {
 
     first_index = 0;
     do {
-        first_actor = native_fn_ov001_021db438(0, first_index);
+        first_actor = ov001_side_slot_record_021db438(0, first_index);
         if ((M2C_FIELD(first_actor, u8 *, 0x31C) != 0) && (native_fn_ov001_02209ac0(first_actor) != 0)) {
             M2C_FIELD(first_actor, s8 *, 0x1FD) = 0;
             M2C_FIELD(first_actor, s8 *, 0x1FF) = 0;
@@ -19,7 +19,7 @@ void native_ov001_02209b4c(void) {
     } while ((s32) first_index < 3);
     second_index = 0;
     do {
-        second_actor = native_fn_ov001_021db438(2, second_index);
+        second_actor = ov001_side_slot_record_021db438(2, second_index);
         current_actor = second_actor;
         if (M2C_FIELD(current_actor, u8 *, 0x31C) != 0) {
             if (native_fn_ov001_02209ac0(second_actor) != 0) {

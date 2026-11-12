@@ -15,8 +15,8 @@ typedef double f64;
 extern u32 native_fn_0203d294();
 extern u32 native_fn_02065d88();
 extern u32 native_fn_ov001_021d9494();
-extern u32 native_fn_ov001_021db438();
-extern u32 native_fn_ov001_021db8d0();
+extern u32 ov001_side_slot_record_021db438();
+extern u32 ov001_record_is_active_021db8d0();
 extern u32 native_fn_ov001_021dcda8();
 extern u32 native_fn_ov001_021ee78c();
 extern u32 native_fn_ov001_021f0eb4();
@@ -34,13 +34,13 @@ void native_ov001_0220cab0(u32 arg0, u32 arg1, u32 arg2) {
     if (M2C_FIELD((void *) native_fn_02065d88(arg2), u8 *, 0x30) != 1) {
         var_r9 = 1;
     } else {
-        var_r5 = native_fn_ov001_021db438(arg1, 0);
+        var_r5 = ov001_side_slot_record_021db438(arg1, 0);
         var_r9 = 3;
     }
     var_r8 = 0;
     if ((var_r9 > 0) && (var_r9 > 0)) {
         do {
-            if (native_fn_ov001_021db8d0((void *) var_r5) != 0) {
+            if (ov001_record_is_active_021db8d0((void *) var_r5) != 0) {
                 if (native_fn_ov001_021dcda8((void *) var_r5) != 0) {
                     var_r10 = 0;
                 } else {

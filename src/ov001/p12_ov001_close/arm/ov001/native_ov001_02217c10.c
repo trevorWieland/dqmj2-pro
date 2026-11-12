@@ -28,17 +28,17 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_02048034(void);
-extern void native_fn_021f1354(void);
+extern void ov001_begin_state_transition_021f1354(void);
 extern void native_fn_021f1414(void);
-extern void native_fn_021f1438(void);
+extern void ov001_select_mode_id_021f1438(void);
 extern void native_fn_02217b20(void);
 extern void native_fn_021d9494(void);
-extern void native_fn_021dbd30(void);
+extern void ov001_record_field_1f2_021dbd30(void);
 extern void native_fn_0207b244(void);
 extern void native_fn_021db834(void);
 extern void native_fn_02202528(void);
 extern void native_fn_022024d4(void);
-extern void native_fn_021f14a4(void);
+extern void ov001_clear_state_flag4_021f14a4(void);
 extern void native_fn_02202568(void);
 
 
@@ -59,12 +59,12 @@ asm u32 native_ov001_02217c10 (register u32 a0)
     ldrh r2, [r1, #4]
     mov r1, #0
     mov r3, #1
-    bl native_fn_021f1354
+    bl ov001_begin_state_transition_021f1354
     ldr r0, =0x02242c40
     ldr r0, [r0, #0x8]
     ldrb r0, [r0, #0x31e]
     bl native_fn_021f1414
-    bl native_fn_021f1438
+    bl ov001_select_mode_id_021f1438
     bl native_fn_02217b20
     ldr r0, =0x02242c40
     mov r1, #0
@@ -74,7 +74,7 @@ asm u32 native_ov001_02217c10 (register u32 a0)
     ldr r0, =0x02242c40
     ldr r4, [r0, #0x8]
     mov r0, r4
-    bl native_fn_021dbd30
+    bl ov001_record_field_1f2_021dbd30
     ldr r2, [r4, #0x1e8]
     mov r1, r0
     add r2, r2, #70
@@ -118,7 +118,7 @@ ov001_02217c10_L110:
     ldrb r0, [r0, #0x3]
     cmp r0, #100
     bne ov001_02217c10_L14c
-    bl native_fn_021f14a4
+    bl ov001_clear_state_flag4_021f14a4
     ldr r0, =0x02242c40
     ldr r1, [r0, #0x8]
     ldrb r0, [r1, #0x31e]

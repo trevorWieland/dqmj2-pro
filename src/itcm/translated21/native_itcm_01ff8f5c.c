@@ -30,14 +30,14 @@ extern u32 native_fn_020620e8(u32, u32);
 extern u32 native_fn_0208420c(void);
 extern u32 native_fn_020889cc(u32);
 extern u32 native_fn_020894e0(void);
-extern u32 native_fn_ov000_02223c54();
+extern u32 ov000_context_02246600_02223c54();
 extern u8 native_data_021ceb54[];
 extern u8 native_data_021ceb94[];
 void native_itcm_01ff8f5c(u32 arg0, u32 arg1, u32 arg2, u32 arg3) {
     u32 temp_r0;
     u32 temp_r4;
 
-    temp_r4 = native_fn_ov000_02223c54();
+    temp_r4 = ov000_context_02246600_02223c54();
     native_fn_020889cc(1U);
     if (M2C_FIELD(temp_r4, s8 *, 0x58) == 1) {
         native_fn_01ff8eec();

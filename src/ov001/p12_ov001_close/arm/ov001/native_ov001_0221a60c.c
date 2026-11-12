@@ -38,12 +38,12 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021db8d0(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_021e2b1c(void);
 extern void native_fn_02218524(void);
 extern void native_fn_02218430(void);
 extern void native_fn_0207b004(void);
-extern void native_fn_021dbd30(void);
+extern void ov001_record_field_1f2_021dbd30(void);
 extern void native_fn_0207b244(void);
 
 
@@ -60,7 +60,7 @@ asm u32 native_ov001_0221a60c (register u32 a0)
     mov r5, #4
 ov001_0221a60c_L24:
     mov r0, r10
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_0221a60c_Lec
     ldr r0, [sp]
@@ -95,10 +95,10 @@ ov001_0221a60c_L94:
     cmp r0, #0
     beq ov001_0221a60c_Le0
     mov r0, r10
-    bl native_fn_021dbd30
+    bl ov001_record_field_1f2_021dbd30
     mov r4, r0
     mov r0, r10
-    bl native_fn_021dbd30
+    bl ov001_record_field_1f2_021dbd30
     ldr r2, [r10, #0x1e8]
     mov r1, r0
     ldr r0, [r6, r8, lsl #2]

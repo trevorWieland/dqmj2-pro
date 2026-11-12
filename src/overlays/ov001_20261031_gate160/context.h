@@ -15,8 +15,8 @@ typedef double f64;
 #define NULL ((void *)0)
 extern u32 native_fn_020444a8(void);
 extern u32 native_fn_020655d8(void);
-extern void * native_fn_ov001_021db438(s32, u32);
-extern u32 native_fn_ov001_021db8d0(u8 *);
+extern void * ov001_side_slot_record_021db438(s32, u32);
+extern u32 ov001_record_is_active_021db8d0(u8 *);
 typedef struct {
     u8 unknown_0[0x18];
     u8 field_18;

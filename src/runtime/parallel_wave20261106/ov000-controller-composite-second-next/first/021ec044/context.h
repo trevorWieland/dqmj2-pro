@@ -22,7 +22,7 @@ extern void native_fn_0204a288(s32,Point16*,u32,u32,s16,u32,u32,u32);
 extern u32 native_fn_02065818(u32,s8,s8);
 extern State12 native_data_ov000_02237778,native_data_ov000_02237d94;
 extern const u8 native_data_ov000_02237f7c[];
-extern u8*native_fn_ov000_02215698(void);
+extern u8*ov000_display_context_02215698(void);
 extern Target8*native_fn_02049ae4(void);
 extern u16*native_fn_02049f24(void);
 extern void native_fn_02049f30(void);

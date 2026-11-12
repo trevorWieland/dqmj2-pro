@@ -5,7 +5,7 @@
    two page handles. */
 extern u32 native_data_ov006_0221c1ac;
 
-extern u32 native_ov006_02203c08(s32 id, s32 size);
+extern u32 ov006_clear_buffer_02203c08(s32 id, s32 size);
 extern void native_fn_02008c58(u32 value, u32 block, u32 size);
 extern u32 native_ov006_022030a4(s32 first, u32 block, s32 size);
 extern u32 native_ov006_0220490c(s32 which, u32 callback, s32 arg2, s32 arg3);
@@ -22,7 +22,7 @@ void native_ov006_022042c4(void)
 {
     s32 index;
 
-    native_data_ov006_0221c1ac = native_ov006_02203c08(0x80C, 4);
+    native_data_ov006_0221c1ac = ov006_clear_buffer_02203c08(0x80C, 4);
     native_fn_02008c58(0x200, native_data_ov006_0221c1ac, 0x800);
 
     for (index = 0; index < 2; index++)

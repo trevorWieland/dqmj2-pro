@@ -3,7 +3,7 @@ typedef signed char s8;
 typedef unsigned int u32;
 typedef signed int s32;
 #define NULL ((void *)0)
-extern void *native_fn_ov001_021db438(s32,u32);
+extern void *ov001_side_slot_record_021db438(s32,u32);
 extern u32 native_fn_ov001_0220b74c(void);
 extern u32 native_fn_ov001_0220b770(void);
 extern u32 native_fn_ov001_0220b794(void);

@@ -12,11 +12,11 @@ typedef double f64;
 #define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
-extern u32 native_fn_ov000_02223c54();
+extern u32 ov000_context_02246600_02223c54();
 u32 native_ov000_02227ccc(void) {
     u8 var_r0;
 
-    if (M2C_FIELD((void *) native_fn_ov000_02223c54(), s8 *, 0x59) == 1) {
+    if (M2C_FIELD((void *) ov000_context_02246600_02223c54(), s8 *, 0x59) == 1) {
         var_r0 = 1;
     } else {
         var_r0 = 0;

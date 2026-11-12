@@ -41,7 +41,7 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_02044424(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_021db9e0(void);
 extern void native_fn_021dbcbc(void);
 extern void native_fn_021dbd24(void);
@@ -73,7 +73,7 @@ asm u32 native_ov001_021dc6a4 (register u32 a0)
     str r0, [sp, #0xc]
 ov001_021dc6a4_L4c:
     mov r0, r7
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021dc6a4_L8c
     mov r0, r7
@@ -90,7 +90,7 @@ ov001_021dc6a4_L4c:
     add r5, r5, r0
 ov001_021dc6a4_L8c:
     mov r0, r8
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021dc6a4_Lcc
     mov r0, r8
@@ -110,7 +110,7 @@ ov001_021dc6a4_Lcc:
     cmp r0, #0
     bne ov001_021dc6a4_L158
     mov r0, r9
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021dc6a4_L118
     mov r0, r9
@@ -127,7 +127,7 @@ ov001_021dc6a4_Lcc:
     add r5, r5, r0
 ov001_021dc6a4_L118:
     mov r0, r10
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021dc6a4_L158
     mov r0, r10

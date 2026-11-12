@@ -61,7 +61,7 @@ typedef struct FourRule { s16 id; s16 values[4]; } FourRule;
 typedef struct WideFourRule { s16 id; s16 values[4]; u16 reserved; } WideFourRule;
 typedef struct NativeDefinition { u8 reserved[4]; u16 low:4; u16 category:4; u16 high:8; } NativeDefinition;
 typedef struct FlagState { u8 reserved[0x34e8]; u32 banks[3][16]; } FlagState;
-extern const Vec3 *native_fn_ov000_021e07b8(int);
+extern const Vec3 *ov000_saved_world_position_get_021e07b8(int);
 extern void native_fn_ov000_021e8de8(int, int, int, int);
 extern SceneState *native_fn_ov000_021e07ac(void);
 extern int native_fn_ov000_021da5e4(const Vec3 *, void *, Vec3 *, int);

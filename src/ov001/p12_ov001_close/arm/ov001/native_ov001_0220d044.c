@@ -50,7 +50,7 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_0220b794(void);
-extern void native_fn_021db438(void);
+extern void ov001_side_slot_record_021db438(void);
 extern void native_fn_0220b770(void);
 extern void native_fn_02044424(void);
 extern void native_fn_021fc15c(void);
@@ -58,13 +58,13 @@ extern void native_fn_021fc13c(void);
 extern void native_fn_0202ac08(void);
 extern void native_fn_021eea10(void);
 extern void native_fn_0205d790(void);
-extern void native_fn_021eec7c(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_0205d6f4(void);
 extern void native_fn_021eeb70(void);
 extern void native_fn_0202ac4c(void);
-extern void native_fn_021f1354(void);
+extern void ov001_begin_state_transition_021f1354(void);
 extern void native_fn_021f14e4(void);
-extern void native_fn_021f14a4(void);
+extern void ov001_clear_state_flag4_021f14a4(void);
 
 
 asm u32 native_ov001_0220d044 (register u32 a0)
@@ -73,7 +73,7 @@ asm u32 native_ov001_0220d044 (register u32 a0)
     bl native_fn_0220b794
     mov r1, r0
     mov r0, #1
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r4, r0
     bl native_fn_0220b770
     ldr r0, =0x0223e088
@@ -110,7 +110,7 @@ ov001_0220d044_L6c:
     mov r2, r0
     ldr r0, =0x000001b7
     mov r1, r4
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     ldr r1, =0x0223e088
     mov r2, #20
     strb r0, [r1, #0x2]
@@ -133,7 +133,7 @@ ov001_0220d044_Lbc:
     mov r3, r0
     mov r1, #0
     mov r2, #8
-    bl native_fn_021f1354
+    bl ov001_begin_state_transition_021f1354
     ldr r0, =0x0223e088
     mov r1, #60
     strb r1, [r0, #0x4]
@@ -150,7 +150,7 @@ ov001_0220d044_L110:
     mov r3, r0
     mov r1, #0
     mov r2, #43
-    bl native_fn_021f1354
+    bl ov001_begin_state_transition_021f1354
     ldr r0, =0x0223e088
     mov r1, #60
     strb r1, [r0, #0x4]
@@ -171,7 +171,7 @@ ov001_0220d044_L150:
 ov001_0220d044_L178:
     cmp r1, #100
     bne ov001_0220d044_L198
-    bl native_fn_021f14a4
+    bl ov001_clear_state_flag4_021f14a4
     ldr r0, =0x0223e088
     mov r1, #14
     strb r1, [r0, #0x3]

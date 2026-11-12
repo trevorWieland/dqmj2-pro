@@ -31,7 +31,7 @@ extern u8 native_data_0222e920[];
 extern void native_fn_02218368(void);
 extern void native_fn_02008e0c(void);
 extern void native_fn_02226764(void);
-extern void native_fn_02223f20(void);
+extern void ov001_count_candidates_02223f20(void);
 
 
 asm u32 native_ov001_02226bdc (register u32 a0)
@@ -75,7 +75,7 @@ ov001_02226bdc_L5c:
     mov r1, r9
     bl native_fn_02226764
     mov r0, r4
-    bl native_fn_02223f20
+    bl ov001_count_candidates_02223f20
     mov r6, r0
     cmp r6, #0
     ble ov001_02226bdc_Lb4

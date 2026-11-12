@@ -1,21 +1,14 @@
-/* ov001 row 0x021f1354: 164 bytes.
+/* ov001 row 0x021F1354: 164 bytes.
  *
- * What it does: 40 instructions; 5 call(s) to 0x02085284, 0x02086b14, 0x02086b24, +2 more; loops (back edge at +0x3c); returns through pop {r3, r4, r5, pc}; 1 literal slot(s) in the extent
+ * ov001_begin_state_transition_021f1354: Starts a guarded state transition: sets state bit 2, issues a 4-argument service call and two mode callbacks.
  *
- * Decoded shape: loop with 5 calls (40 instructions, 5 calls, 2 branches, 5 back edges, 1 literal slot).
+ * Evidence: Returns immediately if state->+0x18 bit 2 is already set; otherwise calls 02085284(state+0x3C, arg0&0xFF, arg1&0xFF, (s16)arg2), sets bit 2, calls 02086B14(state, 22), 02086B24(state, 24 or 4) and 02085420(state, 0).
+ * Touches: ov001 state 0x02238F58 -> +4; service calls 02085284/02086B14/02086B24/02085420.
+ * Remaining unknowns: The transition's target screen and the service call's contract are not established.
  *
- *   pool +0xa0 -> constant 0x02238f58 (image word 0x02238f58)
- *   branch +0x64 -> +0x7c
- *   branch +0x78 -> +0x8c
- *   test +0x20 cmp r0, #2
- *   test +0x60 cmp r4, #1
- *   0 block transfer(s), 1 word store instruction(s)
- *
- * Body: the measured instruction stream transcribed from
- * ov001.bin at 0x021f1354; the literal pool and
- * every branch target are read from the image, not guessed.
- *
- * Unknowns: byte identity fixes the instruction stream, not the field, block and callee semantics behind the addresses and strides it touches.
+ * The address stays in the symbol and file name because the measurement pairs a
+ * compiled symbol to the private ledger row by its eight-hex address; removing
+ * it would silently unmatch the row under the pinned private ledger.
  */
 typedef unsigned int u32;
 typedef signed int s32;
@@ -30,7 +23,7 @@ extern void native_fn_02086b24(void);
 extern void native_fn_02085420(void);
 
 
-asm u32 native_ov001_021f1354 (register u32 a0)
+asm u32 ov001_begin_state_transition_021f1354 (register u32 arg0, register u32 arg1, register u32 arg2, register u32 arg3)
 {
     stmdb sp!, {r3, r4, r5, lr}
     ldr r4, =0x02238f58

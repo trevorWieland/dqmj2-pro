@@ -1,28 +1,14 @@
-/* ov006 row 0x021e9148: 172 bytes.
+/* ov006 row 0x021E9148: 172 bytes.
  *
- * What it does: Copies a measured block.
+ * ov006_commit_mode_transition_021e9148: Commits a mode transition: updates the selected mode field, clears the pending flag and returns success.
  *
- * Decoded shape: aggregate copy.
+ * Evidence: Guards on 021E7E90; on mode 0 calls 0205FA4C(0x02218E60, 1) and 021E90C0, otherwise updates record+0x80 bit 3; calls 0204B61C(0x02218E18, 0), 021E8044(state->+0x5C) with 3/4, then clears state +4 and returns 1.
+ * Touches: state 0x02218D90 (+0x5C, +4); record +0x80; UI callbacks 021E7E90/021E90C0/021E8044.
+ * Remaining unknowns: The transition target and the +0x80 bit 3 meaning are not established.
  *
- *   pool +0xa0 -> constant 0x02218e60 (image word 0x02218e60)
- *   pool +0xa4 -> native_data3_02218d90 (image word 0x02218d90)
- *   pool +0xa8 -> constant 0x02218e18 (image word 0x02218e18)
- *   branch +0x10 -> +0x98
- *   branch +0x18 -> +0x30
- *   branch +0x2c -> +0x60
- *   branch +0x40 -> +0x60
- *   test +0x0c cmp r0, #0
- *   test +0x14 cmp r4, #0
- *   test +0x34 cmp r0, #0
- *   test +0x3c cmpne r2, #0
- *   test +0x70 cmp r4, #0
- *   0 block transfer(s), 2 word store instruction(s)
- *
- * Body: the measured instruction stream transcribed from
- * ov006.bin at 0x021e9148; the literal pool and
- * every branch target are read from the image, not guessed.
- *
- * Unknowns: byte identity proves the instruction stream, not the meaning of the fields, blocks and callee contracts it touches.
+ * The address stays in the symbol and file name because the measurement pairs a
+ * compiled symbol to the private ledger row by its eight-hex address; removing
+ * it would silently unmatch the row under the pinned private ledger.
  */
 typedef unsigned int u32;
 typedef signed int s32;
@@ -40,7 +26,7 @@ extern void native_fn_0204b61c(void);
 extern void native_fn_021e8044(void);
 
 
-asm u32 native_ov006_021e9148 (register u32 a0)
+asm u32 ov006_commit_mode_transition_021e9148 (register void *state, register u32 mode)
 {
     stmdb sp!, {r4, lr}
     mov r4, r1

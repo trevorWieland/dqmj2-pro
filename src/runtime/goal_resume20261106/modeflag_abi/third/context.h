@@ -44,7 +44,7 @@ extern void native_fn_0204b61c(void *,u32);
 extern u32 native_fn_020756e4(s32,s32,s32);
 extern u32 native_fn_02062378(void);
 extern void native_fn_020619b0(u32);
-extern void *native_fn_ov000_02215698(void);
+extern void *ov000_display_context_02215698(void);
 extern void native_fn_ov000_022162c0(void *);
 extern void native_fn_ov000_02216664(void *);
 extern void native_fn_ov000_02215078(void *,u32);

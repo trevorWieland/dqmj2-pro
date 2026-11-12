@@ -27,7 +27,7 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021db8d0(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_021dbe5c(void);
 extern void native_fn_021dbd24(void);
 
@@ -41,7 +41,7 @@ asm u32 native_ov001_0221f98c (register u32 a0)
     mov r6, #0
 ov001_0221f98c_L14:
     mov r0, r7
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_0221f98c_L78
     mov r0, r5

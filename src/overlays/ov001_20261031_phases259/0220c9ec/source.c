@@ -13,7 +13,7 @@ u32 native_ov001_0220c9ec(void) {
         if (temp_r0 == 4) {
             var_r4 = NULL;
         } else {
-            var_r4 = native_fn_ov001_021db438((s32) temp_r4, temp_r0);
+            var_r4 = ov001_side_slot_record_021db438((s32) temp_r4, temp_r0);
         }
         M2C_FIELD(M2C_FIELD(var_r4, void **, 0x1E8), u8 *, 0xB0) = (u8) M2C_FIELD((void *) native_fn_02065d88(temp_r5), u8 *, 0x2A);
         native_data_ov001_0223e088.field_b = 0U;

@@ -2,7 +2,7 @@
 
 void native_ov006_021fd41c(void)
 {
-    switch (native_fn_ov006_021f2390()) {
+    switch (ov006_context_byte_16_021f2390()) {
     case 0:
         native_fn_ov006_021ff6d4(7);
         break;
@@ -14,5 +14,5 @@ void native_ov006_021fd41c(void)
     default:
         return;
     }
-    native_fn_ov006_021f52cc((void (*)(void))0x021FD455);
+    ov006_main_loop_set_callback_021f52cc((void (*)(void))0x021FD455);
 }

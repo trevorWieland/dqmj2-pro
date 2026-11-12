@@ -76,7 +76,7 @@ extern u8 native_data_04000010[];
 extern void native_fn_021f5300(void);
 extern void native_fn_021f52d8(void);
 extern void native_fn_021f8d4c(void);
-extern void native_fn_021f52cc(void);
+extern void ov006_main_loop_set_callback_021f52cc(void);
 extern void native_fn_021f94ac(void);
 extern void native_fn_021fedc8(void);
 extern void native_fn_020a48e4(void);
@@ -216,7 +216,7 @@ ov006_021fa9c8_Ld8:
     mov r1, #0x0
     bl native_fn_021f52d8
     ldr r0, =native_fn_021f8d4c+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     b ov006_021fa9c8_L1e8
     sub r4, r0, #0x4
     cmp r0, #0x9
@@ -230,7 +230,7 @@ ov006_021fa9c8_L11c:
     mov r1, #0x0
     bl native_fn_021f5300
     ldr r0, =native_fn_021f94ac+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     b ov006_021fa9c8_L1e8
     bl native_fn_021fedc8
     add r4, r0, #0x0
@@ -282,12 +282,12 @@ ov006_021fa9c8_L192:
     add r1, r0, #0x0
     bl native_fn_021f5300
     ldr r0, =native_fn_021fd660+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     b ov006_021fa9c8_L1e8
     add r0, r1, #0x0
     bl native_fn_021f52d8
     ldr r0, =native_fn_021fb93c+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     b ov006_021fa9c8_L1e8
     ldrb r0, [r2, #0x1]
     cmp r0, #0x0
@@ -296,7 +296,7 @@ ov006_021fa9c8_L192:
     mov r1, #0x1
     bl native_fn_021f52d8
     ldr r0, =native_fn_021fc870+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     b ov006_021fa9c8_L1e8
 ov006_021fa9c8_L1ce:
     bl native_fn_021fedc8
@@ -307,7 +307,7 @@ ov006_021fa9c8_L1ce:
     mov r1, #0x1
     bl native_fn_021f52d8
     ldr r0, =native_fn_021fd11c+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
 ov006_021fa9c8_L1e8:
     ldr r0, =native_data_0221c0f4
     bl native_fn_02203c20

@@ -23,8 +23,8 @@ extern u32 native_fn_ov001_021e3564();
 extern u32 native_fn_ov001_021e3b34();
 extern u32 native_fn_ov001_021e3bd0();
 extern u32 native_fn_ov001_021e3be4();
-extern u32 native_fn_ov001_021f1354(u32, u32, u32, u32);
-extern u32 native_fn_ov001_021f14a4();
+extern u32 ov001_begin_state_transition_021f1354(u32, u32, u32, u32);
+extern u32 ov001_clear_state_flag4_021f14a4();
 extern u32 native_fn_ov001_021f1a44();
 extern u32 native_fn_ov001_02202654();
 extern u32 native_fn_ov001_02212858();
@@ -60,7 +60,7 @@ u32 native_ov001_021e634c(void) {
         if (native_data_ov001_02238cd4.field_a != 0) {
             native_data_ov001_02238cd4.field_8 = (s8) native_fn_ov001_021e3be4();
             native_data_ov001_02238cd4.field_7 = (s8) native_fn_0205e7a8(-1, 0x3A);
-            native_fn_ov001_021f1354(1U, 0U, 0xBU, 1U);
+            ov001_begin_state_transition_021f1354(1U, 0U, 0xBU, 1U);
             native_data_ov001_02238cd4.field_9 = 0xFU;
             native_data_ov001_02238cd4.field_6 = 0x12;
             native_data_ov001_02238cd4.field_28 = 0xB4;
@@ -70,7 +70,7 @@ u32 native_ov001_021e634c(void) {
         if (native_data_ov001_02238cd4.field_6 == 0) {
             if ((native_data_ov001_02238cd4.field_28 == 0) || (M2C_FIELD(temp_r4, u16 *, 2) & 0xFF7)) {
                 native_data_ov001_02238cd4.field_9 = 0x10U;
-                native_fn_ov001_021f14a4();
+                ov001_clear_state_flag4_021f14a4();
                 native_fn_ov001_021d75d4(0x2EU);
             }
         }

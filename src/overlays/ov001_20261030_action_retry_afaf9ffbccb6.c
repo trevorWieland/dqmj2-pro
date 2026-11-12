@@ -14,7 +14,7 @@ typedef double f64;
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 #define NULL ((void *)0)
 extern u32 native_fn_0203d294();
-extern u32 native_fn_ov001_021db438(s32, u32);
+extern u32 ov001_side_slot_record_021db438(s32, u32);
 extern u32 native_fn_ov001_021e7290();
 extern u32 native_fn_ov001_021e7484();
 extern u32 native_fn_ov001_021e81d0();
@@ -31,18 +31,18 @@ void native_ov001_021e8510(s32 arg0, u32 arg1) {
     s32 var_r10;
 
     var_r10 = 0;
-    temp_r0_4 = (void *) native_fn_ov001_021db438(arg0, arg1);
+    temp_r0_4 = (void *) ov001_side_slot_record_021db438(arg0, arg1);
     temp_r0_3 = M2C_FIELD(temp_r0_4, u8 *, 0x322);
     if (temp_r0_3 != 1) {
         return;
     }
-    temp_r7 = native_fn_ov001_021db438(arg0, 0);
+    temp_r7 = ov001_side_slot_record_021db438(arg0, 0);
     if (arg0 == 0) {
         var_r0 = 1;
     } else {
         var_r0 = 0;
     }
-    temp_r8 = native_fn_ov001_021db438(var_r0, 0);
+    temp_r8 = ov001_side_slot_record_021db438(var_r0, 0);
     temp_r9 = native_fn_ov001_021e81d0(arg0, arg1);
 loop_6:
     native_fn_ov001_021e7290(temp_r0_4, temp_r7, temp_r8, temp_r9, temp_r9 + 2, temp_r9 + 3);

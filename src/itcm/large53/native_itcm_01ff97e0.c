@@ -15,9 +15,9 @@ u32 native_itcm_01ff97e0(void) {
     s32 var_r7;
     u32 temp_r10;
 
-    temp_r6 = native_fn_ov000_02223c60();
-    temp_r4 = native_fn_ov000_02223c54();
-    temp_r5 = M2C_FIELD(native_fn_ov000_02223c54(), s8 *, 0x5A);
+    temp_r6 = ov000_context_02246600_02223c60();
+    temp_r4 = ov000_context_02246600_02223c54();
+    temp_r5 = M2C_FIELD(ov000_context_02246600_02223c54(), s8 *, 0x5A);
     var_r6 = *temp_r6;
     if (M2C_FIELD(native_data_021ceb54, s32 *, 4) == 1) {
         native_fn_020885d0();
@@ -73,7 +73,7 @@ u32 native_itcm_01ff97e0(void) {
         break;
     case 15:
         if (native_fn_01ffa2fc() == 1) {
-            temp_r0 = native_fn_ov000_02223c54();
+            temp_r0 = ov000_context_02246600_02223c54();
             M2C_FIELD(native_data_021ceb54, u32 *, 0xC) = 0x10U;
             if (M2C_FIELD(temp_r0, s8 *, 0x58) == 1) {
                 native_fn_020620e8(0x15, 1);
@@ -187,7 +187,7 @@ u32 native_itcm_01ff97e0(void) {
         }
         break;
     case 9:
-        if ((M2C_FIELD(native_fn_ov000_02223c54(), s8 *, 0x59) == 1) && (M2C_FIELD(native_data_021ceb54, s32 *, 8) == 2)) {
+        if ((M2C_FIELD(ov000_context_02246600_02223c54(), s8 *, 0x59) == 1) && (M2C_FIELD(native_data_021ceb54, s32 *, 8) == 2)) {
             var_r2 = 0;
             do {
                 ((u32 *)native_data_021ceb64)[var_r2] = 0;
@@ -197,7 +197,7 @@ u32 native_itcm_01ff97e0(void) {
         native_fn_01ffa5ac(native_data_021ceb64, 0x30, 3);
         if (native_fn_01ffa5fc(native_fn_01ffa84c(), 3) != 0) {
             var_r7 = 0;
-            if ((M2C_FIELD(native_fn_ov000_02223c54(), s8 *, 0x59) == 1) && (M2C_FIELD(native_data_021ceb54, s32 *, 8) == 2)) {
+            if ((M2C_FIELD(ov000_context_02246600_02223c54(), s8 *, 0x59) == 1) && (M2C_FIELD(native_data_021ceb54, s32 *, 8) == 2)) {
 
             } else {
                 var_r5 = 0;

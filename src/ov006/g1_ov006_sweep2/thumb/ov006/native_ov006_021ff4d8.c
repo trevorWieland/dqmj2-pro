@@ -41,7 +41,7 @@ typedef signed char s8;
 
 extern void native_fn_02008d78(void);
 extern void native_fn_02019b80(void);
-extern void native_fn_02203c08(void);
+extern void ov006_clear_buffer_02203c08(void);
 extern void native_fn_020a47ec(void);
 extern void native_fn_02203c20(void);
 
@@ -149,7 +149,7 @@ ov006_021ff4d8_Lb4:
     cmp r6, #0x4
     blt ov006_021ff4d8_L98
     mov r1, #0x20
-    bl native_fn_02203c08
+    bl ov006_clear_buffer_02203c08
     add r2, r0, #0x0
     ldr r0, =0x0221c148
     add r1, sp, #0x4

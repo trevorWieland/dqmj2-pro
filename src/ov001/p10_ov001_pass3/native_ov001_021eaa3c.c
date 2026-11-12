@@ -8,7 +8,7 @@ s32 native_ov001_021eaa3c(void)
     s32 result = 0;
 
     if (native_data_ov001_0222ec84[0] != 0) {
-        native_fn_ov001_021f1354(native_data_ov001_02238d7c[0x1a],
+        ov001_begin_state_transition_021f1354(native_data_ov001_02238d7c[0x1a],
                                  native_data_ov001_02238d7c[0x17],
                                  *(u16 *)(native_data_ov001_02238d7c + 0x38), 1);
         native_data_ov001_02238d7c[0x27] = 0x1e;

@@ -15,7 +15,7 @@ typedef double f64;
 #define NULL ((void *)0)
 extern u32 native_fn_0203d294(s32);
 extern u32 native_fn_02066a7c();
-extern void * native_fn_ov001_021db438(s32, u32);
+extern void * ov001_side_slot_record_021db438(s32, u32);
 extern u32 native_fn_ov001_0220b74c();
 extern u32 native_fn_ov001_0220b770();
 extern u32 native_fn_ov001_0220b794();

@@ -16,13 +16,13 @@ extern u32 native_fn_02045680();
 extern u32 native_fn_ov000_021f7fcc();
 extern u32 native_fn_ov000_021f8398();
 extern u32 native_fn_ov000_021f895c();
-extern u32 native_fn_ov000_02215698();
+extern u32 ov000_display_context_02215698();
 extern u32 native_fn_ov000_02215850();
 extern u32 native_fn_ov000_02215a7c();
 extern u32 native_fn_ov000_022162b4();
 extern u32 native_fn_ov000_02217440();
 u32 native_ov000_021fab0c(void) {
-    native_fn_ov000_02215698();
+    ov000_display_context_02215698();
     native_fn_ov000_022162b4(M2C_FIELD((void *) native_fn_ov000_02217440(), s8 *, 0x10), 0x7F);
     native_fn_ov000_021f895c();
     native_fn_ov000_021f8398();
