@@ -50,7 +50,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from repo_build import elf_profile, pair_functions, short_paths  # noqa: E402
-from source_units import CONFIG, enumerate_sources, load_config  # noqa: E402
+from source_units import CONFIG, config_digest, enumerate_sources, load_config  # noqa: E402
 
 MODULE = 'main'
 PROCESSOR = 'arm9'
@@ -1406,7 +1406,7 @@ def emit(root, out, jobs, emit_lcf, check_lcf, region_file, limit, write_baselin
         ledger=dict(path=LEDGER_PATH, sha256=digest(root / LEDGER_PATH), rows=len(ledger)),
         symbols=dict(path=SYMBOLS_PATH, names=len(symbols)),
         delinks=dict(path=DELINKS_PATH, sha256=delinks_sha),
-        config=dict(path=CONFIG, sha256=digest(root / CONFIG)),
+        config=dict(path=CONFIG, sha256=config_digest(root)),
     )
     rom = root / ROM_PATH
     rom_matches = None

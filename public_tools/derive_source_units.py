@@ -20,7 +20,11 @@ import argparse
 import collections
 import json
 import posixpath
+import sys
 from pathlib import Path, PurePosixPath
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from source_units import read_rule_fragments  # noqa: E402
 
 SKIP_DIRECTORIES = {'nonmatching'}
 TOP_LEVEL_FALLBACKS = {
@@ -37,6 +41,8 @@ TOP_LEVEL_FALLBACKS = {
     'nonmatching': None,
     'ov000': 'ov000',
     'ov001': 'ov001',
+    'ov003': 'ov003',
+    'ov005': 'ov005',
     'ov006': 'ov006',
     'overlays': 'ov001',
     'ports': 'main',
@@ -133,6 +139,22 @@ def flag_profile(profiles, flags):
     return profiles[key]
 
 
+def without_fragment_rules(rules, root):
+    """Drop generated rules whose glob a ``config/rules.d`` fragment owns.
+
+    The loader rejects a glob declared in both a fragment and the base file, so
+    regeneration must leave the fragment's copy alone.
+    """
+    owned = {
+        rule['glob']
+        for unused_origin, entries in read_rule_fragments(Path(root))
+        for rule in entries
+        if isinstance(rule, dict) and isinstance(rule.get('glob'), str)
+    }
+    kept = [rule for rule in rules if rule['glob'] not in owned]
+    return kept, len(rules) - len(kept)
+
+
 def build(root, ledger_path, modules_path, compiler, compiler_sha256, compiler_root):
     root = Path(root).resolve()
     inventory = read_json(modules_path)
@@ -144,7 +166,9 @@ def build(root, ledger_path, modules_path, compiler, compiler_sha256, compiler_r
     by_source = collections.defaultdict(list)
     for row in rows:
         name = row.get('sourceUnit')
-        if isinstance(name, str) and name.endswith('.c'):
+        # A ledger row without compilerFlags records no profile evidence.  An
+        # empty profile is not a buildable rule, so never let it become one.
+        if isinstance(name, str) and name.endswith('.c') and row.get('compilerFlags'):
             by_source[name.replace('\\', '/')].append(row)
     files = source_files(root)
     known = {name: dominant(value) for name, value in by_source.items()}
@@ -261,6 +285,11 @@ def build(root, ledger_path, modules_path, compiler, compiler_sha256, compiler_r
             fields['compilerSha256'] = compiler_identity
         emit(path, fields)
 
+    # A lane may own its directory rule in config/rules.d/<lane>.json.  Keep the
+    # derived base list disjoint from those fragments: the loader rejects a glob
+    # declared twice, and the fragment is the copy that must survive regeneration.
+    rules, fragmented = without_fragment_rules(rules, root)
+
     rules.sort(key=lambda rule: (rule['glob'].count('/'), rule['glob']))
     alternates = {}
     used_compilers = {compiler_sha256}
@@ -299,7 +328,7 @@ def build(root, ledger_path, modules_path, compiler, compiler_sha256, compiler_r
         alternates=alternates,
         rules=rules,
     )
-    return config, files, known, ambiguity, overrides
+    return config, files, known, ambiguity, overrides, fragmented
 
 
 def verify(config, root, files, known):
@@ -308,7 +337,7 @@ def verify(config, root, files, known):
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from source_units import load_config, resolve, source_files, excluded
 
-    loaded = load_config(None, config)
+    loaded = load_config(root, config)
     all_files = source_files(root)
     unresolved = []
     resolved = excluded_count = 0
@@ -350,15 +379,16 @@ def main():
                         default='7150fa4fe4cb6db6867ac530ec1a0754f6ca4df92868d963a7875196f9222880')
     parser.add_argument('--compiler-root', default='tools/mwccarm')
     args = parser.parse_args()
-    config, files, known, ambiguity, overrides = build(args.root, args.ledger, args.modules,
-                                                       args.compiler, args.compiler_sha256, args.compiler_root)
+    config, files, known, ambiguity, overrides, fragmented = build(
+        args.root, args.ledger, args.modules, args.compiler, args.compiler_sha256, args.compiler_root)
     out = args.out if args.out.is_absolute() else args.root / args.out
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(config, indent=1) + '\n', encoding='utf-8')
     checked = verify(config, args.root.resolve(), files, known)
     print(json.dumps(dict(output=out.name, rules=len(config['rules']), **checked,
                           ledgerSources=len(known), ambiguous=len(ambiguity),
-                          overrides=overrides, bytes=out.stat().st_size)))
+                          overrides=overrides, fragmentRules=fragmented,
+                          bytes=out.stat().st_size)))
 
 
 if __name__ == '__main__':

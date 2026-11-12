@@ -27,7 +27,7 @@ import time
 from pathlib import Path, PurePosixPath
 
 from bytematch_project import DENOMINATOR, elf_object, write
-from source_units import CONFIG, SourceUnitError, enumerate_sources, load_config, read_json
+from source_units import SourceUnitError, config_digest, enumerate_sources, load_config, read_json
 
 MODNAMES = ('main', 'itcm', 'dtcm', 'ov000', 'ov001', 'ov002', 'ov003', 'ov004', 'ov005', 'ov006', 'ov007',
             'arm7-boot', 'arm7-wram', 'arm7-main', 'utility-child-arm9-main', 'utility-child-arm9-itcm',
@@ -267,7 +267,7 @@ def compile_all(root, private_root, out_dir, jobs=4, timeout=180, limit=None, so
         startedTimeNs=started, finishedTimeNs=time.time_ns(),
         compiler=dict(path=config['data']['compiler']['path'], sha256=default_compiler),
         compilers={identity: path.relative_to(root).as_posix() for identity, path in sorted(compilers.items())},
-        configSha256=digest(root / CONFIG),
+        configSha256=config_digest(root),
         sourceInventory=dict(allSourceFiles=len(enumerated['files']),
                              compiledSources=len(enumerated['compiled']),
                              assemblySources=len(assembly), prebuiltObjects=len(prebuilt),
@@ -878,7 +878,7 @@ def compiled_selections(root, private_root, compilation):
         raise RepositoryBuildError('A repository compilation report is required')
     if report.get('selectedCompilationUnits') != (report.get('compiledUnits', 0) + report.get('failedUnits', 0)):
         raise RepositoryBuildError('The compilation report did not account for every selected source')
-    if digest(root / CONFIG) != report.get('configSha256'):
+    if config_digest(root) != report.get('configSha256'):
         raise RepositoryBuildError('The source-unit configuration changed after compilation')
     config = load_config(root)
     modules = module_inventory(root, config)
@@ -1149,7 +1149,7 @@ def build_project(root, private_root, out_dir, compilation):
         matchedBytesByModule=dict(sorted(stats.get('matchedBytesByModule', {}).items())),
         relocationOutsideImage=stats.get('relocationOutsideImage', [])[:50],
         relocationOutsideImageCount=len(stats.get('relocationOutsideImage', [])),
-        sourceUnitConfigSha256=digest(root / CONFIG),
+        sourceUnitConfigSha256=config_digest(root),
         accounting='Compiled source is compared byte-for-byte with the original module image after applying its '
                    'ELF relocations. complete is true only for an exact, full-size match; no manifest membership '
                    'is used. Typed data remains the separately measured accepted-data budget.',
