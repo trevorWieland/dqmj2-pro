@@ -2744,6 +2744,12 @@
    "compilerSha256": "7150fa4fe4cb6db6867ac530ec1a0754f6ca4df92868d963a7875196f9222880"
   },
   {
+   "glob": "src/main/r2_main_large/**",
+   "module": "main",
+   "compilerFlags": "p002",
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
+  },
+  {
    "glob": "src/main/**",
    "module": "main",
    "compilerFlags": "p002",
