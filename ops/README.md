@@ -339,3 +339,23 @@ The image's `ldr r0,[pool] / ldr r0,[r0] / ldr r0,[r0,#0x34]` chain is also emit
 
 A future pass should start from the frame shape (`push {r4,lr}; sub sp,#8` with the
 channel at `[sp, #4]`) rather than from the field arithmetic.
+
+## `gen_ov000_gen1.py` / `verify_ov000_gen1.py` — the generation-1 packet
+
+Generates the 47-row `src/ov000/g1_ov000_gen1` packet from the ledger and
+`extract/arm9_overlays/ov000.bin`, then gates it. Four donor templates cover the
+clusters that converged (F1, F2, F4, F7; F4 ships two of its three members
+because the screen found the representative already defined); the
+thirty-three rows with no C family are emitted as mwccarm `asm` from the measured
+stream (the round-6 fallback). No body is hand-written.
+
+```bash
+python ops/gen_ov000_gen1.py --list        # planned rows and their form
+python ops/gen_ov000_gen1.py --write       # regenerate every source
+python ops/verify_ov000_gen1.py --record   # refresh the pinned fixture
+python ops/verify_ov000_gen1.py            # recompile, pin relocations, controls
+python ops/test_gen_ov000_gen1.py          # spelling and decoding unit tests
+```
+
+See `docs/authoring/2026-11-12-ov000-gen1.md` for the cluster table, the
+first-try rates and the parked F3 cluster.
