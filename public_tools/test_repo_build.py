@@ -11,6 +11,7 @@ derivation for C/C++ versus assembly, and one real assembly compile of a
 import json
 import os
 import shutil
+import struct
 import sys
 import tempfile
 import unittest
@@ -18,7 +19,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from repo_build import compile_all, compile_flags
+from repo_build import (RepositoryBuildError, compile_all, compile_flags,
+                        encode_thumb_branch, patch_function)
 
 ROOT = Path(__file__).resolve().parent.parent
 MWASMARM = 'tools/mwccarm/mwccarm/2.0/base/mwasmarm.exe'
@@ -50,6 +52,66 @@ class CompileFlagTests(unittest.TestCase):
         flags = compile_flags(dict(path='src/main/unit.c', mode='thumb',
                                    profileFlags=['-proc', 'arm946e', '-thumb', '-c']))
         self.assertEqual(flags.count('-thumb'), 1)
+
+
+class Xpc22PatchTests(unittest.TestCase):
+    """R_ARM_THM_XPC22 (kind 16) must encode BLX or BL from the measured site.
+
+    Each case uses a real measured call site and image word.  The patcher may
+    not infer the form from the compiler's placeholder (mwasmarm always emits
+    the BL spelling), and BLX must use Align(PC+4,4) while BL uses PC+4.
+    """
+
+    BASE = 0x021D7240
+
+    def patch(self, function_address, size, where, target, image_word,
+              kind=16, image_size=None):
+        site = function_address + where
+        offset = site - self.BASE
+        image = bytearray(image_size or offset + 4)
+        struct.pack_into('<I', image, offset, image_word)
+        function = dict(name='native_probe', value=0, size=size, section=4,
+                        address=function_address, mode='thumb', bytes=bytearray(size))
+        relocations = {4: [dict(where=where, type=kind, addend=-4,
+                                symbol=dict(name=target, shndx=0))]}
+        return patch_function(function, dict(name='ov006', symbols={}, by_address={}, runtime={}),
+                              self.BASE, [], relocations, bytes(image))
+
+    def test_thm_xpc22_to_arm_uses_blx_with_aligned_base(self):
+        # Real site 0x021EDE7A -> ARM 0x02008008; image word 0xE8C6F61A.
+        # site + 4 is not 4-aligned, so the BLX base is Align(site + 4, 4).
+        site = 0x021EDE7A
+        self.assertNotEqual((site + 4) & ~3, site + 4)
+        patched, unresolved, sources, outside = self.patch(
+            0x021EDE50, 196, 0x2A, 'native_fn_02008008', 0xE8C6F61A)
+        self.assertEqual(unresolved, [])
+        self.assertEqual(sources['name'], 1)
+        self.assertEqual(patched[0x2A:0x2E], struct.pack('<I', 0xE8C6F61A))
+        second = struct.unpack_from('<H', patched, 0x2C)[0]
+        self.assertEqual(second & 0xD000, 0xC000, 'BLX clears second-halfword bit 12')
+
+    def test_thm_xpc22_to_thumb_uses_bl(self):
+        # Real site 0x021F7212 -> Thumb 0x021F52CC; image word 0xF85BF7FE.
+        patched, unresolved, sources, outside = self.patch(
+            0x021F7212, 4, 0, 'native_fn_021F52CC', 0xF85BF7FE)
+        self.assertEqual(unresolved, [])
+        self.assertEqual(patched, struct.pack('<I', 0xF85BF7FE))
+        second = struct.unpack_from('<H', patched, 2)[0]
+        self.assertEqual(second & 0xD000, 0xD000, 'BL keeps second-halfword bit 12')
+
+    def test_thm_xpc22_negative_control_mode_changes_the_word(self):
+        # The same ARM-target site encoded as Thumb (BL) must not reproduce the
+        # measured BLX word: the site's marker, not a default, decides the form.
+        first, second = encode_thumb_branch(0x021EDE7A, 0x02008008, -4, False)
+        self.assertNotEqual((first, second), (0xF61A, 0xE8C6))
+        self.assertEqual(second & 0xD000, 0xD000, 'the BL form keeps bit 12 set')
+
+    def test_unknown_relocation_kind_fails_loudly(self):
+        with self.assertRaises(RepositoryBuildError) as raised:
+            self.patch(0x021EDE50, 196, 0x2A, 'native_fn_02008008', 0xE8C6F61A, kind=99)
+        message = str(raised.exception)
+        self.assertIn('Unsupported relocation kind 99', message)
+        self.assertIn('0x021ede7a', message)
 
 
 @unittest.skipUnless((ROOT / MWASMARM).is_file(), 'pinned mwasmarm is not present')
