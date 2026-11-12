@@ -208,17 +208,31 @@ class ConfigDigestTests(RuleFragmentFixture):
         self.assertNotEqual(config_digest(self.root), after_fragment)
 
 
-class NoShippedFragmentTests(unittest.TestCase):
-    """This round ships the loader, not a migrated lane."""
+class ShippedFragmentTests(unittest.TestCase):
+    """A lane ships its own fragment; the loader account must stay exact."""
 
-    def test_no_rule_fragment_is_shipped_this_round(self):
-        self.assertEqual(rule_fragment_files(ROOT), [])
+    def test_shipped_fragments_account_for_the_merged_rule_count(self):
         self.assertTrue((ROOT / 'config/rules.d/README.md').is_file())
         config = load_config(ROOT)
         base = json.loads((ROOT / 'config/source_units.json').read_text(encoding='utf-8-sig'))
-        self.assertEqual(config['fragmentRules'], 0)
+        shipped = sum(len(json.loads(path.read_text(encoding='utf-8')))
+                      for path in rule_fragment_files(ROOT))
+        self.assertEqual(config['fragmentRules'], shipped)
         self.assertEqual(config['baseRules'], len(base['rules']))
-        self.assertEqual(len(config['rules']), len(base['rules']))
+        self.assertEqual(len(config['rules']), len(base['rules']) + shipped)
+
+    def test_the_first_lane_fragment_resolves_its_own_sources(self):
+        config = load_config(ROOT)
+        for mode, profile in (('thumb', 'p033'), ('arm', 'p003')):
+            path = 'src/ov006/g1_ov006_sweep2/%s/ov006/native_ov006_00000000.c' % mode
+            rule = resolve(config, path)
+            self.assertEqual(rule['module'], 'ov006')
+            self.assertEqual(rule['mode'], mode)
+            self.assertEqual(rule['compilerFlags'], config['profiles'][profile])
+            self.assertEqual(rule['compilerSha256'],
+                             '89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca')
+            scope = 'src/ov006/g1_ov006_sweep2/' + mode
+            self.assertEqual(config['origins'][scope], 'config/rules.d/ov006-sweep2.json')
 
     def test_a_fragment_repeating_a_shipped_base_rule_is_rejected(self):
         base = json.loads((ROOT / 'config/source_units.json').read_text(encoding='utf-8-sig'))
