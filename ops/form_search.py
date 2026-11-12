@@ -428,7 +428,10 @@ def relocate(text, base, relocations, defined, modes=None, arm=None, skip_counts
     out = bytearray(text)
     for offset, kind, symbol, addend in relocations:
         target = defined.get(symbol) or symbol_address(symbol)
-        if kind in (10, 30):
+        # 16 is R_ARM_THM_XPC22, the BLX-to-ARM form mwcc emits for an
+        # interworking call to a symbol outside the translation unit. It is the
+        # same two-halfword immediate as 10/30; the measured site decides BLX.
+        if kind in (10, 16, 30):
             place = base + offset
             if arm is None:
                 if modes is not None:

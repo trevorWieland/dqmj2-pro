@@ -17307,6 +17307,20 @@
    "module": "ov006",
    "compilerFlags": "p004",
    "mode": "thumb"
+  },
+  {
+   "glob": "src/verified_assembly/20261112_asm_chunk_thumb/main/**",
+   "module": "main",
+   "compilerFlags": "p033",
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca",
+   "mode": "thumb"
+  },
+  {
+   "glob": "src/verified_assembly/20261112_asm_chunk_thumb/ov006/**",
+   "module": "ov006",
+   "compilerFlags": "p033",
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca",
+   "mode": "thumb"
   }
  ],
  "objects": {}
