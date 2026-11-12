@@ -20,5 +20,9 @@ State `glob`, `module` and `compilerFlags`; add `compilerSha256` or `mode` only 
 from the most specific parent rule. See `docs/source-units.md` and
 `docs/authoring/2026-11-12-rules-fragments.md`.
 
-`config/rules.d/ov006-sweep2.json` is the first shipped fragment (the ov006
-sweep-2 lane's thumb and arm directories, 2026-11-12).
+The first shipped fragments are `config/rules.d/ov006-sweep2.json` (the ov006
+sweep-2 lane's thumb and arm directories) and
+`config/rules.d/jumptable-carrier.json` (the jump-table carrier lane's ov006
+arm/thumb and main arm directories), both 2026-11-12. See
+`docs/authoring/2026-11-12-ov006-sweep2.md` and
+`docs/authoring/2026-11-12-jumptable-carrier.md`.
