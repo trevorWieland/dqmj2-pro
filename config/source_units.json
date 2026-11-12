@@ -2940,6 +2940,11 @@
    "compilerFlags": "p003"
   },
   {
+   "glob": "src/ov000/pass2_20261111/**",
+   "module": "ov000",
+   "compilerFlags": "p001"
+  },
+  {
    "glob": "src/ov001/**",
    "module": "ov001",
    "compilerFlags": "p003"
