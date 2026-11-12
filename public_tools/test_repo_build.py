@@ -114,6 +114,67 @@ class Xpc22PatchTests(unittest.TestCase):
         self.assertIn('0x021ede7a', message)
 
 
+class ArmCallPatchTests(unittest.TestCase):
+    """R_ARM_CALL (kind 15) must encode an ARM-state BL/BLX immediate.
+
+    mwasmarm writes kind 15 for an interworking ``blx`` and keeps the legacy
+    R_ARM_PC24 (kind 1) spelling for a plain ``bl``.  The first case is a real
+    measured site: 0x02000950 in the utility child ARM9 boot unit targets the
+    Thumb entry 0x020111e8, and the original image word there is 0xFA004224.
+    """
+
+    BASE = 0x02000000
+
+    def patch(self, function_address, size, where, target, placeholder,
+              image_word, kind=15, addend=-8):
+        offset = function_address + where - self.BASE
+        image = bytearray(offset + 4)
+        struct.pack_into('<I', image, offset, image_word)
+        content = bytearray(size)
+        struct.pack_into('<I', content, where, placeholder)
+        function = dict(name='native_probe', value=0, size=size, section=4,
+                        address=function_address, mode='arm', bytes=content)
+        relocations = {4: [dict(where=where, type=kind, addend=addend,
+                                symbol=dict(name=target, shndx=0))]}
+        return patch_function(function, dict(name='utility-child-arm9-main', symbols={},
+                                             by_address={}, runtime={}),
+                              self.BASE, [], relocations, bytes(image))
+
+    def test_arm_call_blx_reproduces_the_measured_image_word(self):
+        patched, unresolved, sources, outside = self.patch(
+            0x02000850, 316, 0x100, 'native_utility_child_arm9_thumb_020111e8',
+            0xFAFFFFFE, 0xFA004224)
+        self.assertEqual(unresolved, [])
+        self.assertEqual(sources['name'], 1)
+        self.assertEqual(struct.unpack_from('<I', patched, 0x100)[0], 0xFA004224)
+
+    def test_arm_call_blx_uses_the_h_selector_for_a_two_aligned_target(self):
+        # Target 0x02001082 is only two-aligned, so bit 1 lives in H (bit 24).
+        patched, unresolved, unused_sources, unused_outside = self.patch(
+            0x02000000, 4, 0, 'native_fn_02001082', 0xFAFFFFFE, 0xFB00041E)
+        self.assertEqual(unresolved, [])
+        self.assertEqual(struct.unpack_from('<I', patched, 0)[0], 0xFB00041E)
+
+    def test_arm_call_without_a_rela_addend_decodes_the_placeholder(self):
+        patched, unresolved, unused_sources, unused_outside = self.patch(
+            0x02000850, 316, 0x100, 'native_utility_child_arm9_thumb_020111e8',
+            0xFAFFFFFE, 0xFA004224, addend=None)
+        self.assertEqual(unresolved, [])
+        self.assertEqual(struct.unpack_from('<I', patched, 0x100)[0], 0xFA004224)
+
+    def test_arm_call_bl_uses_imm24(self):
+        # BL to 0x02001000: delta 0xFF8, encoded as imm24 0x3FE.
+        patched, unresolved, unused_sources, unused_outside = self.patch(
+            0x02000000, 4, 0, 'native_fn_02001000', 0xEBFFFFFE, 0xEB0003FE)
+        self.assertEqual(unresolved, [])
+        self.assertEqual(struct.unpack_from('<I', patched, 0)[0], 0xEB0003FE)
+
+    def test_arm_call_rejects_a_non_branch_instruction(self):
+        with self.assertRaises(RepositoryBuildError) as raised:
+            self.patch(0x02000000, 4, 0, 'native_fn_02001000', 0xE1A00000, 0xE1A00000)
+        self.assertIn('is not an ARM BL/BLX immediate', str(raised.exception))
+
+
 @unittest.skipUnless((ROOT / MWASMARM).is_file(), 'pinned mwasmarm is not present')
 class ThumbAssemblyCompileTests(unittest.TestCase):
     """Compile a real ``mode: thumb`` .s unit through compile_all.

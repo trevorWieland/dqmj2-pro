@@ -43,8 +43,18 @@ COMPILE_SUFFIXES = ('.c',)
 # Relocation kinds this patcher can encode.  Anything else must fail loudly: a
 # relocation silently left as the compiler's placeholder would turn a
 # measurement hole into a source mismatch (or, worse, an accidental match).
-SUPPORTED_RELOCATION_KINDS = frozenset((1, 2, 10, 11, 16, 43, 44))
+SUPPORTED_RELOCATION_KINDS = frozenset((1, 2, 10, 11, 15, 16, 43, 44))
 THUMB_BRANCH_KINDS = (10, 11)
+# R_ARM_CALL (15) is the modern ARM-state call relocation.  mwasmarm emits it for
+# interworking `blx` (bit 24 of the image instruction is the H selector), while
+# plain `bl` still uses the legacy R_ARM_PC24 (kind 1) form.  The instruction
+# word keeps the mnemonic and only imm24/H are written, exactly as the original
+# linker did.
+ARM_CALL = 15
+BLX_IMMEDIATE_MASK = 0xFE000000
+BLX_IMMEDIATE_VALUE = 0xFA000000
+BL_IMMEDIATE_MASK = 0xFF000000
+BL_IMMEDIATE_VALUE = 0xEB000000
 # R_ARM_THM_XPC22 (16) is the interworking-call form mwasmarm emits for `blx`.
 # The measured call site, not the compiler's BL placeholder, says whether the
 # original linker wrote BL or BLX; bit 12 of the second halfword discriminates
@@ -644,6 +654,29 @@ def patch_function(function, module, base, sections, relocations, image):
             if mode == 'thumb':
                 value |= 1
             struct.pack_into('<I', body, offset, value & 0xFFFFFFFF)
+        elif kind == ARM_CALL:  # R_ARM_CALL: ARM-state BL/BLX immediate
+            word = struct.unpack_from('<I', body, offset)[0]
+            if (word & BLX_IMMEDIATE_MASK) == BLX_IMMEDIATE_VALUE:  # BLX (immediate)
+                if addend is None:
+                    # imm24:'H0' is the 26-bit signed addend; mwasmarm writes -8
+                    # (the architectural PC bias) as the placeholder.
+                    addend = sign_extend(((word & 0xFFFFFF) << 2)
+                                         | (((word >> 24) & 1) << 1), 26)
+                delta = target + addend - absolute
+                if delta & 1:
+                    raise RepositoryBuildError(
+                        'R_ARM_CALL BLX site 0x%08x has an odd branch offset' % absolute)
+                word = (BLX_IMMEDIATE_VALUE | (((delta >> 1) & 1) << 24)
+                        | ((delta >> 2) & 0xFFFFFF))
+            elif (word & BL_IMMEDIATE_MASK) == BL_IMMEDIATE_VALUE:  # BL
+                if addend is None:
+                    addend = sign_extend((word & 0xFFFFFF) << 2, 26)
+                delta = target + addend - absolute
+                word = BL_IMMEDIATE_VALUE | ((delta >> 2) & 0xFFFFFF)
+            else:
+                raise RepositoryBuildError(
+                    'R_ARM_CALL site 0x%08x is not an ARM BL/BLX immediate' % absolute)
+            struct.pack_into('<I', body, offset, word)
         elif kind in THUMB_BRANCH_KINDS:  # R_ARM_THM_CALL / R_ARM_THM_JUMP24
             first, second = encode_thumb_branch(absolute, target, addend or 0, mode == 'arm')
             struct.pack_into('<H', body, offset, first)
