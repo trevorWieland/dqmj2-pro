@@ -4181,6 +4181,42 @@
    "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
   },
   {
+   "glob": "src/verified_assembly/20261112_asm_chunk_scan/main/**",
+   "module": "main",
+   "compilerFlags": "p003",
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
+  },
+  {
+   "glob": "src/verified_assembly/20261112_asm_chunk_scan/ov000/**",
+   "module": "ov000",
+   "compilerFlags": "p003",
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
+  },
+  {
+   "glob": "src/verified_assembly/20261112_asm_chunk_scan/ov001/**",
+   "module": "ov001",
+   "compilerFlags": "p003",
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
+  },
+  {
+   "glob": "src/verified_assembly/20261112_asm_chunk_scan/ov003/**",
+   "module": "ov003",
+   "compilerFlags": "p003",
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
+  },
+  {
+   "glob": "src/verified_assembly/20261112_asm_chunk_scan/ov005/**",
+   "module": "ov005",
+   "compilerFlags": "p003",
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
+  },
+  {
+   "glob": "src/verified_assembly/20261112_asm_chunk_scan/ov006/**",
+   "module": "ov006",
+   "compilerFlags": "p003",
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
+  },
+  {
    "glob": "src/verified_assembly/**",
    "module": "main",
    "compilerFlags": "p001",
