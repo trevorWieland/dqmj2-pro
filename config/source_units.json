@@ -4147,6 +4147,18 @@
    "compilerFlags": "p001"
   },
   {
+   "glob": "src/verified_assembly/20261111_asm_sweep1/main/**",
+   "module": "main",
+   "compilerFlags": "p001",
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
+  },
+  {
+   "glob": "src/verified_assembly/20261111_asm_sweep1/ov000/**",
+   "module": "ov000",
+   "compilerFlags": "p001",
+   "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"
+  },
+  {
    "glob": "src/verified_assembly/20261111_main_families/**",
    "module": "main",
    "compilerFlags": "p001",
