@@ -171,10 +171,12 @@ independently of anything the permuter reported, and additionally requires:
 
 0. **the fixed branch-mode path** — it relocates through
    `form_search.relocate(..., modes=form_search.TargetModes(root, module))`, i.e. `BL`
-   vs `BLX` is resolved from the branch *target* as in
-   `docs/authoring/2026-11-11-blx-mode-fix.md`. Calling `relocate` without `modes` falls
-   back to `BL` and invents a 2-byte mismatch on every Thumb call to an ARM function;
-   that is how `0x021FB384` and `0x021FF02C` were "failing" before that fix;
+   vs `BLX` is read from the measured instruction at the call site, then from
+   module-scoped ledger evidence as in
+   `docs/authoring/2026-11-11-scanner-module-mode.md`. Calling `relocate` without
+   `modes` falls back to `BL` and invents a 2-byte mismatch on every Thumb call to an
+   ARM function; that is how `0x021FB384` and `0x021FF02C` were "failing" before that
+   fix;
 1. **workspace integrity** — the image still hashes to `row.json`'s value and
    `target.o`'s `.text` is the recorded slice with the recorded slots zeroed;
 2. **negative control, base source** — `base.c` must *not* reproduce the row;
@@ -384,9 +386,10 @@ measured size and was one byte off, with the whole difference inside a single
 `R_ARM_ABS32` relocation slot: the image stores a Thumb function's address **with bit 0
 set**, and the patcher stored the even address.
 
-`ops/form_search.py:relocate` now sets bit 0 for an `R_ARM_ABS32` whose symbol is a
-function (project naming `*_fn_*`, `func_*`) and whose target resolves to Thumb, using the
-same `TargetModes` evidence that decides `BL` vs `BLX`. After the fix all ten rows measure
+`ops/form_search.py:relocate` now writes the measured `R_ARM_ABS32` word from the caller
+image; when the site is outside the image it falls back to the function-symbol/Thumb
+resolution that also decides `BL` vs `BLX` (module-scoped, see
+`docs/authoring/2026-11-11-scanner-module-mode.md`). After the fix all ten rows measure
 exact and the relocation-only bucket is empty in every module scanned so far. Two
 consequences worth keeping straight:
 
