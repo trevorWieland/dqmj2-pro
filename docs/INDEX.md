@@ -37,6 +37,7 @@ in order.
 | document | what it answers |
 | --- | --- |
 | [source-units.md](source-units.md) | how `config/source_units.json` maps directories to compilation rules |
+| [authoring/2026-11-12-rules-fragments.md](authoring/2026-11-12-rules-fragments.md) | lane-owned `config/rules.d/*.json` fragments: load order, precedence, duplicate-glob errors, why the first migration was dropped at rebase, and the split-golden proof |
 | [bytematch.md](bytematch.md) | how measurement works, badge scopes and the public number tables |
 | [public-build.md](public-build.md) | building and checking the public tree without private inputs |
 | [semantic-understanding.md](semantic-understanding.md) | how to do naming and meaning work without inventing |

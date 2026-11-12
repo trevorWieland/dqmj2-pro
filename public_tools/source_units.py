@@ -6,18 +6,27 @@ specific ancestor rule, so a new file merged into an existing directory is
 compiled automatically.  A source file that matches no rule is a build error,
 never a silent skip.
 
+A lane may also declare its rules in ``config/rules.d/<lane>.json``, a JSON
+array of the same rule objects.  Fragment files are loaded in filename order
+before the base ``rules`` list and merged with it.  Resolution is unchanged:
+the whole matching ancestor chain is merged from shallowest to deepest, so the
+most specific glob wins.  Fragment globs are unique by construction; the
+loader rejects a glob declared twice and names both sources.
+
 Command line check used by CI and by ``derive_source_units.py``::
 
     python public_tools/source_units.py --root . --check
 """
 
 import argparse
+import hashlib
 import json
 import os
 import re
 from pathlib import Path, PurePosixPath
 
 CONFIG = 'config/source_units.json'
+RULES_DIR = 'config/rules.d'
 FIELDS = ('module', 'processor', 'compilerFlags', 'loadAddressBase', 'originalImage', 'mode')
 RULE_FIELDS = FIELDS + ('compilerSha256',)
 MODES = ('arm', 'thumb')
@@ -47,6 +56,49 @@ def canonical(value):
 
 def read_json(path):
     return json.loads(Path(path).read_text(encoding='utf-8-sig'))
+
+
+def rule_fragment_files(root):
+    """The rule-fragment files for ``root``, in deterministic filename order."""
+    directory = Path(root) / RULES_DIR
+    if not directory.is_dir():
+        return []
+    return sorted((path for path in directory.glob('*.json') if path.is_file()),
+                  key=lambda path: path.name)
+
+
+def read_rule_fragments(root):
+    """Read ``config/rules.d/*.json`` as ``[(origin, rules), ...]``.
+
+    Each fragment is a JSON array of rule objects in the same shape as one
+    entry of the base ``rules`` array.  Files are returned in filename order,
+    so the merged configuration never depends on filesystem enumeration order.
+    """
+    fragments = []
+    for path in rule_fragment_files(root):
+        origin = RULES_DIR + '/' + path.name
+        try:
+            entries = read_json(path)
+        except json.JSONDecodeError as error:
+            raise SourceUnitError(f'Rule fragment {origin} is not valid JSON: {error}') from error
+        if not isinstance(entries, list):
+            raise SourceUnitError(f'Rule fragment {origin} must be a JSON array of source-unit rules')
+        fragments.append((origin, entries))
+    return fragments
+
+
+def config_digest(root):
+    """SHA-256 over the base configuration and every rule fragment.
+
+    Rule fragments are part of the build configuration, so a compile report
+    generated from one rule set must not validate against another.
+    """
+    root = Path(root).resolve()
+    hasher = hashlib.sha256()
+    for path in [root / CONFIG] + rule_fragment_files(root):
+        hasher.update(path.relative_to(root).as_posix().encode('utf-8') + b'\0')
+        hasher.update(path.read_bytes() + b'\0')
+    return hasher.hexdigest()
 
 
 def scope_of(glob):
@@ -144,8 +196,8 @@ def load_config(root, data=None):
     if data.get('schemaVersion') != 1:
         raise SourceUnitError('Expected source-unit configuration schemaVersion 1')
     rules = data.get('rules')
-    if not isinstance(rules, list) or not rules:
-        raise SourceUnitError('The source-unit configuration has no rules')
+    if not isinstance(rules, list):
+        raise SourceUnitError('The source-unit configuration rules must be an array')
     modules = data.get('modules')
     if not isinstance(modules, dict) or not modules:
         raise SourceUnitError('The source-unit configuration has no module inventory')
@@ -191,14 +243,29 @@ def load_config(root, data=None):
             identity = entry.get('compilerSha256', default_compiler)
             if identity not in compilers:
                 raise SourceUnitError('Unknown alternate compiler identity: ' + str(identity))
+    fragments = read_rule_fragments(root) if root is not None else []
+    ordered = [(origin, raw) for origin, entries in fragments for raw in entries]
+    ordered.extend((CONFIG, raw) for raw in rules)
+    if not ordered:
+        raise SourceUnitError('The source-unit configuration has no rules')
     parsed = []
     scopes = {}
-    for raw in rules:
-        rule = validate_rule(raw, modules)
+    origins = {}
+    merge_order = []
+    for origin, raw in ordered:
+        try:
+            rule = validate_rule(raw, modules)
+        except SourceUnitError as error:
+            raise SourceUnitError(str(error) + ' (in ' + origin + ')') from error
         if rule['scope'] in scopes:
-            raise SourceUnitError('Duplicate source-unit rule scope: ' + rule['scope'])
+            raise SourceUnitError("Duplicate source-unit rule glob '" + rule['scope'] + "' in "
+                                  + origin + '; already declared in ' + origins[rule['scope']])
         scopes[rule['scope']] = rule
+        origins[rule['scope']] = origin
+        merge_order.append(rule['scope'])
         parsed.append(rule)
+    parsed.sort(key=lambda item: depth(item['scope']))
+    fragment_rule_count = len(ordered) - len(rules)
     objects = data.get('objects') or {}
     if not isinstance(objects, dict):
         raise SourceUnitError('objects must be an object keyed by source path')
@@ -215,10 +282,11 @@ def load_config(root, data=None):
     exclusions = list(EXCLUSIONS) + list(data.get('exclusions') or [])
     for value in exclusions:
         scope_of(value)
-    parsed.sort(key=lambda item: depth(item['scope']))
-    return dict(data=data, rules=parsed, scopes=scopes, modules=modules, profiles=profiles,
+    return dict(data=data, rules=parsed, scopes=scopes, origins=origins, mergeOrder=merge_order,
+                modules=modules, profiles=profiles,
                 compilers=compilers, default_compiler=default_compiler, alternates=alternates,
-                exclusions=exclusions, objects=objects)
+                exclusions=exclusions, objects=objects, fragments=[origin for origin, unused in fragments],
+                fragmentRules=fragment_rule_count, baseRules=len(rules))
 
 
 def matches(scope, name):
@@ -299,7 +367,10 @@ def check(root, config=None):
         by_module[rule['module']] = by_module.get(rule['module'], 0) + 1
         suffix = PurePosixPath(name).suffix or '<none>'
         by_extension[suffix] = by_extension.get(suffix, 0) + 1
-    return dict(schemaVersion=1, configRules=len(config['rules']), sourceFiles=len(result['files']),
+    return dict(schemaVersion=1, configRules=len(config['rules']),
+                baseRules=config['baseRules'], fragmentFiles=len(config['fragments']),
+                fragmentRules=config['fragmentRules'],
+                sourceFiles=len(result['files']),
                 resolvedFiles=len(result['resolved']), excludedFiles=len(result['excluded']),
                 compiledSources=len(result['compiled']), assemblySources=len(result['assembly']),
                 prebuiltObjects=len(result['prebuilt']), modules=len(by_module),

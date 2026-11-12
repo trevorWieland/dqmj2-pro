@@ -35,6 +35,31 @@ pin: sweep every installed build, promote the row to the *lowest* exact build wi
 `config/source_units.json:compiler` to fix one row, and never report a permuter score as
 acceptance — see `docs/authoring/permuter.md`.
 
+## Source-unit rules
+
+`config/source_units.json` is the shared legacy rule list. Do not append a lane's rule to it:
+four consecutive pull requests (#185, #187, #190, #191) conflicted in that file and forced a rebase
+plus re-verification of work that was already green.
+
+A lane owns exactly one fragment, `config/rules.d/<lane>.json`. It is a JSON array of rule objects
+with the same shape as the base `rules` entries:
+
+```json
+[
+ {"glob": "src/verified_assembly/20261112_asm_chunk_scan/ov006/**", "module": "ov006",
+  "compilerFlags": "p003",
+  "compilerSha256": "89b2fc16c7f1f29ede1e52bdee5bc8ae4d63fe7e50d8074354dfd92c43d47aca"}
+]
+```
+
+The loader reads every `config/rules.d/*.json` in filename order, then appends the base `rules`
+list. Resolution is unchanged: merge every matching rule from the shallowest scope to the deepest,
+so the most specific glob wins and a fragment rule inherits every field it does not state. A glob
+may be declared only once across the base file and all fragments; a duplicate is a build error that
+names both sources. Keep the fragment small — the lane's added directories, or only the fields it
+changes — and leave `config/source_units.json` untouched. See `docs/source-units.md` and
+`docs/authoring/2026-11-12-rules-fragments.md`.
+
 ## Comments and naming
 
 Authored code may and should carry concise comments that explain mechanism and intent: why a

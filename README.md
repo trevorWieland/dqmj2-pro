@@ -76,9 +76,11 @@ area, not a credit ledger.
 ## Repository map
 
 - `src/` — reconstruction sources and authored headers.
-- `config/source_units.json` — the compilation rule for each source directory (module, processor,
-  flags, load base, original image). A new file merged into a directory that already has a rule is
-  compiled and measured automatically; a new directory needs a rule.
+- `config/source_units.json` and `config/rules.d/*.json` — compilation rules for each source
+  directory (module, processor, flags, load base, original image). A new file merged into a directory
+  that already has a rule is compiled and measured automatically; a new directory needs a rule. New
+  lanes put their rule in their own `config/rules.d/<lane>.json` fragment instead of editing the
+  shared base list.
 - `public_tools/` — standalone checks and the data/script tools; `ops/` — private-input tooling
   (symbol map, patch tool, disassembly helper).
 - `ports/` — native storage, resource and scene-matrix subsystems with synthetic host tests and

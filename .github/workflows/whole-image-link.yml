@@ -90,9 +90,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: build/whole-image
-          key: whole-image-objects-${{ hashFiles('config/source_units.json') }}-${{ hashFiles('ports/recompile/arm9.lcf') }}-${{ github.sha }}
+          key: whole-image-objects-${{ hashFiles('config/source_units.json', 'config/rules.d/*.json') }}-${{ hashFiles('ports/recompile/arm9.lcf') }}-${{ github.sha }}
           restore-keys: |
-            whole-image-objects-${{ hashFiles('config/source_units.json') }}-${{ hashFiles('ports/recompile/arm9.lcf') }}-
+            whole-image-objects-${{ hashFiles('config/source_units.json', 'config/rules.d/*.json') }}-${{ hashFiles('ports/recompile/arm9.lcf') }}-
             whole-image-objects-
       - name: Link every accepted main-module source into the declared layout and diff it
         shell: pwsh

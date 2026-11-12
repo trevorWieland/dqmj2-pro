@@ -40,8 +40,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(ROOT / 'public_tools'))
 
 from thumb_branch import encode as encode_thumb_branch, is_blx  # noqa: E402
+from source_units import read_rule_fragments  # noqa: E402
 
 FLAGS = ['-O2', '-enum', 'int', '-char', 'signed', '-str', 'noreuse', '-proc', 'arm946e',
          '-gccext,on', '-fp', 'soft', '-inline', 'off', '-Cpp_exceptions', 'off',
@@ -197,7 +199,12 @@ class TargetModes:
             return
         document = json.loads(config.read_text(encoding='utf-8'))
         self._profiles = document.get('flagProfiles', {})
-        self._rules = list(document.get('rules', []))
+        # Lane rule fragments are part of the build configuration and must be
+        # visible here too, in the loader's order: fragments before the base list.
+        self._rules = []
+        for unused_origin, entries in read_rule_fragments(self.root):
+            self._rules.extend(entries)
+        self._rules.extend(document.get('rules', []))
         for path in (self.root / 'src').rglob('*'):
             if path.suffix.lower() not in ('.c', '.s', '.cpp', '.inc') or not path.is_file():
                 continue
