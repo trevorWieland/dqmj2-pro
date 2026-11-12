@@ -1,0 +1,616 @@
+{
+ "rows": [
+  {
+   "address": "0x02000de8",
+   "module": "main",
+   "purpose": "Thumb initialiser: stores the third argument at +0 and +0x20, zeros the four stride-8 fields at +4, +0xc, +0x14 and +0x1c, and writes r1, -r1 and 0x1000 at +0x18, +8 and +0x10.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0200613c",
+   "module": "main",
+   "purpose": "2 loads, 1 store; 1 local pool word (0x027fffb0); returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0200616c",
+   "module": "main",
+   "purpose": "Variadic forwarder: pushes the four argument registers, builds a pointer to the stacked arguments (sp + 0xc aligned down to 4, plus 4) and calls 0x02006194 with it, then drops the argument block.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020061ac",
+   "module": "main",
+   "purpose": "Variadic forwarder one stack slot higher than 0x0200616c: pushes the four argument registers, builds the pointer to the fifth argument at sp + 0x10 and calls 0x020061d4 with it.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02007360",
+   "module": "main",
+   "purpose": "Polls the video timing: saves the word at 0x04000208, stores 0x04000000 there, waits for VCOUNT (0x04000006) to read zero, then restores the saved word.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02008bf8",
+   "module": "main",
+   "purpose": "Halfword copy loop: copies a halfword from [r0 + i] to [r1 + i] while i < r2, stepping i by 2 with the test at the top.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02019dd4",
+   "module": "main",
+   "purpose": "The same variadic-forwarder body as 0x0200616c with its own callee: aligns the stacked argument pointer at sp + 0xc and calls 0x02019e78.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020244c4",
+   "module": "main",
+   "purpose": "1 branch, 1 backward; returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02024504",
+   "module": "main",
+   "purpose": "2 branches, 1 backward; returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020259b4",
+   "module": "main",
+   "purpose": "2 branches, 1 backward; returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020259e8",
+   "module": "main",
+   "purpose": "2 branches; returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02026124",
+   "module": "main",
+   "purpose": "Multiplies the 64-bit value (r1:r0) by (r3:r2) with umull plus two mla cross terms and returns the low word in r0 and the high word in r1.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02028dec",
+   "module": "main",
+   "purpose": "calls 1 helper; 1 indirect call through a register; 2 loads, 0 stores; 1 local pool word (0x020edd0c); 2 branches; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0202ac08",
+   "module": "main",
+   "purpose": "Gate-and-init routine: returns 0 when the pooled global byte is not 1; otherwise initialises 0x0203bfcc on the argument (or on the pooled default when it is null) and then 0x0203bcbc on argument + 0x28, returning 1.",
+   "unknowns": "the table, the record layout and the callee contract are not established by byte identity."
+  },
+  {
+   "address": "0x0202ac4c",
+   "module": "main",
+   "purpose": "Skeleton sibling of 0x0202ac08 with its own callee pair (0x0203c00c, 0x0203bcd8): the same pooled gate byte, the same null fallback and the same argument + 0x28, returning 1.",
+   "unknowns": "the table, the record layout and the callee contract are not established by byte identity."
+  },
+  {
+   "address": "0x0202e66c",
+   "module": "main",
+   "purpose": "calls 1 helper; 4 loads, 1 store; 1 local pool word (0x020edf90); 2 branches, 2 backward; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02038174",
+   "module": "main",
+   "purpose": "Guarded field call: returns when [r0] is null, otherwise reloads [r0] and calls 0x02009160 with the byte at +0x3c of the object.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02038194",
+   "module": "main",
+   "purpose": "Guarded field call, skeleton sibling of 0x02038174: returns when [r0] is null, otherwise calls 0x02009160 with the byte at +0x3c.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020381b4",
+   "module": "main",
+   "purpose": "Guarded field call, skeleton sibling of 0x02038174: the same null test and the same byte at +0x3c before calling 0x02009160.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02038224",
+   "module": "main",
+   "purpose": "calls 1 helper; 3 loads, 0 stores; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020385a0",
+   "module": "main",
+   "purpose": "calls 1 helper; 2 loads, 1 store; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0203a090",
+   "module": "main",
+   "purpose": "calls 1 helper; 4 loads, 0 stores; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0203c830",
+   "module": "main",
+   "purpose": "2 loads, 0 stores; 1 local pool word (0x020f5c18); 2 branches, 2 backward; returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0203c8e0",
+   "module": "main",
+   "purpose": "calls 1 helper; 3 loads, 1 store; 1 local pool word (0x04000540); returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0203d25c",
+   "module": "main",
+   "purpose": "calls 3 helpers; 2 loads, 2 stores; 1 local pool word (0x020f6044); returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0203d934",
+   "module": "main",
+   "purpose": "calls 4 helpers; 2 loads, 1 store; 1 local pool word (0x020f6054); returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0204514c",
+   "module": "main",
+   "purpose": "calls 2 helpers; 3 loads, 0 stores; 2 branches; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02045738",
+   "module": "main",
+   "purpose": "calls 2 helpers; 3 branches, 1 backward; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02045dc4",
+   "module": "main",
+   "purpose": "Builds a three-word argument block from the two stack bytes at sp + 0x18 and sp + 0x1c and calls 0x02045c90.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02045dec",
+   "module": "main",
+   "purpose": "Twin of 0x02045dc4 with 1 instead of 0 in the block's third word: builds the same three-word argument block and calls 0x02045c90.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0204609c",
+   "module": "main",
+   "purpose": "1 load, 1 store; 1 local pool word (0x020f6ae8); 1 branch, 1 backward; returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020481b8",
+   "module": "main",
+   "purpose": "Clamped halfword copy: clamps the span to 0x200 - offset, then copies span >> 1 halfwords from [r0] into the halfword table at the pooled base plus (offset >> 1).",
+   "unknowns": "the fields, the table and the callee contract are not established by byte identity."
+  },
+  {
+   "address": "0x0204820c",
+   "module": "main",
+   "purpose": "Cluster sibling of 0x020481b8, body-identical except the trailing pool word (0x021d4bb2 instead of 0x021d4bb8): the same clamped halfword copy.",
+   "unknowns": "the fields, the table and the callee contract are not established by byte identity."
+  },
+  {
+   "address": "0x02048260",
+   "module": "main",
+   "purpose": "Cluster sibling of 0x020481b8, body-identical except the trailing pool word (0x021d4bb6): the same clamped halfword copy.",
+   "unknowns": "the fields, the table and the callee contract are not established by byte identity."
+  },
+  {
+   "address": "0x020482b4",
+   "module": "main",
+   "purpose": "Cluster sibling of 0x020481b8, body-identical except the trailing pool word (0x021d4bb4): the same clamped halfword copy.",
+   "unknowns": "the fields, the table and the callee contract are not established by byte identity."
+  },
+  {
+   "address": "0x0204a010",
+   "module": "main",
+   "purpose": "calls 1 helper; 2 loads, 2 stores; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0204b138",
+   "module": "main",
+   "purpose": "calls 1 helper; 2 loads, 2 stores; 2 branches, 1 backward; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0204c6e0",
+   "module": "main",
+   "purpose": "Stores -1 at the first pooled word, clears the pooled byte and the word at +4, then calls the fill primitive 0x02008d78 with 0x40.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0205c25c",
+   "module": "main",
+   "purpose": "Per-index flag probe: returns the word at +0x18 of the object 0x02063e80 returns, masked with 1 << index.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0205c9d8",
+   "module": "main",
+   "purpose": "2 loads, 0 stores; 1 local pool word (0x021043ac); 2 branches, 2 backward; returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0205e704",
+   "module": "main",
+   "purpose": "calls 1 helper; 1 branch, 1 backward; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0205e7f4",
+   "module": "main",
+   "purpose": "calls 2 helpers; 1 branch; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0205f0f8",
+   "module": "main",
+   "purpose": "Scans 16 records of 8 bytes from the pooled base: returns the index of the first record whose byte at +7 has bit 0 clear and whose halfword at +4 is negative, else -1.",
+   "unknowns": "the table, the record layout and the callee contract are not established by byte identity."
+  },
+  {
+   "address": "0x0205f318",
+   "module": "main",
+   "purpose": "Skeleton sibling of 0x0205f0f8 with its own table base and a 4-record scan: the same bit-0 test at +7 and sign test at +4, returning the index or -1.",
+   "unknowns": "the table, the record layout and the callee contract are not established by byte identity."
+  },
+  {
+   "address": "0x0205faac",
+   "module": "main",
+   "purpose": "calls 1 helper; 2 loads, 2 stores; 2 branches, 1 backward; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020612b8",
+   "module": "main",
+   "purpose": "2 loads, 2 stores; 3 branches, 2 backward; returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020622ec",
+   "module": "main",
+   "purpose": "calls 1 helper; 1 branch, 1 backward; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02063ad0",
+   "module": "main",
+   "purpose": "calls 2 helpers; 1 load, 0 stores; 1 local pool word (0x021c0c7c); returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02065db0",
+   "module": "main",
+   "purpose": "calls 3 helpers; 2 loads, 0 stores; 1 branch; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02067dd4",
+   "module": "main",
+   "purpose": "Sums 0x02067e54(0x02062a50(i)) for i in [0, 0x02062aa0()) and returns the total.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02067e14",
+   "module": "main",
+   "purpose": "Skeleton sibling of 0x02067dd4: sums 0x02067e54(0x02062a88(i)) over the count 0x02062ad0 returns.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0206de1c",
+   "module": "main",
+   "purpose": "3 loads, 1 store; 2 local pool words (0x021c4f60, 0x0206de44); tail-branches out",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0206df1c",
+   "module": "main",
+   "purpose": "calls 2 helpers; 2 loads, 0 stores; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0206e1d8",
+   "module": "main",
+   "purpose": "calls 2 helpers; 2 loads, 0 stores; 2 branches, 1 backward; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02080420",
+   "module": "main",
+   "purpose": "3 loads, 2 stores; 1 local pool word (0x021c6e10); returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02081cac",
+   "module": "main",
+   "purpose": "calls 1 helper; 3 loads, 1 store; 2 local pool words (0x020de5a4, 0x04000050); returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02083e60",
+   "module": "main",
+   "purpose": "4 loads, 1 store; 1 local pool word (0x021c72a0); 1 branch; returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020847d0",
+   "module": "main",
+   "purpose": "calls 1 helper; 3 loads, 2 stores; 1 local pool word (0x021c968c); returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02084830",
+   "module": "main",
+   "purpose": "calls 1 helper; 1 load, 0 stores; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0208522c",
+   "module": "main",
+   "purpose": "calls 1 helper; 3 loads, 0 stores; 2 local pool words (0x021c96b0, 0x00001810); returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02085440",
+   "module": "main",
+   "purpose": "calls 1 helper; 3 loads, 0 stores; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020861a0",
+   "module": "main",
+   "purpose": "calls 2 helpers; 1 load, 0 stores; 1 branch; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02086458",
+   "module": "main",
+   "purpose": "calls 1 helper; 5 loads, 2 stores; 1 branch; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02087e44",
+   "module": "main",
+   "purpose": "Calls the function pointer at +4 of the object at +0x14 of its argument, inside a one-word frame.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02087e58",
+   "module": "main",
+   "purpose": "1 indirect call through a register; 4 loads, 2 stores; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02087f88",
+   "module": "main",
+   "purpose": "calls 1 helper; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0208a66c",
+   "module": "main",
+   "purpose": "Counts the set bits of its argument with a CLZ-based clear-the-top-bit loop.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0208baac",
+   "module": "main",
+   "purpose": "calls 4 helpers; 4 loads, 3 stores; 3 local pool words (0x021cfea0, 0x021cff60, 0x021cfcf8); falls through",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0209073c",
+   "module": "main",
+   "purpose": "Thumb variadic forwarder: calls 0x02090794 with r0 = 2, r1 = sp + 8, r2 = 0x021d162c and r3 = 0x10, then tail-branches to its own first argument.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020908f0",
+   "module": "main",
+   "purpose": "calls 2 helpers; 1 load, 1 store; 1 local pool word (0x02090919); 1 branch; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02090bdc",
+   "module": "main",
+   "purpose": "calls 1 helper; 7 loads, 1 store; 1 local pool word (0x00000818); 3 branches, 1 backward; falls through",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020930f4",
+   "module": "main",
+   "purpose": "5 loads, 1 store; returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02093128",
+   "module": "main",
+   "purpose": "2 loads, 4 stores; 1 local pool word (0x00000000); 2 branches, 1 backward; returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02093974",
+   "module": "main",
+   "purpose": "calls 1 helper; 1 load, 1 store; 2 branches, 1 backward; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x02094208",
+   "module": "main",
+   "purpose": "calls 1 helper; 3 loads, 2 stores; 3 branches, 1 backward; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020945d8",
+   "module": "main",
+   "purpose": "calls 1 helper; 1 indirect call through a register; 2 loads, 1 store; 1 branch; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020956a4",
+   "module": "main",
+   "purpose": "4 loads, 0 stores; 2 local pool words (0x00000d12, 0x00000447); 4 branches, 1 backward; returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x0209a470",
+   "module": "main",
+   "purpose": "calls 1 helper; 5 loads, 4 stores; 1 local pool word (0x027ffe0f); 2 branches; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020a3194",
+   "module": "main",
+   "purpose": "calls 1 helper; 1 load, 0 stores; 1 local pool word (0xfffeb007); 6 branches; falls through",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020a48e4",
+   "module": "main",
+   "purpose": "1 load, 0 stores; 3 branches, 2 backward; returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020a4910",
+   "module": "main",
+   "purpose": "0 loads, 1 store; 1 branch, 1 backward; returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020a5fe4",
+   "module": "main",
+   "purpose": "calls 2 helpers; 2 loads, 1 store; 3 branches; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020a85dc",
+   "module": "main",
+   "purpose": "calls 2 helpers; 2 loads, 6 stores; 3 branches; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020a8b8c",
+   "module": "main",
+   "purpose": "calls 2 helpers; 2 loads, 2 stores; 2 branches, 1 backward; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020a8c34",
+   "module": "main",
+   "purpose": "calls 2 helpers; 3 loads, 3 stores; 1 branch, 1 backward; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020b60c4",
+   "module": "main",
+   "purpose": "calls 2 helpers; 4 loads, 0 stores; 1 local pool word (0x0100007f); 5 branches, 1 backward; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020b66a4",
+   "module": "main",
+   "purpose": "calls 2 helpers; 4 loads, 0 stores; 1 local pool word (0x0100007f); 5 branches, 1 backward; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020b9d80",
+   "module": "main",
+   "purpose": "1 indirect call through a register; 2 loads, 0 stores; 1 local pool word (0x021d3044); returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020b9dac",
+   "module": "main",
+   "purpose": "1 indirect call through a register; 2 loads, 0 stores; 1 local pool word (0x021d3044); returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020ba3bc",
+   "module": "main",
+   "purpose": "calls 1 helper; 2 loads, 1 store; 2 local pool words (0x020b9d68, 0x020e2c64); returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020ba7a8",
+   "module": "main",
+   "purpose": "1 indirect call through a register; 1 load, 0 stores; 1 local pool word (0x007fffff); returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020bab8c",
+   "module": "main",
+   "purpose": "1 indirect call through a register; 2 loads, 0 stores; 1 local pool word (0x021d3044); returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020baccc",
+   "module": "main",
+   "purpose": "calls 1 helper; 1 indirect call through a register; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020bada0",
+   "module": "main",
+   "purpose": "calls 1 helper; 1 indirect call through a register; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020baf04",
+   "module": "main",
+   "purpose": "calls 3 helpers; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020bf5ec",
+   "module": "main",
+   "purpose": "4 loads, 0 stores; 1 local pool word (0x021d4bec); returns to its caller",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020bf928",
+   "module": "main",
+   "purpose": "Linear search of a 100-entry, 8-byte-record table (base from the pooled pointer's +8 word) for the record whose first word equals r0; returns its byte at +7, or -1.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020c22c4",
+   "module": "main",
+   "purpose": "Relays the two stack words at sp + 0x10 and sp + 0x14 into 0x02217bdc, then calls 0x020414c8 with 0x2a.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020c22f0",
+   "module": "main",
+   "purpose": "Wrapper around the neighbouring relay 0x020c22c4: forwards the same two stack words to it, then calls 0x02049e0c with 0.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020cde3c",
+   "module": "main",
+   "purpose": "calls 1 helper; 2 loads, 1 store; 1 local pool word (0x021d697c); 1 branch, 1 backward; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020d09d8",
+   "module": "main",
+   "purpose": "calls 2 helpers; 3 loads, 1 store; 1 local pool word (0x021d6b5c); 1 branch; returns through a restored pc",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  },
+  {
+   "address": "0x020d3b50",
+   "module": "main",
+   "purpose": "Canonicalises the 0x30 and 0xc0 bit groups of its second argument (OR in each group when either bit is set, truncating to 16 bits), then ORs and XORs that value into its first argument, so the first argument is returned unchanged.",
+   "unknowns": "the field meanings and the callee contracts are not established by byte identity."
+  }
+ ]
+}
