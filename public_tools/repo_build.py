@@ -123,6 +123,27 @@ def compiler_inventory(root, config):
     return resolved, license_file, default
 
 
+def substituted_drives():
+    """The drive letters ``subst`` already maps, as ``'Q:'`` strings.
+
+    ``subst <letter>: <path>`` exits 0 even when the letter is already mapped
+    ("Drive already SUBSTed"), so a successful exit does not prove the new
+    mapping took effect.  Treat every existing substitution as unavailable:
+    otherwise the compiler's working directory can silently point at another
+    worktree (the publish tree keeps Q:/R:/S: mapped on the shared host) and
+    every source under the real root looks absent.
+    """
+    if os.name != 'nt':
+        return set()
+    result = subprocess.run(['subst'], capture_output=True, text=True)
+    mapped = set()
+    for line in result.stdout.splitlines():
+        letter, separator, unused_target = line.partition(':')
+        if separator and len(letter) == 1 and letter.isalpha():
+            mapped.add(letter.upper() + ':')
+    return mapped
+
+
 @contextlib.contextmanager
 def short_paths(root):
     """Give the 32-bit compiler a drive-substituted view of very long paths."""
@@ -134,14 +155,24 @@ def short_paths(root):
     drive = None
     if os.name == 'nt':
         used = {path.drive.upper() for path in [Path.cwd(), root] if path.drive}
+        used |= substituted_drives()
         for letter in 'QRSTUVWXYZ':
             candidate = letter + ':'
-            if candidate in used:
+            if candidate in used or Path(candidate + '\\').exists():
                 continue
             result = subprocess.run(['subst', candidate, str(root)], capture_output=True, text=True)
-            if result.returncode == 0:
-                drive = candidate
-                break
+            if result.returncode != 0:
+                continue
+            try:
+                mapped = Path(candidate + '\\').resolve() == root
+            except OSError:
+                mapped = False
+            if not mapped:
+                # Another process won the race after the inventory above.
+                subprocess.run(['subst', candidate, '/D'], capture_output=True, text=True)
+                continue
+            drive = candidate
+            break
     try:
         if drive is None:
             yield root, identity

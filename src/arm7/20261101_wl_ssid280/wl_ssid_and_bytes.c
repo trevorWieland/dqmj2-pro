@@ -1,4 +1,4 @@
-#include "wl_complete_types.h"
+#include "../20261101_wl_counter504/wl_complete_types.h"
 u8 native_host_arm7_main_027ead5c(void *p);
 void native_host_arm7_main_027ead30(void *p,u8 data);
 
