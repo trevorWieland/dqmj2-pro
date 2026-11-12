@@ -28,3 +28,14 @@ ov006 sweep-3 lane's thumb and arm directories), all 2026-11-12. See
 `docs/authoring/2026-11-12-ov006-sweep2.md`,
 `docs/authoring/2026-11-12-jumptable-carrier.md` and
 `docs/authoring/2026-11-12-ov006-sweep3.md`.
+
+`config/rules.d/ov001-close.json` is the ov001 closing lane
+(`src/ov001/p12_ov001_close/**`). It is the only fragment whose `compilerSha256` pin
+is forced by an *assembly* difference rather than by flag inheritance: mwccarm 2.0/base
+inserts an interworking veneer (`b <label+4>`) at an inline-asm label that a backward
+branch targets, which makes 364 of that lane's rows 4-64 bytes longer than the measured
+extent; 2.0/sp1p5 assembles the same text without the veneer and all 671 rows are
+exact. (A transcribed lane placed under `src/verified_assembly/**` inherits the shared
+sp1p5 pin and never meets this; a lane outside that tree inherits its module's base
+rule, which for ov001/ov000/main resolves to 2.0/base.) See
+`docs/authoring/2026-11-12-ov001-close.md`.
