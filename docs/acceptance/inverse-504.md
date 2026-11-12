@@ -41,3 +41,18 @@ Buckets B (mention-only), C (data/assembly) and D (genuinely lost) are empty for
 ledger state: no inverse row lacks a recorded source unit, so nothing was found to be
 missing outright. That is the reassuring half of the answer; the weak-A set is the honest
 caveat on it.
+
+## Later correction (2026-11-11 evening)
+
+The counts above were produced by the address-global, symbol-only evidence in the
+first version of `ops/reconcile_ledger.py`. `ops/unclaimed.py` replaced that evidence
+with module scope and address-named-file detection, and the ledger absorbed the 204
+stale rows this page was working around. The inverse set is now **471 rows /
+74,046 bytes** (not 504 / 81,968): 74 rows left it because their definition wraps
+across lines before the body opens, and 42 rows entered it because their only "claim"
+was a different overlay at the same address. Every one of the 471 still carries an
+existing `sourceUnit`, so the conclusion of this page — renamed-source bookkeeping,
+nothing lost — stands. See
+[../authoring/2026-11-11-unclaimed-tool.md](../authoring/2026-11-11-unclaimed-tool.md)
+for the current numbers and the hashes of the correction.
+

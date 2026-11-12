@@ -65,6 +65,31 @@ link that produced them or a decision to accept the address-derived names. Until
 then `--check --allow-unresolved` passes at the baseline and fails if the count
 grows. The text map is stable across runs.
 
+## `unclaimed.py` — source-first screening (and `--check-addresses` gate)
+
+The ledger's `functionMatched` flag is not a duplicate screen: a source can land in
+`src/` before the ledger absorbs it. `unclaimed.py` answers "is this row claimed?" from
+the source tree first and the ledger only as a confidence modifier.
+
+```bash
+python ops/unclaimed.py --module ov000
+python ops/unclaimed.py --all --json work/unclaimed.json
+python ops/unclaimed.py --check-addresses 0x021FBB04 main:0x020685bc --address-file work/batch.txt
+```
+
+A claim is a **symbol** definition whose identifier encodes the address, an
+**address-named source file** (`native_main_020685bc.c`, whatever the symbol inside is
+called), or a **data** definition named after the address. Extern declarations,
+prototypes, call sites and comments are *mentions*: they lower confidence to `medium`
+but never claim a row. Claims are **module-scoped**, because every overlay loads at
+`0x021d7240`; `src/ov000/...` cannot claim an `ov004` row at the same address.
+`--check-addresses` exits 1 when any address in the batch is already defined, so a
+packet build can gate on it.
+
+`python -m unittest ops.test_unclaimed` covers the evidence rules. The measured
+correction, bucket counts and ledger hashes are in
+[docs/authoring/2026-11-11-unclaimed-tool.md](../docs/authoring/2026-11-11-unclaimed-tool.md).
+
 ## `permute.py` — deterministic allocation-form permuter
 
 Hand-matching stalls on one class of row: the C is reachable and compiles to the

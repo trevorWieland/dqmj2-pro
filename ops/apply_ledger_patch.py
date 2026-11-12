@@ -55,6 +55,24 @@ That run also fixed this tool's write step: ``shutil.move`` cannot replace an ex
 file on Windows (rename refuses, and the copy fallback fails with WinError 1224 when the
 ledger is mapped), so it now uses ``os.replace`` with a short retry and leaves the temp
 file plus backup intact if the ledger stays locked.
+
+Third use (2026-11-11), the screening-debt correction
+-----------------------------------------------------
+204 rows produced by the module-scoped evidence in ``ops/unclaimed.py`` (see
+``docs/authoring/2026-11-11-unclaimed-tool.md``):
+
+  backup         work/ledger-backup-f3330f8eade90521.jsonl
+  backup sha256  f3330f8eade90521e3ead7ef4e23a36a844b60f7020418c7d520a74826ed91e8
+                 (32,723,744 bytes, 16,073 rows)
+  patch          work/ledger-proposed.jsonl (204 rows: functionMatched=true, sourceUnit,
+                 sourceLanguage) — 12,000 bytes over ov000/ov001/ov006/main
+  after sha256   751f366138a3a9ac7ed2b4e2113cadd36a0b80697bcfd89e598aa46e8a9760fb
+                 (16,073 rows, unchanged count)
+
+Reconciliation went from stale 204 / inverse 472 / unmatched 3,079 / consistent 11,553
+to stale 0 / inverse 471 / unmatched 3,079 / consistent 11,758. The single
+inverse-to-consistent move is a scanner fix (an address present only in the file stem),
+not this write; the patch was generated before that fix and did not need to change.
 """
 import argparse
 import hashlib
