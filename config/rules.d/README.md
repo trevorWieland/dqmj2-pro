@@ -21,8 +21,10 @@ from the most specific parent rule. See `docs/source-units.md` and
 `docs/authoring/2026-11-12-rules-fragments.md`.
 
 The first shipped fragments are `config/rules.d/ov006-sweep2.json` (the ov006
-sweep-2 lane's thumb and arm directories) and
+sweep-2 lane's thumb and arm directories),
 `config/rules.d/jumptable-carrier.json` (the jump-table carrier lane's ov006
-arm/thumb and main arm directories), both 2026-11-12. See
-`docs/authoring/2026-11-12-ov006-sweep2.md` and
-`docs/authoring/2026-11-12-jumptable-carrier.md`.
+arm/thumb and main arm directories) and `config/rules.d/ov006-sweep3.json` (the
+ov006 sweep-3 lane's thumb and arm directories), all 2026-11-12. See
+`docs/authoring/2026-11-12-ov006-sweep2.md`,
+`docs/authoring/2026-11-12-jumptable-carrier.md` and
+`docs/authoring/2026-11-12-ov006-sweep3.md`.

@@ -136,7 +136,13 @@ def thumb_mnemonic(mnemonic, operands):
             return 'mul', '%s, %s' % (parts[0], parts[1])
     if mnemonic in ('rsbs', 'negs'):
         parts = [part.strip() for part in operands.split(',')]
-        if len(parts) == 3 and parts[2] == '#0':
+        # Thumb-1 has no RSB immediate form at all: the encoding is the two-operand
+        # ``neg``. LLVM prints the immediate zero as ``#0`` in this form on some
+        # rows and ``#0x0`` on others, so both spellings of zero are accepted; the
+        # rule is about the *encoding*, and one spelling is not more honest than the
+        # other. (No shipped sweep-1/sweep-2 row contains this mnemonic, so the
+        # accepted alternative leaves those lanes byte-identical.)
+        if len(parts) == 3 and parts[2] in ('#0', '#0x0'):
             return 'neg', '%s, %s' % (parts[0], parts[1])
         if len(parts) == 2:
             return 'neg', operands
