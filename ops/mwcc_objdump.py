@@ -46,12 +46,17 @@ from capstone import Cs, CS_ARCH_ARM, CS_MODE_ARM, CS_MODE_LITTLE_ENDIAN, CS_MOD
 from elftools.elf.elffile import ELFFile
 
 # ARM ELF relocation kinds mwccarm emits for these single-function objects.
+# 1  = R_ARM_PC24       (pre-EABI spelling of an ARM BL; 2.0/base emits this)
 # 2  = R_ARM_ABS32      (literal pool / data pointer)
 # 10 = R_ARM_THM_CALL   (Thumb BL)
-# 28 = R_ARM_CALL       (ARM BL)
+# 28 = R_ARM_CALL       (ARM BL, newer EABI spelling)
 # 29 = R_ARM_JUMP24     (ARM B)
 # 30 = R_ARM_THM_JUMP24 (Thumb B.W / BLX)
+# PC24 and CALL are rendered with the same name on purpose: both sides of a
+# permuter diff go through this shim, and the permuter only needs one ARM call
+# spelling to line the relocation rows up.
 RELOCATION_NAMES = {
+    1: 'R_ARM_CALL',
     2: 'R_ARM_ABS32',
     3: 'R_ARM_REL32',
     10: 'R_ARM_THM_CALL',
