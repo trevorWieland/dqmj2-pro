@@ -234,6 +234,19 @@ class ShippedFragmentTests(unittest.TestCase):
             scope = 'src/ov006/g1_ov006_sweep2/' + mode
             self.assertEqual(config['origins'][scope], 'config/rules.d/ov006-sweep2.json')
 
+    def test_every_shipped_fragment_covers_a_source_directory(self):
+        """A fragment that names a directory with no sources is a stale lane."""
+        config = load_config(ROOT)
+        self.assertEqual(len(config['fragments']), len(rule_fragment_files(ROOT)))
+        names = source_files(ROOT)
+        for path in rule_fragment_files(ROOT):
+            for entry in json.loads(path.read_text(encoding='utf-8-sig')):
+                scope = scope_of(entry['glob'])
+                self.assertTrue(any(name == scope or name.startswith(scope + '/')
+                                    for name in names),
+                                'fragment %s declares a directory with no sources: %s'
+                                % (path.name, scope))
+
     def test_a_fragment_repeating_a_shipped_base_rule_is_rejected(self):
         base = json.loads((ROOT / 'config/source_units.json').read_text(encoding='utf-8-sig'))
         rule = base['rules'][0]
@@ -285,3 +298,4 @@ class FullTreeGoldenTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+

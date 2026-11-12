@@ -1,0 +1,664 @@
+{
+ "rows": [
+  {
+   "module": "main",
+   "address": "0x2025578",
+   "tables": [
+    "0x202562c:256"
+   ],
+   "purpose": "normalises a soft-float quotient through a 256-byte reciprocal table",
+   "unknowns": "the reciprocal table's producer and every call-site contract; the table content and bounds are measured.",
+   "form": "c"
+  },
+  {
+   "module": "main",
+   "address": "0x202654c",
+   "tables": [
+    "0x2026684:256"
+   ],
+   "purpose": "normalises a soft-float quotient through a 256-byte reciprocal table",
+   "unknowns": "the reciprocal table's producer and every call-site contract; the table content and bounds are measured.",
+   "form": "c"
+  },
+  {
+   "module": "ov006",
+   "address": "0x21d7478",
+   "form": "c",
+   "tables": [
+    "0x021d74cc:16"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21d8414",
+   "form": "c",
+   "tables": [
+    "0x021d8480:32"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21d8874",
+   "form": "c",
+   "tables": [
+    "0x021d8894:208"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21db5b4",
+   "form": "c",
+   "tables": [
+    "0x021db5cc:48"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21dc3b8",
+   "form": "c",
+   "tables": [
+    "0x021dc564:24"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21dcd88",
+   "form": "c",
+   "tables": [
+    "0x021dcdc0:36"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21dd57c",
+   "form": "c",
+   "tables": [
+    "0x021dd588:20"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21ddfa8",
+   "form": "c",
+   "tables": [
+    "0x021ddfc8:20"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21df5a4",
+   "form": "c",
+   "tables": [
+    "0x021df694:28"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21dfa24",
+   "form": "c",
+   "tables": [
+    "0x021dfa3c:32"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21e00cc",
+   "form": "c",
+   "tables": [
+    "0x021e0108:44"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21e0454",
+   "form": "c",
+   "tables": [
+    "0x021e0488:260"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21e674c",
+   "form": "c",
+   "tables": [
+    "0x021e67a4:16"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21e72c4",
+   "form": "c",
+   "tables": [
+    "0x021e72d8:40"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21e9f14",
+   "form": "c",
+   "tables": [
+    "0x021e9f2c:28"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21ea144",
+   "form": "c",
+   "tables": [
+    "0x021ea15c:32"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21ea3d4",
+   "form": "c",
+   "tables": [
+    "0x021ea3f0:56"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21eadd4",
+   "form": "c",
+   "tables": [
+    "0x021eadec:24"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21eafe4",
+   "form": "c",
+   "tables": [
+    "0x021eaffc:32"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21eb8e4",
+   "form": "c",
+   "tables": [
+    "0x021eb90c:16"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21ebc2c",
+   "form": "s",
+   "tables": [
+    "0x021ec5d0:14"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21eceac",
+   "form": "s",
+   "tables": [
+    "0x021ecee8:14"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21ecf8c",
+   "form": "s",
+   "tables": [
+    "0x021ecfe0:12,0x021ed044:12"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21ed1c8",
+   "form": "s",
+   "tables": [
+    "0x021ed242:22"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21ede50",
+   "form": "s",
+   "tables": [
+    "0x021edec6:32"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21edf14",
+   "form": "s",
+   "tables": [
+    "0x021edf52:42"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21edfe4",
+   "form": "s",
+   "tables": [
+    "0x021ee066:40"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21ee15c",
+   "form": "s",
+   "tables": [
+    "0x021ee220:40"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21ee348",
+   "form": "s",
+   "tables": [
+    "0x021ee366:16"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21ee600",
+   "form": "s",
+   "tables": [
+    "0x021ee616:18"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21ee9a4",
+   "form": "s",
+   "tables": [
+    "0x021ee9c2:20"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21eecb0",
+   "form": "s",
+   "tables": [
+    "0x021eecc6:18"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21ef564",
+   "form": "s",
+   "tables": [
+    "0x021ef614:40"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21eff34",
+   "form": "s",
+   "tables": [
+    "0x021eff66:46"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21f0170",
+   "form": "s",
+   "tables": [
+    "0x021f01a6:22"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21f3660",
+   "form": "s",
+   "tables": [
+    "0x021f3702:8"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21f3a78",
+   "form": "s",
+   "tables": [
+    "0x021f3a94:12"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21f3b10",
+   "form": "s",
+   "tables": [
+    "0x021f3bb6:12,0x021f3c3a:24,0x021f3cda:12,0x021f3d52:24"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21f5740",
+   "form": "s",
+   "tables": [
+    "0x021f575a:16"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21f83c8",
+   "form": "s",
+   "tables": [
+    "0x021f8400:16"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21f8b70",
+   "form": "s",
+   "tables": [
+    "0x021f8b88:10"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21fa620",
+   "form": "s",
+   "tables": [
+    "0x021fa65c:18"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21fa67c",
+   "form": "s",
+   "tables": [
+    "0x021fa6a4:18"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21fa7f8",
+   "form": "s",
+   "tables": [
+    "0x021fa830:16"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21fac5c",
+   "form": "s",
+   "tables": [
+    "0x021fac78:18,0x021facb0:8"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21fad68",
+   "form": "s",
+   "tables": [
+    "0x021fad82:18"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21fae50",
+   "form": "s",
+   "tables": [
+    "0x021fae6a:22"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21fb5e4",
+   "form": "s",
+   "tables": [
+    "0x021fb622:8"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21fcc90",
+   "form": "s",
+   "tables": [
+    "0x021fcd44:8"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21fce00",
+   "form": "s",
+   "tables": [
+    "0x021fce1a:14"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21fe338",
+   "form": "s",
+   "tables": [
+    "0x021fe352:8"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21fe6f8",
+   "form": "s",
+   "tables": [
+    "0x021fe716:8,0x021fe738:10"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x21fe9b8",
+   "form": "s",
+   "tables": [
+    "0x021fe9d4:10"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x2200ef4",
+   "form": "s",
+   "tables": [
+    "0x02200f0c:30"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x2201544",
+   "form": "s",
+   "tables": [
+    "0x02201570:8"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x2201d08",
+   "form": "s",
+   "tables": [
+    "0x02201d6c:12"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x2202018",
+   "form": "s",
+   "tables": [
+    "0x02202036:70"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x22022f0",
+   "form": "s",
+   "tables": [
+    "0x02202306:20"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x220238c",
+   "form": "s",
+   "tables": [
+    "0x022023a4:16"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x22024e4",
+   "form": "s",
+   "tables": [
+    "0x022024fc:14"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x22036ac",
+   "form": "s",
+   "tables": [
+    "0x022036d2:16"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x22037c0",
+   "form": "s",
+   "tables": [
+    "0x022037e6:16"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x2203a80",
+   "form": "s",
+   "tables": [
+    "0x02203a92:8"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  },
+  {
+   "module": "ov006",
+   "address": "0x2204ae4",
+   "form": "c",
+   "tables": [
+    "0x02204b38:24"
+   ],
+   "purpose": "switch dispatch through an inline table",
+   "unknowns": "the field roles and the meaning of the table entries are not established by byte identity."
+  }
+ ]
+}
