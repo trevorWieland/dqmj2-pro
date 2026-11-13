@@ -38,7 +38,7 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021db438(void);
+extern void ov001_side_slot_record_021db438(void);
 extern void native_fn_021dba58(void);
 extern void native_fn_021da4f4(void);
 
@@ -53,7 +53,7 @@ asm u32 native_ov001_021da544 (register u32 a0)
     bne ov001_021da544_L50
     mov r0, r4
     mov r1, r4
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r5, r0
     mov r0, r4
     mov r1, #2
@@ -70,12 +70,12 @@ ov001_021da544_L50:
     bne ov001_021da544_L88
     mov r0, r4
     mov r1, r4
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r1, #5
     bl native_fn_021da4f4
     mov r0, r4
     mov r1, #1
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r1, #6
     bl native_fn_021da4f4
     add r4, r4, #2
@@ -85,17 +85,17 @@ ov001_021da544_L88:
     bne ov001_021da544_Ld0
     mov r0, r4
     mov r1, r4
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r1, #2
     bl native_fn_021da4f4
     mov r0, r4
     mov r1, #1
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r1, #3
     bl native_fn_021da4f4
     mov r0, r4
     mov r1, #2
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r1, #4
     bl native_fn_021da4f4
     add r4, r4, #3
@@ -106,7 +106,7 @@ ov001_021da544_Ld0:
     bne ov001_021da544_L118
     mov r0, #1
     mov r1, #0
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r5, r0
     mov r0, #1
     mov r1, #2
@@ -123,12 +123,12 @@ ov001_021da544_L118:
     bne ov001_021da544_L150
     mov r0, #1
     mov r1, #0
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r1, #13
     bl native_fn_021da4f4
     mov r0, #1
     mov r1, r0
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r1, #14
     bl native_fn_021da4f4
     add r4, r4, #2
@@ -138,17 +138,17 @@ ov001_021da544_L150:
     bne ov001_021da544_L198
     mov r0, #1
     mov r1, #0
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r1, #10
     bl native_fn_021da4f4
     mov r0, #1
     mov r1, r0
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r1, #11
     bl native_fn_021da4f4
     mov r0, #1
     mov r1, #2
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r1, #12
     bl native_fn_021da4f4
     add r4, r4, #3

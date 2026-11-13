@@ -38,7 +38,7 @@ extern void native_fn_0200bfe4(void);
 extern void native_fn_02008430(void);
 extern u8 native_data_0220e8d8[];
 extern void native_fn_02202b48(void);
-extern void native_fn_02203c08(void);
+extern void ov006_clear_buffer_02203c08(void);
 extern void native_fn_0200c180(void);
 extern void native_fn_0200c02c(void);
 extern void native_fn_02008f54(void);
@@ -87,7 +87,7 @@ ov006_02202a80_L4c:
 ov006_02202a80_L4e:
     add r0, r4, #0x0
     add r1, r6, #0x0
-    bl native_fn_02203c08
+    bl ov006_clear_buffer_02203c08
     add r1, r0, #0x0
     add r0, sp, #0x4
     add r2, r4, #0x0
@@ -109,7 +109,7 @@ ov006_02202a80_L72:
     str r0, [r5, #0]
 ov006_02202a80_L7e:
     add r1, r7, #0x0
-    bl native_fn_02203c08
+    bl ov006_clear_buffer_02203c08
     add r4, r0, #0x0
     ldr r0, [sp]
     add r1, r4, #0x0

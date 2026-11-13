@@ -17,7 +17,7 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_02215698(void);
+extern void ov000_display_context_02215698(void);
 extern void native_fn_0202a634(void);
 extern void native_fn_022156c4(void);
 extern void native_fn_02062aa0(void);
@@ -33,7 +33,7 @@ extern void native_fn_021e7b9c(void);
 extern void native_fn_02201818(void);
 extern void native_fn_02201990(void);
 extern void native_fn_0206332c(void);
-extern void native_fn_0221794c(void);
+extern void ov000_poll_change_notify_0221794c(void);
 extern void native_fn_02214008(void);
 extern void native_fn_02048094(void);
 extern void native_fn_02217bdc(void);
@@ -47,7 +47,7 @@ asm u32 native_ov000_02201a60 (register u32 a0)
 {
     stmdb sp!, {r3, r4, r5, r6, r7, r8, r9, lr}
     sub sp, sp, #8
-    bl native_fn_02215698
+    bl ov000_display_context_02215698
     mov r6, #0
     mov r5, r0
     bl native_fn_0202a634
@@ -120,7 +120,7 @@ L_02201b50:
     b L_02201ccc
 L_02201b7c:
     mov r0, r6
-    bl native_fn_0221794c
+    bl ov000_poll_change_notify_0221794c
     mov r8, r0
     b L_02201ccc
     mov r0, #3
@@ -170,7 +170,7 @@ L_02201c24:
     b L_02201ccc
 L_02201c38:
     mov r0, r6
-    bl native_fn_0221794c
+    bl ov000_poll_change_notify_0221794c
     mov r8, r0
     b L_02201ccc
     bl native_fn_02214008

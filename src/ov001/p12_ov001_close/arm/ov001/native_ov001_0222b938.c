@@ -24,15 +24,15 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern u8 native_data_0222e1a0[];
-extern void native_fn_02223fe8(void);
+extern void ov001_clear_free_candidate_slots_02223fe8(void);
 extern void native_fn_02226bdc(void);
 extern void native_fn_022243f8(void);
 extern void native_fn_02225354(void);
-extern void native_fn_02224570(void);
+extern void ov001_filter_highest_priority_candidates_02224570(void);
 extern void native_fn_0207afec(void);
 extern void native_fn_02225534(void);
-extern void native_fn_02224050(void);
-extern void native_fn_02226cb0(void);
+extern void ov001_pick_random_candidate_02224050(void);
+extern void ov001_first_candidate_02226cb0(void);
 
 
 asm u32 native_ov001_0222b938 (register u32 a0)
@@ -49,7 +49,7 @@ asm u32 native_ov001_0222b938 (register u32 a0)
     mov r1, r4
     ldr r5, [r7]
     ldr r6, [r7, #0x8]
-    bl native_fn_02223fe8
+    bl ov001_clear_free_candidate_slots_02223fe8
     add r0, sp, #0
     mov r1, r7
     mov r2, #173
@@ -67,7 +67,7 @@ asm u32 native_ov001_0222b938 (register u32 a0)
     add r0, sp, #0
     mov r1, r4
     mov r2, #0
-    bl native_fn_02224570
+    bl ov001_filter_highest_priority_candidates_02224570
     b ov001_0222b938_Lb4
 ov001_0222b938_L80:
     mov r0, r6
@@ -82,12 +82,12 @@ ov001_0222b938_L80:
     add r0, sp, #0
     mov r1, r4
     mov r2, #0
-    bl native_fn_02224570
+    bl ov001_filter_highest_priority_candidates_02224570
 ov001_0222b938_Lb4:
     add r0, sp, #0
-    bl native_fn_02224050
+    bl ov001_pick_random_candidate_02224050
     add r0, sp, #0
-    bl native_fn_02226cb0
+    bl ov001_first_candidate_02226cb0
     add sp, sp, #12
     ldmia sp!, {r4, r5, r6, r7, pc}
 }

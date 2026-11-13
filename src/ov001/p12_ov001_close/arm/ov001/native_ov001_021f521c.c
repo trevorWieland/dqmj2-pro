@@ -113,8 +113,8 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_0207afec(void);
-extern void native_fn_021db438(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_side_slot_record_021db438(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_021f2304(void);
 extern void native_fn_021e1a60(void);
 extern void native_fn_021f4fa4(void);
@@ -125,7 +125,7 @@ extern void native_fn_021e2078(void);
 extern void native_fn_021e24f8(void);
 extern void native_fn_021dc108(void);
 extern void native_fn_0205d790(void);
-extern void native_fn_021eec7c(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_021dc5d4(void);
 extern void native_fn_021ee7b0(void);
 extern void native_fn_021f949c(void);
@@ -172,7 +172,7 @@ asm u32 native_ov001_021f521c (register u32 a0)
     movne r0, #0
 ov001_021f521c_L94:
     mov r1, #0
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r9, r0
     mov r4, #3
     b ov001_021f521c_Lac
@@ -188,7 +188,7 @@ ov001_021f521c_Lac:
     add r5, sp, #104
 ov001_021f521c_Lc8:
     mov r0, r7
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021f521c_Lf0
     ldrb r2, [r11, #0x10]
@@ -212,14 +212,14 @@ ov001_021f521c_L100:
     ble ov001_021f521c_L47c
 ov001_021f521c_L11c:
     mov r0, r9
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021f521c_L464
     ldrb r2, [r9, #0x31f]
     add r1, sp, #104
     ldrb r0, [r9, #0x31e]
     ldr r1, [r1, r2, lsl #2]
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r5, r0
     mov r0, #0
     str r0, [sp, #0x4c]
@@ -430,7 +430,7 @@ ov001_021f521c_L41c:
     add r0, r5, #768
     ldrh r0, [r0, #76]
     mov r1, r5
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     mov r0, r5
     bl native_fn_021dc5d4
     mov r1, #0
@@ -460,7 +460,7 @@ ov001_021f521c_L47c:
     add r8, sp, #92
 ov001_021f521c_L4a4:
     mov r0, r9
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021f521c_L4ec
     ldrb r1, [r9, #0x31f]

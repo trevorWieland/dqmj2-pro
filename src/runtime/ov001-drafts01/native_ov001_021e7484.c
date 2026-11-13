@@ -15,7 +15,7 @@ typedef double f64;
 extern u32 native_fn_0207afec();
 extern u32 native_fn_0207b004();
 extern u32 native_fn_0207b244();
-extern u32 native_fn_ov001_021dbd30();
+extern u32 ov001_record_field_1f2_021dbd30();
 extern u32 native_fn_ov001_021e2c60();
 u32 native_ov001_021e7484(void *arg0, u32 arg1) {
     u32 temp_r7_2;
@@ -26,8 +26,8 @@ u32 native_ov001_021e7484(void *arg0, u32 arg1) {
     var_r4 = 1;
     temp_r7 = (u8) ((u32) (M2C_FIELD((void *) native_fn_0207afec(arg1), u16 *, 8) << 0x1C) >> 0x1C);
     if (native_fn_0207b004(arg1, 1) != 0) {
-        temp_r7_2 = native_fn_ov001_021dbd30(arg0);
-        if ((s32) temp_r7_2 < (s32) native_fn_0207b244(arg1, native_fn_ov001_021dbd30(arg0), M2C_FIELD(arg0, void **, 0x1E8) + 0x46)) {
+        temp_r7_2 = ov001_record_field_1f2_021dbd30(arg0);
+        if ((s32) temp_r7_2 < (s32) native_fn_0207b244(arg1, ov001_record_field_1f2_021dbd30(arg0), M2C_FIELD(arg0, void **, 0x1E8) + 0x46)) {
             temp_r0 = M2C_FIELD(M2C_FIELD(arg0, void **, 0x1E8), u8 *, 0xA9);
             if ((temp_r0 != 0) && (temp_r0 != 5)) {
                 var_r4 = 0;

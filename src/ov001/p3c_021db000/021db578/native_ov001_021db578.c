@@ -27,7 +27,7 @@ u32 native_ov001_021db578(u32 kind) {
     i = 0;
     count = 0;
     while (i < limit) {
-        if (native_fn_ov001_021db8d0(record) != 0) {
+        if (ov001_record_is_active_021db8d0(record) != 0) {
             count++;
         }
         i++;

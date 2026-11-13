@@ -48,7 +48,7 @@ extern void native_fn_02025ca4(void);
 extern void native_fn_020259b4(void);
 extern void native_fn_02028044(void);
 extern void native_fn_0200103c(void);
-extern void native_fn_021e07b8(void);
+extern void ov000_saved_world_position_get_021e07b8(void);
 extern void native_fn_020420c4(void);
 extern void native_fn_02042c0c(void);
 extern void native_fn_0220a2a4(void);
@@ -162,7 +162,7 @@ ov000_0220daf8_Lb4:
     ldr r1, [sp, #0x2c]
     add r1, r2, r1
     str r1, [r5, #0x78]
-    bl native_fn_021e07b8
+    bl ov000_saved_world_position_get_021e07b8
     mov r1, r0
     mov r0, r5
     bl native_fn_020420c4

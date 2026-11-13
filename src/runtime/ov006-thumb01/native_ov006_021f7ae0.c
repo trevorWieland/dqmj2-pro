@@ -12,8 +12,8 @@ typedef double f64;
 #define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
-extern u32 native_fn_ov006_021f2390();
-extern u32 native_fn_ov006_021f52cc();
+extern u32 ov006_context_byte_16_021f2390();
+extern u32 ov006_main_loop_set_callback_021f52cc();
 extern u32 native_fn_ov006_021f7b14();
 extern u32 native_fn_ov006_021f7cf8();
 extern u32 native_fn_ov006_0220490c();
@@ -25,10 +25,10 @@ extern Record_native_data_ov006_0221c0cc native_data_ov006_0221c0cc;
 u32 native_ov006_021f7ae0(void) {
     u32 var_r0;
 
-    var_r0 = native_fn_ov006_021f2390();
+    var_r0 = ov006_context_byte_16_021f2390();
     if (var_r0 != -2U) {
         native_data_ov006_0221c0cc.field_4 = native_fn_ov006_0220490c(1, native_fn_ov006_021f7cf8, 0, 0x78);
-        var_r0 = native_fn_ov006_021f52cc(native_fn_ov006_021f7b14);
+        var_r0 = ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021f7b14);
     }
     return var_r0;
 }

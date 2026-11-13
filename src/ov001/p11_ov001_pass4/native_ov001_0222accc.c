@@ -20,9 +20,9 @@ void native_ov001_0222accc(Record *record)
     Block local = *(Block *)native_data_ov001_0222e398;
     u8 *entry = record->entry;
 
-    native_fn_ov001_02223fe8((u32 *)&local, entry);
+    ov001_clear_free_candidate_slots_02223fe8((u32 *)&local, entry);
     native_fn_ov001_02226bdc(&local, record, 0x7f);
-    native_fn_ov001_02224570(&local, entry, 4);
-    native_fn_ov001_02224050(&local);
-    native_fn_ov001_02226cb0(&local);
+    ov001_filter_highest_priority_candidates_02224570(&local, entry, 4);
+    ov001_pick_random_candidate_02224050(&local);
+    ov001_first_candidate_02226cb0(&local);
 }

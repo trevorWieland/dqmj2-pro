@@ -14,7 +14,7 @@ u32 native_ov001_021dff00(void) {
         break;
     case 0x5:
         native_fn_ov001_021d7e80(*(native_data_ov001_0223896c + (native_data_ov001_022388ec.field_2b * 4)));
-        native_data_ov001_022388ec.field_2a = (u8) native_fn_ov001_021eec7c(0x5C, *(native_data_ov001_0223896c + (native_data_ov001_022388ec.field_2b * 4)), (s8) native_fn_0205d790(0x5C));
+        native_data_ov001_022388ec.field_2a = (u8) ov001_effect_resource_create_021eec7c(0x5C, *(native_data_ov001_0223896c + (native_data_ov001_022388ec.field_2b * 4)), (s8) native_fn_0205d790(0x5C));
         native_data_ov001_022388ec.field_2c = 6;
         break;
     case 0x6:

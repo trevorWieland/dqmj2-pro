@@ -12,10 +12,10 @@ typedef double f64;
 #define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
-extern u32 native_fn_ov006_021e3cd4();
+extern u32 ov006_noop_021e3cd4();
 extern u8 native_data_ov006_02218d30[];
 u32 native_ov006_021e4ca4(void) {
-    native_fn_ov006_021e3cd4();
+    ov006_noop_021e3cd4();
     M2C_FIELD(native_data_ov006_02218d30, s32 *, 0x20) = 0;
     return (u32) native_data_ov006_02218d30;
 }

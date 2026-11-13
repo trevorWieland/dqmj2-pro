@@ -40,13 +40,13 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021f2390(void);
+extern void ov006_context_byte_16_021f2390(void);
 extern void native_fn_021f5334(void);
 extern void native_fn_021ff6d4(void);
 extern u8 native_data2_0221c10c[];
 extern void native_fn_021f23f4(void);
 extern void native_fn_021f57f4(void);
-extern void native_fn_021f52cc(void);
+extern void ov006_main_loop_set_callback_021f52cc(void);
 extern void native_fn_021ff0bc(void);
 extern void native_fn_021f23b8(void);
 extern void native_fn_021f5328(void);
@@ -62,7 +62,7 @@ extern void native_fn_021fcc10(void);
 asm u32 native_ov006_021fcb50 (register u32 a0)
 {
     push {r3, r4, r5, lr}
-    bl native_fn_021f2390
+    bl ov006_context_byte_16_021f2390
     cmp r0, #0x0
     beq ov006_021fcb50_L10
     cmp r0, #0x1
@@ -86,7 +86,7 @@ ov006_021fcb50_L1e:
 ov006_021fcb50_L2e:
     bl native_fn_021f23f4
     ldr r0, =native_fn_021f57f4+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     pop {r3, r4, r5, pc}
 ov006_021fcb50_L3a:
     ldr r0, =native_data2_0221c10c
@@ -123,7 +123,7 @@ ov006_021fcb50_L64:
     bl native_fn_021fcf44
     bl native_fn_021f23f4
     ldr r0, =native_fn_021fcfa0+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     pop {r3, r4, r5, pc}
 ov006_021fcb50_L92:
     cmp r0, #0x2
@@ -135,6 +135,6 @@ ov006_021fcb50_L9a:
     bl native_fn_021fd0a4
 ov006_021fcb50_La4:
     ldr r0, =native_fn_021fcc10+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     pop {r3, r4, r5, pc}
 }

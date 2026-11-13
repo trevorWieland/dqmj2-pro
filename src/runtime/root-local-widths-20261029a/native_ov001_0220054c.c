@@ -14,7 +14,7 @@ typedef double f64;
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 extern u32 native_fn_020443ec();
 extern u32 native_fn_0204458c();
-extern u32 native_fn_ov001_021db530();
+extern u32 ov001_mode_byte_021db530();
 extern u32 native_fn_ov001_021e13a8();
 extern u32 native_fn_ov001_021e81f0();
 extern u32 native_fn_ov001_021f949c();
@@ -24,7 +24,7 @@ extern u32 native_fn_ov001_02201504();
 extern u32 native_fn_ov001_022021fc();
 extern u32 native_fn_ov001_02202218();
 extern u32 native_fn_ov001_0220225c();
-extern u32 native_fn_ov001_02202360();
+extern u32 ov001_table_f0_entry_02202360();
 extern u32 native_fn_ov001_02202f98();
 extern u32 native_fn_ov001_02202fb4();
 extern u32 native_fn_ov001_02202fe4();
@@ -56,12 +56,12 @@ u32 native_ov001_0220054c(u32 arg0) {
     u8 *var_r8;
 
     var_r4 = 0;
-    temp_r5 = native_fn_ov001_02202360(native_data_ov001_02239c10.field_c);
+    temp_r5 = ov001_table_f0_entry_02202360(native_data_ov001_02239c10.field_c);
     switch (arg0) {
     default:
         break;
     case 0:
-        temp_r0 = (s32) native_fn_ov001_021db530(0);
+        temp_r0 = (s32) ov001_mode_byte_021db530(0);
         var_r6 = 0;
         if (temp_r0 > 0) {
             var_r7 = native_data_ov001_0222edc8;
@@ -110,7 +110,7 @@ u32 native_ov001_0220054c(u32 arg0) {
         break;
     case 4:
         if (native_fn_ov001_02202fb4() != 0) {
-            temp_r6 = native_fn_ov001_02202360(4);
+            temp_r6 = ov001_table_f0_entry_02202360(4);
             native_fn_ov001_02202218(4);
             native_fn_ov001_0220b70c(1);
             native_fn_ov001_021fe2b8(0, 1);

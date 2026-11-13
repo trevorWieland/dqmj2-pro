@@ -26,7 +26,7 @@ extern void native_fn_020420c4(void);
 extern void native_fn_021e5f10(void);
 extern void native_fn_021e5f2c(void);
 extern void native_fn_02042464(void);
-extern void native_fn_021e07b8(void);
+extern void ov000_saved_world_position_get_021e07b8(void);
 extern void native_fn_02041f74(void);
 extern void native_fn_020028d8(void);
 extern void native_fn_0200235c(void);
@@ -194,7 +194,7 @@ L_0220e6cc:
     mov r0, r5
     bl native_fn_02042bfc
     mov r0, #0
-    bl native_fn_021e07b8
+    bl ov000_saved_world_position_get_021e07b8
     mov r4, r0
     mov r0, r5
     mov r1, #0
@@ -206,9 +206,9 @@ L_0220e6cc:
     sub r6, r3, r2
     bl native_fn_02041f74
     mov r0, #0
-    bl native_fn_021e07b8
+    bl ov000_saved_world_position_get_021e07b8
     mov r0, #0
-    bl native_fn_021e07b8
+    bl ov000_saved_world_position_get_021e07b8
     mov r4, r0
     mov r0, r5
     mov r1, #0

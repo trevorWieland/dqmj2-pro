@@ -107,7 +107,7 @@ extern void native_fn_02044424(void);
 extern void native_fn_021dbd24(void);
 extern void native_fn_021dbcbc(void);
 extern void native_fn_0207c164(void);
-extern void native_fn_021dbd30(void);
+extern void ov001_record_field_1f2_021dbd30(void);
 extern void native_fn_021dbcf0(void);
 extern void native_fn_021dbd3c(void);
 extern void native_fn_021dbd8c(void);
@@ -256,7 +256,7 @@ ov001_022086b4_L180:
     b ov001_022086b4_L24c
 ov001_022086b4_L1e8:
     mov r0, r8
-    bl native_fn_021dbd30
+    bl ov001_record_field_1f2_021dbd30
     mov r4, r0
     mov r0, r8
     bl native_fn_021dbcf0

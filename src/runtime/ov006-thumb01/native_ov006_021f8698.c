@@ -15,7 +15,7 @@ typedef double f64;
 extern u32 native_fn_ov006_021f23c4();
 extern u32 native_fn_ov006_021f2774();
 extern u32 native_fn_ov006_021f2a4c();
-extern u32 native_fn_ov006_021f52cc();
+extern u32 ov006_main_loop_set_callback_021f52cc();
 extern u32 native_fn_ov006_021f52d8();
 extern u32 native_fn_ov006_021f5300();
 extern u32 native_fn_ov006_021f8d4c();
@@ -74,22 +74,22 @@ u32 native_ov006_021f8698(void) {
         native_fn_ov006_021fea78();
         native_fn_ov006_021ff0d0(M2C_FIELD((void *) native_fn_ov006_021fedc8(), u8 *, 0xF4));
         native_fn_ov006_021f52d8(2, 0);
-        native_fn_ov006_021f52cc(native_fn_ov006_021fd11c);
+        ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021fd11c);
     } else if (M2C_FIELD(native_data_ov006_0221c0d8, u8 *, 0) == 4) {
         native_fn_ov006_021fea78();
         native_fn_ov006_021f52d8(0, 1);
-        native_fn_ov006_021f52cc(native_fn_ov006_021fc514);
+        ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021fc514);
     } else {
         native_fn_ov006_021fee00(M2C_FIELD(M2C_FIELD(native_data_ov006_0221c0d8, void **, 4), s32 *, 0) + (0x2A * M2C_FIELD(M2C_FIELD(native_data_ov006_0221c0d8, void **, 4), u8 *, 0x52)));
         native_fn_ov006_021f52d8(0, 0);
         if (M2C_FIELD((M2C_FIELD(M2C_FIELD(native_data_ov006_0221c0d8, void **, 4), s32 *, 0) + (0x2A * M2C_FIELD(M2C_FIELD(native_data_ov006_0221c0d8, void **, 4), u8 *, 0x52))), u8 *, 0x28) != 0) {
             native_fn_ov006_021f52d8(0, 1);
             native_fn_ov006_021f5300(1, 1);
-            native_fn_ov006_021f52cc(native_fn_ov006_021f8d4c);
+            ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021f8d4c);
         } else {
             native_fn_ov006_021f52d8(0, 1);
             native_fn_ov006_021f5300(0, 1);
-            native_fn_ov006_021f52cc(native_fn_ov006_021fdb08);
+            ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021fdb08);
         }
     }
     return native_fn_ov006_02203c20(native_data_ov006_0221c0dc);

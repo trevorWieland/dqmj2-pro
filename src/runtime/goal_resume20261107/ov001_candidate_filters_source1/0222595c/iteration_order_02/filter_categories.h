@@ -22,5 +22,5 @@ typedef char CandidateRosterStride[(sizeof(CandidateRosterRecord) == 0x440) ? 1 
 extern void native_fn_02008e0c(const void *, void *, u32);
 extern u32 native_fn_020449d4(s32);
 extern int native_fn_0207b02c(int, int);
-extern s32 native_fn_ov001_02223f20(s32 *);
+extern s32 ov001_count_candidates_02223f20(s32 *);
 s32 native_ov001_0222595c(s32 *, const void *, s32);

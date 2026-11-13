@@ -66,8 +66,8 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_0207afec(void);
-extern void native_fn_021db438(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_side_slot_record_021db438(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_021f2304(void);
 extern void native_fn_021f4fa4(void);
 extern void native_fn_021e1a60(void);
@@ -77,7 +77,7 @@ extern void native_fn_022024d4(void);
 extern void native_fn_021f2464(void);
 extern void native_fn_0220f600(void);
 extern void native_fn_0205d790(void);
-extern void native_fn_021eec7c(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_021ee7b0(void);
 extern void native_fn_021f949c(void);
 
@@ -116,7 +116,7 @@ asm u32 native_ov001_021f6088 (register u32 a0)
     movne r0, #0
 ov001_021f6088_L78:
     mov r1, #0
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r9, r0
     mov r6, #3
     b ov001_021f6088_L90
@@ -131,7 +131,7 @@ ov001_021f6088_L90:
     ldr r4, =0x0223989c
 ov001_021f6088_La8:
     mov r0, r9
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021f6088_L2a0
     ldrb r2, [r4, #0x10]
@@ -140,7 +140,7 @@ ov001_021f6088_La8:
     bl native_fn_021f2304
     mov r1, r0
     ldrb r0, [r9, #0x31e]
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r7, r0
     mov r0, r10
     mov r1, r7
@@ -254,7 +254,7 @@ ov001_021f6088_L260:
     add r0, r7, #768
     ldrh r0, [r0, #76]
     mov r1, r7
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     add r1, r7, #768
     mov r0, #0
     strh r0, [r1, #76]
@@ -279,7 +279,7 @@ ov001_021f6088_L2b0:
     add r7, sp, #76
 ov001_021f6088_L2d4:
     mov r0, r9
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021f6088_L320
     ldrb r1, [r9, #0x31f]

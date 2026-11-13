@@ -5,7 +5,7 @@
    0x600-byte payload this row fills. */
 extern u32 native_data_ov006_0221c134;
 
-extern u32 native_ov006_02203c08(s32 id, s32 size);
+extern u32 ov006_clear_buffer_02203c08(s32 id, s32 size);
 extern void native_fn_02008ca4(u32 first, u32 second, s32 size);
 extern u32 native_ov006_0220490c(s32 which, void *callback, s32 arg2, s32 arg3);
 /* Address taken as data so mwcc folds the Thumb bit into the relocation. */
@@ -21,7 +21,7 @@ extern u8 native_ov006_021fe544[];
    order (source first, destination second). */
 void native_ov006_021fe49c(u32 source)
 {
-    u32 handle = native_ov006_02203c08(0x608, 4);
+    u32 handle = ov006_clear_buffer_02203c08(0x608, 4);
 
     native_data_ov006_0221c134 = handle;
     native_fn_02008ca4(source, handle + 4, 0x600);

@@ -36,7 +36,7 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021f2390(void);
+extern void ov006_context_byte_16_021f2390(void);
 extern void native_fn_021ff6d4(void);
 extern void native_fn_021f8cec(void);
 extern void native_fn_02002480(void);
@@ -44,7 +44,7 @@ extern void native_fn_021fe6e8(void);
 extern void native_fn_021f23f4(void);
 extern void native_fn_02200344(void);
 extern void native_fn_021f8d0c(void);
-extern void native_fn_021f52cc(void);
+extern void ov006_main_loop_set_callback_021f52cc(void);
 extern void native_fn_021f8634(void);
 
 
@@ -61,7 +61,7 @@ asm u32 native_ov006_021f8578 (register u32 a0)
     ldrb r0, [r1, #0]
     cmp r0, #0x0
     bne ov006_021f8578_Laa
-    bl native_fn_021f2390
+    bl ov006_context_byte_16_021f2390
     cmp r0, #0x0
     beq ov006_021f8578_L26
     cmp r0, #0x1
@@ -113,7 +113,7 @@ ov006_021f8578_L4a:
     sub r3, r1, #0x2
     bl native_fn_02200344
     ldr r0, =native_fn_021f8d0c+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     add sp, #0x4
     pop {r3, r4, pc}
 ov006_021f8578_L92:
@@ -127,7 +127,7 @@ ov006_021f8578_L92:
     bl native_fn_021ff6d4
 ov006_021f8578_La4:
     ldr r0, =native_fn_021f8634+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
 ov006_021f8578_Laa:
     add sp, #0x4
     pop {r3, r4, pc}

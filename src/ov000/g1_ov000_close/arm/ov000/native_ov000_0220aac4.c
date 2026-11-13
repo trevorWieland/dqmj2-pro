@@ -34,7 +34,7 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_0220aa68(void);
-extern void native_fn_021e07b8(void);
+extern void ov000_saved_world_position_get_021e07b8(void);
 extern void native_fn_020c56b4(void);
 extern void native_fn_0220a960(void);
 extern void native_fn_0220a7f4(void);
@@ -56,7 +56,7 @@ asm u32 native_ov000_0220aac4 (register u32 a0)
     cmp r0, #0
     beq ov000_0220aac4_L178
     mov r0, r7
-    bl native_fn_021e07b8
+    bl ov000_saved_world_position_get_021e07b8
     add r3, sp, #16
     ldmia r0, {r0, r1, r2}
     stmia r3, {r0, r1, r2}

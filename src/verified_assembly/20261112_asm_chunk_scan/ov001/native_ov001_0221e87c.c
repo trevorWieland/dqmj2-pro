@@ -31,7 +31,7 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern u8 native_data_0222e138[];
-extern void native_fn_021dbd30(void);
+extern void ov001_record_field_1f2_021dbd30(void);
 extern void native_fn_0207b244(void);
 
 
@@ -47,7 +47,7 @@ asm u32 native_ov001_0221e87c (register u32 a0)
     ldmia r5, {r0, r1, r2, r3}
     stmia r4, {r0, r1, r2, r3}
     mov r0, r6
-    bl native_fn_021dbd30
+    bl ov001_record_field_1f2_021dbd30
     ldr r1, [r6, #0x1e8]
     mov r4, r0
     add r2, r1, #70

@@ -40,11 +40,11 @@ extern void native_fn_0220b770(void);
 extern void native_fn_0220b74c(void);
 extern void native_fn_0220b794(void);
 extern void native_fn_0205d790(void);
-extern void native_fn_021db438(void);
-extern void native_fn_021eec7c(void);
+extern void ov001_side_slot_record_021db438(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_02041f74(void);
 extern void native_fn_021eedbc(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_0220bb7c(void);
 extern void native_fn_021d8b4c(void);
 
@@ -68,14 +68,14 @@ asm u32 native_ov001_0220bbb8 (register u32 a0)
     beq ov001_0220bbb8_Lb4
     mov r0, r8
     mov r1, r6
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r6, r0
     cmp r4, #0
     blt ov001_0220bbb8_L70
     mov r0, r5
     mov r1, r6
     mov r2, r4
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     mov r0, r0, lsl #24
     mov r9, r0, asr #24
     b ov001_0220bbb8_L168
@@ -102,12 +102,12 @@ ov001_0220bbb8_Lb4:
     blt ov001_0220bbb8_L120
     mov r0, r8
     mov r1, #0
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r8, r0
     mov r6, #0
 ov001_0220bbb8_Ld0:
     mov r0, r8
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     bne ov001_0220bbb8_Lf4
     mov r0, r8
@@ -119,7 +119,7 @@ ov001_0220bbb8_Lf4:
     mov r0, r5
     mov r1, r8
     mov r2, r4
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     mov r0, r0, lsl #24
     mov r9, r0, asr #24
 ov001_0220bbb8_L10c:

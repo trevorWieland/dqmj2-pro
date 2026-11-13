@@ -38,7 +38,7 @@ extern void native_fn_02202b24(void);
 extern void native_fn_02203954(void);
 extern void native_fn_021f52d8(void);
 extern void native_fn_021fc870(void);
-extern void native_fn_021f52cc(void);
+extern void ov006_main_loop_set_callback_021f52cc(void);
 extern void native_fn_021f6544(void);
 
 
@@ -76,14 +76,14 @@ ov006_021f5d10_L44:
     mov r1, #0x0
     bl native_fn_021f52d8
     ldr r0, =native_fn_021fc870+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     pop {r3, pc}
 ov006_021f5d10_L54:
     mov r0, #0x0
     add r1, r0, #0x0
     bl native_fn_021f52d8
     ldr r0, =native_fn_021f6544+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
 ov006_021f5d10_L62:
     pop {r3, pc}
 }

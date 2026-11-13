@@ -21,17 +21,17 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021e3cd4(void);
+extern void ov006_noop_021e3cd4(void);
 extern void native_fn_020644f4(void);
 extern void native_fn_021e7d98(void);
 extern u8 native_data_02207d18[];
-extern void native_fn_021e9148(void);
+extern void ov006_commit_mode_transition_021e9148(void);
 
 
 asm u32 native_ov006_021e442c (register u32 a0)
 {
     stmdb sp!, {r3, lr}
-    bl native_fn_021e3cd4
+    bl ov006_noop_021e3cd4
     mov r0, #1
     bl native_fn_020644f4
     mov r0, #0
@@ -42,6 +42,6 @@ asm u32 native_ov006_021e442c (register u32 a0)
     str r1, [r2, #0x4]
     mov r3, #1
     str r3, [r2]
-    bl native_fn_021e9148
+    bl ov006_commit_mode_transition_021e9148
     ldmia sp!, {r3, pc}
 }

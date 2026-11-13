@@ -15,8 +15,8 @@ typedef int s32;
 /* 0x0221c0b8: flag set when the second mode is taken. */
 extern u8 native_data_ov006_0221c0b8;
 /* 0x021f2390: returns the mode to dispatch on (0, 1 or neither). */
-extern s32 native_fn_ov006_021f2390(void);
+extern s32 ov006_context_byte_16_021f2390(void);
 /* 0x021ff6d4: applies the mode. */
 extern void native_fn_ov006_021ff6d4(s32 mode);
 /* 0x021f52cc: runs the follow-up callback. */
-extern void native_fn_ov006_021f52cc(void (*callback)(void));
+extern void ov006_main_loop_set_callback_021f52cc(void (*callback)(void));

@@ -13,9 +13,9 @@ typedef double f64;
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 extern u32 native_fn_0207b244();
-extern u32 native_fn_ov001_021db8d0();
+extern u32 ov001_record_is_active_021db8d0();
 extern u32 native_fn_ov001_021dbcf0();
-extern u32 native_fn_ov001_021dbd30();
+extern u32 ov001_record_field_1f2_021dbd30();
 extern u32 native_fn_ov001_021f0950();
 u32 native_ov001_0221fa3c(void *arg0) {
     void *temp_r5;
@@ -30,9 +30,9 @@ u32 native_ov001_0221fa3c(void *arg0) {
     temp_r5 = M2C_FIELD(arg0, void **, 0);
     var_r8 = M2C_FIELD(arg0, void **, 4);
 loop_1:
-    if (native_fn_ov001_021db8d0(var_r8) != 0) {
-        temp_r10 = native_fn_ov001_021f0950(temp_r5, var_r8, (s16) native_fn_0207b244(temp_r6, native_fn_ov001_021dbd30(temp_r5), M2C_FIELD(temp_r5, s32 *, 0x1E8) + 0x46), temp_r6, 0);
-        temp_r9 = native_fn_ov001_021dbd30(var_r8);
+    if (ov001_record_is_active_021db8d0(var_r8) != 0) {
+        temp_r10 = native_fn_ov001_021f0950(temp_r5, var_r8, (s16) native_fn_0207b244(temp_r6, ov001_record_field_1f2_021dbd30(temp_r5), M2C_FIELD(temp_r5, s32 *, 0x1E8) + 0x46), temp_r6, 0);
+        temp_r9 = ov001_record_field_1f2_021dbd30(var_r8);
         if ((s32) (temp_r10 + temp_r9) <= (s32) native_fn_ov001_021dbcf0(var_r8)) {
             return 1U;
         }

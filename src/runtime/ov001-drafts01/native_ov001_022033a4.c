@@ -12,8 +12,8 @@ typedef double f64;
 #define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
-extern u32 native_fn_ov001_021db438();
-extern u32 native_fn_ov001_021db530();
+extern u32 ov001_side_slot_record_021db438();
+extern u32 ov001_mode_byte_021db530();
 extern u8 native_data_ov001_02239d04[];
 u32 native_ov001_022033a4(s32 arg0) {
     s32 temp_r0_2;
@@ -21,14 +21,14 @@ u32 native_ov001_022033a4(s32 arg0) {
     s32 var_r6;
     u8 temp_r0;
 
-    temp_r0_2 = (s32) native_fn_ov001_021db530();
+    temp_r0_2 = (s32) ov001_mode_byte_021db530();
     var_r5 = 0;
     if (temp_r0_2 <= 0) {
         return (u32) temp_r0_2;
     }
     var_r6 = (arg0 * 0x34) + (s32) native_data_ov001_02239d04;
     do {
-        temp_r0 = M2C_FIELD((void *) native_fn_ov001_021db438(arg0, var_r5), u8 *, 0x1FE);
+        temp_r0 = M2C_FIELD((void *) ov001_side_slot_record_021db438(arg0, var_r5), u8 *, 0x1FE);
         var_r5 += 1;
         M2C_FIELD(var_r6, u8 *, 1) = temp_r0;
         var_r6 += 1;

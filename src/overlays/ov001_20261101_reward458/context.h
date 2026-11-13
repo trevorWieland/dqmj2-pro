@@ -4,7 +4,7 @@ typedef unsigned short u16;
 typedef signed int s32;
 typedef unsigned int u32;
 extern void native_fn_02008d78(void *,s32,u32);
-extern u8 *native_fn_ov001_021db438(s32,u32);
+extern u8 *ov001_side_slot_record_021db438(s32,u32);
 extern u32 native_fn_ov001_021e3eec(u8 *,s32);
 extern u32 native_fn_ov001_021e3db0(u32,s32,s32);
 extern u16 native_data_ov001_02238d10[3];

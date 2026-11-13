@@ -15,12 +15,12 @@ typedef double f64;
 extern u32 native_fn_ov006_021f26f0();
 extern u32 native_fn_ov006_021f27fc();
 extern u32 native_fn_ov006_021f2ad4();
-extern u32 native_fn_ov006_021f52cc();
+extern u32 ov006_main_loop_set_callback_021f52cc();
 extern u32 native_fn_ov006_021fc8b8();
 extern u32 native_fn_ov006_021fc968();
 extern u32 native_fn_ov006_021fca18();
 extern u32 native_fn_ov006_021fcdb4();
-extern u32 native_fn_ov006_02203c08();
+extern u32 ov006_clear_buffer_02203c08();
 typedef struct {
     u8 unknown_0[0x4];
     u32 field_4;
@@ -29,7 +29,7 @@ extern Record_native_data_ov006_0221c10c native_data_ov006_0221c10c;
 u32 native_ov006_021fc870(void) {
     u32 temp_r0;
 
-    temp_r0 = native_fn_ov006_02203c08(0x20, 4);
+    temp_r0 = ov006_clear_buffer_02203c08(0x20, 4);
     native_data_ov006_0221c10c.field_4 = temp_r0;
     M2C_FIELD(temp_r0, s8 *, 0x1D) = 0;
     native_fn_ov006_021fc8b8();
@@ -38,5 +38,5 @@ u32 native_ov006_021fc870(void) {
     native_fn_ov006_021f27fc(0);
     native_fn_ov006_021fc968();
     native_fn_ov006_021fcdb4();
-    return native_fn_ov006_021f52cc(native_fn_ov006_021fca18);
+    return ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021fca18);
 }

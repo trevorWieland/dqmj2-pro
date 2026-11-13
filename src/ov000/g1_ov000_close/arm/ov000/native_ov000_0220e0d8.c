@@ -28,7 +28,7 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021e07b8(void);
+extern void ov000_saved_world_position_get_021e07b8(void);
 extern void native_fn_021e6040(void);
 extern void native_fn_0203d294(void);
 
@@ -41,7 +41,7 @@ asm u32 native_ov000_0220e0d8 (register u32 a0)
     mvn r1, #0
     mov r0, #0
     str r1, [sp]
-    bl native_fn_021e07b8
+    bl ov000_saved_world_position_get_021e07b8
     mov r6, r0
     ldr r1, [r6, #0x4]
     ldr r0, [r8, #0x74]

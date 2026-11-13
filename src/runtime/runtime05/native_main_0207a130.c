@@ -13,9 +13,9 @@ typedef double f64;
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 extern u32 native_fn_0204b77c();
 extern u32 native_fn_ov000_02215078();
-extern u32 native_fn_ov000_02215698();
+extern u32 ov000_display_context_02215698();
 extern u8 native_data_021c6560[];
 u32 native_main_0207a130(void) {
-    native_fn_0204b77c(native_fn_ov000_02215698() + 0x10);
+    native_fn_0204b77c(ov000_display_context_02215698() + 0x10);
     return native_fn_ov000_02215078(native_data_021c6560, 1);
 }

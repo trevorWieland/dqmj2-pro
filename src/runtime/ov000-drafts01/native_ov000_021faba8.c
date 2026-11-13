@@ -27,7 +27,7 @@ extern u32 native_fn_ov000_021fb000();
 extern u32 native_fn_ov000_021fb030();
 extern u32 native_fn_ov000_021fbcb8();
 extern u32 native_fn_ov000_021fbdec();
-extern u32 native_fn_ov000_02215698();
+extern u32 ov000_display_context_02215698();
 extern u32 native_fn_ov000_0221767c();
 extern u32 native_fn_ov000_02217c68();
 extern u32 native_fn_ov000_02217c9c();
@@ -49,7 +49,7 @@ u32 native_ov000_021faba8(void) {
     u32 var_r5;
     u8 var_r1;
 
-    temp_r4 = native_fn_ov000_02215698();
+    temp_r4 = ov000_display_context_02215698();
     temp_r0 = native_fn_0202a634();
     var_r5 = 0;
     switch (native_data_ov000_0223716c.field_1) {

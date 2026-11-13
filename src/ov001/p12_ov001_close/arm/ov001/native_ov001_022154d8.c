@@ -58,16 +58,16 @@ extern void native_fn_0202ac08(void);
 extern void native_fn_021eea10(void);
 extern void native_fn_021d7f54(void);
 extern void native_fn_02041898(void);
-extern void native_fn_021f1354(void);
+extern void ov001_begin_state_transition_021f1354(void);
 extern void native_fn_021f1414(void);
-extern void native_fn_021f1438(void);
-extern void native_fn_021db438(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_select_mode_id_021f1438(void);
+extern void ov001_side_slot_record_021db438(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_022025a4(void);
 extern void native_fn_021f949c(void);
 extern void native_fn_0205c904(void);
-extern void native_fn_021eec7c(void);
-extern void native_fn_021f14a4(void);
+extern void ov001_effect_resource_create_021eec7c(void);
+extern void ov001_clear_state_flag4_021f14a4(void);
 extern void native_fn_021f14e4(void);
 extern void native_fn_021eeb70(void);
 extern void native_fn_0202ac4c(void);
@@ -102,10 +102,10 @@ ov001_022154d8_L40:
     mov r3, r0
     mov r1, #0
     mov r2, #21
-    bl native_fn_021f1354
+    bl ov001_begin_state_transition_021f1354
     mov r0, #1
     bl native_fn_021f1414
-    bl native_fn_021f1438
+    bl ov001_select_mode_id_021f1438
     mov r5, #1
     ldr r9, =0x02242be4
     mov r8, #0
@@ -114,9 +114,9 @@ ov001_022154d8_L40:
 ov001_022154d8_L84:
     mov r0, r7
     mov r1, r8
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r6, r0
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_022154d8_Lb8
     mov r0, r5
@@ -165,14 +165,14 @@ ov001_022154d8_L134:
     beq ov001_022154d8_L168
     mov r0, r10
     mov r1, r5
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r9, r0
     mov r0, r8
     bl native_fn_0205c904
     mov r0, r7
     mov r1, r9
     mov r2, r6
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
 ov001_022154d8_L168:
     add r5, r5, #1
     cmp r5, #3
@@ -198,7 +198,7 @@ ov001_022154d8_L190:
 ov001_022154d8_L1b8:
     cmp r1, #40
     bne ov001_022154d8_L1d4
-    bl native_fn_021f14a4
+    bl ov001_clear_state_flag4_021f14a4
     ldr r0, =0x02242ba0
     mov r1, #100
     strb r1, [r0, #0x1]

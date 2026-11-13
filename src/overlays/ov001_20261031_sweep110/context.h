@@ -14,8 +14,8 @@ typedef double f64;
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 #define NULL ((void *)0)
 extern u32 native_fn_02065d88();
-extern void * native_fn_ov001_021db438(s32, u32);
-extern u32 native_fn_ov001_021db8d0(u8 *);
+extern void * ov001_side_slot_record_021db438(s32, u32);
+extern u32 ov001_record_is_active_021db8d0(u8 *);
 extern u32 native_fn_ov001_021ee91c();
 extern u32 native_fn_ov001_0220b74c();
 extern u32 native_fn_ov001_0220b770();

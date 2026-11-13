@@ -7535,7 +7535,7 @@
    "module": "ov001"
   },
   {
-   "glob": "src/runtime/root-linear-20261029-ov001/native_ov001_021db438.c",
+   "glob": "src/runtime/root-linear-20261029-ov001/ov001_side_slot_record_021db438.c",
    "compilerFlags": "p003"
   },
   {
@@ -8166,7 +8166,7 @@
    "compilerFlags": "p032"
   },
   {
-   "glob": "src/transplants/ov006-reuse01/native_ov006_021f52cc.c",
+   "glob": "src/transplants/ov006-reuse01/ov006_main_loop_set_callback_021f52cc.c",
    "compilerFlags": "p032"
   },
   {

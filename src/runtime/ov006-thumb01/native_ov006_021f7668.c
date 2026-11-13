@@ -13,7 +13,7 @@ typedef double f64;
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 extern u32 native_fn_ov006_021f2774();
-extern u32 native_fn_ov006_021f52cc();
+extern u32 ov006_main_loop_set_callback_021f52cc();
 extern u32 native_fn_ov006_021f52d8();
 extern u32 native_fn_ov006_021f5524();
 extern u32 native_fn_ov006_021f6544();
@@ -38,13 +38,13 @@ u32 native_ov006_021f7668(void) {
         }
         native_fn_ov006_021f52d8(0, 1);
         if (native_data_ov006_0221c0c4.field_0 != 0) {
-            return native_fn_ov006_021f52cc(native_fn_ov006_021f7220);
+            return ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021f7220);
         }
         if (native_data_ov006_0221c0c4.field_1 == 0) {
             native_fn_ov006_02203954(1, 1);
-            return native_fn_ov006_021f52cc(native_fn_ov006_021f6544);
+            return ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021f6544);
         }
-        var_r0 = native_fn_ov006_021f52cc(native_fn_ov006_021f69fc);
+        var_r0 = ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021f69fc);
         
         return var_r0;
     }

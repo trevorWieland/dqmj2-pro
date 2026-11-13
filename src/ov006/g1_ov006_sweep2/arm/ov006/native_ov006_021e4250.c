@@ -25,20 +25,20 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021e65a4(void);
+extern void ov006_active_state_value_021e65a4(void);
 extern void native_fn_021e9420(void);
 extern void native_fn_020bb2b0(void);
 extern void native_fn_02008140(void);
 extern void native_fn_021e802c(void);
 extern void native_fn_021e7e28(void);
-extern void native_fn_021e3f28(void);
-extern void native_fn_021e3cd8(void);
+extern void native_fn_ov006_021e3f28(void);
+extern void ov006_forward_four_args_021e3cd8(void);
 
 
 asm u32 native_ov006_021e4250 (register u32 a0)
 {
     stmdb sp!, {r3, lr}
-    bl native_fn_021e65a4
+    bl ov006_active_state_value_021e65a4
     mvn r1, #3
     cmp r0, r1
     beq ov006_021e4250_L48
@@ -60,8 +60,8 @@ ov006_021e4250_L48:
     bl native_fn_021e802c
     bl native_fn_021e7e28
     mov r0, #3
-    bl native_fn_021e3f28
+    bl native_fn_ov006_021e3f28
 ov006_021e4250_L5c:
-    bl native_fn_021e3cd8
+    bl ov006_forward_four_args_021e3cd8
     ldmia sp!, {r3, pc}
 }

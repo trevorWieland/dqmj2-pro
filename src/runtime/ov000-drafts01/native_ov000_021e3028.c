@@ -16,12 +16,12 @@ extern u32 native_fn_0202818c();
 extern u32 native_fn_0202859c();
 extern u32 native_fn_020285c8();
 extern u32 native_fn_0205eb58();
-extern u32 native_fn_ov000_021e07b8();
+extern u32 ov000_saved_world_position_get_021e07b8();
 u32 native_ov000_021e3028(void) {
     u32 temp_r4;
     u32 temp_r4_2;
 
     temp_r4_2 = native_fn_020285c8(0, 0);
     temp_r4 = native_fn_0202818c(native_fn_0202859c(0, 0), temp_r4_2);
-    return native_fn_0205eb58(native_fn_ov000_021e07b8(0), temp_r4);
+    return native_fn_0205eb58(ov000_saved_world_position_get_021e07b8(0), temp_r4);
 }

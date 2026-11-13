@@ -88,11 +88,11 @@ u32 native_ov001_021de984(void) {
             var_r6 = 1;
             var_r5 = 0;
         }
-        M2C_FIELD(native_data_ov001_022388ec, u32 *, 0x48) = native_fn_ov001_021db438((u32) M2C_FIELD(temp_r4, u8 *, 1), (u32) M2C_FIELD(temp_r4, u8 *, 2));
+        M2C_FIELD(native_data_ov001_022388ec, u32 *, 0x48) = ov001_side_slot_record_021db438((u32) M2C_FIELD(temp_r4, u8 *, 1), (u32) M2C_FIELD(temp_r4, u8 *, 2));
         if (var_r5 != 0) {
-            temp_r0_2 = native_fn_ov001_021db438((u32) M2C_FIELD(native_data_ov001_022388ec, u8 *, 0x17), 0U);
+            temp_r0_2 = ov001_side_slot_record_021db438((u32) M2C_FIELD(native_data_ov001_022388ec, u8 *, 0x17), 0U);
             M2C_FIELD(native_data_ov001_022388ec, u32 *, 0x40) = temp_r0_2;
-            if ((temp_r0_2 != 0) && (native_fn_ov001_021db8d0(temp_r0_2) == 0) && (M2C_FIELD(M2C_FIELD(native_data_ov001_022388ec, u32 *, 0x40), u8 *, 0x31C) == 0)) {
+            if ((temp_r0_2 != 0) && (ov001_record_is_active_021db8d0(temp_r0_2) == 0) && (M2C_FIELD(M2C_FIELD(native_data_ov001_022388ec, u32 *, 0x40), u8 *, 0x31C) == 0)) {
                 M2C_FIELD(native_data_ov001_022388ec, u32 *, 0x40) = native_fn_ov001_021db918(M2C_FIELD(native_data_ov001_022388ec, u8 *, 0x17));
             }
             native_fn_ov001_021f1c68(1U);
@@ -101,14 +101,14 @@ u32 native_ov001_021de984(void) {
         } else if (var_r6 != 0) {
             temp_r0_3 = M2C_FIELD(temp_r4, u8 *, 1);
             if (((u32) (M2C_FIELD((void *) native_fn_0207afec(native_fn_0207b6e8((u32) M2C_FIELD(temp_r4, u8 *, 0))), u16 *, 8) << 0x14) >> 0x1C) != 0xA) {
-                var_r0 = native_fn_ov001_021db438((u32) temp_r0_3, (u32) M2C_FIELD(temp_r4, u8 *, 2));
+                var_r0 = ov001_side_slot_record_021db438((u32) temp_r0_3, (u32) M2C_FIELD(temp_r4, u8 *, 2));
             } else {
                 if (temp_r0_3 == 0) {
                     var_r0_2 = 1;
                 } else {
                     var_r0_2 = 0;
                 }
-                var_r0 = native_fn_ov001_021db438(var_r0_2, 0U);
+                var_r0 = ov001_side_slot_record_021db438(var_r0_2, 0U);
             }
             M2C_FIELD(native_data_ov001_022388ec, u32 *, 0x40) = var_r0;
             native_fn_ov001_02217910((u32) M2C_FIELD(temp_r4, u8 *, 0));

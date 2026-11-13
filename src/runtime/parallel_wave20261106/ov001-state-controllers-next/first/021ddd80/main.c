@@ -6,13 +6,13 @@ u32 native_ov001_021ddd80(void) {
   native_fn_ov001_021f1294(16,2);
   if (mode == 1) mode = 6; else mode = 7;
   native_fn_ov001_021d94cc(0,1);
-  native_fn_ov001_021f1354(1,0,mode,1);
+  ov001_begin_state_transition_021f1354(1,0,mode,1);
   native_data_ov001_022388ec.state2 = 10;
   native_data_ov001_022388ec.counterD = 0;
  } else if (native_data_ov001_022388ec.state2 == 10) {
   native_data_ov001_022388ec.counterD++;
   if (native_data_ov001_022388ec.counterD >= 30) {
-   native_fn_ov001_021f14a4();
+   ov001_clear_state_flag4_021f14a4();
    native_data_ov001_022388ec.state2 = 100;
   }
  } else if (native_data_ov001_022388ec.state2 == 100) {

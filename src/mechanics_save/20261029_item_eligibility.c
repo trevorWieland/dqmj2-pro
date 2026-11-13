@@ -22,7 +22,7 @@ extern u32 native_fn_ov000_02210bd4(void);
 extern u32 native_fn_ov001_021dbcbc(const void *);
 extern u32 native_fn_ov001_021dbcf0(const void *);
 extern u32 native_fn_ov001_021dbd24(const void *);
-extern u32 native_fn_ov001_021dbd30(const void *);
+extern u32 ov001_record_field_1f2_021dbd30(const void *);
 u32 native_main_02065e44(u8 *block, const u8 *bonus, s32 species, s32 variant, const u8 *features, s32 item_id, u8 *live_entity) {
     u32 status_available;
     u32 first_work;
@@ -90,7 +90,7 @@ u32 native_main_02065e44(u8 *block, const u8 *bonus, s32 species, s32 variant, c
         max_first = native_fn_ov001_021dbcbc(entity);
         first_work = native_fn_ov001_021dbd24(entity);
         third_work = native_fn_ov001_021dbcf0(entity);
-        second_work = native_fn_ov001_021dbd30(entity);
+        second_work = ov001_record_field_1f2_021dbd30(entity);
     }
     status_available = native_fn_02065e14(entity, status_area);
     switch ((s32) kind) {

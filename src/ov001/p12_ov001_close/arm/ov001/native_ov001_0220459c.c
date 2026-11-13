@@ -29,7 +29,7 @@ extern void native_fn_02204270(void);
 extern void native_fn_02204250(void);
 extern void native_fn_02204244(void);
 extern void native_fn_022042ac(void);
-extern void native_fn_021db530(void);
+extern void ov001_mode_byte_021db530(void);
 extern void native_fn_02202384(void);
 extern void native_fn_02202398(void);
 
@@ -63,7 +63,7 @@ asm u32 native_ov001_0220459c (register u32 a0)
     mov r0, #0
     str r0, [r4, #0x38]
     str r7, [r4, #0x44]
-    bl native_fn_021db530
+    bl ov001_mode_byte_021db530
     mov r0, #0
     bl native_fn_02202384
     strh r0, [r4, #20]

@@ -8,7 +8,7 @@
 s32 native_ov001_021db834(u8 *obj, s32 step) {
     s32 old;
 
-    if (native_fn_ov001_021dbd30() >= 10000) {
+    if (ov001_record_field_1f2_021dbd30() >= 10000) {
         return -step;
     }
     if (step == 10000) {

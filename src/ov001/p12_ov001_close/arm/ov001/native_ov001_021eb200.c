@@ -159,13 +159,13 @@ extern void native_fn_021ea428(void);
 extern void native_fn_021e19c8(void);
 extern void native_fn_021d7e80(void);
 extern void native_fn_0220f530(void);
-extern void native_fn_021f14a4(void);
+extern void ov001_clear_state_flag4_021f14a4(void);
 extern void native_fn_021dbb14(void);
 extern void native_fn_021dbb9c(void);
 extern void native_fn_022168e8(void);
 extern void native_fn_021e9d70(void);
 extern void native_fn_021eab34(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_021dc5d4(void);
 extern void native_fn_021eeb70(void);
 extern void native_fn_0202ac4c(void);
@@ -534,7 +534,7 @@ ov001_021eb200_L508:
     bl native_fn_021f14e4
     cmp r0, #0
     beq ov001_021eb200_L548
-    bl native_fn_021f14a4
+    bl ov001_clear_state_flag4_021f14a4
 ov001_021eb200_L548:
     ldr r0, =0x02238d7c
     ldrb r1, [r0, #0xd]
@@ -607,7 +607,7 @@ ov001_021eb200_L618:
     bl native_fn_021f14e4
     cmp r0, #0
     beq ov001_021eb200_L680
-    bl native_fn_021f14a4
+    bl ov001_clear_state_flag4_021f14a4
     b ov001_021eb200_L680
 ov001_021eb200_L65c:
     cmp r1, #70
@@ -630,12 +630,12 @@ ov001_021eb200_L680:
     bl native_fn_021f14e4
     cmp r0, #0
     beq ov001_021eb200_L6ac
-    bl native_fn_021f14a4
+    bl ov001_clear_state_flag4_021f14a4
 ov001_021eb200_L6ac:
     bl native_fn_021eab34
     ldr r0, =0x02238d7c
     ldr r0, [r0, #0x54]
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021eb200_L6e4
     ldr r0, =0x02238d7c

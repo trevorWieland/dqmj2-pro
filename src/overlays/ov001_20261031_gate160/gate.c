@@ -33,8 +33,8 @@ u32 native_ov001_021f73b8(s32 arg0) {
     }
     var_r5 = 0;
 loop_16:
-    temp_r0 = native_fn_ov001_021db438(var_r6, var_r5);
-    if ((native_fn_ov001_021db8d0(temp_r0) != 0) && (M2C_FIELD(temp_r0, u8 *, 0x322) == 2)) {
+    temp_r0 = ov001_side_slot_record_021db438(var_r6, var_r5);
+    if ((ov001_record_is_active_021db8d0(temp_r0) != 0) && (M2C_FIELD(temp_r0, u8 *, 0x322) == 2)) {
         return 0U;
     }
     var_r5 += 1;

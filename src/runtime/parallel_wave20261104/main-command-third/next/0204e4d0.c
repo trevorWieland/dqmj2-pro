@@ -5,7 +5,7 @@ void native_main_0204e4d0(ExtendedContext *context,const Instruction *instructio
     native_fn_0205bdfc(native_fn_ov000_021df1f0());
     native_fn_0205bf04(0);
     native_fn_0205be4c(-1);
-    native_fn_0205be74(native_fn_ov000_021e07b8(0));
+    native_fn_0205be74(ov000_saved_world_position_get_021e07b8(0));
     native_fn_0205bea4(native_fn_ov000_021e07d4(0)->words[1]);
     native_fn_0205bed4(native_fn_ov000_021d8a44()->field98);
     native_fn_0205c020(2);

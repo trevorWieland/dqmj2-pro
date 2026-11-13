@@ -13,6 +13,6 @@ s32 native_ov001_022294c8(void)
 {
     Block local = *(Block *)native_data_ov001_0222e5c0;
 
-    native_fn_ov001_02224050(&local);
-    return native_fn_ov001_02226cb0(&local);
+    ov001_pick_random_candidate_02224050(&local);
+    return ov001_first_candidate_02226cb0(&local);
 }

@@ -47,7 +47,7 @@ extern void native_fn_021dbd24(void);
 extern void native_fn_02044cdc(void);
 extern void native_fn_02026144(void);
 extern void native_fn_02210ad0(void);
-extern void native_fn_021dbd30(void);
+extern void ov001_record_field_1f2_021dbd30(void);
 extern void native_fn_0203d294(void);
 extern void native_fn_021dbcf0(void);
 
@@ -114,7 +114,7 @@ ov001_021ef224_Lcc:
     ldmia sp!, {r4, r5, r6, pc}
 ov001_021ef224_Ld4:
     mov r0, r5
-    bl native_fn_021dbd30
+    bl ov001_record_field_1f2_021dbd30
     ldr r2, =0x55555556
     add r3, r0, #2
     smull r1, r0, r2, r3

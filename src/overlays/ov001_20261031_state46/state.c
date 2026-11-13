@@ -12,7 +12,7 @@ u32 native_ov001_021eacb0(void) {
         if (native_fn_ov001_021f14e4() == 0) {
             native_fn_ov001_021eaa3c(M2C_FIELD(native_data_ov001_02238d7c, u16 *, 0x36));
             if (*native_data_ov001_0222ec84 != 0) {
-                native_fn_ov001_021f1438(M2C_FIELD(native_data_ov001_02238d7c, u8 *, 0x29));
+                ov001_select_mode_id_021f1438(M2C_FIELD(native_data_ov001_02238d7c, u8 *, 0x29));
             }
         }
         M2C_FIELD(native_data_ov001_02238d7c, u8 *, 0xA) = (u8) native_fn_ov001_021e97c0();

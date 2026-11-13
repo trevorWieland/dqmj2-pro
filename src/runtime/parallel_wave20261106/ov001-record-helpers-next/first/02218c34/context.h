@@ -24,7 +24,7 @@ typedef struct Record40 {
     u8 unknown33[7];
 } Record40;
 extern Record40 *native_fn_0207afec(s32);
-extern s32 native_fn_ov001_021dbd30(Object440 *);
+extern s32 ov001_record_field_1f2_021dbd30(Object440 *);
 extern s32 native_fn_0207b244(s32, s32, u8 *);
 extern s32 native_fn_ov001_021f07dc(Object440 *, Object440 *, s32, s32, s32, s32, s32);
 extern s32 native_fn_ov001_021f0858(Object440 *, Object440 *, s32, s32, s32, s32, s32);

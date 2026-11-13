@@ -37,9 +37,9 @@ typedef signed char s8;
 
 extern void native_fn_02008e0c(void);
 extern void native_fn_021dbcf0(void);
-extern void native_fn_021dbd30(void);
+extern void ov001_record_field_1f2_021dbd30(void);
 extern void native_fn_02026144(void);
-extern void native_fn_02223f20(void);
+extern void ov001_count_candidates_02223f20(void);
 
 
 asm u32 native_ov001_02224c38 (register u32 a0)
@@ -67,7 +67,7 @@ ov001_02224c38_L34:
     moveq r0, r11
     beq ov001_02224c38_L74
     mov r0, r9
-    bl native_fn_021dbd30
+    bl ov001_record_field_1f2_021dbd30
     mov r5, r0
     mov r0, r9
     bl native_fn_021dbcf0
@@ -97,7 +97,7 @@ ov001_02224c38_La0:
     moveq r0, r11
     beq ov001_02224c38_Le0
     mov r0, r10
-    bl native_fn_021dbd30
+    bl ov001_record_field_1f2_021dbd30
     mov r6, r0
     mov r0, r10
     bl native_fn_021dbcf0
@@ -113,7 +113,7 @@ ov001_02224c38_Le8:
     add r10, r10, #1088
     blt ov001_02224c38_La0
     add r0, sp, #4
-    bl native_fn_02223f20
+    bl ov001_count_candidates_02223f20
     mov r4, r0
     cmp r4, #0
     ble ov001_02224c38_L11c

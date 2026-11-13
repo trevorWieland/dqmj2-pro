@@ -16,9 +16,9 @@ extern u32 native_fn_022092c0(u8 *, s32, s32, s32, s32);
 extern u8 *native_fn_021e81d0(u32, u32);
 extern s32 native_fn_021e865c(u32, u32);
 extern u32 native_fn_ov001_021d8dec(u32);
-extern s32 native_fn_ov001_021db8d0(u8 *);
+extern s32 ov001_record_is_active_021db8d0(u8 *);
 extern s32 native_fn_ov001_021dbcf0(u8 *);
-extern s32 native_fn_ov001_021dbd30(void);
+extern s32 ov001_record_field_1f2_021dbd30(void);
 extern s32 native_fn_ov001_021dbcbc(u8 *);
 
 extern u8 native_data_ov001_022355e4[];   /* four part-table counts */

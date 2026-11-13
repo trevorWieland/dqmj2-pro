@@ -20,7 +20,7 @@ typedef struct {
     u8 reserved38[16];
 } LayoutState;
 typedef struct { u8 prefix[16]; LayoutState layout; } Display;
-extern Display *native_fn_ov000_02215698(void);
+extern Display *ov000_display_context_02215698(void);
 extern void native_fn_ov000_022159b8(const char *, u32);
 extern void native_fn_0204b4f4(LayoutState *, const Point *, u32, u32, u32, u8);
 extern void native_fn_0204b61c(LayoutState *, u32);

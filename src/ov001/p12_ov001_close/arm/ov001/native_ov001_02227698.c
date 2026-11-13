@@ -23,8 +23,8 @@ typedef signed char s8;
 extern u8 native_data_0222e854[];
 extern void native_fn_02224020(void);
 extern void native_fn_02226bdc(void);
-extern void native_fn_02224050(void);
-extern void native_fn_02226cb0(void);
+extern void ov001_pick_random_candidate_02224050(void);
+extern void ov001_first_candidate_02226cb0(void);
 
 
 asm u32 native_ov001_02227698 (register u32 a0)
@@ -44,9 +44,9 @@ asm u32 native_ov001_02227698 (register u32 a0)
     mov r2, #26
     bl native_fn_02226bdc
     add r0, sp, #0
-    bl native_fn_02224050
+    bl ov001_pick_random_candidate_02224050
     add r0, sp, #0
-    bl native_fn_02226cb0
+    bl ov001_first_candidate_02226cb0
     add sp, sp, #12
     ldmia sp!, {r3, r4, pc}
 }

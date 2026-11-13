@@ -35,7 +35,7 @@ extern u8 native_data_0220b54c[];
 extern u8 native_data_0220b546[];
 extern void native_fn_021f29bc(void);
 extern void native_fn_021f5b3c(void);
-extern void native_fn_021f52cc(void);
+extern void ov006_main_loop_set_callback_021f52cc(void);
 
 
 asm u32 native_ov006_021f5a4c (register u32 a0)
@@ -64,6 +64,6 @@ asm u32 native_ov006_021f5a4c (register u32 a0)
     ldrh r3, [r4, r3]
     bl native_fn_021f29bc
     ldr r0, =native_fn_021f5b3c+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     pop {r4, pc}
 }

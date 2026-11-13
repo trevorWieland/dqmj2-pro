@@ -11,14 +11,14 @@
  */
 extern u8 native_data_ov001_0222ec84[];
 extern u8 native_data_ov001_02238d7c[];
-extern void native_fn_ov001_021f14a4(void);
+extern void ov001_clear_state_flag4_021f14a4(void);
 
 s32 native_ov001_021eaa88(void)
 {
     s32 result = 0;
 
     if (native_data_ov001_0222ec84[0] != 0) {
-        native_fn_ov001_021f14a4();
+        ov001_clear_state_flag4_021f14a4();
         *(s8 *)(native_data_ov001_02238d7c + 0x27) = -1;
         result = 1;
     }

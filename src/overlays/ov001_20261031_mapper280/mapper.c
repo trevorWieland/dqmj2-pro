@@ -12,11 +12,11 @@ u32 native_ov001_0222bf54(s32 arg0, s32 arg1) {
     temp_r4 = M2C_FIELD((void *) native_fn_0207afec(arg0), s16 *, 0xC);
     temp_r0 = (s32) native_fn_0205d790(temp_r4);
     if (temp_r0 >= 0) {
-        var_r8 = native_fn_ov001_021db438(arg1, 0U);
+        var_r8 = ov001_side_slot_record_021db438(arg1, 0U);
         var_r5 = 0;
         do {
-            if (native_fn_ov001_021db8d0(var_r8) != 0) {
-                var_r7 = (s8) native_fn_ov001_021eec7c(temp_r4, var_r8, temp_r0);
+            if (ov001_record_is_active_021db8d0(var_r8) != 0) {
+                var_r7 = (s8) ov001_effect_resource_create_021eec7c(temp_r4, var_r8, temp_r0);
             }
             var_r5 += 1;
             var_r8 += 0x440;

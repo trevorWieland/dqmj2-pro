@@ -14,11 +14,11 @@ typedef double f64;
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 extern u32 native_fn_02062a50();
 extern u32 native_fn_0206dcd0();
-extern u32 native_fn_ov000_02215698();
+extern u32 ov000_display_context_02215698();
 u32 native_ov000_021f9148(s8 arg0) {
     void *temp_r0;
 
-    temp_r0 = (void *) native_fn_ov000_02215698();
+    temp_r0 = (void *) ov000_display_context_02215698();
     M2C_FIELD(temp_r0, s8 *, 0x490) = 0;
     M2C_FIELD(temp_r0, s8 *, 0x491) = arg0;
     native_fn_02062a50(M2C_FIELD(temp_r0, s8 *, 0x491));

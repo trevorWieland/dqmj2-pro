@@ -32,9 +32,9 @@ typedef signed char s8;
 extern void native_fn_02065d88(void);
 extern void native_fn_0220d468(void);
 extern void native_fn_021d8dec(void);
-extern void native_fn_021f1354(void);
+extern void ov001_begin_state_transition_021f1354(void);
 extern void native_fn_021f1414(void);
-extern void native_fn_021f1438(void);
+extern void ov001_select_mode_id_021f1438(void);
 
 
 asm u32 native_ov001_0220bf30 (register u32 a0)
@@ -71,10 +71,10 @@ ov001_0220bf30_L4c:
     mov r2, r4
     mov r3, r0
     mov r1, #0
-    bl native_fn_021f1354
+    bl ov001_begin_state_transition_021f1354
     and r0, r5, #255
     bl native_fn_021f1414
-    bl native_fn_021f1438
+    bl ov001_select_mode_id_021f1438
 ov001_0220bf30_L88:
     mov r0, r4
     ldmia sp!, {r4, r5, r6, pc}

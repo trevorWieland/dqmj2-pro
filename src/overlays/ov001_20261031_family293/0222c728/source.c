@@ -11,8 +11,8 @@ u32 native_ov001_0222c728(void) {
     if (native_data_ov001_022497e8.field_3 == 0xA) {
         var_r7 = 0;
         do {
-            temp_r0 = native_fn_ov001_021db438((s32) native_data_ov001_022497e8.field_0, var_r7);
-            if (native_fn_ov001_021db8d0(temp_r0) != 0) {
+            temp_r0 = ov001_side_slot_record_021db438((s32) native_data_ov001_022497e8.field_0, var_r7);
+            if (ov001_record_is_active_021db8d0(temp_r0) != 0) {
                 var_r8 = native_fn_ov001_0222c700(temp_r0);
                 if ((s32) var_r8 > 0) {
                     native_fn_ov001_021d9494(temp_r0, 0, 0);

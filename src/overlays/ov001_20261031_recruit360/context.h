@@ -30,7 +30,7 @@ extern u32 native_fn_0206dcd0(void *);
 extern u32 native_fn_0206de44(s8);
 extern u32 native_fn_0207e720(void *);
 extern u8 * native_fn_ov001_021fbe70(void);
-extern u32 native_fn_ov001_02202360();
+extern u32 ov001_table_f0_entry_02202360();
 extern u32 native_fn_ov001_0220a5e0();
 extern u32 native_fn_ov001_0220a6cc();
 extern u32 native_fn_ov001_0220aaa0();

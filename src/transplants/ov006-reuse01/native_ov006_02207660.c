@@ -8,7 +8,7 @@ extern u8 native_data_021cec40[];
 extern u8 native_data_01fff9a8[];
 extern u8 native_data_01fff944[];
 extern u8 native_data_021d4100[];
-extern u8 *native_fn_ov000_02223c60(void);
+extern u8 *ov000_context_02246600_02223c60(void);
 extern u32 native_fn_02041814(void);
 extern void native_fn_02027410(u32);
 extern void native_fn_ov006_021e9008(void);
@@ -46,7 +46,7 @@ extern u8 *native_fn_02049ae4(void);
 extern u8 *native_fn_01ffb340(void);
 extern void native_fn_01ffb158(u32, u16);
 extern u32 native_fn_0202a634(void);
-extern u32 native_fn_ov000_0221794c(u8 *);
+extern u32 ov000_poll_change_notify_0221794c(u8 *);
 extern void native_fn_01ffb46c(void);
 extern void native_fn_02049604(u8 *, u32);
 extern void native_fn_01ffb530(u32, u32, u32, u32, u32, u32);
@@ -56,7 +56,7 @@ extern u32 native_fn_0205e644(u32);
 extern void native_fn_0205e66c(u32);
 extern void native_fn_0205e73c(u32);
 extern void native_fn_0205e7a8(u32, u32);
-extern u8 *native_fn_ov000_02223c54(void);
+extern u8 *ov000_context_02246600_02223c54(void);
 extern u32 native_fn_020b9f84(void (*)(void));
 extern void native_fn_01ffb744(void);
 extern void native_fn_020414b0(u32);
@@ -68,7 +68,7 @@ void native_ov006_02207660(void) {
     native_fn_ov006_021e6494();
 }
 u32 native_itcm_01ff97a0(void) {
-    u32 result = *(u32 *)native_fn_ov000_02223c60();
+    u32 result = *(u32 *)ov000_context_02246600_02223c60();
     if (native_fn_02041814() == 1) return result;
     result = *(u32 *)(native_data_021ceb54 + 8);
     if (result == 4) native_fn_02027410(0);
@@ -163,7 +163,7 @@ u32 native_itcm_01ffb368(void) {
     return *(u32 *)native_fn_01ffb340();
 }
 void native_itcm_01ffb4c4(void) {
-    if (native_fn_ov000_0221794c(native_fn_01ffb340())) {
+    if (ov000_poll_change_notify_0221794c(native_fn_01ffb340())) {
         native_fn_01ffb46c();
         native_fn_02049604(native_fn_01ffb340(), 1);
     }
@@ -180,7 +180,7 @@ void native_itcm_01ffb6b8(u32 value) {
     native_fn_0205e7a8(0, value);
 }
 int native_itcm_01ffb734(void) {
-    return *(s8 *)(native_fn_ov000_02223c54() + 0x58);
+    return *(s8 *)(ov000_context_02246600_02223c54() + 0x58);
 }
 void native_itcm_01ffb744(void) {
     *(u32 *)native_data_01fff944 = 1;

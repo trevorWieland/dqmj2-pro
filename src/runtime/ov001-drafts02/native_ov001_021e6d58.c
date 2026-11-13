@@ -13,12 +13,12 @@ typedef double f64;
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 extern u32 native_fn_0203d294();
-extern u32 native_fn_ov001_021db438();
+extern u32 ov001_side_slot_record_021db438();
 void native_ov001_021e6d58(u32 arg0) {
     void *temp_r0;
     u8 temp_r0_2;
 
-    temp_r0 = (void *) native_fn_ov001_021db438(1, arg0);
+    temp_r0 = (void *) ov001_side_slot_record_021db438(1, arg0);
     temp_r0_2 = M2C_FIELD(M2C_FIELD(temp_r0, void **, 0x1E8), u8 *, 0xAA);
     switch (temp_r0_2) {
     case 4:

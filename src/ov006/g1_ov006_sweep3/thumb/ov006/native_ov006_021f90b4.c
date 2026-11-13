@@ -33,7 +33,7 @@ typedef signed char s8;
 extern u8 native_data_0220b65c[];
 extern void native_fn_021f2f4c(void);
 extern void native_fn_021f913c(void);
-extern void native_fn_021f52cc(void);
+extern void ov006_main_loop_set_callback_021f52cc(void);
 extern void native_fn_02200344(void);
 extern void native_fn_021f9460(void);
 extern void native_fn_021f530c(void);
@@ -59,7 +59,7 @@ asm u32 native_ov006_021f90b4 (register u32 a0)
     cmp r0, #0x0
     bne ov006_021f90b4_L2c
     ldr r0, =native_fn_021f913c+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     add sp, #0x10
     pop {r3, pc}
 ov006_021f90b4_L2c:
@@ -73,7 +73,7 @@ ov006_021f90b4_L2c:
     sub r3, r2, #0x2
     bl native_fn_02200344
     ldr r0, =native_fn_021f9460+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     add sp, #0x10
     pop {r3, pc}
 ov006_021f90b4_L4a:
@@ -91,7 +91,7 @@ ov006_021f90b4_L4a:
     sub r3, r2, #0x2
     bl native_fn_02200344
     ldr r0, =native_fn_021f92d4+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
 ov006_021f90b4_L6e:
     add sp, #0x10
     pop {r3, pc}

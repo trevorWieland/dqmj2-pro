@@ -12,7 +12,7 @@ u32 native_ov006_021f4f44(s32 arg0, u32 arg1, u32 arg2) {
     native_fn_ov006_021f5010();
     native_fn_ov006_021f50b0();
     native_fn_ov006_021ff628();
-    native_fn_ov006_021f52cc(native_fn_ov006_021f5870);
+    ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021f5870);
     do {
         native_fn_ov006_02203cf0();
         M2C_FIELD(native_data_ov006_0221c06c, u32 (**)(void), 0xC)();

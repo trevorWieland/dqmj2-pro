@@ -24,7 +24,7 @@ extern u32 native_fn_02065dec(s32);
 extern u32 native_fn_020756e4(s32, s32, s32);
 extern u32 native_fn_ov000_021e7b9c(s32);
 extern s32 native_fn_ov000_022140c0(void *, const void *, s32);
-extern void *native_fn_ov000_02215698(void);
+extern void *ov000_display_context_02215698(void);
 extern u32 native_fn_ov000_0221573c(s32);
 extern u32 native_fn_ov000_02215bc8(void);
 extern const u8 *native_fn_ov000_02215d94(u8);
@@ -49,7 +49,7 @@ u32 native_main_020731ac(void) {
     void *temp_r9;
     struct { u8 id; u8 allocated; } slot_input;
 
-    native_fn_ov000_02215698();
+    ov000_display_context_02215698();
     temp_r8 = native_data_021c6124.field_d8;
     selected_index = &native_data_021c5b20;
     var_r6 = 0;

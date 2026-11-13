@@ -15,7 +15,7 @@ u32 native_ov001_0220c888(void) {
     if (temp_r0 == 4) {
         var_r6 = NULL;
     } else {
-        var_r6 = native_fn_ov001_021db438((s32) temp_r5, temp_r0);
+        var_r6 = ov001_side_slot_record_021db438((s32) temp_r5, temp_r0);
     }
     if (native_data_ov001_0223e088.field_e == 0) {
         temp_r7 = native_fn_02066a7c(temp_r4);

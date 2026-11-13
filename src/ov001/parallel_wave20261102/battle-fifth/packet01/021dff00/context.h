@@ -23,7 +23,7 @@ extern u32 native_fn_ov001_021dbb9c(u32 arg0,u32 arg1);
 extern u32 native_fn_ov001_021dc230(u32 arg0,u32 arg1);
 extern u32 native_fn_ov001_021eea10(u32 arg0,u32 arg1);
 extern u32 native_fn_ov001_021eeb70(u32 arg0);
-extern s32 native_fn_ov001_021eec7c(u32 arg0,u8 *arg1,s32 arg2);
+extern s32 ov001_effect_resource_create_021eec7c(u32 arg0,u8 *arg1,s32 arg2);
 typedef struct {
     u8 unknown_0[0x8];
     s8 field_8;

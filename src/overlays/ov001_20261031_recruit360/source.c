@@ -46,9 +46,9 @@ u32 native_ov001_0220984c(void) {
         native_fn_ov001_0220aaa0();
         native_fn_ov001_0220aab8(native_data_ov001_0223df1c);
         native_fn_ov001_0220a5e0();
-        native_fn_ov001_0220ad70(native_fn_ov001_02202360(6));
-        native_fn_ov001_0220af00(native_fn_ov001_02202360(6), 0);
-        native_fn_ov001_0220af68(native_fn_ov001_02202360(6));
+        native_fn_ov001_0220ad70(ov001_table_f0_entry_02202360(6));
+        native_fn_ov001_0220af00(ov001_table_f0_entry_02202360(6), 0);
+        native_fn_ov001_0220af68(ov001_table_f0_entry_02202360(6));
         native_fn_ov001_0220a6cc(native_data_ov001_0223def8.field_1c);
         temp_r4_2 = native_fn_02062aa0();
         native_fn_02068eb8(2U, 0, 0, (s8) (temp_r4_2 + native_fn_02062ad0()));
@@ -60,10 +60,10 @@ u32 native_ov001_0220984c(void) {
     case 3:
         coordinates[1] = native_data_ov001_0222e0e4.field_2;
         coordinates[0] = native_data_ov001_0222e0e4.field_0;
-        native_fn_ov001_0220af00(native_fn_ov001_02202360(6), 0);
-        native_fn_ov001_0220af68(native_fn_ov001_02202360(6));
-        native_fn_ov001_0220afe4(native_fn_ov001_02202360(6), native_data_ov001_0223def8.field_18);
-        native_fn_ov001_0220b0f0(native_fn_ov001_02202360(6), 2, coordinates, 2, 9, 0xE);
+        native_fn_ov001_0220af00(ov001_table_f0_entry_02202360(6), 0);
+        native_fn_ov001_0220af68(ov001_table_f0_entry_02202360(6));
+        native_fn_ov001_0220afe4(ov001_table_f0_entry_02202360(6), native_data_ov001_0223def8.field_18);
+        native_fn_ov001_0220b0f0(ov001_table_f0_entry_02202360(6), 2, coordinates, 2, 9, 0xE);
         var_r5 = 4;
         break;
     }

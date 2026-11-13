@@ -4,7 +4,7 @@
    resume or the restart path before switching the channel table. */
 void native_ov006_021e5d90(void)
 {
-    if (native_fn_ov006_021e65a4() != 0) {
+    if (ov006_active_state_value_021e65a4() != 0) {
         *(s32 *)(native_data_ov006_0220d108 + 0x08) = -1;
         if (*(s32 *)(native_data_ov006_02218d70 + 0x08) != 0) {
             native_fn_ov006_021e3f28(0x15);
@@ -13,5 +13,5 @@ void native_ov006_021e5d90(void)
             native_fn_ov006_021e3f28(2);
         }
     }
-    native_fn_ov006_021e3cd8();
+    ov006_forward_four_args_021e3cd8();
 }

@@ -14,8 +14,8 @@ typedef double f64;
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 extern u32 native_fn_0207afec();
 extern u32 native_fn_0207b004();
-extern u32 native_fn_ov001_021db438();
-extern u32 native_fn_ov001_021db8d0();
+extern u32 ov001_side_slot_record_021db438();
+extern u32 ov001_record_is_active_021db8d0();
 extern u32 native_fn_ov001_021dc108();
 u32 native_ov001_021f2304(void *arg0, u32 arg1, s32 arg2) {
     u32 temp_r4;
@@ -29,12 +29,12 @@ u32 native_ov001_021f2304(void *arg0, u32 arg1, s32 arg2) {
     if (arg2 != 0) {
         return (u32) M2C_FIELD(arg0, u8 *, 0x31F);
     }
-    temp_r4 = native_fn_ov001_021db438(M2C_FIELD(arg0, u8 *, 0x31E), 0);
+    temp_r4 = ov001_side_slot_record_021db438(M2C_FIELD(arg0, u8 *, 0x31E), 0);
     if (native_fn_0207b004(arg1, 0x8000) != 0) {
         var_r7 = temp_r4 + 0x880;
         var_r6 = 2;
         do {
-            if ((native_fn_ov001_021db8d0(var_r7) != 0) && (M2C_FIELD(var_r7, s8 *, 0x257) != 0)) {
+            if ((ov001_record_is_active_021db8d0(var_r7) != 0) && (M2C_FIELD(var_r7, s8 *, 0x257) != 0)) {
                 if (native_fn_ov001_021dc108(var_r7) != 0) {
                     var_r5 = var_r6;
                 }
@@ -47,7 +47,7 @@ u32 native_ov001_021f2304(void *arg0, u32 arg1, s32 arg2) {
         var_r4 = temp_r4 + 0x880;
         var_r6_2 = 2;
         do {
-            if ((native_fn_ov001_021db8d0(var_r4) != 0) && (M2C_FIELD(var_r4, s8 *, 0x251) != 0)) {
+            if ((ov001_record_is_active_021db8d0(var_r4) != 0) && (M2C_FIELD(var_r4, s8 *, 0x251) != 0)) {
                 if (native_fn_ov001_021dc108(var_r4) != 0) {
                     var_r5 = var_r6_2;
                 }

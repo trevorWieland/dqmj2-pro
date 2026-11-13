@@ -27,8 +27,8 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_02008e0c(void);
-extern void native_fn_021dbd30(void);
-extern void native_fn_02223f20(void);
+extern void ov001_record_field_1f2_021dbd30(void);
+extern void ov001_count_candidates_02223f20(void);
 
 
 asm u32 native_ov001_02224ed0 (register u32 a0)
@@ -48,7 +48,7 @@ ov001_02224ed0_L28:
     cmp r0, #0
     beq ov001_02224ed0_L44
     mov r0, r7
-    bl native_fn_021dbd30
+    bl ov001_record_field_1f2_021dbd30
     cmp r0, #0
     streq r4, [r5, r6, lsl #2]
 ov001_02224ed0_L44:
@@ -57,7 +57,7 @@ ov001_02224ed0_L44:
     add r7, r7, #1088
     blt ov001_02224ed0_L28
     add r0, sp, #0
-    bl native_fn_02223f20
+    bl ov001_count_candidates_02223f20
     mov r4, r0
     cmp r4, #0
     ble ov001_02224ed0_L78

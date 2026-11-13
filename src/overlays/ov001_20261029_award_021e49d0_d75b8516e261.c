@@ -9,8 +9,8 @@ extern u32 native_fn_02044f9c();
 extern u32 native_fn_020630b0();
 extern u32 native_fn_0207c958();
 extern u32 native_fn_0207c9b8();
-extern u32 native_fn_ov001_021db438();
-extern u32 native_fn_ov001_021db8d0();
+extern u32 ov001_side_slot_record_021db438();
+extern u32 ov001_record_is_active_021db8d0();
 extern u32 native_fn_ov001_021e485c();
 extern u32 native_fn_ov001_022071a8();
 extern u32 native_fn_ov001_022071d0();
@@ -32,8 +32,8 @@ u32 native_ov001_021e49d0(void) {
     any_level_up = 0;
     slot_index = 0;
     do {
-        actor = native_fn_ov001_021db438(0, slot_index);
-        if (native_fn_ov001_021db8d0(actor) != 0) {
+        actor = ov001_side_slot_record_021db438(0, slot_index);
+        if (ov001_record_is_active_021db8d0(actor) != 0) {
             M2C_FIELD(actor, s32 *, 0x200) = (s32) (M2C_FIELD(actor, s32 *, 0x200) + native_data_ov001_02238cd4.field_30);
             temp_r1 = M2C_FIELD(actor, void **, 0x1E8);
             curve_id = native_fn_02044f9c(M2C_FIELD(temp_r1, s16 *, 0x2A), M2C_FIELD(temp_r1, u8 *, 0x2C));

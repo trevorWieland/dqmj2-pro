@@ -14,7 +14,7 @@ typedef double f64;
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 #define NULL ((void *)0)
 extern u32 native_fn_0206bc80();
-extern u32 native_fn_ov001_021db8d0(u8 *);
+extern u32 ov001_record_is_active_021db8d0(u8 *);
 extern u32 native_fn_ov001_021dc2f8(u32);
 typedef struct {
     u8 unknown_0[0x1c];

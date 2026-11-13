@@ -24,7 +24,7 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_021fdd6c(void);
-extern void native_fn_021f52cc(void);
+extern void ov006_main_loop_set_callback_021f52cc(void);
 
 
 asm u32 native_ov006_021fdde0 (register u32 a0)
@@ -38,7 +38,7 @@ asm u32 native_ov006_021fdde0 (register u32 a0)
     cmp r0, #0x78
     blo ov006_021fdde0_L16
     ldr r0, =native_fn_021fdd6c+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
 ov006_021fdde0_L16:
     pop {r3, pc}
 }

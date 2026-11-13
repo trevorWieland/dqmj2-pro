@@ -16,7 +16,7 @@ extern u32 native_fn_02049ad0();
 extern u32 native_fn_0204b61c();
 extern u32 native_fn_02061260();
 extern u32 native_fn_020642dc();
-extern u32 native_fn_ov000_02215698();
+extern u32 ov000_display_context_02215698();
 extern u32 native_fn_ov000_022156d4();
 extern u32 native_fn_ov000_022162c0();
 extern u32 native_fn_ov000_02216664();
@@ -26,7 +26,7 @@ u32 native_ov000_021fe964(s32 arg0) {
     u32 temp_r0;
     u32 temp_r4;
 
-    temp_r4 = native_fn_ov000_02215698();
+    temp_r4 = ov000_display_context_02215698();
     switch (arg0) {
     case 1:
         native_fn_ov000_022156d4();

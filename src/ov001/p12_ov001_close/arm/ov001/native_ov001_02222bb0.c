@@ -37,7 +37,7 @@ typedef signed char s8;
 extern void native_fn_02218430(void);
 extern void native_fn_0207b004(void);
 extern void native_fn_0207afec(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_022189cc(void);
 extern void native_fn_02026144(void);
 
@@ -78,7 +78,7 @@ ov001_02222bb0_L44:
     mov r7, #0
 ov001_02222bb0_L7c:
     mov r0, r10
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_02222bb0_La8
     ldr r2, [r4, r6, lsl #2]

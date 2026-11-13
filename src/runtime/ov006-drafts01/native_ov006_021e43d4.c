@@ -14,14 +14,14 @@ typedef double f64;
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 extern u32 native_fn_02064488();
 extern u32 native_fn_020bae44();
-extern u32 native_fn_ov006_021e3cd4();
+extern u32 ov006_noop_021e3cd4();
 extern u32 native_fn_ov006_021e7d98();
-extern u32 native_fn_ov006_021e9148();
+extern u32 ov006_commit_mode_transition_021e9148();
 extern u8 native_data_ov006_02207d1c[];
 u32 native_ov006_021e43d4(void) {
-    native_fn_ov006_021e3cd4();
+    ov006_noop_021e3cd4();
     native_fn_020bae44();
     native_fn_ov006_021e7d98(0);
     native_fn_02064488(1);
-    return native_fn_ov006_021e9148(native_data_ov006_02207d1c, 0);
+    return ov006_commit_mode_transition_021e9148(native_data_ov006_02207d1c, 0);
 }

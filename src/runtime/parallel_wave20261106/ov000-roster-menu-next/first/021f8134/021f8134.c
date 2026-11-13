@@ -1,7 +1,7 @@
 #include "context.h"
 void native_ov000_021f8134(void)
 {
-    MenuView *menu=(MenuView *)native_fn_ov000_02215698();
+    MenuView *menu=(MenuView *)ov000_display_context_02215698();
     Point position;
     if(!native_fn_ov000_02215a7c())native_fn_ov000_021f7f9c();
     native_fn_ov000_021f8044();

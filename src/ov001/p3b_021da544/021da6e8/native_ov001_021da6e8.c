@@ -34,7 +34,7 @@ u32 native_ov001_021da6e8(u8 *obj) {
                     (s32)((*(u16 *)(*(u32 *)(*(u32 *)(obj + 0x60) + 8) + 4) << 12) - 1)) {
                     native_fn_ov001_021d9494(obj, 0, 1);
                     native_fn_ov001_021da480(
-                        native_fn_ov001_021db438(obj[0x31E], obj[0x31F]), 0);
+                        ov001_side_slot_record_021db438(obj[0x31E], obj[0x31F]), 0);
                 }
             }
             count = *(s8 *)(obj + 0x354);

@@ -36,5 +36,5 @@ u32 native_ov006_021f5870(void) {
     *(u16 *)0x0400000A = (*(u16 *)0x0400000A & ~3) | 3;
     native_fn_ov006_02203908(1, 2);
     native_fn_ov006_02203908(0, 2);
-    return native_fn_ov006_021f52cc(native_fn_ov006_021f59d8);
+    return ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021f59d8);
 }

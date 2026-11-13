@@ -67,7 +67,7 @@ extern void native_fn_02203ebc(void);
 extern void native_fn_021fa67c(void);
 extern void native_fn_021ff6d4(void);
 extern void native_fn_021fa980(void);
-extern void native_fn_021f52cc(void);
+extern void ov006_main_loop_set_callback_021f52cc(void);
 extern void native_fn_02203eec(void);
 extern void native_fn_021fb414(void);
 extern void native_fn_0220490c(void);
@@ -112,7 +112,7 @@ ov006_021fa484_L30:
     add r0, #0x40
     strb r1, [r0, #0]
     ldr r0, =native_fn_021fa980+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     pop {r3, pc}
 ov006_021fa484_L52:
     mov r0, #0x2

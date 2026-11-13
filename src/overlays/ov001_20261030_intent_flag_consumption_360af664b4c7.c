@@ -4,8 +4,8 @@ typedef signed int s32;
 extern u32 native_fn_01ffa824(void);
 extern u32 native_fn_01ffa84c(void);
 extern u32 native_fn_020444ec(void);
-extern u8 *native_fn_ov001_021db438(s32, s32);
-extern u32 native_fn_ov001_021db8d0(u8 *);
+extern u8 *ov001_side_slot_record_021db438(s32, s32);
+extern u32 ov001_record_is_active_021db8d0(u8 *);
 extern u8 *native_fn_ov001_021e81d0(s32, s32);
 extern void native_fn_ov001_021e8398(s32, s32);
 void native_ov001_021dcbe4(void) {
@@ -32,10 +32,10 @@ ready:
     side_index = 0;
     do {
         side = sides[side_index];
-        actor = native_fn_ov001_021db438(side, 0);
+        actor = ov001_side_slot_record_021db438(side, 0);
         actor_index = 0;
         do {
-            result = native_fn_ov001_021db8d0(actor);
+            result = ov001_record_is_active_021db8d0(actor);
             if (result != 0) {
                 result = ((u32)actor[0x35D] << 29) >> 31;
                 if (result != 0) {

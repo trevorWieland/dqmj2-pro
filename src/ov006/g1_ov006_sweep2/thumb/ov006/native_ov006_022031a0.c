@@ -1,29 +1,14 @@
-/* ov006 row 0x022031a0: 136 bytes.
+/* ov006 row 0x022031A0: 136 bytes.
  *
- * What it does: Writes one block of 1 registers through a writeback base pointer.
+ * ov006_display_blend_start_022031a0: Starts a display blend/fade on the main or sub BLDCNT register and schedules its completion callback.
  *
- * Decoded shape: block fill.
+ * Evidence: Writes 0x04000050 (main BLDCNT) or 0x04001050 (sub BLDCNT) through 020042E0, sets up callback 02203228 with 0xC8 via 0220490C, and returns early while context byte +9 is busy.
+ * Touches: NDS BLDCNT 0x04000050 / 0x04001050; display context 0x0221C180 (+0xC for sub); callback 02203228.
+ * Remaining unknowns: The exact fade target and the meaning of the two arguments passed to 020042E0 are not established.
  *
- *   pool +0x74 -> native_data_0220bb48 (image word 0x0220bb48)
- *   pool +0x78 -> constant 0x0221c180 (image word 0x0221c180)
- *   pool +0x7c -> constant 0x04001050 (image word 0x04001050)
- *   pool +0x80 -> constant 0x04000050 (image word 0x04000050)
- *   pool +0x84 -> native_fn_02203228+1 (image word 0x02203229)
- *   branch +0x22 -> +0x2a
- *   branch +0x28 -> +0x30
- *   branch +0x34 -> +0x3c
- *   branch +0x40 -> +0x4c
- *   branch +0x4a -> +0x54
- *   test +0x16 cmp r0, #0x1
- *   test +0x32 cmp r2, #0x0
- *   test +0x3c cmp r0, #0x1
- *   0 block transfer(s), 9 word store instruction(s)
- *
- * Body: the measured instruction stream transcribed from
- * ov006.bin at 0x022031a0; the literal pool and
- * every branch target are read from the image, not guessed.
- *
- * Unknowns: byte identity proves the instruction stream, not the meaning of the fields, blocks and callee contracts it touches.
+ * The address stays in the symbol and file name because the measurement pairs a
+ * compiled symbol to the private ledger row by its eight-hex address; removing
+ * it would silently unmatch the row under the pinned private ledger.
  */
 typedef unsigned int u32;
 typedef signed int s32;
@@ -38,7 +23,7 @@ extern void native_fn_02203228(void);
 extern void native_fn_0220490c(void);
 
 
-asm u32 native_ov006_022031a0 (register u32 a0)
+asm u32 ov006_display_blend_start_022031a0 (register u32 screen, register u32 arg1, register u32 arg2, register u32 fade)
 {
     push {r3, r4, r5, r6, lr}
     sub sp, #0x4

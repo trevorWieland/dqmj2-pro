@@ -33,10 +33,10 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_02008e0c(void);
-extern void native_fn_021dbd30(void);
+extern void ov001_record_field_1f2_021dbd30(void);
 extern void native_fn_0207b244(void);
 extern void native_fn_021f0858(void);
-extern void native_fn_02223f20(void);
+extern void ov001_count_candidates_02223f20(void);
 
 
 asm u32 native_ov001_02224f54 (register u32 a0)
@@ -52,7 +52,7 @@ asm u32 native_ov001_02224f54 (register u32 a0)
     ldr r6, =0x0000270f
     bl native_fn_02008e0c
     mov r0, r10
-    bl native_fn_021dbd30
+    bl ov001_record_field_1f2_021dbd30
     ldr r2, [r10, #0x1e8]
     mov r1, r0
     add r2, r2, #70
@@ -66,7 +66,7 @@ ov001_02224f54_L50:
     cmp r0, #0
     beq ov001_02224f54_La4
     mov r0, r9
-    bl native_fn_021dbd30
+    bl ov001_record_field_1f2_021dbd30
     mov r1, #0
     str r1, [sp]
     str r1, [sp, #0x4]
@@ -104,7 +104,7 @@ ov001_02224f54_Ldc:
     cmp r4, #3
     blt ov001_02224f54_Lc4
     add r0, sp, #16
-    bl native_fn_02223f20
+    bl ov001_count_candidates_02223f20
     mov r4, r0
     cmp r4, #0
     ble ov001_02224f54_L10c

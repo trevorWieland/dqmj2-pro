@@ -51,7 +51,7 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_02227bf8(void);
-extern void native_fn_02223c54(void);
+extern void ov000_context_02246600_02223c54(void);
 extern void native_fn_02227c60(void);
 extern void native_fn_02008d78(void);
 extern void native_fn_02224b84(void);
@@ -124,7 +124,7 @@ ov000_02225eb8_Lbc:
     movgt r1, #2
     strgtb r1, [r0, #0x1f]
     bgt ov000_02225eb8_L16c
-    bl native_fn_02223c54
+    bl ov000_context_02246600_02223c54
     ldrsb r0, [r0, #89]
     cmp r0, #1
     bne ov000_02225eb8_L168

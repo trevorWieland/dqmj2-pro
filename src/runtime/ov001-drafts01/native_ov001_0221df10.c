@@ -14,7 +14,7 @@ typedef double f64;
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 extern u32 native_fn_020444ec();
 extern u32 native_fn_0207b674();
-extern u32 native_fn_ov001_021db8d0();
+extern u32 ov001_record_is_active_021db8d0();
 u32 native_ov001_0221df10(void *arg0) {
     s32 var_r5;
     void *var_r6;
@@ -22,7 +22,7 @@ u32 native_ov001_0221df10(void *arg0) {
     var_r6 = M2C_FIELD(arg0, void **, 8);
     var_r5 = 0;
 loop_1:
-    if ((native_fn_ov001_021db8d0(var_r6) != 0) && ((native_fn_020444ec() != 0) || (M2C_FIELD(M2C_FIELD(var_r6, void **, 0x1E8), u8 *, 0xAF) == 0)) && ((s32) native_fn_0207b674(5, M2C_FIELD(var_r6, void **, 0x1E8) + 0x46) > 0)) {
+    if ((ov001_record_is_active_021db8d0(var_r6) != 0) && ((native_fn_020444ec() != 0) || (M2C_FIELD(M2C_FIELD(var_r6, void **, 0x1E8), u8 *, 0xAF) == 0)) && ((s32) native_fn_0207b674(5, M2C_FIELD(var_r6, void **, 0x1E8) + 0x46) > 0)) {
         return 1U;
     }
     var_r5 += 1;

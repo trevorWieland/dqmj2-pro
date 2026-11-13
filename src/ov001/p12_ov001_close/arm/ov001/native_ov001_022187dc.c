@@ -1,31 +1,14 @@
-/* ov001 row 0x022187dc: 160 bytes.
+/* ov001 row 0x022187DC: 160 bytes.
  *
- * What it does: 40 instructions; 3 call(s) to 0x021db8d0, 0x02218860, 0x022187f4; loops (back edge at +0x1c); returns through pop {r4, r5, r6, r7, r8, pc}
+ * ov001_any_active_slot_compare_022187dc: Returns 1 when any of three active records satisfies the selected comparison.
  *
- * Decoded shape: loop with 3 calls (40 instructions, 3 calls, 5 branches, 2 back edges, 0 literal slots).
+ * Evidence: Loops three 0x440-byte records, skips inactive with 021DB8D0, reads signed byte [record + offset + 0x24C], and returns 1 for mode 0 (>=), 1 (==), 2 (<=).
+ * Touches: three 0x440-byte records; signed byte +0x24C; 021DB8D0 predicate.
+ * Remaining unknowns: What the signed byte at +0x24C represents is not established.
  *
- *   branch +0x24 -> +0x84
- *   branch +0x2c -> +0x48
- *   branch +0x3c -> +0x84
- *   branch +0x4c -> +0x68
- *   branch +0x5c -> +0x84
- *   branch +0x6c -> +0x84
- *   back edge +0x94 -> +0x18
- *   test +0x20 cmp r0, #0
- *   test +0x28 cmp r6, #0
- *   test +0x38 cmp r0, r7
- *   test +0x48 cmp r6, #1
- *   test +0x58 cmp r7, r0
- *   test +0x68 cmp r6, #2
- *   test +0x78 cmp r0, r7
- *   test +0x88 cmp r4, #3
- *   0 block transfer(s), 0 word store instruction(s)
- *
- * Body: the measured instruction stream transcribed from
- * ov001.bin at 0x022187dc; the literal pool and
- * every branch target are read from the image, not guessed.
- *
- * Unknowns: byte identity fixes the instruction stream, not the field, block and callee semantics behind the addresses and strides it touches.
+ * The address stays in the symbol and file name because the measurement pairs a
+ * compiled symbol to the private ledger row by its eight-hex address; removing
+ * it would silently unmatch the row under the pinned private ledger.
  */
 typedef unsigned int u32;
 typedef signed int s32;
@@ -34,10 +17,10 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021db8d0(void);
+extern void ov001_record_is_active_021db8d0(void);
 
 
-asm u32 native_ov001_022187dc (register u32 a0)
+asm u32 ov001_any_active_slot_compare_022187dc (register u8 *records, register u32 offset, register s32 value, register u32 mode)
 {
     stmdb sp!, {r4, r5, r6, r7, r8, lr}
     mov r8, r0
@@ -47,7 +30,7 @@ asm u32 native_ov001_022187dc (register u32 a0)
     mov r4, #0
 ov001_022187dc_L18:
     mov r0, r8
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_022187dc_L84
     cmp r6, #0

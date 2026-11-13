@@ -38,10 +38,10 @@ extern s32 native_fn_ov001_021d9494(u8 *, u32, s32);
 extern s32 native_fn_ov001_021d95b0(u8 *);
 extern s32 native_fn_ov001_021d96d4(u8 *, u32);
 extern s32 native_fn_ov001_021db410(u8 *, s32);
-extern u32 native_fn_ov001_021db438(u32, u32);
+extern u32 ov001_side_slot_record_021db438(u32, u32);
 extern u32 native_fn_ov001_021d8dec(u32);
 extern s32 native_fn_ov001_021dc940(u8 *, s32);
 extern s32 native_fn_ov001_021e865c(u32, u32);
-extern s32 native_fn_ov001_021eec7c(u32, u8 *, s32);
+extern s32 ov001_effect_resource_create_021eec7c(u32, u8 *, s32);
 extern s32 native_fn_ov001_021f949c(u32, u32);
 

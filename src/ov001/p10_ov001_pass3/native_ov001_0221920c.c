@@ -17,7 +17,7 @@ s32 native_ov001_0221920c(Record *record)
     if (native_fn_ov001_022191e8() != 0) {
         i = 0;
         do {
-            if (native_fn_ov001_021db8d0(entry) != 0)
+            if (ov001_record_is_active_021db8d0(entry) != 0)
                 count++;
             i++;
             entry += 0x440;

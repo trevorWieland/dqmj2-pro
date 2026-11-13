@@ -86,13 +86,13 @@ extern void native_fn_0202ac08(void);
 extern void native_fn_021f2120(void);
 extern void native_fn_0207b02c(void);
 extern void native_fn_021f2408(void);
-extern void native_fn_021db438(void);
+extern void ov001_side_slot_record_021db438(void);
 extern void native_fn_021e2444(void);
 extern void native_fn_021f433c(void);
 extern void native_fn_0220f868(void);
 extern void native_fn_021f2230(void);
 extern void native_fn_021f42b8(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_021f2304(void);
 extern void native_fn_021e1a60(void);
 extern void native_fn_021dc940(void);
@@ -207,7 +207,7 @@ ov001_021f43bc_L148:
     mov r0, r7
     mov r1, #0
     strb r3, [r2, #0x16]
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     ldr r9, =0x0223989c
     mov r6, r0
     mov r4, #0
@@ -315,7 +315,7 @@ ov001_021f43bc_L2b4:
     cmp r2, #0
     beq ov001_021f43bc_L3c8
     ldrb r0, [r0, #0x11]
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r9, r0
     mov r10, #0
     ldr r4, =0x0223989c
@@ -325,7 +325,7 @@ ov001_021f43bc_L2b4:
     add r5, sp, #28
 ov001_021f43bc_L338:
     mov r0, r7
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021f43bc_L3a4
     ldrh r1, [r4, #80]

@@ -1,7 +1,7 @@
 #include "context.h"
 void native_main_02073090(s32 option)
 {
-    void *object=native_fn_ov000_02215698();
+    void *object=ov000_display_context_02215698();
     u8 *state=(u8 *)&native_data_021c5b20;
     native_fn_ov000_022162c0(native_fn_02049ad0(1));
     native_fn_ov000_02216664(state);

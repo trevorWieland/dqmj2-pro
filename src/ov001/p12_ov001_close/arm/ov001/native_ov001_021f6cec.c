@@ -49,10 +49,10 @@ typedef signed char s8;
 
 extern void native_fn_021f69a0(void);
 extern void native_fn_021f2120(void);
-extern void native_fn_021db438(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_side_slot_record_021db438(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_0205d790(void);
-extern void native_fn_021eec7c(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_0220f868(void);
 extern void native_fn_021f2230(void);
 extern void native_fn_021f4210(void);
@@ -94,9 +94,9 @@ ov001_021f6cec_L70:
 ov001_021f6cec_L78:
     mov r0, r4
     mov r1, r7
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r6, r0
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     addne r0, r6, #768
     ldrneh r0, [r0, #76]
@@ -107,7 +107,7 @@ ov001_021f6cec_L78:
     mov r2, r0
     ldrh r0, [r1, #76]
     mov r1, r6
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     add r0, r6, #768
     strh r5, [r0, #76]
 ov001_021f6cec_Lc0:

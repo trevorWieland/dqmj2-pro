@@ -57,7 +57,7 @@ extern void native_fn_0202ac08(void);
 extern u8 native_data_0222ed16[];
 extern void native_fn_021eea10(void);
 extern void native_fn_0205d790(void);
-extern void native_fn_021eec7c(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_02041f74(void);
 extern void native_fn_021eedbc(void);
 extern void native_fn_0205d6f4(void);
@@ -106,7 +106,7 @@ ov001_021f2e7c_L58:
     bmi ov001_021f2e7c_La4
     ldrsh r0, [r6, #104]
     ldr r1, [r6, #0x84]
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     str r0, [r6, #0x88]
     b ov001_021f2e7c_Lec
 ov001_021f2e7c_La4:
@@ -140,7 +140,7 @@ ov001_021f2e7c_Lec:
     mov r2, r0
     ldrsh r0, [r6, #106]
     ldr r1, [r6, #0x84]
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     str r0, [r6, #0x8c]
 ov001_021f2e7c_L120:
     add r9, r9, #1

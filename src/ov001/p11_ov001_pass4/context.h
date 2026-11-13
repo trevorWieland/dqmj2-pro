@@ -62,13 +62,13 @@ extern u8 native_data_ov001_0222e8c0[];
 
 /* overlay and main call targets */
 extern s32 native_fn_0207afec(s32 value);
-extern s32 native_fn_ov001_021db8d0(u8 *entry);
+extern s32 ov001_record_is_active_021db8d0(u8 *entry);
 extern s32 native_fn_ov001_02218524(u8 *entry, s32 flag);
-extern void native_fn_ov001_02223fe8(u32 *block, u8 *entry);
-extern void native_fn_ov001_02224050(void *local);
-extern void native_fn_ov001_02224570(void *local, u8 *entry, s32 value);
+extern void ov001_clear_free_candidate_slots_02223fe8(u32 *block, u8 *entry);
+extern void ov001_pick_random_candidate_02224050(void *local);
+extern void ov001_filter_highest_priority_candidates_02224570(void *local, u8 *entry, s32 value);
 extern void native_fn_ov001_0222463c(void *local, u8 *entry, s32 value);
 extern void native_fn_ov001_02225bac(void *local, u8 *entry, s32 value);
 extern void native_fn_ov001_02225d6c(void *local, u8 *entry, s32 value);
 extern s32 native_fn_ov001_02226bdc(void *local, void *record, s32 command);
-extern s32 native_fn_ov001_02226cb0(void *local);
+extern s32 ov001_first_candidate_02226cb0(void *local);

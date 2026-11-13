@@ -126,10 +126,10 @@ u32 native_ov001_02209cc0(void) {
         }
         break;
     case 3:
-        native_fn_020491f8(native_fn_ov001_02202360(6));
+        native_fn_020491f8(ov001_table_f0_entry_02202360(6));
         temp_r0_6 = M2C_FIELD(temp_r6, u16 *, 2);
         if (temp_r0_6 & 1) {
-            if (*(s32 *) native_fn_ov001_02202360(6) != 0) {
+            if (*(s32 *) ov001_table_f0_entry_02202360(6) != 0) {
                 var_r4 = 2;
             } else {
                 native_fn_02047ff0(native_fn_02062a10(native_data_ov001_0223def8.field_18), 0x14, 0);
@@ -143,8 +143,8 @@ u32 native_ov001_02209cc0(void) {
         break;
     }
     if (var_r5 != 0) {
-        native_fn_ov001_0220b21c(native_fn_ov001_02202360(6));
-        native_fn_ov001_0220a97c(native_fn_ov001_02202360(6));
+        native_fn_ov001_0220b21c(ov001_table_f0_entry_02202360(6));
+        native_fn_ov001_0220a97c(ov001_table_f0_entry_02202360(6));
     }
     return var_r4;
 }

@@ -5,7 +5,7 @@ extern void native_fn_02008d78(void *, u32, u32);
 extern u32 native_fn_0203d2ec(u32);
 extern u32 native_fn_02044508(void);
 extern u32 native_fn_0204457c(void);
-extern u32 native_fn_ov001_021db530(signed int);
+extern u32 ov001_mode_byte_021db530(signed int);
 extern void native_fn_ov001_021dcabc(void);
 extern void native_fn_ov001_021dcbe4(void);
 extern u32 native_fn_ov001_021de590(void);
@@ -30,8 +30,8 @@ extern u8 native_data_ov001_0223896c[];
 u32 native_ov001_021de598(void) {
     u32 temp_r4;
 
-    temp_r4 = native_fn_ov001_021db530(0);
-    native_data_ov001_022388ec.field_e = (s8) (temp_r4 + native_fn_ov001_021db530(1));
+    temp_r4 = ov001_mode_byte_021db530(0);
+    native_data_ov001_022388ec.field_e = (s8) (temp_r4 + ov001_mode_byte_021db530(1));
     native_data_ov001_022388ec.field_12 = 0;
     native_data_ov001_022388ec.field_1a = 0;
     native_data_ov001_022388ec.field_b = 0;

@@ -21,7 +21,7 @@ u8 *native_ov001_021db918(u32 table) {
     do {
         index = native_fn_0203d294(limit) * 1088;
         if (base[index + 0x31C] != 0) {
-            if (native_fn_ov001_021db8d0(base + index) != 0) {
+            if (ov001_record_is_active_021db8d0(base + index) != 0) {
                 found = base + index;
                 break;
             }
@@ -34,7 +34,7 @@ u8 *native_ov001_021db918(u32 table) {
             record = base;
             do {
                 if (record[0x31C] != 0) {
-                    if (native_fn_ov001_021db8d0(record) != 0) {
+                    if (ov001_record_is_active_021db8d0(record) != 0) {
                         found = base + i * 1088;
                         break;
                     }

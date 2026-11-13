@@ -22,10 +22,10 @@ u32 native_ov006_021f7c64(void) {
             native_fn_ov006_02203954(0, 0x15);
             if (*native_data_ov006_0221c0cc == 0) {
                 native_fn_ov006_021f52d8(2, 1);
-                return native_fn_ov006_021f52cc(native_fn_ov006_021fd11c);
+                return ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021fd11c);
             }
             native_fn_ov006_021f52d8(0, 0);
-            var_r0 = native_fn_ov006_021f52cc(native_fn_ov006_021f7da4);
+            var_r0 = ov006_main_loop_set_callback_021f52cc(native_fn_ov006_021f7da4);
             
             return var_r0;
         }

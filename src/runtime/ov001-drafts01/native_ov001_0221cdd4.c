@@ -13,7 +13,7 @@ typedef double f64;
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 extern u32 native_fn_02026144();
-extern u32 native_fn_ov001_021db8d0();
+extern u32 ov001_record_is_active_021db8d0();
 u32 native_ov001_0221cdd4(void *arg0) {
     s32 var_r4;
     s32 var_r5;
@@ -25,7 +25,7 @@ u32 native_ov001_0221cdd4(void *arg0) {
     var_r6 = 0;
     var_r4 = 0;
     do {
-        if (native_fn_ov001_021db8d0(var_r7) != 0) {
+        if (ov001_record_is_active_021db8d0(var_r7) != 0) {
             if ((M2C_FIELD(var_r7, s8 *, 0x236) == 0) && (M2C_FIELD(var_r7, s8 *, 0x235) == 0)) {
                 var_r6 += 1;
                 var_r5 += M2C_FIELD(M2C_FIELD(var_r7, void **, 0x1E8), u8 *, 0x99);

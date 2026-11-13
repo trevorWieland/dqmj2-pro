@@ -36,7 +36,7 @@ u32 native_ov000_0220d46c(ActorView *actor)
         native_fn_ov000_021e60a8(actor->scratch.index,&destination);
         actor->position=destination;
         actor->secondaryPosition=destination;
-        native_fn_020420c4(actor,native_fn_ov000_021e07b8(0));
+        native_fn_020420c4(actor,ov000_saved_world_position_get_021e07b8(0));
         actor->timer=0;
         actor->phase=56;
     }

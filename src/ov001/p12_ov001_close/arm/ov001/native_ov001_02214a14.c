@@ -33,10 +33,10 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021db438(void);
-extern void native_fn_021db530(void);
+extern void ov001_side_slot_record_021db438(void);
+extern void ov001_mode_byte_021db530(void);
 extern void native_fn_0203d294(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_021f07dc(void);
 extern void native_fn_021db578(void);
 extern void native_fn_021dbd24(void);
@@ -60,10 +60,10 @@ asm u32 native_ov001_02214a14 (register u32 a0)
     moveq r4, #0
     movne r4, #1
     mov r0, r4
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r10, r0
     mov r0, r4
-    bl native_fn_021db530
+    bl ov001_mode_byte_021db530
     mov r8, r0
 ov001_02214a14_L3c:
     mov r0, r8
@@ -71,7 +71,7 @@ ov001_02214a14_L3c:
     mov r9, r0
     add r0, r9, r9, lsl #4
     add r0, r10, r0, lsl #6
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_02214a14_L3c
     cmp r8, #0
@@ -82,7 +82,7 @@ ov001_02214a14_L3c:
     mov r11, r6
 ov001_02214a14_L74:
     mov r0, r10
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_02214a14_L130
     cmp r6, r9

@@ -37,7 +37,7 @@ typedef signed char s8;
 extern void native_fn_02041f74(void);
 extern void native_fn_021e6158(void);
 extern void native_fn_021d8c18(void);
-extern void native_fn_021e07b8(void);
+extern void ov000_saved_world_position_get_021e07b8(void);
 extern void native_fn_021e61c0(void);
 extern void native_fn_02041f34(void);
 extern void native_fn_021e61f8(void);
@@ -78,7 +78,7 @@ ov000_0220c164_L64:
     mov r6, #0
     mov r0, r6
     mov r5, r6
-    bl native_fn_021e07b8
+    bl ov000_saved_world_position_get_021e07b8
     add r3, sp, #28
     ldmia r0, {r0, r1, r2}
     stmia r3, {r0, r1, r2}

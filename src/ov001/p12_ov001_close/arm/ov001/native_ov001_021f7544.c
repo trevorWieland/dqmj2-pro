@@ -79,7 +79,7 @@ extern void native_fn_021f2464(void);
 extern void native_fn_0220f600(void);
 extern void native_fn_021dc59c(void);
 extern void native_fn_0205d790(void);
-extern void native_fn_021eec7c(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_021dc5d4(void);
 
 
@@ -288,7 +288,7 @@ ov001_021f7544_L2cc:
     mov r2, r0
     ldrh r0, [r1, #76]
     mov r1, r10
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     mov r0, r10
     bl native_fn_021dc5d4
     mov r1, #0

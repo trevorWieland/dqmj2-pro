@@ -34,9 +34,9 @@ typedef signed char s8;
 extern void native_fn_0206d230(void);
 extern void native_fn_02008e0c(void);
 extern void native_fn_0202a498(void);
-extern void native_fn_021db530(void);
+extern void ov001_mode_byte_021db530(void);
 extern void native_fn_021fd074(void);
-extern void native_fn_021db438(void);
+extern void ov001_side_slot_record_021db438(void);
 extern void native_fn_0206d114(void);
 extern void native_fn_021fcd14(void);
 
@@ -72,7 +72,7 @@ ov001_02202c9c_L5c:
     moveq r10, r11
     movne r10, #1
     mov r0, r10
-    bl native_fn_021db530
+    bl ov001_mode_byte_021db530
     mov r9, r0
     mov r7, #0
     cmp r9, #0
@@ -86,7 +86,7 @@ ov001_02202c9c_L88:
     mov r5, r0
     mov r0, r10
     mov r1, r7
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     ldrsb r0, [r5, #12]
     mov r1, r4
     bl native_fn_0206d114

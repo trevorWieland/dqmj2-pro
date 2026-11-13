@@ -12,7 +12,7 @@ typedef double f64;
 #define MULT_HI(a, b) ((s32)(((s64)(s32)(a) * (s32)(b)) >> 32))
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
-extern u32 native_fn_ov001_021db438();
+extern u32 ov001_side_slot_record_021db438();
 extern u32 native_fn_ov001_021dc8b4();
 u32 native_ov001_021dbb9c(u32 arg0, u32 arg1) {
     s32 var_r5;
@@ -25,7 +25,7 @@ u32 native_ov001_021dbb9c(u32 arg0, u32 arg1) {
     if (var_r8 != 0) {
         var_r6 = 1;
     } else {
-        var_r8 = native_fn_ov001_021db438(arg1, 0);
+        var_r8 = ov001_side_slot_record_021db438(arg1, 0);
         var_r6 = 3;
     }
     var_r5 = 0;

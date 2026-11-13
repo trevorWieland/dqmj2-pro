@@ -19,7 +19,7 @@ extern u32 native_fn_ov001_021dacd0();
 extern u32 native_fn_ov001_021daec8();
 extern u32 native_fn_ov001_021daf48();
 extern u32 native_fn_ov001_021dafb4();
-extern u32 native_fn_ov001_021db8d0();
+extern u32 ov001_record_is_active_021db8d0();
 u32 native_ov001_021db020(void *arg0) {
     s32 var_r4;
     u32 var_r5;
@@ -30,7 +30,7 @@ u32 native_ov001_021db020(void *arg0) {
     var_r4 = 0;
     do {
         if (M2C_FIELD(var_r6, u8 *, 0x31C) != 0) {
-            if (native_fn_ov001_021db8d0(var_r6) != 0) {
+            if (ov001_record_is_active_021db8d0(var_r6) != 0) {
                 native_fn_ov001_021da6e8(var_r6);
                 native_fn_ov001_021da814(var_r6);
                 native_fn_ov001_021daec8(var_r6);

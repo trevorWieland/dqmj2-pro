@@ -28,7 +28,7 @@ typedef signed char s8;
 
 extern void native_fn_021f5740(void);
 extern void native_fn_021fbc1c(void);
-extern void native_fn_021f52cc(void);
+extern void ov006_main_loop_set_callback_021f52cc(void);
 extern void native_fn_021ff718(void);
 extern void native_fn_021ff6d4(void);
 extern void native_fn_02200344(void);
@@ -50,7 +50,7 @@ ov006_021fbd00_L10:
     mov r1, #0x1
     strb r1, [r0, #0]
     ldr r0, =native_fn_021fbc1c+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     pop {r3, pc}
 ov006_021fbd00_L1e:
     ldr r0, =0x0221c0f8
@@ -68,7 +68,7 @@ ov006_021fbd00_L1e:
     bl native_fn_02200344
     bl native_fn_021f23f4
     ldr r0, =native_fn_021fbd58+1
-    bl native_fn_021f52cc
+    bl ov006_main_loop_set_callback_021f52cc
     pop {r3, pc}
     mov r8, r8
 }

@@ -43,7 +43,7 @@ typedef signed char s8;
 extern void native_fn_0202ac08(void);
 extern void native_fn_021eea10(void);
 extern void native_fn_0205d790(void);
-extern void native_fn_021eec7c(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_021f5c38(void);
 extern void native_fn_021f5cc0(void);
 extern void native_fn_0205d6f4(void);
@@ -81,7 +81,7 @@ ov001_021f5d6c_L44:
     beq ov001_021f5d6c_L8c
     mov r1, r4
     mov r0, #140
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     str r0, [r4, #0x338]
     mov r12, #1
     mov r0, r4

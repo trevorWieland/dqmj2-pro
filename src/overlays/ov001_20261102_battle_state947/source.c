@@ -12,7 +12,7 @@ u32 native_ov001_021e00b4(void) {
             } else {
                 M2C_FIELD(native_data_ov001_022388ec, s8 *, 8) = 0x1C;
             }
-        } else if (native_fn_ov001_021db8d0(temp_r0) != 0) {
+        } else if (ov001_record_is_active_021db8d0(temp_r0) != 0) {
             native_fn_0202ac08(native_data_ov001_02238988);
             native_fn_ov001_021eea10(0x7D, 0);
             M2C_FIELD(native_data_ov001_022388ec, s8 *, 0x29) = 5;
@@ -22,16 +22,16 @@ u32 native_ov001_021e00b4(void) {
     }
     else if (M2C_FIELD(native_data_ov001_022388ec, s8 *, 0x29) == 0x5) {
         native_fn_ov001_021d7e80(*(native_data_ov001_02238950 + (M2C_FIELD(native_data_ov001_022388ec, s8 *, 0x28))));
-        M2C_FIELD(native_data_ov001_022388ec, u32 *, 0x44) = native_fn_ov001_021eec7c(0x7DU, *(native_data_ov001_02238950 + (M2C_FIELD(native_data_ov001_022388ec, s8 *, 0x28))), native_fn_0205d790(0x7DU));
+        M2C_FIELD(native_data_ov001_022388ec, u32 *, 0x44) = ov001_effect_resource_create_021eec7c(0x7DU, *(native_data_ov001_02238950 + (M2C_FIELD(native_data_ov001_022388ec, s8 *, 0x28))), native_fn_0205d790(0x7DU));
         native_fn_ov001_021f1294(0x10, 2);
-        native_fn_ov001_021f1354(5, 3, 0x3B, 1);
-        native_fn_ov001_021f1438(native_fn_ov001_021f1414((u32) M2C_FIELD(*(native_data_ov001_02238950 + (M2C_FIELD(native_data_ov001_022388ec, s8 *, 0x28))), u8 *, 0x31E)));
+        ov001_begin_state_transition_021f1354(5, 3, 0x3B, 1);
+        ov001_select_mode_id_021f1438(native_fn_ov001_021f1414((u32) M2C_FIELD(*(native_data_ov001_02238950 + (M2C_FIELD(native_data_ov001_022388ec, s8 *, 0x28))), u8 *, 0x31E)));
         M2C_FIELD(native_data_ov001_022388ec, s8 *, 0x29) = 6;
     }
     else if (M2C_FIELD(native_data_ov001_022388ec, s8 *, 0x29) == 0x6) {
         if (native_fn_0205d6f4(M2C_FIELD(native_data_ov001_022388ec, u32 *, 0x44)) == 0) {
             M2C_FIELD(native_data_ov001_022388ec, s8 *, 0x29) = 8;
-            native_fn_ov001_021f14a4();
+            ov001_clear_state_flag4_021f14a4();
         }
     }
     else if (M2C_FIELD(native_data_ov001_022388ec, s8 *, 0x29) == 0x8) {

@@ -25,7 +25,7 @@ extern u32 native_fn_02008e0c(u32, u32, u32);
 extern u32 native_fn_0205e7a8(u32, u32);
 extern u32 native_fn_020620e8(u32, u32);
 extern u32 native_fn_02084730(void);
-extern u32 native_fn_ov000_02223c54();
+extern u32 ov000_context_02246600_02223c54();
 extern u8 native_data_021ceb54[];
 extern u8 native_data_021ceb94[];
 void native_itcm_01ff951c(u32 arg0, u32 arg1, u32 arg2, u32 arg3) {
@@ -33,7 +33,7 @@ void native_itcm_01ff951c(u32 arg0, u32 arg1, u32 arg2, u32 arg3) {
     u32 temp_r0_2;
     u32 temp_r4;
 
-    temp_r4 = native_fn_ov000_02223c54();
+    temp_r4 = ov000_context_02246600_02223c54();
     native_fn_01ffa5ac((u32) native_data_021ceb94, 0x34U, 2U);
     temp_r0 = native_fn_01ffa6c0(0U, 1U);
     if (temp_r0 != 0) {

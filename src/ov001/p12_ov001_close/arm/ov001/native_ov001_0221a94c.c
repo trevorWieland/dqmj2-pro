@@ -27,9 +27,9 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021db8d0(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_021dbe68(void);
-extern void native_fn_0221873c(void);
+extern void ov001_all_active_slots_compare_0221873c(void);
 
 
 asm u32 native_ov001_0221a94c (register u32 a0)
@@ -41,7 +41,7 @@ asm u32 native_ov001_0221a94c (register u32 a0)
     mov r7, r5
 ov001_0221a94c_L14:
     mov r0, r7
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_0221a94c_L34
     mov r0, r7
@@ -61,6 +61,6 @@ ov001_0221a94c_L50:
     mov r1, #4
     mov r2, #2
     mov r3, #0
-    bl native_fn_0221873c
+    bl ov001_all_active_slots_compare_0221873c
     ldmia sp!, {r3, r4, r5, r6, r7, pc}
 }

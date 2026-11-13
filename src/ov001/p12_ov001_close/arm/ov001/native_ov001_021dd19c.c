@@ -173,7 +173,7 @@ typedef signed char s8;
 
 extern void native_fn_021dba58(void);
 extern void native_fn_021dbac8(void);
-extern void native_fn_021db530(void);
+extern void ov001_mode_byte_021db530(void);
 extern void native_fn_021d732c(void);
 extern void native_fn_021d7d4c(void);
 extern void native_fn_021d7564(void);
@@ -249,9 +249,9 @@ asm u32 native_ov001_021dd19c (register u32 a0)
     bl native_fn_021dbac8
     mov r10, r0
     mov r0, #0
-    bl native_fn_021db530
+    bl ov001_mode_byte_021db530
     mov r0, #1
-    bl native_fn_021db530
+    bl ov001_mode_byte_021db530
     str r0, [sp]
     mov r0, #2
     mov r1, r0

@@ -13,9 +13,9 @@ typedef double f64;
 #define MULTU_HI(a, b) ((u32)(((u64)(u32)(a) * (u32)(b)) >> 32))
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 #define NULL ((void *)0)
-extern u32 native_fn_ov001_021db8d0(u8 *);
+extern u32 ov001_record_is_active_021db8d0(u8 *);
 extern u32 native_fn_ov001_021e29e8();
-extern u32 native_fn_ov001_022187dc();
+extern u32 ov001_any_active_slot_compare_022187dc();
 extern u32 native_fn_ov001_02218dbc();
 
 typedef struct {u8 opaque[0x4];s32 value;} Field491_s32_0004;

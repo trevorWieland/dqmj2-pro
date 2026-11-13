@@ -86,7 +86,7 @@ extern int native_fn_02041bdc(void);
 extern void native_fn_0204dd64(int);
 extern void native_fn_0205e3c0(short);
 extern void native_fn_020404f0(int);
-extern const Words3 * native_fn_ov000_021e07b8(int);
+extern const Words3 * ov000_saved_world_position_get_021e07b8(int);
 extern const Words3 * native_fn_ov000_021e5744(int);
 extern void native_fn_ov000_021e0b88(int);
 extern int native_fn_0202818c(const Words3 *,const Words3 *);

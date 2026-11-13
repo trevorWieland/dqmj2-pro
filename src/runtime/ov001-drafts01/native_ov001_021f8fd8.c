@@ -14,7 +14,7 @@ typedef double f64;
 #define ROTATE_RIGHT(value, amount) (((u32)(value) >> ((u32)(amount) & 31)) | ((u32)(value) << ((0U - (u32)(amount)) & 31)))
 extern u32 native_fn_ov001_021d9494();
 extern u32 native_fn_ov001_021da480();
-extern u32 native_fn_ov001_021db438();
+extern u32 ov001_side_slot_record_021db438();
 typedef struct {
     u8 unknown_0[0x1b];
     s8 field_1b;
@@ -31,12 +31,12 @@ u32 native_ov001_021f8fd8(void) {
     native_fn_ov001_021d9494(native_data_ov001_0223989c.field_80, 0, 0);
     var_r6 = 0;
     do {
-        native_fn_ov001_021da480(native_fn_ov001_021db438(0, var_r6), 1);
+        native_fn_ov001_021da480(ov001_side_slot_record_021db438(0, var_r6), 1);
         var_r6 += 1;
     } while (var_r6 < 3);
     var_r6_2 = 0;
     do {
-        native_fn_ov001_021da480(native_fn_ov001_021db438(1, var_r6_2), 1);
+        native_fn_ov001_021da480(ov001_side_slot_record_021db438(1, var_r6_2), 1);
         var_r6_2 += 1;
     } while (var_r6_2 < 3);
     native_data_ov001_0223989c.field_1b = 0x1C;

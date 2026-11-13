@@ -28,7 +28,7 @@ typedef signed char s8;
 
 extern void native_fn_02008e0c(void);
 extern void native_fn_021e81d0(void);
-extern void native_fn_02223f20(void);
+extern void ov001_count_candidates_02223f20(void);
 
 
 asm u32 native_ov001_0222602c (register u32 a0)
@@ -60,7 +60,7 @@ ov001_0222602c_L50:
     add r7, r7, #1088
     blt ov001_0222602c_L2c
     add r0, sp, #0
-    bl native_fn_02223f20
+    bl ov001_count_candidates_02223f20
     mov r4, r0
     cmp r4, #0
     ble ov001_0222602c_L84

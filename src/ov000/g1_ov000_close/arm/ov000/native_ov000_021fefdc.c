@@ -63,7 +63,7 @@ extern void native_fn_02008be0(void);
 extern void native_fn_021fef08(void);
 extern void native_fn_02217dbc(void);
 extern void native_fn_02217f78(void);
-extern void native_fn_02215698(void);
+extern void ov000_display_context_02215698(void);
 extern void native_fn_0205fb3c(void);
 
 
@@ -300,7 +300,7 @@ ov000_021fefdc_L334:
     bl native_fn_02217f78
     ldr r1, =0x02237564
     strb r0, [r1, #0x1ed]
-    bl native_fn_02215698
+    bl ov000_display_context_02215698
     add r0, r0, #16
     mov r1, #0
     bl native_fn_0205fb3c

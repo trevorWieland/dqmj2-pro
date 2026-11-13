@@ -15,7 +15,7 @@ typedef double f64;
 extern u32 native_fn_ov001_021fe2b8();
 extern u32 native_fn_ov001_021fe74c();
 extern u32 native_fn_ov001_02202218();
-extern u32 native_fn_ov001_02202360();
+extern u32 ov001_table_f0_entry_02202360();
 extern u32 native_fn_ov001_02202b84();
 extern u32 native_fn_ov001_02204590();
 typedef struct {
@@ -28,7 +28,7 @@ extern Record_native_data_ov001_02239c10 native_data_ov001_02239c10;
 u32 native_ov001_02201350(void) {
     u32 temp_r4;
 
-    temp_r4 = native_fn_ov001_02202360(native_data_ov001_02239c10.field_c);
+    temp_r4 = ov001_table_f0_entry_02202360(native_data_ov001_02239c10.field_c);
     switch (native_data_ov001_02239c10.field_c) {
     default:
         break;
@@ -54,7 +54,7 @@ u32 native_ov001_02201350(void) {
         break;
     }
     if (native_data_ov001_02239c10.field_a == 3) {
-        native_fn_ov001_02204590(native_fn_ov001_02202360(0) + 0x18, 0x7B);
+        native_fn_ov001_02204590(ov001_table_f0_entry_02202360(0) + 0x18, 0x7B);
     }
     return 1U;
 }

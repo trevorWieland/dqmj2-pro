@@ -7,7 +7,7 @@ s32 native_ov001_021dcfa0(u8 *record)
 {
     s32 i;
 
-    if (native_fn_ov001_021db8d0(record) == 0)
+    if (ov001_record_is_active_021db8d0(record) == 0)
         goto fail;
     i = 0;
     do {

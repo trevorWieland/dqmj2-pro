@@ -68,10 +68,10 @@ typedef signed char s8;
 extern void native_fn_0207afec(void);
 extern void native_fn_0203d294(void);
 extern void native_fn_021f2304(void);
-extern void native_fn_021db438(void);
+extern void ov001_side_slot_record_021db438(void);
 extern void native_fn_021f7544(void);
 extern void native_fn_021ea428(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_021e2390(void);
 extern void native_fn_021f2120(void);
 extern void native_fn_0220f868(void);
@@ -133,7 +133,7 @@ ov001_021f7a40_L84:
     bl native_fn_021f2304
     mov r1, r0
     mov r0, r4
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     ldr r2, =0x0223989c
     mov r1, r0
     ldr r0, [r2, #0x80]
@@ -174,9 +174,9 @@ ov001_021f7a40_L150:
     bl native_fn_0203d294
     mov r1, r0
     mov r0, r4
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     str r0, [r7, #0x80]
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021f7a40_L150
     ldr r0, =0x0223989c
@@ -191,7 +191,7 @@ ov001_021f7a40_L190:
     ldr r0, [r7, #0x80]
     mov r1, r4
     ldrb r0, [r0, #0x31e]
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     ldr r1, [r7, #0x84]
     add r1, r1, r5, lsl #1
     add r1, r1, #768

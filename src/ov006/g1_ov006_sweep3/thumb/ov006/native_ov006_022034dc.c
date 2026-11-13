@@ -35,7 +35,7 @@ typedef signed char s8;
 
 extern u8 native_data_0220bb5a[];
 extern u8 native_data_0220bb58[];
-extern void native_fn_02203c08(void);
+extern void ov006_clear_buffer_02203c08(void);
 extern void native_fn_0203631c(void);
 extern void native_fn_02003e88(void);
 extern void native_fn_02003e54(void);
@@ -69,7 +69,7 @@ asm u32 native_ov006_022034dc (register u32 a0)
     add r0, r7, #0x0
     mul r0, r6
     lsl r0, r0, #0x5
-    bl native_fn_02203c08
+    bl ov006_clear_buffer_02203c08
     str r0, [r4, #0x28]
     cmp r5, #0x1
     bne ov006_022034dc_L4e

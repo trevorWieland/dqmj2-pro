@@ -17,7 +17,7 @@ extern u32 native_fn_02008d78();
 extern u32 native_fn_0202ac08();
 extern u32 native_fn_02044424(s32);
 extern u32 native_fn_02063c00();
-extern void * native_fn_ov001_021db438(s32, u32);
+extern void * ov001_side_slot_record_021db438(s32, u32);
 extern u32 native_fn_ov001_021f1294();
 typedef struct {
     u8 unknown_0[0x1];

@@ -39,12 +39,12 @@ extern void native_fn_0203d294(void);
 extern void native_fn_021f949c(void);
 extern void native_fn_021e9884(void);
 extern void native_fn_021d9494(void);
-extern void native_fn_021f1354(void);
-extern void native_fn_021f1438(void);
+extern void ov001_begin_state_transition_021f1354(void);
+extern void ov001_select_mode_id_021f1438(void);
 extern void native_fn_02202528(void);
 extern void native_fn_021d9534(void);
 extern void native_fn_021f14e4(void);
-extern void native_fn_021f14a4(void);
+extern void ov001_clear_state_flag4_021f14a4(void);
 
 
 asm u32 native_ov001_021ebecc (register u32 a0)
@@ -97,10 +97,10 @@ ov001_021ebecc_L60:
     ldrb r0, [r2, #0x1a]
     ldrb r1, [r2, #0x17]
     ldrh r2, [r2, #56]
-    bl native_fn_021f1354
+    bl ov001_begin_state_transition_021f1354
     ldr r0, =0x02238d7c
     ldrb r0, [r0, #0x29]
-    bl native_fn_021f1438
+    bl ov001_select_mode_id_021f1438
     ldr r0, =0x02238d7c
     ldr r1, [r0, #0x60]
     ldrb r0, [r1, #0x31e]
@@ -138,7 +138,7 @@ ov001_021ebecc_L130:
     bl native_fn_021f14e4
     cmp r0, #0
     beq ov001_021ebecc_L158
-    bl native_fn_021f14a4
+    bl ov001_clear_state_flag4_021f14a4
 ov001_021ebecc_L158:
     ldr r0, =0x02238d7c
     mov r1, #8

@@ -42,14 +42,14 @@ extern void native_fn_0202ac08(void);
 extern void native_fn_021eea10(void);
 extern void native_fn_0205c904(void);
 extern void native_fn_0205d790(void);
-extern void native_fn_021eec7c(void);
-extern void native_fn_021f1354(void);
+extern void ov001_effect_resource_create_021eec7c(void);
+extern void ov001_begin_state_transition_021f1354(void);
 extern void native_fn_021f1414(void);
-extern void native_fn_021f1438(void);
+extern void ov001_select_mode_id_021f1438(void);
 extern void native_fn_0205d6f4(void);
 extern void native_fn_021db788(void);
 extern void native_fn_022024d4(void);
-extern void native_fn_021f14a4(void);
+extern void ov001_clear_state_flag4_021f14a4(void);
 extern void native_fn_021f2230(void);
 extern void native_fn_021eeb70(void);
 extern void native_fn_0202ac4c(void);
@@ -78,14 +78,14 @@ asm u32 native_ov001_021f8e70 (register u32 a0)
     mov r2, r0
     ldr r1, [r1, #0x84]
     mov r0, #125
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     ldr r2, =0x0223989c
     mov r1, #3
     str r0, [r2, #0x58]
     mov r0, #5
     mov r2, #59
     mov r3, #1
-    bl native_fn_021f1354
+    bl ov001_begin_state_transition_021f1354
     ldr r0, =0x0223989c
     ldr r0, [r0, #0x84]
     ldrb r0, [r0, #0x31e]
@@ -94,7 +94,7 @@ asm u32 native_ov001_021f8e70 (register u32 a0)
     movne r0, #0
     and r0, r0, #255
     bl native_fn_021f1414
-    bl native_fn_021f1438
+    bl ov001_select_mode_id_021f1438
     ldr r0, =0x0223989c
     mov r1, #10
     strb r1, [r0, #0x39]
@@ -116,7 +116,7 @@ ov001_021f8e70_La4:
     ldrb r0, [r1, #0x31e]
     ldrb r1, [r1, #0x31f]
     bl native_fn_022024d4
-    bl native_fn_021f14a4
+    bl ov001_clear_state_flag4_021f14a4
     ldr r0, =0x0223989c
     mov r1, #20
     strb r1, [r0, #0x39]

@@ -27,7 +27,7 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021db438(void);
+extern void ov001_side_slot_record_021db438(void);
 
 
 asm u32 native_ov001_021f4210 (register u32 a0)
@@ -54,13 +54,13 @@ ov001_021f4210_L28:
     and r0, r3, #255
     mov r1, #0
     strb r3, [r2, #0x11]
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     ldr r1, =0x0223989c
     str r0, [r1, #0x84]
     b ov001_021f4210_L74
 ov001_021f4210_L64:
     mov r1, #0
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     ldr r1, =0x0223989c
     str r0, [r1, #0x84]
 ov001_021f4210_L74:

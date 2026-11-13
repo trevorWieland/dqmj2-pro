@@ -17,7 +17,7 @@ extern u32 native_fn_ov001_021f949c();
 extern u32 native_fn_ov001_02201504();
 extern u32 native_fn_ov001_02201728();
 extern u32 native_fn_ov001_02201744();
-extern u32 native_fn_ov001_02202360();
+extern u32 ov001_table_f0_entry_02202360();
 extern u32 native_fn_ov001_02203000();
 typedef struct {
     u8 unknown_0[0xa];
@@ -32,7 +32,7 @@ u32 native_ov001_02201438(void) {
     u32 temp_r4;
 
     temp_r4 = native_fn_0202a634();
-    native_fn_ov001_02202360(native_data_ov001_02239c10.field_c);
+    ov001_table_f0_entry_02202360(native_data_ov001_02239c10.field_c);
     if (M2C_FIELD(temp_r4, u16 *, 2) & 0x800) {
         switch (native_data_ov001_02239c10.field_e) {
         case 0:

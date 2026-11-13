@@ -16,7 +16,7 @@ extern u32 native_fn_01ffb35c();
 extern u32 native_fn_01ffb368();
 extern u32 native_fn_0205e7a8();
 extern u32 native_fn_ov000_021f6cd0();
-extern u32 native_fn_ov000_02223c54();
+extern u32 ov000_context_02246600_02223c54();
 extern u8 native_data_021ceb54[];
 u32 native_itcm_01ff8a4c(void) {
     u16 temp_r0;
@@ -27,7 +27,7 @@ u32 native_itcm_01ff8a4c(void) {
     u32 temp_r4;
     u32 temp_r4_2;
 
-    temp_r4 = native_fn_ov000_02223c54();
+    temp_r4 = ov000_context_02246600_02223c54();
     if (M2C_FIELD(native_data_021ceb54, s32 *, 8) == 1) {
         if (M2C_FIELD(temp_r4, s8 *, 0x58) == 0) {
             temp_r0_5 = native_fn_01ffb12c(3, 2);
@@ -54,7 +54,7 @@ block_8:
         }
     }
     if (M2C_FIELD((void *) native_fn_01ffb35c(), u16 *, 2) & 1) {
-        temp_r4_2 = native_fn_ov000_02223c54();
+        temp_r4_2 = ov000_context_02246600_02223c54();
         M2C_FIELD(temp_r4_2, s8 *, 0x5A) = (s8) native_fn_01ffb368();
         M2C_FIELD(native_data_021ceb54, s32 *, 0xC) = 5;
         return native_fn_01ffae5c(0x10, 6, 0, 0x52, 0);

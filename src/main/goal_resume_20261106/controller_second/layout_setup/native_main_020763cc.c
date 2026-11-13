@@ -2,7 +2,7 @@
 
 void native_main_020763cc(void)
 {
-    Display *display = native_fn_ov000_02215698();
+    Display *display = ov000_display_context_02215698();
     Point point;
     native_fn_ov000_022159b8(native_data_020de3f8, 4);
     point.x = 0;

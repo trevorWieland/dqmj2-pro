@@ -39,7 +39,7 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_021dbe5c(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_record_is_active_021db8d0(void);
 
 
 asm u32 native_ov001_0221efd4 (register u32 a0)
@@ -58,7 +58,7 @@ ov001_0221efd4_L24:
     cmp r5, r0
     beq ov001_0221efd4_L50
     mov r0, r9
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_0221efd4_L50
     mov r0, r9
@@ -83,7 +83,7 @@ ov001_0221efd4_L68:
     mov r5, #0
 ov001_0221efd4_L88:
     mov r0, r8
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_0221efd4_La8
     mov r0, r8

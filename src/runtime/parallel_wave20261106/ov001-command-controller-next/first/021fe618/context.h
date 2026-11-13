@@ -21,7 +21,7 @@ typedef struct OutputView { u32 field0; u32 field4; u8 unknown8[4]; u16 fieldc; 
 extern s32 native_data_02239c64[];
 extern u32 native_fn_02068de0(u32,u32,s32,u32,u32,u32,u32,u32);
 extern u32 native_fn_02068f70(u32,u32,s32,u32,u32,u32,u32,u32,u32,u32,u32,u32);
-extern Record10View *native_fn_ov001_02202360(s32);
+extern Record10View *ov001_table_f0_entry_02202360(s32);
 extern void native_fn_ov001_0220aba0(s32,u32,u32,u8,u8,u8,u8,s8,u32);
 extern void native_fn_ov001_0220ac58(s32,u32,u32,u32,u32);
 extern void native_fn_02049008(OutputView *,u32,u32,u32,u32);

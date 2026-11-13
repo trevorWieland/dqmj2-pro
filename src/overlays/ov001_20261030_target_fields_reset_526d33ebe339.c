@@ -3,8 +3,8 @@ typedef signed char s8;
 typedef unsigned int u32;
 typedef signed int s32;
 #define M2C_FIELD(value, type, offset) (*(type)((s8 *)(value) + (offset)))
-extern u32 native_fn_ov001_021db438(s32, u32);
-extern u32 native_fn_ov001_021db8d0(void *);
+extern u32 ov001_side_slot_record_021db438(s32, u32);
+extern u32 ov001_record_is_active_021db8d0(void *);
 extern u32 native_fn_ov001_021ee9fc(void *);
 u32 native_ov001_021ec620(void *actor) {
     u32 other_team;
@@ -17,10 +17,10 @@ u32 native_ov001_021ec620(void *actor) {
     } else {
         other_team = 0;
     }
-    target = native_fn_ov001_021db438(other_team, 0);
+    target = ov001_side_slot_record_021db438(other_team, 0);
     index = 0;
     do {
-        result = native_fn_ov001_021db8d0((void *)target);
+        result = ov001_record_is_active_021db8d0((void *)target);
         if (result != 0) {
             result = native_fn_ov001_021ee9fc((void *)target);
         }

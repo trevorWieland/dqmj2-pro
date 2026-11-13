@@ -2,7 +2,7 @@
 
 void native_main_02078818(const Selection *selection)
 {
-    void *display = native_fn_ov000_02215698();
+    void *display = ov000_display_context_02215698();
     Point point = {0, 0};
     switch (native_data_021c6234) {
     case 0:

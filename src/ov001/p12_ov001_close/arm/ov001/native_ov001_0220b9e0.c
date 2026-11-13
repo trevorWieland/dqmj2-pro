@@ -57,7 +57,7 @@ extern void native_fn_021d75d4(void);
 extern void native_fn_021dba58(void);
 extern void native_fn_021d77b0(void);
 extern void native_fn_021d94cc(void);
-extern void native_fn_021db438(void);
+extern void ov001_side_slot_record_021db438(void);
 extern void native_fn_021db9e0(void);
 extern void native_fn_021dbaac(void);
 extern void native_fn_02042c2c(void);
@@ -127,7 +127,7 @@ ov001_0220b9e0_Lbc:
     bl native_fn_021d94cc
     ldmia sp!, {r4, r5, r6, pc}
 ov001_0220b9e0_Ld4:
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r6, r0
     bl native_fn_021db9e0
     mov r4, r0

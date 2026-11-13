@@ -48,7 +48,7 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_021eec7c(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_021e13c8(void);
 extern void native_fn_021eed78(void);
 extern void native_fn_02041f74(void);
@@ -77,7 +77,7 @@ asm u32 native_ov001_021ee564 (register u32 a0)
     mov r5, r3
     str r12, [sp, #0xc]
     str r12, [sp, #0x8]
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
     movs r9, r0
     bmi ov001_021ee564_L218
     cmp r6, #0

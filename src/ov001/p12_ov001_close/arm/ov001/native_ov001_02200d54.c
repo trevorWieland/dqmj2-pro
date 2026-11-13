@@ -74,8 +74,8 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef signed char s8;
 
-extern void native_fn_02202360(void);
-extern void native_fn_021db438(void);
+extern void ov001_table_f0_entry_02202360(void);
+extern void ov001_side_slot_record_021db438(void);
 extern void native_fn_0207b244(void);
 extern void native_fn_021fcb64(void);
 extern void native_fn_0207afec(void);
@@ -93,10 +93,10 @@ extern void native_fn_021fe2b8(void);
 extern void native_fn_02213b4c(void);
 extern void native_fn_02065d88(void);
 extern void native_fn_02049748(void);
-extern void native_fn_021db530(void);
+extern void ov001_mode_byte_021db530(void);
 extern void native_fn_022007f0(void);
 extern void native_fn_021ff050(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_0220473c(void);
 extern void native_fn_0220451c(void);
 extern void native_fn_021fe3dc(void);
@@ -110,10 +110,10 @@ asm u32 native_ov001_02200d54 (register u32 a0)
     ldr r1, =0x02239c10
     mov r7, r0
     ldrsb r0, [r1, #12]
-    bl native_fn_02202360
+    bl ov001_table_f0_entry_02202360
     mov r4, r0
     mov r0, #0
-    bl native_fn_02202360
+    bl ov001_table_f0_entry_02202360
     ldr r1, =0x02239c10
     mov r11, r0
     ldrsb r0, [r1, #12]
@@ -131,7 +131,7 @@ asm u32 native_ov001_02200d54 (register u32 a0)
 ov001_02200d54_L58:
     ldrsb r1, [r4, #8]
     mov r0, r8
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r7, r0
     ldr r1, [r4]
     ldr r2, [r7, #0x1e8]
@@ -300,7 +300,7 @@ ov001_02200d54_L274:
     b ov001_02200d54_L3ac
 ov001_02200d54_L2dc:
     mov r0, r10
-    bl native_fn_021db530
+    bl ov001_mode_byte_021db530
     mov r8, r0
     mov r0, r9
     bl native_fn_022007f0
@@ -317,9 +317,9 @@ ov001_02200d54_L2dc:
 ov001_02200d54_L318:
     mov r0, r10
     mov r1, r6
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r5, r0
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     movs r7, r0
     bne ov001_02200d54_L35c
     mov r0, r9
@@ -363,7 +363,7 @@ ov001_02200d54_L3ac:
 ov001_02200d54_L3bc:
     ldrsb r1, [r4, #8]
     mov r0, r8
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     ldrsb r2, [r4, #8]
     ldr r1, =native_data_0222edcc
     mov r6, r0

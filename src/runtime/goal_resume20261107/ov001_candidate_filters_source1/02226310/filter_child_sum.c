@@ -20,7 +20,7 @@ s32 native_ov001_02226310(s32 *available, const void *roster) {
         if (values[index] && scores[index] < best) values[index] = 0;
         index++;
     } while (index < 3);
-    result = native_fn_ov001_02223f20(values);
+    result = ov001_count_candidates_02223f20(values);
     if (result > 0) native_fn_02008e0c(values, available, sizeof(values));
     return result;
 }

@@ -23,7 +23,7 @@ typedef signed char s8;
 
 extern void native_fn_0207afec(void);
 extern void native_fn_021f07dc(void);
-extern void native_fn_021dbd30(void);
+extern void ov001_record_field_1f2_021dbd30(void);
 extern void native_fn_0207b244(void);
 extern void native_fn_021f0858(void);
 
@@ -54,7 +54,7 @@ asm u32 native_ov001_02223f48 (register u32 a0)
     ldmia sp!, {r4, r5, r6, r7, pc}
 ov001_02223f48_L58:
     mov r0, r7
-    bl native_fn_021dbd30
+    bl ov001_record_field_1f2_021dbd30
     ldr r2, [r7, #0x1e8]
     mov r1, r0
     mov r0, r5

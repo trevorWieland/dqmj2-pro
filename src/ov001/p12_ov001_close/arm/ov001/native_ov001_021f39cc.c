@@ -127,8 +127,8 @@ typedef unsigned char u8;
 typedef signed char s8;
 
 extern void native_fn_0207afec(void);
-extern void native_fn_021db438(void);
-extern void native_fn_021db8d0(void);
+extern void ov001_side_slot_record_021db438(void);
+extern void ov001_record_is_active_021db8d0(void);
 extern void native_fn_021f2304(void);
 extern void native_fn_021e1410(void);
 extern void native_fn_021ee78c(void);
@@ -150,10 +150,10 @@ extern void native_fn_021f0f0c(void);
 extern void native_fn_021ee7d4(void);
 extern void native_fn_022024d4(void);
 extern void native_fn_021dbd24(void);
-extern void native_fn_021dbd30(void);
+extern void ov001_record_field_1f2_021dbd30(void);
 extern void native_fn_0207b244(void);
 extern void native_fn_0205d790(void);
-extern void native_fn_021eec7c(void);
+extern void ov001_effect_resource_create_021eec7c(void);
 extern void native_fn_021f949c(void);
 extern void native_fn_021f94d8(void);
 extern void native_fn_0207b004(void);
@@ -183,7 +183,7 @@ asm u32 native_ov001_021f39cc (register u32 a0)
     cmp r0, #0
     moveq r0, #1
     movne r0, #0
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r9, r0
     mov r0, #3
     str r0, [sp, #0x44]
@@ -214,7 +214,7 @@ ov001_021f39cc_L8c:
     mov r11, r0, asr #16
 ov001_021f39cc_Lb8:
     mov r0, r9
-    bl native_fn_021db8d0
+    bl ov001_record_is_active_021db8d0
     cmp r0, #0
     beq ov001_021f39cc_L6d8
     mov r0, r9
@@ -224,7 +224,7 @@ ov001_021f39cc_Lb8:
     bl native_fn_021f2304
     mov r1, r0
     ldrb r0, [r9, #0x31e]
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r4, r0
     mov r0, r10
     mov r1, r8
@@ -564,7 +564,7 @@ ov001_021f39cc_L5a8:
     ldrsb r5, [r0, #43]
     mov r0, r4
     str r4, [r1, r5, lsl #2]
-    bl native_fn_021dbd30
+    bl ov001_record_field_1f2_021dbd30
     mov r1, r0
     ldr r0, =0x0223989c
     ldr r2, [r4, #0x1e8]
@@ -626,7 +626,7 @@ ov001_021f39cc_L6a8:
     add r0, r4, #768
     ldrh r0, [r0, #76]
     mov r1, r4
-    bl native_fn_021eec7c
+    bl ov001_effect_resource_create_021eec7c
 ov001_021f39cc_L6d8:
     ldr r0, [sp, #0x20]
     add r9, r9, #1088

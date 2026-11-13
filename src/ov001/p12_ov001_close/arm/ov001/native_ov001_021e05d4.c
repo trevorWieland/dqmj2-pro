@@ -55,7 +55,7 @@ extern void native_fn_021e0584(void);
 extern void native_fn_021e2afc(void);
 extern void native_fn_0204447c(void);
 extern void native_fn_0203d294(void);
-extern void native_fn_021db438(void);
+extern void ov001_side_slot_record_021db438(void);
 extern void native_fn_0220f354(void);
 extern void native_fn_021e66f8(void);
 
@@ -133,7 +133,7 @@ ov001_021e05d4_Lf8:
 ov001_021e05d4_Lfc:
     mov r0, #0
     mov r1, r0
-    bl native_fn_021db438
+    bl ov001_side_slot_record_021db438
     mov r1, r4
     mov r2, r5
     bl native_fn_0220f354
