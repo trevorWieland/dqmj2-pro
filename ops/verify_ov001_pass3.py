@@ -428,7 +428,7 @@ ROWS = (
     (0x0221dd80, 52, 'native_ov001_0221dd80.c',
      ((0x0c, 1, 'native_fn_ov001_0221887c'), (0x18, 1, 'native_fn_ov001_022188d0')),
      [8, 20]),
-    (0x02223fe8, 56, 'ov001_clear_free_candidate_slots_02223fe8.c',
+    (0x02223fe8, 56, 'native_ov001_02223fe8.c',
      ((0x18, 1, 'ov001_record_is_active_021db8d0')),
      [28]),
     (0x02226d2c, 68, 'native_ov001_02226d2c.c',
