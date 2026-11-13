@@ -13,11 +13,13 @@ typedef void (*Vis)(struct NNSG3dVisAnmResult_ *, const struct NNSG3dAnmObj_ *, 
 typedef struct { u8 category0, dummy_; u16 category1; Init func; } Record;
 u32 native_data_020dd5f4;
 Record native_data_020dd618[10];
-Mat native_data_020dd608 = (Mat)0x02033C58;
+/* Measured data order: 020dd5f8, 020dd5fc, 020dd600, 020dd604, 020dd608.
+   MWCC emits reverse(declaration[:-1]) + last, so declare in this order. */
 Mat native_data_020dd604 = (Mat)0x02034388;
 Mat native_data_020dd600 = (Mat)0x02034128;
-Vis native_data_020dd5f8 = (Vis)0x02034448;
 Joint native_data_020dd5fc = (Joint)0x020323A0;
+Vis native_data_020dd5f8 = (Vis)0x02034448;
+Mat native_data_020dd608 = (Mat)0x02033C58;
 extern void native_main_0202e8b8(u32 object, u32 animation, int model, u32 texture);
 extern void native_main_02033b84(struct NNSG3dAnmObj_ *, void *, const struct NNSG3dResMdl_ *);
 extern void native_main_0203416c(struct NNSG3dAnmObj_ *, void *, const struct NNSG3dResMdl_ *);
